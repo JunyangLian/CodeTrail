@@ -111,8 +111,15 @@ class QCGraph:
             self.registry.register_packet(payload["packet_id"], payload["packet_dir"])
         except ValueError:
             pass  # idempotent re-registration (resume/repeat submission)
-        files = self.registry.files_for(payload["packet_id"])
-        manifest = files.manifest()
+        except OSError as error:
+            # missing/unreadable packet dir must fail SAFELY, not crash the run
+            return self._fail(state, f"packet not accessible: {error}")
+        try:
+            files = self.registry.files_for(payload["packet_id"])
+            manifest = files.manifest()
+        except KeyError:
+            return self._fail(state,
+                              f"packet not registered: {payload['packet_id']}")
         runtime = dict(_runtime(state))
         runtime["step"] = runtime.get("step", 0) + 1
         events = list(state.get("events", [])) + [
