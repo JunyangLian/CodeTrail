@@ -193,3 +193,40 @@ def test_resume_after_completion_is_noop(tmp_path):
         graph.close()
     assert again["runtime"]["status"] == "succeeded"
     assert again["report"] is not None  # checkpoint replay, not a second report
+
+
+def test_cross_process_checkpoint_resume(tmp_path):
+    """P2: process A writes a checkpoint and dies; a brand-new interpreter
+    process resumes the run from the checkpoint file alone."""
+    import json
+    import subprocess
+    import sys
+
+    run_id = str(uuid.uuid4())
+    db = tmp_path / "cross_process.sqlite3"
+    root = Path(__file__).resolve().parents[2]
+    child_a = (
+        "import sys; sys.path.insert(0, r'{root}\\src'); "
+        "from genomeqc_agent.runtime.graph import QCGraph; "
+        "g = QCGraph(db_path=r'{db}', interrupt_before=['plan_next_action']); "
+        "state = g.run('{run_id}', 'chloro_C1_NC_013991_2_CHLORO-CDS-03', r'{packet}'); "
+        "g.close(); assert state.get('facts') is not None"
+    )
+    proc_a = subprocess.run(
+        [sys.executable, "-c", child_a.format(
+            root=str(root), db=str(db), run_id=run_id, packet=str(FAULT))],
+        capture_output=True, text=True, timeout=180, check=False, cwd=str(root))
+    assert proc_a.returncode == 0, proc_a.stderr[-400:]
+
+    # process B: fresh interpreter, fresh graph instance, same checkpoint file
+    worker = root / "scripts" / "resume_worker.py"
+    out_dir = tmp_path / "resumed"
+    proc_b = subprocess.run(
+        [sys.executable, str(worker), "--db", str(db), "--run-id", run_id,
+         "--interrupt-before", "plan_next_action", "--out", str(out_dir)],
+        capture_output=True, text=True, timeout=180, check=False, cwd=str(root))
+    assert proc_b.returncode == 0, proc_b.stderr[-400:]
+    result_b = json.loads(proc_b.stdout.strip().splitlines()[-1])
+    assert result_b["status"] == "succeeded"
+    assert result_b["decision"] == "block"
+    assert result_b["facts_ok"] is True  # facts survived the process boundary

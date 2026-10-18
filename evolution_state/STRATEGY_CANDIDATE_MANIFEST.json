@@ -1,0 +1,91 @@
+{
+  "manifest": "STRATEGY_CANDIDATE_MANIFEST/v1",
+  "simulation": "offline_simulation",
+  "generated_at": "2026-10-18T05:36:10+00:00",
+  "active_strategy": {
+    "prompt_version": "promptv1",
+    "prompt_sha256": "f4f02d462a48182dee544ae1611377d640029063c53c2f8cca1a81c9133e4a1e",
+    "config": {
+      "max_tokens": 8192,
+      "gateway_timeout_s": 120,
+      "verify_pointer_cap": 50
+    }
+  },
+  "candidates": [
+    {
+      "candidate_id": "CAND-promptv2-pointer-guard",
+      "kind": "behavior_policy",
+      "status": "rejected_by_simulated_approval",
+      "status_cap": "validated",
+      "prompt_version": "promptv2",
+      "prompt_sha256": "594650c0ecd12806a672c2eded11d8ff1a5784a1f7a7927b6249da22df6835d3",
+      "config_delta": {
+        "evidence_enforce_manifest": true,
+        "pre_verify_pointers": true,
+        "unresolved_requires_review": true
+      },
+      "root_cause": "1 real invalid_evidence_pointer failure(s): planner cited pointers outside the packet manifest or with invented locators",
+      "failure_refs": [
+        {
+          "case_id": "chloro_C1_NC_088770_1_CHLORO-CDS-03",
+          "unresolved_pointers": [
+            "artifacts/genome.fa:all_sequences",
+            "artifacts/proteins.fa:all_records"
+          ]
+        }
+      ],
+      "rollback_ref": "{\"config_delta\": {}, \"prompt_version\": \"promptv1\"}",
+      "approvals": [
+        {
+          "candidate_id": "CAND-promptv2-pointer-guard",
+          "candidate_version": 1,
+          "approver": "offline_simulation:phase15-driver",
+          "decision": "reject",
+          "at": "2026-10-18T05:36:10+00:00",
+          "simulation": "offline_simulation"
+        }
+      ]
+    },
+    {
+      "candidate_id": "CAND-promptv2-pointer-guard-v2",
+      "kind": "behavior_policy",
+      "status": "validated (approval receipt simulated)",
+      "status_cap": "validated",
+      "prompt_version": "promptv2",
+      "prompt_sha256": "594650c0ecd12806a672c2eded11d8ff1a5784a1f7a7927b6249da22df6835d3",
+      "config_delta": {
+        "evidence_enforce_manifest": true,
+        "pre_verify_pointers": true,
+        "unresolved_requires_review": true
+      },
+      "root_cause": "1 real invalid_evidence_pointer failure(s): planner cited pointers outside the packet manifest or with invented locators",
+      "failure_refs": [
+        {
+          "case_id": "chloro_C1_NC_088770_1_CHLORO-CDS-03",
+          "unresolved_pointers": [
+            "artifacts/genome.fa:all_sequences",
+            "artifacts/proteins.fa:all_records"
+          ]
+        }
+      ],
+      "rollback_ref": "{\"config_delta\": {}, \"prompt_version\": \"promptv1\"}",
+      "approvals": [
+        {
+          "candidate_id": "CAND-promptv2-pointer-guard-v2",
+          "candidate_version": 1,
+          "approver": "offline_simulation:phase15-driver",
+          "decision": "approve",
+          "at": "2026-10-18T05:36:10+00:00",
+          "simulation": "offline_simulation"
+        }
+      ]
+    }
+  ],
+  "prompt_registry": {
+    "path": "evolution_state/prompt_registry.v1.json",
+    "versions": {
+      "promptv1": "f4f02d462a48182dee544ae1611377d640029063c53c2f8cca1a81c9133e4a1e",
+      "promptv2": "594650c0ecd12806a672c2eded11d8ff1a5784a1f7a7927b6249da22df6835d3"
+    }
+  }
+}

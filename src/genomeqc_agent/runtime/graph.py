@@ -235,6 +235,17 @@ class QCGraph:
 
     def node_execute(self, state: QCState) -> dict:
         pending = state.get("pending_call") or {}
+        packet_id = state["input"]["packet_id"]
+        try:
+            self.registry.files_for(packet_id)
+        except KeyError:
+            # cross-process resume: the packet sandbox is memory-resident in
+            # each process and must be re-opened (idempotent, read-only)
+            try:
+                self.registry.register_packet(packet_id,
+                                              state["input"]["packet_dir"])
+            except ValueError:
+                pass
         result, budgets, trace = self._call(state, pending["tool_name"],
                                             pending.get("arguments", {}))
         runtime = dict(_runtime(state))

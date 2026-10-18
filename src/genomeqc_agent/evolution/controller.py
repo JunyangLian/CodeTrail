@@ -36,9 +36,31 @@ VALID_TRANSITIONS = {
 }
 TERMINAL = {"rejected", "published"}
 
+# Phase 1.5 (P1): candidates for the real invalid_evidence_pointer failure
+# may only climb to `validated` - real shadow/A-B evidence needs Phase 2.
+BEHAVIOR_POLICY_MAX_STATUS = "validated"
+
+# P1 allowed candidate directions (user directive), enforced verbatim.
+BEHAVIOR_POLICY_DIRECTIONS = [
+    "evidence pointers must reference files from the actual tool-returned manifest",
+    "locators must be verified before citation",
+    "insufficient evidence must be flagged partial/needs_review",
+    "necessary evidence must never be dropped to raise pass rates",
+]
+
+
 
 def _now() -> str:
     return datetime.now(UTC).isoformat(timespec="seconds")
+
+
+# rank order used to enforce per-candidate status caps (Phase 1.5 P1)
+_STATUS_RANK = {"proposed": 0, "validated": 1, "shadow_tested": 2, "accepted": 3,
+                "rejected": 3, "approved": 4, "published": 5}
+
+
+def _rank(status: str) -> int:
+    return _STATUS_RANK.get(status, 0)
 
 
 class EvolutionError(RuntimeError):
@@ -161,6 +183,11 @@ class EvolutionController:
         if candidate is None:
             raise EvolutionError(f"unknown candidate: {candidate_id}")
         current = candidate["status"]
+        cap = candidate.get("status_cap")
+        if cap and VALID_TRANSITIONS[current] and _rank(target) > _rank(cap):
+            raise EvolutionError(
+                f"candidate {candidate_id} is capped at '{cap}': reaching '{target}' "
+                f"requires real A/B evidence (Phase 2 authorisation)")
         if target not in VALID_TRANSITIONS[current]:
             raise EvolutionError(f"illegal transition {current} -> {target}")
 
@@ -203,6 +230,93 @@ class EvolutionController:
                                      "simulation": self.simulation})
         self._receipt(candidate_id, "rejected", {"reason": reason})
         return candidate
+
+    # -- Phase 1.5 (P1): restricted behaviour-policy candidates -------------
+
+    def propose_behavior_policy(self, candidate_id: str, failure_entries: list[dict],
+                                prompt_registry=None, base_prompt: str = "promptv1",
+                                candidate_prompt: str = "promptv2") -> dict:
+        """Restricted candidate for the real invalid_evidence_pointer failure.
+
+        The candidate is a behaviour policy: a config delta (runtime guards)
+        plus a prompt diff (pointer hygiene constraints). It may only reach
+        ``validated`` status; shadow/A-B needs Phase 2 authorisation. Python
+        source, the Oracle, the Scorer and frozen data are untouched by
+        construction - the delta carries no code path.
+        """
+        hallucinations = [e for e in failure_entries
+                          if e.get("category") == "model_planning_error"]
+        if not hallucinations:
+            raise EvolutionError(
+                "no model_planning_error failure in pool: refusing to propose "
+                "a pointer-guard candidate without real failure evidence")
+        evidence_refs = []
+        for entry in hallucinations:
+            unresolved = (entry.get("error_evidence") or {}).get("unresolved_pointers")
+            if unresolved:
+                evidence_refs.append({"case_id": entry["case_id"],
+                                      "unresolved_pointers": unresolved})
+        prompt_diff = None
+        candidate_prompt_sha = None
+        if prompt_registry is not None:
+            prompt_diff = prompt_registry.diff(base_prompt, candidate_prompt)
+            candidate_prompt_sha = prompt_registry.get(candidate_prompt)["sha256"]
+        proposal = {
+            "kind": "behavior_policy",
+            "config_delta": {
+                "evidence_enforce_manifest": True,   # direction 1
+                "pre_verify_pointers": True,         # direction 2
+                "unresolved_requires_review": True,  # direction 3
+            },
+            "prompt_version": candidate_prompt,
+            "prompt_sha256": candidate_prompt_sha,
+            "prompt_diff": prompt_diff,
+            "allowed_directions": list(BEHAVIOR_POLICY_DIRECTIONS),
+            "root_cause": (f"{len(hallucinations)} real invalid_evidence_pointer "
+                           f"failure(s): planner cited pointers outside the packet "
+                           f"manifest or with invented locators"),
+            "failure_refs": evidence_refs or [e.get("entry_id") or e.get("case_id")
+                                              for e in hallucinations],
+            "rollback_ref": json.dumps({"prompt_version": base_prompt,
+                                        "config_delta": {}}, sort_keys=True),
+            "no_evidence_dropping_rule": BEHAVIOR_POLICY_DIRECTIONS[3],
+            "max_status": BEHAVIOR_POLICY_MAX_STATUS,
+            "simulation": self.simulation,
+        }
+        candidate = self.propose(candidate_id, proposal)
+        candidate["status_cap"] = BEHAVIOR_POLICY_MAX_STATUS
+        return candidate
+
+    # -- Phase 1.5 (P2): governed human approvals ---------------------------
+
+    def record_approval(self, candidate_id: str, approver: str, decision: str,
+                        candidate_version: int = 1) -> dict:
+        """Record a human approval decision (approve|reject) with identity.
+        A rejection moves the candidate to the rejected terminal state and
+        leaves the active strategy untouched; approval unlocks promotion."""
+        candidate = self.state.get(candidate_id)
+        if candidate is None:
+            raise EvolutionError(f"unknown candidate: {candidate_id}")
+        if decision not in ("approve", "reject"):
+            raise EvolutionError(f"illegal decision: {decision}")
+        receipt = {
+            "candidate_id": candidate_id,
+            "candidate_version": candidate_version,
+            "approver": approver,
+            "decision": decision,
+            "at": _now(),
+            "simulation": self.simulation,
+        }
+        target = self.receipts_dir / candidate_id
+        target.mkdir(parents=True, exist_ok=True)
+        (target / f"approval_{decision}_{candidate_version}.json").write_text(
+            json.dumps(receipt, ensure_ascii=False, indent=2, sort_keys=True) + "\n",
+            encoding="utf-8")
+        if decision == "reject":
+            candidate = self._reject(candidate_id, candidate,
+                                     f"human rejection by {approver}")
+        candidate["approval"] = receipt
+        return receipt
 
     def _receipt(self, candidate_id: str, transition: str, payload: dict) -> None:
         target = self.receipts_dir / candidate_id

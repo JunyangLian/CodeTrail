@@ -1,0 +1,11 @@
+{
+  "at": "2026-10-18T05:36:10+00:00",
+  "candidate_id": "CAND-promptv2-pointer-guard",
+  "config_delta": {
+    "evidence_enforce_manifest": true,
+    "pre_verify_pointers": true,
+    "unresolved_requires_review": true
+  },
+  "simulation": "offline_simulation",
+  "transition": "proposed"
+}

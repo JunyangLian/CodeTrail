@@ -1,0 +1,8 @@
+{
+  "approver": "offline_simulation:phase15-driver",
+  "at": "2026-10-18T05:36:10+00:00",
+  "candidate_id": "CAND-promptv2-pointer-guard",
+  "candidate_version": 1,
+  "decision": "reject",
+  "simulation": "offline_simulation"
+}

@@ -1,0 +1,7 @@
+{
+  "at": "2026-10-18T05:36:10+00:00",
+  "candidate_id": "CAND-promptv2-pointer-guard",
+  "reason": "human rejection by offline_simulation:phase15-driver",
+  "simulation": "offline_simulation",
+  "transition": "rejected"
+}
