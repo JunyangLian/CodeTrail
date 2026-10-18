@@ -1,0 +1,45 @@
+{
+  "plan": "V3_2_P2_ABLATION_PLAN/v1",
+  "frozen_at": "2026-10-18T17:03:04+00:00",
+  "purpose": "attribute the invalid-pointer class: evidence-block presence (C) vs mere extra tokens (D) vs full builder organisation (B, historical)",
+  "matrix": {
+    "focus_pairs": [
+      "chloro_C1_NC_088757_1_CHLORO-META-05:glm",
+      "chloro_C1_NC_088762_1_CHLORO-META-05:glm",
+      "chloro_C1_NC_088770_1_CHLORO-NORMAL-00:glm",
+      "chloro_C1_NC_140640_1_CHLORO-NORMAL-00:ds"
+    ],
+    "arms": {
+      "C": "baseline+evidence_locators block only",
+      "D": "baseline+neutral filler to B size"
+    },
+    "repeats": 3,
+    "observations": 24
+  },
+  "frozen_targets_est": {
+    "chloro_C1_NC_088757_1_CHLORO-META-05:glm": 750,
+    "chloro_C1_NC_088762_1_CHLORO-META-05:glm": 727,
+    "chloro_C1_NC_088770_1_CHLORO-NORMAL-00:glm": 749,
+    "chloro_C1_NC_140640_1_CHLORO-NORMAL-00:ds": 743
+  },
+  "inference_config": {
+    "temperature": 0.0,
+    "max_tokens": 8192,
+    "prompt_version": "promptv1",
+    "prompt_sha256": "f4f02d462a48182dee544ae1611377d640029063c53c2f8cca1a81c9133e4a1e",
+    "tool_schema": "V3 frozen tool contract v1",
+    "scorer": "organelle_v2.rubric.deterministic_grader/v1",
+    "dataset": "V2 candidates DEV slice (focus cases)"
+  },
+  "per_run_limits": {
+    "max_model_requests": 5,
+    "gateway_timeout_s": 120
+  },
+  "decision_table": [
+    "C=0 & D>0 -> evidence-block presence is causal",
+    "C>0 & D>0 -> full builder organisation needed",
+    "C=0 & D=0 -> extra tokens alone suffice (weakens causal story)",
+    "C>0 & D=0 -> filler alone reduces hallucination (investigate)"
+  ],
+  "execution": "serial, 1 repeat interleaved C/D per pair"
+}

@@ -1,0 +1,393 @@
+{
+  "n_clusters": 24,
+  "n_observations": 144,
+  "unit_note": "cluster = (task, model); repeat-level values averaged within cluster before pairing",
+  "invalid_pointers": {
+    "A_count": 4,
+    "A_obs": 72,
+    "B_count": 0,
+    "B_obs": 72,
+    "A_rate": 0.0556,
+    "B_rate": 0.0,
+    "A_rate_wilson": [
+      0.0218,
+      0.1343
+    ],
+    "B_rate_wilson": [
+      0.0,
+      0.0507
+    ],
+    "cluster_diffs_B_minus_A": [
+      0,
+      0,
+      -0.3333333333333333,
+      0,
+      0,
+      -0.3333333333333333,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      -0.3333333333333333,
+      0,
+      -0.3333333333333333,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "clusters_affected": [
+      "chloro_C1_NC_088770_1_CHLORO-NORMAL-00:glm",
+      "chloro_C1_NC_140640_1_CHLORO-NORMAL-00:ds",
+      "chloro_C1_NC_088757_1_CHLORO-META-05:glm",
+      "chloro_C1_NC_088762_1_CHLORO-META-05:glm"
+    ],
+    "distribution": [
+      {
+        "case": "chloro_C1_NC_088757_1_CHLORO-META-05",
+        "model": "glm",
+        "repeat": 1
+      },
+      {
+        "case": "chloro_C1_NC_088762_1_CHLORO-META-05",
+        "model": "glm",
+        "repeat": 1
+      },
+      {
+        "case": "chloro_C1_NC_088770_1_CHLORO-NORMAL-00",
+        "model": "glm",
+        "repeat": 3
+      },
+      {
+        "case": "chloro_C1_NC_140640_1_CHLORO-NORMAL-00",
+        "model": "ds",
+        "repeat": 3
+      }
+    ],
+    "paired_bootstrap_ci_diff": [
+      -0.1667,
+      0
+    ]
+  },
+  "tokens": {
+    "A_mean_over_obs": 5101.3,
+    "B_mean_over_obs": 5751.4,
+    "pct_diff_cluster_means": 13.47,
+    "cluster_pct_diffs_B_minus_A": [
+      22.08,
+      24.95,
+      -6.02,
+      -22.25,
+      42.98,
+      -4.77,
+      33.76,
+      9.23,
+      7.9,
+      13.23,
+      9.7,
+      11.91,
+      29.27,
+      47.98,
+      -4.11,
+      25.41,
+      -20.14,
+      -28.06,
+      22.35,
+      5.29,
+      53.99,
+      5.69,
+      24.2,
+      18.76
+    ],
+    "paired_bootstrap_ci_pct": [
+      -3.79,
+      28.65
+    ],
+    "NAIVE_obs_level_CI_A": [
+      4449.5972,
+      5804.5278
+    ],
+    "NAIVE_obs_level_CI_B": [
+      4988.2083,
+      6711.2639
+    ],
+    "units_warning": "observation-level CIs treat 144 as independent and are NARROWER than the defensible task-level paired CI; the old report's 'CI 不重叠' wording used printed intervals that actually overlap"
+  },
+  "verdict_correct": {
+    "A_mean": 1,
+    "B_mean": 1,
+    "clusters_with_diff": 0,
+    "paired_bootstrap_ci_diff": [
+      0,
+      0
+    ]
+  },
+  "judgment_pass": {
+    "A_mean": 1,
+    "B_mean": 1,
+    "clusters_with_diff": 0,
+    "paired_bootstrap_ci_diff": [
+      0,
+      0
+    ]
+  },
+  "output_contract": {
+    "A_mean": 1,
+    "B_mean": 1,
+    "clusters_with_diff": 0,
+    "paired_bootstrap_ci_diff": [
+      0,
+      0
+    ]
+  },
+  "defect_localization": {
+    "A_mean": 2,
+    "B_mean": 2,
+    "clusters_with_diff": 0
+  },
+  "by_model": {
+    "glm": {
+      "invalid_A": 3,
+      "invalid_B": 0,
+      "n": 36,
+      "tokens_A": 4981.0,
+      "tokens_B": 5882.0,
+      "verdict_A": 1.0,
+      "verdict_B": 1.0,
+      "judgment_A": 1.0,
+      "judgment_B": 1.0
+    },
+    "ds": {
+      "invalid_A": 1,
+      "invalid_B": 0,
+      "n": 36,
+      "tokens_A": 5222.0,
+      "tokens_B": 5621.0,
+      "verdict_A": 1.0,
+      "verdict_B": 1.0,
+      "judgment_A": 1.0,
+      "judgment_B": 1.0
+    }
+  },
+  "by_task": {
+    "chloro_C1_NC_013991_2_CHLORO-NORMAL-00": {
+      "invalid_A": 0,
+      "invalid_B": 0,
+      "n": 6,
+      "tokens_A": 2986.0,
+      "tokens_B": 3687.0,
+      "verdict_A": 1.0,
+      "verdict_B": 1.0,
+      "judgment_A": 1.0,
+      "judgment_B": 1.0
+    },
+    "chloro_C1_NC_088770_1_CHLORO-NORMAL-00": {
+      "invalid_A": 1,
+      "invalid_B": 0,
+      "n": 6,
+      "tokens_A": 4303.0,
+      "tokens_B": 3668.0,
+      "verdict_A": 1.0,
+      "verdict_B": 1.0,
+      "judgment_A": 1.0,
+      "judgment_B": 1.0
+    },
+    "chloro_C1_NC_140640_1_CHLORO-NORMAL-00": {
+      "invalid_A": 1,
+      "invalid_B": 0,
+      "n": 6,
+      "tokens_A": 3997,
+      "tokens_B": 4545.0,
+      "verdict_A": 1.0,
+      "verdict_B": 1.0,
+      "judgment_A": 1.0,
+      "judgment_B": 1.0
+    },
+    "chloro_C1_NC_013991_2_CHLORO-CDS-03": {
+      "invalid_A": 0,
+      "invalid_B": 0,
+      "n": 6,
+      "tokens_A": 4738.0,
+      "tokens_B": 5785.0,
+      "verdict_A": 1.0,
+      "verdict_B": 1.0,
+      "judgment_A": 1.0,
+      "judgment_B": 1.0
+    },
+    "chloro_C1_NC_088771_1_CHLORO-CDS-03": {
+      "invalid_A": 0,
+      "invalid_B": 0,
+      "n": 6,
+      "tokens_A": 4901.0,
+      "tokens_B": 5408.0,
+      "verdict_A": 1.0,
+      "verdict_B": 1.0,
+      "judgment_A": 1.0,
+      "judgment_B": 1.0
+    },
+    "chloro_C1_NC_088765_1_CHLORO-CDS-03": {
+      "invalid_A": 0,
+      "invalid_B": 0,
+      "n": 6,
+      "tokens_A": 4825.0,
+      "tokens_B": 5341.0,
+      "verdict_A": 1.0,
+      "verdict_B": 1.0,
+      "judgment_A": 1.0,
+      "judgment_B": 1.0
+    },
+    "chloro_C1_NC_013991_2_CHLORO-META-05": {
+      "invalid_A": 0,
+      "invalid_B": 0,
+      "n": 6,
+      "tokens_A": 4134.0,
+      "tokens_B": 5749.0,
+      "verdict_A": 1.0,
+      "verdict_B": 1.0,
+      "judgment_A": 1.0,
+      "judgment_B": 1.0
+    },
+    "chloro_C1_NC_088757_1_CHLORO-META-05": {
+      "invalid_A": 1,
+      "invalid_B": 0,
+      "n": 6,
+      "tokens_A": 4713.0,
+      "tokens_B": 5188,
+      "verdict_A": 1.0,
+      "verdict_B": 1.0,
+      "judgment_A": 1.0,
+      "judgment_B": 1.0
+    },
+    "chloro_C1_NC_088762_1_CHLORO-META-05": {
+      "invalid_A": 1,
+      "invalid_B": 0,
+      "n": 6,
+      "tokens_A": 5643.0,
+      "tokens_B": 4283.0,
+      "verdict_A": 1.0,
+      "verdict_B": 1.0,
+      "judgment_A": 1.0,
+      "judgment_B": 1.0
+    },
+    "chloro_C1_NC_082429_1_CHLORO-ID-01": {
+      "invalid_A": 0,
+      "invalid_B": 0,
+      "n": 6,
+      "tokens_A": 7578,
+      "tokens_B": 8582.0,
+      "verdict_A": 1.0,
+      "verdict_B": 1.0,
+      "judgment_A": 1.0,
+      "judgment_B": 1.0
+    },
+    "chloro_C1_NC_088771_1_CHLORO-ID-01": {
+      "invalid_A": 0,
+      "invalid_B": 0,
+      "n": 6,
+      "tokens_A": 6983.0,
+      "tokens_B": 9002.0,
+      "verdict_A": 1.0,
+      "verdict_B": 1.0,
+      "judgment_A": 1.0,
+      "judgment_B": 1.0
+    },
+    "chloro_C1_NC_088770_1_CHLORO-ID-01": {
+      "invalid_A": 0,
+      "invalid_B": 0,
+      "n": 6,
+      "tokens_A": 6416.0,
+      "tokens_B": 7779.0,
+      "verdict_A": 1.0,
+      "verdict_B": 1.0,
+      "judgment_A": 1.0,
+      "judgment_B": 1.0
+    }
+  },
+  "leave_one_task_out_invalid": {
+    "min_A": 3,
+    "max_A": 4,
+    "B_always_zero": true,
+    "rows": [
+      {
+        "drop": "chloro_C1_NC_013991_2_CHLORO-CDS-03",
+        "A": 4,
+        "B": 0
+      },
+      {
+        "drop": "chloro_C1_NC_013991_2_CHLORO-META-05",
+        "A": 4,
+        "B": 0
+      },
+      {
+        "drop": "chloro_C1_NC_013991_2_CHLORO-NORMAL-00",
+        "A": 4,
+        "B": 0
+      },
+      {
+        "drop": "chloro_C1_NC_082429_1_CHLORO-ID-01",
+        "A": 4,
+        "B": 0
+      },
+      {
+        "drop": "chloro_C1_NC_088757_1_CHLORO-META-05",
+        "A": 3,
+        "B": 0
+      },
+      {
+        "drop": "chloro_C1_NC_088762_1_CHLORO-META-05",
+        "A": 3,
+        "B": 0
+      },
+      {
+        "drop": "chloro_C1_NC_088765_1_CHLORO-CDS-03",
+        "A": 4,
+        "B": 0
+      },
+      {
+        "drop": "chloro_C1_NC_088770_1_CHLORO-ID-01",
+        "A": 4,
+        "B": 0
+      },
+      {
+        "drop": "chloro_C1_NC_088770_1_CHLORO-NORMAL-00",
+        "A": 3,
+        "B": 0
+      },
+      {
+        "drop": "chloro_C1_NC_088771_1_CHLORO-CDS-03",
+        "A": 4,
+        "B": 0
+      },
+      {
+        "drop": "chloro_C1_NC_088771_1_CHLORO-ID-01",
+        "A": 4,
+        "B": 0
+      },
+      {
+        "drop": "chloro_C1_NC_140640_1_CHLORO-NORMAL-00",
+        "A": 3,
+        "B": 0
+      }
+    ]
+  },
+  "first_run_vs_repair": [
+    {
+      "repair_rows": 0,
+      "note": "all 144 observations are first-run; no repair pass was needed (0 infrastructure failures in V3.2)"
+    }
+  ],
+  "repeat_consistency": {
+    "cells": 48,
+    "invalid": "44/48",
+    "verdict_ok": "48/48",
+    "judgment_pass": "48/48",
+    "contract_ok": "48/48"
+  }
+}

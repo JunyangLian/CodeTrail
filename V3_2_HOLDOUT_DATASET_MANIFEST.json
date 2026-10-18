@@ -1,0 +1,694 @@
+{
+  "manifest": "V3_2_HOLDOUT_DATASET_MANIFEST/v1",
+  "frozen_at": "2026-10-18T17:05:49+00:00",
+  "baseline_commit": "c30a4f3",
+  "generator": "organelle_v2.factory.generator/v1 (V2 v2.1.1, read-only)",
+  "converter": "organelle_v2.normalize.genbank_to_packet/v1",
+  "domain": "chloroplast",
+  "contract_version": "chloro_qc_v1",
+  "provenance": {
+    "esearch_term": "chloroplast[Title] AND \"complete genome\"[Title] AND srcdb_refseq[PROP] AND Viridiplantae[Organism]",
+    "candidates_considered": 14,
+    "sources_selected": 8,
+    "sources_metadata_file": "holdout_sources/sources_metadata.json"
+  },
+  "isolation": {
+    "checks": [
+      {
+        "check": "accession_not_in_dev_blacklist",
+        "ok": true,
+        "detail": "8 sources vs 10 DEV accessions"
+      },
+      {
+        "check": "sequence_not_in_dev_pool",
+        "ok": true,
+        "detail": "compared against 216 DEV genome.fa files (32 distinct sequences)"
+      },
+      {
+        "check": "accession_not_in_dev_pool",
+        "ok": true,
+        "detail": "V2 candidates + imported"
+      },
+      {
+        "check": "accession_not_in_e2_or_failure_pool",
+        "ok": true,
+        "detail": "E2_REGRESSION_POOL.v2.json + data/failure_pool JSON text scan"
+      },
+      {
+        "check": "source_group_no_collision",
+        "ok": true,
+        "detail": "source_<acc> dir names"
+      },
+      {
+        "check": "genus_diversity",
+        "ok": true,
+        "detail": "8 distinct genera: ['Abies', 'Abrotanella', 'Acer', 'Acicarpha', 'Acronychia', 'Actaea', 'Actinodaphne', 'Adonis']"
+      }
+    ],
+    "per_source": []
+  },
+  "per_source": [
+    {
+      "accession_version": "NC_077573.1",
+      "organism": "Adonis mongolica",
+      "genus": "Adonis",
+      "taxid": 2992654,
+      "ncbi_uid": "2589362927",
+      "gbff_sha256": "fdbdb72d7d44bfcbdc27b8bdce2371fdc2bd0de4a70d9bc1b730545244334108",
+      "fetched_at_utc": "2026-10-18T16:36:18+00:00",
+      "genome_sequence_sha256": "b646a289f5fda5ec5c43381fc338a3794f907509bddeb2c1ba6ae91aca14fbbf",
+      "sequence_length": 157521,
+      "in_dev_blacklist": false,
+      "sequence_in_dev_pool": false,
+      "accession_in_dev_pool": false,
+      "in_e2_or_failure_pool_text": false,
+      "dev_group_collision": false
+    },
+    {
+      "accession_version": "NC_077574.1",
+      "organism": "Actaea cimicifuga",
+      "genus": "Actaea",
+      "taxid": 64032,
+      "ncbi_uid": "2589363012",
+      "gbff_sha256": "882f8ec7ff15402f4510a8e9dca02072d58779e8797036852355268a217e2e6d",
+      "fetched_at_utc": "2026-10-18T16:36:12+00:00",
+      "genome_sequence_sha256": "dca787d9177f852e4c301731201a03960daac752eb0a605cc7e2e019cdf4c220",
+      "sequence_length": 159761,
+      "in_dev_blacklist": false,
+      "sequence_in_dev_pool": false,
+      "accession_in_dev_pool": false,
+      "in_e2_or_failure_pool_text": false,
+      "dev_group_collision": false
+    },
+    {
+      "accession_version": "NC_081007.1",
+      "organism": "Acer caudatifolium",
+      "genus": "Acer",
+      "taxid": 171206,
+      "ncbi_uid": "2554489951",
+      "gbff_sha256": "b7c69b6f5c3c17f225c525323db3a4db9a244d828a8821298d0726596b65da83",
+      "fetched_at_utc": "2026-10-18T16:36:06+00:00",
+      "genome_sequence_sha256": "cc2c4cddf56123b0503a4b2699341e931a18ffb36d5b0c16e993b027bbb2e60f",
+      "sequence_length": 156385,
+      "in_dev_blacklist": false,
+      "sequence_in_dev_pool": false,
+      "accession_in_dev_pool": false,
+      "in_e2_or_failure_pool_text": false,
+      "dev_group_collision": false
+    },
+    {
+      "accession_version": "NC_081864.1",
+      "organism": "Acronychia laevis",
+      "genus": "Acronychia",
+      "taxid": 354484,
+      "ncbi_uid": "2577848931",
+      "gbff_sha256": "e88927b66933c57a82a8220d30230495e77d008023331213907a03a3498c1e32",
+      "fetched_at_utc": "2026-10-18T16:36:10+00:00",
+      "genome_sequence_sha256": "efb100eb05195fa6f74b429541c6f494afe286bf630a52ff0982f2c4fa36b872",
+      "sequence_length": 158267,
+      "in_dev_blacklist": false,
+      "sequence_in_dev_pool": false,
+      "accession_in_dev_pool": false,
+      "in_e2_or_failure_pool_text": false,
+      "dev_group_collision": false
+    },
+    {
+      "accession_version": "NC_081950.1",
+      "organism": "Abrotanella trichoachaenia",
+      "genus": "Abrotanella",
+      "taxid": 316966,
+      "ncbi_uid": "2577857323",
+      "gbff_sha256": "e0bc04f5a66c9188ea1815682c57def90afe447d1e4193f7ab5feb5c6bab8166",
+      "fetched_at_utc": "2026-10-18T16:36:02+00:00",
+      "genome_sequence_sha256": "ea9cea58f77dcae5ee1db900263b09e71af83c418ca1b867dce962b954222dd7",
+      "sequence_length": 152779,
+      "in_dev_blacklist": false,
+      "sequence_in_dev_pool": false,
+      "accession_in_dev_pool": false,
+      "in_e2_or_failure_pool_text": false,
+      "dev_group_collision": false
+    },
+    {
+      "accession_version": "NC_083131.1",
+      "organism": "Abies veitchii",
+      "genus": "Abies",
+      "taxid": 78262,
+      "ncbi_uid": "2591480606",
+      "gbff_sha256": "d919561b563f1c67189b81613879728a3a5b919dd8a8d4dbb5d4621cf2229ac1",
+      "fetched_at_utc": "2026-10-18T16:36:00+00:00",
+      "genome_sequence_sha256": "149d198c4ac08f0746b4919a04cc589bf672f700adddb7be5726a69cec5454fb",
+      "sequence_length": 121412,
+      "in_dev_blacklist": false,
+      "sequence_in_dev_pool": false,
+      "accession_in_dev_pool": false,
+      "in_e2_or_failure_pool_text": false,
+      "dev_group_collision": false
+    },
+    {
+      "accession_version": "NC_084373.1",
+      "organism": "Acicarpha tribuloides",
+      "genus": "Acicarpha",
+      "taxid": 49581,
+      "ncbi_uid": "2627915937",
+      "gbff_sha256": "e5140a0acdbc643298a6361fc3520f0e30de44df36c1e90da0d9f0e2073361d5",
+      "fetched_at_utc": "2026-10-18T16:36:08+00:00",
+      "genome_sequence_sha256": "fd26a34124f7c37cbf8fd75c58b800138a7da850e5b663d00495894a3d2b88f8",
+      "sequence_length": 159957,
+      "in_dev_blacklist": false,
+      "sequence_in_dev_pool": false,
+      "accession_in_dev_pool": false,
+      "in_e2_or_failure_pool_text": false,
+      "dev_group_collision": false
+    },
+    {
+      "accession_version": "NC_085192.1",
+      "organism": "Actinodaphne pilosa",
+      "genus": "Actinodaphne",
+      "taxid": 317038,
+      "ncbi_uid": "2666674639",
+      "gbff_sha256": "466764c3e6b4cc7cd423babff4c7114d5940ee082a778f6a65f6682d70f7f67c",
+      "fetched_at_utc": "2026-10-18T16:36:14+00:00",
+      "genome_sequence_sha256": "999958afabb9af5e6459bc0c75c174a99621ebb9a040af6bb1f5b996073eb68e",
+      "sequence_length": 154130,
+      "in_dev_blacklist": false,
+      "sequence_in_dev_pool": false,
+      "accession_in_dev_pool": false,
+      "in_e2_or_failure_pool_text": false,
+      "dev_group_collision": false
+    }
+  ],
+  "tasks": [
+    {
+      "task_id": "chloro_C1_NC_077573_1_CHLORO-NORMAL-00",
+      "source_accession_version": "NC_077573.1",
+      "organism": "Adonis mongolica",
+      "template_id": "CHLORO-NORMAL-00",
+      "task_type": "normal",
+      "root_cause": "none",
+      "public_sha256": {
+        "task.md": "f9aa01c2bd44030713961d08ac085a598d19a1526f4543249d1dd2dca48a3292",
+        "artifacts/genome.fa": "78ae0b9e0628feaeb45202b1e32043c04a0f5752d5e23b338a85be3e19a5acc4",
+        "artifacts/features.tsv": "6905450a64bb5ee426ef3f3e8932e4db23d39224e8b644518c72ce99f03b89b1",
+        "artifacts/proteins.faa": "c357a7b3cda879e3bc1c98d7751ec4dab753d0bad88b8dc2a3d0b2531fb7ebc8",
+        "artifacts/sequence_stats.json": "5db9535f7b0a76e7b447c305e2ef1cb8bcfce7533119c34dbd372febd69b960f"
+      },
+      "private_sha256": {
+        "private/expected.json": "861f41713df642018bd192a137094ae1b5b3fb546927c6e55b09374feaa25700",
+        "private/mutation.json": "fefa36eef7f8afbe34c6043f312cb1ccbd4daeb73b8e42b3817bc8011eeb301a",
+        "private/rubric.json": "a26e4795990b6f5a3a49b9bf24e142f9de6dbc7ac2bd7f843db86e3aa328daef"
+      },
+      "case_dir": "data\\eval\\final_round\\holdout_candidates\\chloro_C1_NC_077573_1_CHLORO-NORMAL-00"
+    },
+    {
+      "task_id": "chloro_C1_NC_077573_1_CHLORO-CDS-03",
+      "source_accession_version": "NC_077573.1",
+      "organism": "Adonis mongolica",
+      "template_id": "CHLORO-CDS-03",
+      "task_type": "fault",
+      "root_cause": "coordinate_out_of_bounds",
+      "public_sha256": {
+        "task.md": "f9aa01c2bd44030713961d08ac085a598d19a1526f4543249d1dd2dca48a3292",
+        "artifacts/genome.fa": "78ae0b9e0628feaeb45202b1e32043c04a0f5752d5e23b338a85be3e19a5acc4",
+        "artifacts/features.tsv": "0c98f1e21ef6e6d0335cc512825affe2023da9481a9004ca3b5ac81a7485817b",
+        "artifacts/proteins.faa": "c357a7b3cda879e3bc1c98d7751ec4dab753d0bad88b8dc2a3d0b2531fb7ebc8",
+        "artifacts/sequence_stats.json": "5db9535f7b0a76e7b447c305e2ef1cb8bcfce7533119c34dbd372febd69b960f"
+      },
+      "private_sha256": {
+        "private/expected.json": "1534eb71768cdba17cd2763965fca036fa07e8408414d5de6ebf9fd4bffe02ab",
+        "private/mutation.json": "f163f422db305c45d58ab59d034256d48f536d41bd5f06bc22f4c59534aefd53",
+        "private/rubric.json": "7c88205511d0ad17fc6415dde5f35809c9d253a52a0f14c6c6049d7e2bc99057"
+      },
+      "case_dir": "data\\eval\\final_round\\holdout_candidates\\chloro_C1_NC_077573_1_CHLORO-CDS-03"
+    },
+    {
+      "task_id": "chloro_C1_NC_077573_1_CHLORO-ID-01",
+      "source_accession_version": "NC_077573.1",
+      "organism": "Adonis mongolica",
+      "template_id": "CHLORO-ID-01",
+      "task_type": "fault",
+      "root_cause": "cross_file_id_mismatch",
+      "public_sha256": {
+        "task.md": "f9aa01c2bd44030713961d08ac085a598d19a1526f4543249d1dd2dca48a3292",
+        "artifacts/genome.fa": "78ae0b9e0628feaeb45202b1e32043c04a0f5752d5e23b338a85be3e19a5acc4",
+        "artifacts/features.tsv": "66a53d4034ab984f231d9752e07536818fe14512d082397cf7f4da7ae4c1e398",
+        "artifacts/proteins.faa": "c357a7b3cda879e3bc1c98d7751ec4dab753d0bad88b8dc2a3d0b2531fb7ebc8",
+        "artifacts/sequence_stats.json": "5db9535f7b0a76e7b447c305e2ef1cb8bcfce7533119c34dbd372febd69b960f"
+      },
+      "private_sha256": {
+        "private/expected.json": "70ad9b3e0bc825d80d97be717375af98ffa97ceace22a19bfca5f65ced943ebd",
+        "private/mutation.json": "3001c4c181102f793b8154a8785a4a39a1a294d28137f92432c3840d1cb0e5b1",
+        "private/rubric.json": "6dc2bf34d8d9a0d4fae5ff49a8190467c601bf0837249cffdb3cacef1ee38c9f"
+      },
+      "case_dir": "data\\eval\\final_round\\holdout_candidates\\chloro_C1_NC_077573_1_CHLORO-ID-01"
+    },
+    {
+      "task_id": "chloro_C1_NC_077574_1_CHLORO-NORMAL-00",
+      "source_accession_version": "NC_077574.1",
+      "organism": "Actaea cimicifuga",
+      "template_id": "CHLORO-NORMAL-00",
+      "task_type": "normal",
+      "root_cause": "none",
+      "public_sha256": {
+        "task.md": "f9aa01c2bd44030713961d08ac085a598d19a1526f4543249d1dd2dca48a3292",
+        "artifacts/genome.fa": "8c649b3fb4e9c7d614dc10cdc17ab6f9d48288f595e673cb394eef7e5bbe4c57",
+        "artifacts/features.tsv": "c3fe356923c71a965e1a1ba815035e7c5288e3056e5b20fedbca605f38fc43c5",
+        "artifacts/proteins.faa": "9dd1078d74ddc6494cdbb24ae0cda8c776d6fe2f7837d10a336b94828f35c3b1",
+        "artifacts/sequence_stats.json": "0fd5c426ac863ba82ad83f51e5c07792c025c956e1c91adba752c3f610178ecb"
+      },
+      "private_sha256": {
+        "private/expected.json": "221045c670777cd8736844137c2a3645792df72efc39d067f55637f7b46afcdf",
+        "private/mutation.json": "fefa36eef7f8afbe34c6043f312cb1ccbd4daeb73b8e42b3817bc8011eeb301a",
+        "private/rubric.json": "873692fd9f8322cba8eae85d4d9218a3cb8fa5c4fb3e229cd272bd4b014d9813"
+      },
+      "case_dir": "data\\eval\\final_round\\holdout_candidates\\chloro_C1_NC_077574_1_CHLORO-NORMAL-00"
+    },
+    {
+      "task_id": "chloro_C1_NC_077574_1_CHLORO-CDS-03",
+      "source_accession_version": "NC_077574.1",
+      "organism": "Actaea cimicifuga",
+      "template_id": "CHLORO-CDS-03",
+      "task_type": "fault",
+      "root_cause": "coordinate_out_of_bounds",
+      "public_sha256": {
+        "task.md": "f9aa01c2bd44030713961d08ac085a598d19a1526f4543249d1dd2dca48a3292",
+        "artifacts/genome.fa": "8c649b3fb4e9c7d614dc10cdc17ab6f9d48288f595e673cb394eef7e5bbe4c57",
+        "artifacts/features.tsv": "744610286f5d7e26720156c41e5b7a20a486bad736bdd7e5ae88ce9575889ace",
+        "artifacts/proteins.faa": "9dd1078d74ddc6494cdbb24ae0cda8c776d6fe2f7837d10a336b94828f35c3b1",
+        "artifacts/sequence_stats.json": "0fd5c426ac863ba82ad83f51e5c07792c025c956e1c91adba752c3f610178ecb"
+      },
+      "private_sha256": {
+        "private/expected.json": "0aefb2f52a35d0e422c662a96adcd160c779c5d30db00abf60ab0375c5f534bc",
+        "private/mutation.json": "ec35528ba87ff8de80d8361f9355f58f63a86e7f9b8401d07ca3af0cf5c20c2e",
+        "private/rubric.json": "adb0aabe7592d99db9037f52dba3e5768058a67bbef24914f4ea7a0e4a53549f"
+      },
+      "case_dir": "data\\eval\\final_round\\holdout_candidates\\chloro_C1_NC_077574_1_CHLORO-CDS-03"
+    },
+    {
+      "task_id": "chloro_C1_NC_077574_1_CHLORO-META-05",
+      "source_accession_version": "NC_077574.1",
+      "organism": "Actaea cimicifuga",
+      "template_id": "CHLORO-META-05",
+      "task_type": "fault",
+      "root_cause": "stats_conflict",
+      "public_sha256": {
+        "task.md": "f9aa01c2bd44030713961d08ac085a598d19a1526f4543249d1dd2dca48a3292",
+        "artifacts/genome.fa": "8c649b3fb4e9c7d614dc10cdc17ab6f9d48288f595e673cb394eef7e5bbe4c57",
+        "artifacts/features.tsv": "c3fe356923c71a965e1a1ba815035e7c5288e3056e5b20fedbca605f38fc43c5",
+        "artifacts/proteins.faa": "9dd1078d74ddc6494cdbb24ae0cda8c776d6fe2f7837d10a336b94828f35c3b1",
+        "artifacts/sequence_stats.json": "5824ca23e499ff03b3ef91f9ab7d1a635f9bea52bb146ce2bcd5018fde1e762b"
+      },
+      "private_sha256": {
+        "private/expected.json": "ca7ac8a4f1742dd76091884d4a2e94fae711ada6e6bebbd3b12b947aef4b5b80",
+        "private/mutation.json": "ee88eb22e7e73eccba6e6dcd3051b30ab3abee4f01fb4d25d5501ca578078746",
+        "private/rubric.json": "b2da5cc9ebfd1180a837050520d8bdd4ae852ab3bd98173221bc1809b564ea1c"
+      },
+      "case_dir": "data\\eval\\final_round\\holdout_candidates\\chloro_C1_NC_077574_1_CHLORO-META-05"
+    },
+    {
+      "task_id": "chloro_C1_NC_081007_1_CHLORO-NORMAL-00",
+      "source_accession_version": "NC_081007.1",
+      "organism": "Acer caudatifolium",
+      "template_id": "CHLORO-NORMAL-00",
+      "task_type": "normal",
+      "root_cause": "none",
+      "public_sha256": {
+        "task.md": "f9aa01c2bd44030713961d08ac085a598d19a1526f4543249d1dd2dca48a3292",
+        "artifacts/genome.fa": "d7fad06af5436dffbfed8bd68f4045d0031f7d3df3d8b958c1d86d72f1e4fed5",
+        "artifacts/features.tsv": "bece7c5b6fbc7f877750e7a000c6f588f60b953c5be16c8e1cfb0c9fe5229669",
+        "artifacts/proteins.faa": "0b4d8a542cbd8206393b2279fcee1a37424bdf1744cd74909d025b8bb84df6b5",
+        "artifacts/sequence_stats.json": "07196e23cabe7250012029be90c4535ad6e07328cb51a065bede3787c11ea801"
+      },
+      "private_sha256": {
+        "private/expected.json": "15f46a6d768aabd121e3265ab73a909266e4224351976d8c539aa5f3ee9d335e",
+        "private/mutation.json": "fefa36eef7f8afbe34c6043f312cb1ccbd4daeb73b8e42b3817bc8011eeb301a",
+        "private/rubric.json": "b89e7374c969f3fda332bd90f1ca19ce79781aa3d6264065b0cf00a72c996fa1"
+      },
+      "case_dir": "data\\eval\\final_round\\holdout_candidates\\chloro_C1_NC_081007_1_CHLORO-NORMAL-00"
+    },
+    {
+      "task_id": "chloro_C1_NC_081007_1_CHLORO-CDS-03",
+      "source_accession_version": "NC_081007.1",
+      "organism": "Acer caudatifolium",
+      "template_id": "CHLORO-CDS-03",
+      "task_type": "fault",
+      "root_cause": "coordinate_out_of_bounds",
+      "public_sha256": {
+        "task.md": "f9aa01c2bd44030713961d08ac085a598d19a1526f4543249d1dd2dca48a3292",
+        "artifacts/genome.fa": "d7fad06af5436dffbfed8bd68f4045d0031f7d3df3d8b958c1d86d72f1e4fed5",
+        "artifacts/features.tsv": "c357e329f0049c7fbf1d5f3e820faf48884cb5c58a95b9d7cd834105d0906d5f",
+        "artifacts/proteins.faa": "0b4d8a542cbd8206393b2279fcee1a37424bdf1744cd74909d025b8bb84df6b5",
+        "artifacts/sequence_stats.json": "07196e23cabe7250012029be90c4535ad6e07328cb51a065bede3787c11ea801"
+      },
+      "private_sha256": {
+        "private/expected.json": "401d554557e092aa527d54c0ee21ee9ae0105aa846f1c7f6f2b0db42339e64cb",
+        "private/mutation.json": "46166c44639fc071aff3ddd3473847a87f0cd182daca607692954eb2737a1581",
+        "private/rubric.json": "1eb50cf0d51b70f5a8b279266e31638cb02514ef2b1864848d048073e31964a9"
+      },
+      "case_dir": "data\\eval\\final_round\\holdout_candidates\\chloro_C1_NC_081007_1_CHLORO-CDS-03"
+    },
+    {
+      "task_id": "chloro_C1_NC_081007_1_CHLORO-ID-01",
+      "source_accession_version": "NC_081007.1",
+      "organism": "Acer caudatifolium",
+      "template_id": "CHLORO-ID-01",
+      "task_type": "fault",
+      "root_cause": "cross_file_id_mismatch",
+      "public_sha256": {
+        "task.md": "f9aa01c2bd44030713961d08ac085a598d19a1526f4543249d1dd2dca48a3292",
+        "artifacts/genome.fa": "d7fad06af5436dffbfed8bd68f4045d0031f7d3df3d8b958c1d86d72f1e4fed5",
+        "artifacts/features.tsv": "1e36950c39c8d2a227500190b4626d54a535ca1399202b29e9a7bfc182cf61f3",
+        "artifacts/proteins.faa": "0b4d8a542cbd8206393b2279fcee1a37424bdf1744cd74909d025b8bb84df6b5",
+        "artifacts/sequence_stats.json": "07196e23cabe7250012029be90c4535ad6e07328cb51a065bede3787c11ea801"
+      },
+      "private_sha256": {
+        "private/expected.json": "5a6c3f5fbfba228c3530bd1c02d4036f82cec7772cf15c58a08ce51cc9b4fe76",
+        "private/mutation.json": "15613d2a2e082247c019d2c1f2dcf77283278f63adc5e5da4a3bc93bee105221",
+        "private/rubric.json": "ea845f16af4091d252c4d8b0680a48ba44fd9675ac55dd9b2ed056e5ff897276"
+      },
+      "case_dir": "data\\eval\\final_round\\holdout_candidates\\chloro_C1_NC_081007_1_CHLORO-ID-01"
+    },
+    {
+      "task_id": "chloro_C1_NC_081864_1_CHLORO-NORMAL-00",
+      "source_accession_version": "NC_081864.1",
+      "organism": "Acronychia laevis",
+      "template_id": "CHLORO-NORMAL-00",
+      "task_type": "normal",
+      "root_cause": "none",
+      "public_sha256": {
+        "task.md": "f9aa01c2bd44030713961d08ac085a598d19a1526f4543249d1dd2dca48a3292",
+        "artifacts/genome.fa": "9d427c9775d31f4aa396a57f3bfb26749ee16193938f79057a660252cd355188",
+        "artifacts/features.tsv": "9b27494d26c2993f724c2d368fc787739ef9f06ea1fcc80e3e2967fdd46442ba",
+        "artifacts/proteins.faa": "f1cee90d6f90e8790368302dd4a09f211d655a9758630c26aa007fdb536a891e",
+        "artifacts/sequence_stats.json": "0d125a0b10684a7c17e77ebc52699776b2a4839ab520741949fb49ebe002eedd"
+      },
+      "private_sha256": {
+        "private/expected.json": "ee328e7273ca0e185fe5d861edfcdd6c7ee21f7eb868460fc5b0e01e8fff21e6",
+        "private/mutation.json": "fefa36eef7f8afbe34c6043f312cb1ccbd4daeb73b8e42b3817bc8011eeb301a",
+        "private/rubric.json": "bdaa70fc371a9f9c4ec60fd8d794eb5367ed038d9b82cfba7d375dabdb0c530f"
+      },
+      "case_dir": "data\\eval\\final_round\\holdout_candidates\\chloro_C1_NC_081864_1_CHLORO-NORMAL-00"
+    },
+    {
+      "task_id": "chloro_C1_NC_081864_1_CHLORO-CDS-03",
+      "source_accession_version": "NC_081864.1",
+      "organism": "Acronychia laevis",
+      "template_id": "CHLORO-CDS-03",
+      "task_type": "fault",
+      "root_cause": "coordinate_out_of_bounds",
+      "public_sha256": {
+        "task.md": "f9aa01c2bd44030713961d08ac085a598d19a1526f4543249d1dd2dca48a3292",
+        "artifacts/genome.fa": "9d427c9775d31f4aa396a57f3bfb26749ee16193938f79057a660252cd355188",
+        "artifacts/features.tsv": "32c57cd0a19b2bf6d9b96141788e1d068e3c9941b22e089aaf56ae75b238bd6c",
+        "artifacts/proteins.faa": "f1cee90d6f90e8790368302dd4a09f211d655a9758630c26aa007fdb536a891e",
+        "artifacts/sequence_stats.json": "0d125a0b10684a7c17e77ebc52699776b2a4839ab520741949fb49ebe002eedd"
+      },
+      "private_sha256": {
+        "private/expected.json": "9632e1faa4bdd1541be5db447164c0bf7350058d7af5fb381f47430cc4106dae",
+        "private/mutation.json": "c85239f9b05160609731710ea74316fe2b8f59915fcf2ba220b3132349e45b24",
+        "private/rubric.json": "c9784ec4b3069edbbc2454af858ad3b22dfc038cf53937faa21cfd94029ab960"
+      },
+      "case_dir": "data\\eval\\final_round\\holdout_candidates\\chloro_C1_NC_081864_1_CHLORO-CDS-03"
+    },
+    {
+      "task_id": "chloro_C1_NC_081864_1_CHLORO-META-05",
+      "source_accession_version": "NC_081864.1",
+      "organism": "Acronychia laevis",
+      "template_id": "CHLORO-META-05",
+      "task_type": "fault",
+      "root_cause": "stats_conflict",
+      "public_sha256": {
+        "task.md": "f9aa01c2bd44030713961d08ac085a598d19a1526f4543249d1dd2dca48a3292",
+        "artifacts/genome.fa": "9d427c9775d31f4aa396a57f3bfb26749ee16193938f79057a660252cd355188",
+        "artifacts/features.tsv": "9b27494d26c2993f724c2d368fc787739ef9f06ea1fcc80e3e2967fdd46442ba",
+        "artifacts/proteins.faa": "f1cee90d6f90e8790368302dd4a09f211d655a9758630c26aa007fdb536a891e",
+        "artifacts/sequence_stats.json": "ff25c6c83eb5639e1ec57e28a035f51c101c684571fdb39c4b7913c22741cd15"
+      },
+      "private_sha256": {
+        "private/expected.json": "58b9d0a3d83381cb813567c660616c5b7a7596807e713bf90011a2c01e2e23ce",
+        "private/mutation.json": "3e1552cc32b4c61f709afd40872312564ad4a32a4d6034178e4bbb0f6bf788b1",
+        "private/rubric.json": "73a8ef6f5f23592659dcee7ce983ba9fa5aca9873ded9c778145726ca63ea0a0"
+      },
+      "case_dir": "data\\eval\\final_round\\holdout_candidates\\chloro_C1_NC_081864_1_CHLORO-META-05"
+    },
+    {
+      "task_id": "chloro_C1_NC_081950_1_CHLORO-NORMAL-00",
+      "source_accession_version": "NC_081950.1",
+      "organism": "Abrotanella trichoachaenia",
+      "template_id": "CHLORO-NORMAL-00",
+      "task_type": "normal",
+      "root_cause": "none",
+      "public_sha256": {
+        "task.md": "f9aa01c2bd44030713961d08ac085a598d19a1526f4543249d1dd2dca48a3292",
+        "artifacts/genome.fa": "b901fe2245bc5271244886ec7b70bcaa771143068461fd6a79318d22abf531d6",
+        "artifacts/features.tsv": "f75657eb296680ec32e8df44bcd723b8a08a51beceedbc1744600ae5e01a5dee",
+        "artifacts/proteins.faa": "6190c8bd7f3dec524961a55f03ae9901b01f2e099e349ff6b064bf47e10de0de",
+        "artifacts/sequence_stats.json": "e6c0b03d8f95e6104515d1c540b0493370bedace58320914c553118345b1297d"
+      },
+      "private_sha256": {
+        "private/expected.json": "78ae220f0c8bb8a6b729a3b5d9996894c50f054fcbf6b7a83b51ba5488b65e5f",
+        "private/mutation.json": "fefa36eef7f8afbe34c6043f312cb1ccbd4daeb73b8e42b3817bc8011eeb301a",
+        "private/rubric.json": "d7b4f031ac903ef30c4cfc9412800d541a0abc56fe6e114de99b1446235af876"
+      },
+      "case_dir": "data\\eval\\final_round\\holdout_candidates\\chloro_C1_NC_081950_1_CHLORO-NORMAL-00"
+    },
+    {
+      "task_id": "chloro_C1_NC_081950_1_CHLORO-CDS-03",
+      "source_accession_version": "NC_081950.1",
+      "organism": "Abrotanella trichoachaenia",
+      "template_id": "CHLORO-CDS-03",
+      "task_type": "fault",
+      "root_cause": "coordinate_out_of_bounds",
+      "public_sha256": {
+        "task.md": "f9aa01c2bd44030713961d08ac085a598d19a1526f4543249d1dd2dca48a3292",
+        "artifacts/genome.fa": "b901fe2245bc5271244886ec7b70bcaa771143068461fd6a79318d22abf531d6",
+        "artifacts/features.tsv": "02d53dde4ad62652574ccb9ac327f964b778c085146334459abd027acacf5eb2",
+        "artifacts/proteins.faa": "6190c8bd7f3dec524961a55f03ae9901b01f2e099e349ff6b064bf47e10de0de",
+        "artifacts/sequence_stats.json": "e6c0b03d8f95e6104515d1c540b0493370bedace58320914c553118345b1297d"
+      },
+      "private_sha256": {
+        "private/expected.json": "c29092ad2b054d854119b890107f86e4336e1ac323be3526fc92d23147c3f9fa",
+        "private/mutation.json": "3ce26adc33f657c61c127287da7e09b3d83382db640dc68d8652a8359ab97b1a",
+        "private/rubric.json": "f761281912fa60445a456d9632dd01ea91c4c8fce9a4a733b6e0d80c697a5b3e"
+      },
+      "case_dir": "data\\eval\\final_round\\holdout_candidates\\chloro_C1_NC_081950_1_CHLORO-CDS-03"
+    },
+    {
+      "task_id": "chloro_C1_NC_081950_1_CHLORO-ID-01",
+      "source_accession_version": "NC_081950.1",
+      "organism": "Abrotanella trichoachaenia",
+      "template_id": "CHLORO-ID-01",
+      "task_type": "fault",
+      "root_cause": "cross_file_id_mismatch",
+      "public_sha256": {
+        "task.md": "f9aa01c2bd44030713961d08ac085a598d19a1526f4543249d1dd2dca48a3292",
+        "artifacts/genome.fa": "b901fe2245bc5271244886ec7b70bcaa771143068461fd6a79318d22abf531d6",
+        "artifacts/features.tsv": "c836827b00aaca40b5219571fa113e67d7d07cdc005021f372314fdb9c3ab7c0",
+        "artifacts/proteins.faa": "6190c8bd7f3dec524961a55f03ae9901b01f2e099e349ff6b064bf47e10de0de",
+        "artifacts/sequence_stats.json": "e6c0b03d8f95e6104515d1c540b0493370bedace58320914c553118345b1297d"
+      },
+      "private_sha256": {
+        "private/expected.json": "54a82fc009d0d7524f82b8c96922fdd2ed5902027f9077437523be22c499ee0e",
+        "private/mutation.json": "781cd0c5d85e544ae44468a4a121d765f6540a9bb7390fdcaa84a9077bfa7f4b",
+        "private/rubric.json": "42ac27223326f4fa644aa620fa1664641dd04bf108d73376139bc56bb817828b"
+      },
+      "case_dir": "data\\eval\\final_round\\holdout_candidates\\chloro_C1_NC_081950_1_CHLORO-ID-01"
+    },
+    {
+      "task_id": "chloro_C1_NC_083131_1_CHLORO-NORMAL-00",
+      "source_accession_version": "NC_083131.1",
+      "organism": "Abies veitchii",
+      "template_id": "CHLORO-NORMAL-00",
+      "task_type": "normal",
+      "root_cause": "none",
+      "public_sha256": {
+        "task.md": "f9aa01c2bd44030713961d08ac085a598d19a1526f4543249d1dd2dca48a3292",
+        "artifacts/genome.fa": "4f51e1bbc63ba95a9c281dfad68d4bcec5f623bce9e2fad798f82217fcd830c0",
+        "artifacts/features.tsv": "18907dae7ea3a817a7b4762f8916e00bfd20d0b28adaacbff2309cbd11441fb1",
+        "artifacts/proteins.faa": "6923fd6c65ab5821ce70594483130ea098a03d9979f8b8e37491d288f1f45475",
+        "artifacts/sequence_stats.json": "39d705b33c24514c309eae7b4bf8e6fd2e5d0e5402269715cce320ea678718fb"
+      },
+      "private_sha256": {
+        "private/expected.json": "53429c6afca392382058094f5594eb9d3646c8c9f8c87af048ddfa06147c96fc",
+        "private/mutation.json": "fefa36eef7f8afbe34c6043f312cb1ccbd4daeb73b8e42b3817bc8011eeb301a",
+        "private/rubric.json": "6dcb9e544b55552b07cf0a9a856c0c4264a79deda034057f2af487002d9ea488"
+      },
+      "case_dir": "data\\eval\\final_round\\holdout_candidates\\chloro_C1_NC_083131_1_CHLORO-NORMAL-00"
+    },
+    {
+      "task_id": "chloro_C1_NC_083131_1_CHLORO-CDS-03",
+      "source_accession_version": "NC_083131.1",
+      "organism": "Abies veitchii",
+      "template_id": "CHLORO-CDS-03",
+      "task_type": "fault",
+      "root_cause": "coordinate_out_of_bounds",
+      "public_sha256": {
+        "task.md": "f9aa01c2bd44030713961d08ac085a598d19a1526f4543249d1dd2dca48a3292",
+        "artifacts/genome.fa": "4f51e1bbc63ba95a9c281dfad68d4bcec5f623bce9e2fad798f82217fcd830c0",
+        "artifacts/features.tsv": "a89bf184366ea701c2cc42654ab691a89de5d9aef872e65c78ed7df2432f70f3",
+        "artifacts/proteins.faa": "6923fd6c65ab5821ce70594483130ea098a03d9979f8b8e37491d288f1f45475",
+        "artifacts/sequence_stats.json": "39d705b33c24514c309eae7b4bf8e6fd2e5d0e5402269715cce320ea678718fb"
+      },
+      "private_sha256": {
+        "private/expected.json": "1e1779060d8e59dcfa82a7e315166f60475750ab7ccd8d8e55b622c19838f36a",
+        "private/mutation.json": "3efa6e18c29625dc3f1b69de288a2a2d033d478ee524239a4633cbf9c53df1ac",
+        "private/rubric.json": "538883e818498b84647dabf278e3086118d91a33c2deeaa5223044d1f1761934"
+      },
+      "case_dir": "data\\eval\\final_round\\holdout_candidates\\chloro_C1_NC_083131_1_CHLORO-CDS-03"
+    },
+    {
+      "task_id": "chloro_C1_NC_083131_1_CHLORO-META-05",
+      "source_accession_version": "NC_083131.1",
+      "organism": "Abies veitchii",
+      "template_id": "CHLORO-META-05",
+      "task_type": "fault",
+      "root_cause": "stats_conflict",
+      "public_sha256": {
+        "task.md": "f9aa01c2bd44030713961d08ac085a598d19a1526f4543249d1dd2dca48a3292",
+        "artifacts/genome.fa": "4f51e1bbc63ba95a9c281dfad68d4bcec5f623bce9e2fad798f82217fcd830c0",
+        "artifacts/features.tsv": "18907dae7ea3a817a7b4762f8916e00bfd20d0b28adaacbff2309cbd11441fb1",
+        "artifacts/proteins.faa": "6923fd6c65ab5821ce70594483130ea098a03d9979f8b8e37491d288f1f45475",
+        "artifacts/sequence_stats.json": "b0691bf5af07d9f8f46b07fa28a0ee0898471085a95060a3bf2ca8280dcb09c9"
+      },
+      "private_sha256": {
+        "private/expected.json": "a5f87962aadb024b6f0881019e7e43ff50e3a918abc34f9f3e738061837dfeb0",
+        "private/mutation.json": "793ffe4089c2e1329853e3f63ee54d507ff5a16ea2cfb28a065066c74da0903f",
+        "private/rubric.json": "98358febe561cad8752fe3b42f910e361bcf373645f5cf5470b4139cb937286e"
+      },
+      "case_dir": "data\\eval\\final_round\\holdout_candidates\\chloro_C1_NC_083131_1_CHLORO-META-05"
+    },
+    {
+      "task_id": "chloro_C1_NC_084373_1_CHLORO-NORMAL-00",
+      "source_accession_version": "NC_084373.1",
+      "organism": "Acicarpha tribuloides",
+      "template_id": "CHLORO-NORMAL-00",
+      "task_type": "normal",
+      "root_cause": "none",
+      "public_sha256": {
+        "task.md": "f9aa01c2bd44030713961d08ac085a598d19a1526f4543249d1dd2dca48a3292",
+        "artifacts/genome.fa": "348e9dc782c6ea790b7fb2e7b1bb1e8aeae0f7e31875130a171a70a444bd2982",
+        "artifacts/features.tsv": "25bd628a8ead00ccc22d6ffb4be014bbc2192bb2a2202575d3997508bff454a9",
+        "artifacts/proteins.faa": "1b3ac49d5faa196f035d06c42ece49f7e879ffd9dd336329035c091b431dd6fe",
+        "artifacts/sequence_stats.json": "c1853efd00bb58174151f065755a9212a7e587dc56e374b48f718a0e310fafb5"
+      },
+      "private_sha256": {
+        "private/expected.json": "fe582cfe34e3c33bc5e704bdc41915c96ee3bb0481953b5e819f1c5a63b0c928",
+        "private/mutation.json": "fefa36eef7f8afbe34c6043f312cb1ccbd4daeb73b8e42b3817bc8011eeb301a",
+        "private/rubric.json": "2de1c44f7646e190b843fa831873229820c3ad52cc975739693c549586bba496"
+      },
+      "case_dir": "data\\eval\\final_round\\holdout_candidates\\chloro_C1_NC_084373_1_CHLORO-NORMAL-00"
+    },
+    {
+      "task_id": "chloro_C1_NC_084373_1_CHLORO-CDS-03",
+      "source_accession_version": "NC_084373.1",
+      "organism": "Acicarpha tribuloides",
+      "template_id": "CHLORO-CDS-03",
+      "task_type": "fault",
+      "root_cause": "coordinate_out_of_bounds",
+      "public_sha256": {
+        "task.md": "f9aa01c2bd44030713961d08ac085a598d19a1526f4543249d1dd2dca48a3292",
+        "artifacts/genome.fa": "348e9dc782c6ea790b7fb2e7b1bb1e8aeae0f7e31875130a171a70a444bd2982",
+        "artifacts/features.tsv": "44a3ffa901b494a71372e53660cbf1ee46f775e759f3a97f8027d872d5f53cd1",
+        "artifacts/proteins.faa": "1b3ac49d5faa196f035d06c42ece49f7e879ffd9dd336329035c091b431dd6fe",
+        "artifacts/sequence_stats.json": "c1853efd00bb58174151f065755a9212a7e587dc56e374b48f718a0e310fafb5"
+      },
+      "private_sha256": {
+        "private/expected.json": "c2df6a4605486a69d3b73364d1739c014689dde2bc46dd46f851232e43f4adb2",
+        "private/mutation.json": "13c5c8575bbef87e4ad29afd5b002fef69de2bc13b44789e4650b7c36953f30e",
+        "private/rubric.json": "0efe54df59847255fe0f7e67127285b9ed8357b7cc2608323d021aa739feae77"
+      },
+      "case_dir": "data\\eval\\final_round\\holdout_candidates\\chloro_C1_NC_084373_1_CHLORO-CDS-03"
+    },
+    {
+      "task_id": "chloro_C1_NC_084373_1_CHLORO-ID-01",
+      "source_accession_version": "NC_084373.1",
+      "organism": "Acicarpha tribuloides",
+      "template_id": "CHLORO-ID-01",
+      "task_type": "fault",
+      "root_cause": "cross_file_id_mismatch",
+      "public_sha256": {
+        "task.md": "f9aa01c2bd44030713961d08ac085a598d19a1526f4543249d1dd2dca48a3292",
+        "artifacts/genome.fa": "348e9dc782c6ea790b7fb2e7b1bb1e8aeae0f7e31875130a171a70a444bd2982",
+        "artifacts/features.tsv": "2ba7e149023f2b7d7ddf70364256849ba95efc2e7f872071fc12514b9972ec9b",
+        "artifacts/proteins.faa": "1b3ac49d5faa196f035d06c42ece49f7e879ffd9dd336329035c091b431dd6fe",
+        "artifacts/sequence_stats.json": "c1853efd00bb58174151f065755a9212a7e587dc56e374b48f718a0e310fafb5"
+      },
+      "private_sha256": {
+        "private/expected.json": "4cda47e25a79c1db63485061aa4e6f63e14e51594891987c30fc35b2babfe6c5",
+        "private/mutation.json": "b43c53f2a74048a1fc74659fd65ba1cfc39b2e2f8d8b89e55beb61ee62ba3ec8",
+        "private/rubric.json": "546284ff2e0b5f0fa67d41cb0742b7d1f1d66904c98b08eb3d888c54937de413"
+      },
+      "case_dir": "data\\eval\\final_round\\holdout_candidates\\chloro_C1_NC_084373_1_CHLORO-ID-01"
+    },
+    {
+      "task_id": "chloro_C1_NC_085192_1_CHLORO-NORMAL-00",
+      "source_accession_version": "NC_085192.1",
+      "organism": "Actinodaphne pilosa",
+      "template_id": "CHLORO-NORMAL-00",
+      "task_type": "normal",
+      "root_cause": "none",
+      "public_sha256": {
+        "task.md": "f9aa01c2bd44030713961d08ac085a598d19a1526f4543249d1dd2dca48a3292",
+        "artifacts/genome.fa": "ca6223b40cc8133657b398a16126fc143f864433eed4b43f657c498f0858684c",
+        "artifacts/features.tsv": "73947d7baa07c581f28df678712c98b7e6cedd9f622042cf7eedfae38ca86429",
+        "artifacts/proteins.faa": "d882d36041485ce4adb96433d59bd60734daafaf30e424b5601786a76ae3e851",
+        "artifacts/sequence_stats.json": "bf42ef3e021692fbe52d5f2eeafeac19b11cdd1ada1ef4abf91cc2ed729dbcdb"
+      },
+      "private_sha256": {
+        "private/expected.json": "4d2eb376d471c00a34e16f818c961ad451d5a1972f7f7d3deab027491f078a46",
+        "private/mutation.json": "fefa36eef7f8afbe34c6043f312cb1ccbd4daeb73b8e42b3817bc8011eeb301a",
+        "private/rubric.json": "1595c7ac581b182e85d59cef0348d9d9bbf9156b6e9f00bf36de6187e0fbdd46"
+      },
+      "case_dir": "data\\eval\\final_round\\holdout_candidates\\chloro_C1_NC_085192_1_CHLORO-NORMAL-00"
+    },
+    {
+      "task_id": "chloro_C1_NC_085192_1_CHLORO-CDS-03",
+      "source_accession_version": "NC_085192.1",
+      "organism": "Actinodaphne pilosa",
+      "template_id": "CHLORO-CDS-03",
+      "task_type": "fault",
+      "root_cause": "coordinate_out_of_bounds",
+      "public_sha256": {
+        "task.md": "f9aa01c2bd44030713961d08ac085a598d19a1526f4543249d1dd2dca48a3292",
+        "artifacts/genome.fa": "ca6223b40cc8133657b398a16126fc143f864433eed4b43f657c498f0858684c",
+        "artifacts/features.tsv": "dda6ceec18c321ef0a3a6ac02bc75a0b553e2aa64ac87e546c15f4c37278fac4",
+        "artifacts/proteins.faa": "d882d36041485ce4adb96433d59bd60734daafaf30e424b5601786a76ae3e851",
+        "artifacts/sequence_stats.json": "bf42ef3e021692fbe52d5f2eeafeac19b11cdd1ada1ef4abf91cc2ed729dbcdb"
+      },
+      "private_sha256": {
+        "private/expected.json": "0d2f5246af46640f81b048cd95a02bf4e8c14bc762a5bf6a6f41dd3313b88588",
+        "private/mutation.json": "45768d6e67ae565f2d15917bca665e15438ad87fda84cecee0f9c4153dd2b33b",
+        "private/rubric.json": "8d853da32066e868f7a3336115c413d11668d56e6369918a481898441470e4f7"
+      },
+      "case_dir": "data\\eval\\final_round\\holdout_candidates\\chloro_C1_NC_085192_1_CHLORO-CDS-03"
+    },
+    {
+      "task_id": "chloro_C1_NC_085192_1_CHLORO-META-05",
+      "source_accession_version": "NC_085192.1",
+      "organism": "Actinodaphne pilosa",
+      "template_id": "CHLORO-META-05",
+      "task_type": "fault",
+      "root_cause": "stats_conflict",
+      "public_sha256": {
+        "task.md": "f9aa01c2bd44030713961d08ac085a598d19a1526f4543249d1dd2dca48a3292",
+        "artifacts/genome.fa": "ca6223b40cc8133657b398a16126fc143f864433eed4b43f657c498f0858684c",
+        "artifacts/features.tsv": "73947d7baa07c581f28df678712c98b7e6cedd9f622042cf7eedfae38ca86429",
+        "artifacts/proteins.faa": "d882d36041485ce4adb96433d59bd60734daafaf30e424b5601786a76ae3e851",
+        "artifacts/sequence_stats.json": "6f6ca39676d6e2d9734b2f43e984600e742c487e0867d5c4bb5e94abafbe30c0"
+      },
+      "private_sha256": {
+        "private/expected.json": "bf789ecda6d47f17f58ad82eb5af0a3bb541f1c373b2720a82609850e4e72e6e",
+        "private/mutation.json": "845fa815a1e5b69f17460bcea61238c2fd61e0df02f1e812f6a106d218e0307a",
+        "private/rubric.json": "3bf06a28bc3ee4ed72cbb0ec724de52005d9b5229139b62d3934122c02775880"
+      },
+      "case_dir": "data\\eval\\final_round\\holdout_candidates\\chloro_C1_NC_085192_1_CHLORO-META-05"
+    }
+  ],
+  "task_counts_by_template": {
+    "CHLORO-NORMAL-00": 8,
+    "CHLORO-CDS-03": 8,
+    "CHLORO-ID-01": 4,
+    "CHLORO-META-05": 4
+  },
+  "total_tasks": 24,
+  "planned_observations": 96
+}
