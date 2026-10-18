@@ -23,8 +23,8 @@ from genomeqc_agent.adapters.packet_adapter import (
 )
 from genomeqc_agent.api.schemas import (
     ApprovalRecord,
-    EvidenceResponse,
     EventsResponse,
+    EvidenceResponse,
     Healthz,
     JobStatus,
     JobSubmitRequest,
