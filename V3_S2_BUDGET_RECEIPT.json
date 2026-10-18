@@ -1,0 +1,16 @@
+{
+  "receipt": "V3_S2_BUDGET_RECEIPT/v1",
+  "at": "2026-10-18T11:54:35+00:00",
+  "metering": "usage.total_tokens per successful chat call; reasoning counted once inside completion; failed attempts = requests with 0 tokens; ledger is the single source",
+  "s1_tokens": 98851,
+  "s2_tokens": 681440,
+  "s2_requests": 305,
+  "s2_token_cap": 901149,
+  "s2_request_cap": 390,
+  "s2_within_caps": true,
+  "project_total_tokens": 780291,
+  "project_cap": 1000000,
+  "project_within_cap": true,
+  "skipped_due_to_budget": 0,
+  "interrupted_and_resumed": "process killed mid-observation 111 by external interrupt; resumed from ledger with budget guard seeded from the ledger"
+}
