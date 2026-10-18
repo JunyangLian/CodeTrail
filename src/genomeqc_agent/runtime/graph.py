@@ -314,14 +314,91 @@ class QCGraph:
     def node_fail(self, state: QCState) -> dict:
         return state  # status/summary already set by _fail
 
+    def _self_refine(self, state: QCState, evidence: dict) -> tuple[dict, dict, dict, dict]:
+        """Bounded evidence self-correction (P1.1, feature-gated).
+
+        Runs at most MAX_REFINEMENT_ROUNDS rounds of: diagnose unresolved
+        pointers -> propose mechanical corrections against the freshly
+        re-read tool manifest -> RE-VERIFY via verify_evidence_pointer ->
+        keep only mechanically-resolved corrections. Unfixable pointers stay
+        unresolved. Returns (evidence, refinement_record, budgets, trace).
+        """
+        from genomeqc_agent.runtime.refinement import (
+            MAX_REFINEMENT_ROUNDS,
+            apply_verify_result,
+            plan_corrections,
+        )
+        budgets = dict(_budgets(state))
+        trace = json.loads(json.dumps(_trace(state)))
+        packet_id = state["input"]["packet_id"]
+        rounds: list[dict] = []
+        uncorrectable_all: list[dict] = []
+        accepted_all: list[dict] = []
+        attempted_tos: set[str] = set()
+        before = list(evidence.get("unresolved", []))
+        for rnd in range(1, MAX_REFINEMENT_ROUNDS + 1):
+            unresolved = evidence.get("unresolved", [])
+            if not unresolved:
+                break
+            # re-fetch the tool-returned manifest every round
+            try:
+                files = self.registry.files_for(packet_id)
+                manifest_paths = {entry["path"] for entry in files.manifest()}
+            except KeyError:
+                manifest_paths = set()
+            candidates, uncorrectable = plan_corrections(unresolved, manifest_paths)
+            uncorrectable_all.extend(uncorrectable)
+            # a correction already attempted (and not resolved) is never retried
+            candidates = [c for c in candidates if c["to"] not in attempted_tos]
+            if not candidates:
+                rounds.append({"round": rnd, "candidates": 0,
+                               "note": "no new mechanical correction available"})
+                break
+            attempted_tos.update(c["to"] for c in candidates)
+            result, budgets, trace = self._call(
+                state, "verify_evidence_pointer",
+                {"pointers": [c["to"] for c in candidates]},
+                base_trace=trace, base_budgets=budgets)
+            resolved_tos: set[str] = set()
+            verify_detail: list[dict] = []
+            if result.ok:
+                report = result.result or {}
+                resolved_tos = {p["pointer"] for p in report.get("pointers", [])
+                                if p.get("resolved")}
+                verify_detail = report.get("pointers", [])
+            accepted = [c for c in candidates if c["to"] in resolved_tos]
+            rejected = [c for c in candidates if c["to"] not in resolved_tos]
+            for c in rejected:
+                uncorrectable_all.append({"pointer": c["from"],
+                                          "reason": "correction_did_not_resolve"})
+            if accepted:
+                evidence = apply_verify_result(evidence, accepted, rejected)
+                accepted_all.extend(accepted)
+            rounds.append({"round": rnd, "candidates": candidates,
+                           "verify": verify_detail, "accepted": accepted,
+                           "rejected": rejected})
+        record = {"enabled": True, "max_rounds": MAX_REFINEMENT_ROUNDS,
+                  "rounds": rounds, "before_unresolved": before,
+                  "after_unresolved": list(evidence.get("unresolved", [])),
+                  "corrected": [{"from": a["from"], "to": a["to"]}
+                                for a in accepted_all],
+                  "uncorrectable": uncorrectable_all}
+        return evidence, record, budgets, trace
+
     def node_synthesize(self, state: QCState) -> dict:
         if _runtime(state).get("status") in TERMINAL_STATUSES:
             return {}
         evidence = state.get("evidence") or {}
-        unresolved = evidence.get("unresolved", [])
         trace = _trace(state)
         strategy = state.get("strategy") or {}
         guards = strategy.get("policy_guards") or {}
+        refinement = None
+        budgets_update: dict | None = None
+        if (strategy.get("features") or {}).get("self_refinement") \
+                and evidence.get("unresolved"):
+            evidence, refinement, budgets_update, trace = self._self_refine(
+                state, evidence)
+        unresolved = evidence.get("unresolved", [])
         prompt_version = strategy.get("prompt_version",
                                       getattr(self.planner, "prompt_version", "unknown"))
         prompt_sha = strategy.get("prompt_sha256",
@@ -349,7 +426,23 @@ class QCGraph:
             {"step": runtime["step"], "node": "synthesize_report",
              "summary": f"decision={report_dict['qc_decision']} "
                         f"evidence={report_dict['evidence_validity']}"}]
-        return {"report": report_dict, "runtime": runtime, "events": events}
+        updates: dict = {"report": report_dict, "runtime": runtime,
+                         "events": events}
+        if refinement is not None:
+            # before/after correction trace, kept for audit (P1.1)
+            updates["refinement"] = refinement
+            events_refine = [{"step": runtime["step"], "node": "self_refinement",
+                              "summary": (f"corrected={len(refinement['corrected'])} "
+                                          f"unresolved {len(refinement['before_unresolved'])}"
+                                          f"->{len(refinement['after_unresolved'])} "
+                                          f"uncorrectable={len(refinement['uncorrectable'])}")}]
+            updates["events"] = events + events_refine
+        if budgets_update is not None:
+            updates["budgets"] = budgets_update
+            updates["tool_trace"] = trace
+        # refined evidence must be visible downstream (persist/ledger)
+        updates["evidence"] = evidence
+        return updates
 
     def node_validate_report(self, state: QCState) -> dict:
         report = state.get("report") or {}

@@ -33,5 +33,6 @@ class QCState(TypedDict, total=False):
     strategy: dict
     # output ----------------------------------------------------------------
     report: dict | None
+    refinement: dict      # P1.1 self-refinement before/after trace (audit)
     events: list[dict]   # [{step, node, summary}] - append-only audit trail
     result: dict | None
