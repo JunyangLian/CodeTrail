@@ -308,6 +308,7 @@ class QCGraph:
             unresolved_count=len(unresolved),
             tool_calls={name: len(calls) for name, calls in trace.items()},
             versions={"planner": self.planner.model_id,
+                      "prompt": getattr(self.planner, "prompt_version", "unknown"),
                       "graph": "qc-stategraph-v1"})
         report_dict = report.model_dump()
         runtime = dict(_runtime(state))

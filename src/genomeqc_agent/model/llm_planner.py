@@ -16,6 +16,8 @@ from pydantic import ValidationError
 from genomeqc_agent.model.gateway import ChatGateway, GatewayError
 from genomeqc_agent.model.scripted_planner import FACT_KEYS, PlannedAction
 
+SYSTEM_PROMPT_VERSION = "promptv1"
+
 SYSTEM_PROMPT = """You are the planner of a read-only organelle genome QC agent.
 The mandatory deterministic checks (inspect_packet, organelle_summary) have
 already run; their facts are given to you. Decide the ONE next action.
@@ -43,6 +45,7 @@ class PlannerError(RuntimeError):
 
 class LLMPlanner:
     provider = "siliconflow"
+    prompt_version = SYSTEM_PROMPT_VERSION  # E1: strategy candidates version this
 
     def __init__(self, gateway: ChatGateway, max_tokens: int = 4096):
         self.gateway = gateway

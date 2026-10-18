@@ -23,6 +23,7 @@ class ModelCallRecord(BaseModel):
 class FakeModel:
     provider = "fake"
     model_id = "fake-planner-v0"
+    prompt_version = "scripted-v1"
 
     def __init__(self) -> None:
         self.requests: list[ModelCallRecord] = []
