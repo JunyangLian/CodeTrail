@@ -1,0 +1,78 @@
+feature_id	feature_type	part_index	part_count	gene	locus_tag	product	protein_id	start	end	strand	codon_start	transl_table	partial_flags	location_raw
+source_001	source	1	1					1	16596	+			none	1..16596
+D-loop_001	D-loop	1	1					1	950	+			none	1..950
+gene_001	gene	1	1	trnF				951	1019	+			none	951..1019
+tRNA_001	tRNA	1	1	trnF		tRNA-Phe		951	1019	+			none	951..1019
+gene_002	gene	1	1	mt-rnr1				1020	1971	+			none	1020..1971
+rRNA_001	rRNA	1	1	mt-rnr1		s-rRNA		1020	1971	+			none	1020..1971
+gene_003	gene	1	1	trnV				1972	2042	+			none	1972..2042
+tRNA_002	tRNA	1	1	trnV		tRNA-Val		1972	2042	+			none	1972..2042
+gene_004	gene	1	1	mt-rnr2				2043	3725	+			none	2043..3725
+rRNA_002	rRNA	1	1	mt-rnr2		l-rRNA		2043	3725	+			none	2043..3725
+gene_005	gene	1	1	trnL1				3726	3802	+			none	3726..3802
+tRNA_003	tRNA	1	1	trnL1		tRNA-Leu		3726	3802	+			none	3726..3802
+gene_006	gene	1	1	ND1				3803	4777	+			none	3803..4777
+CDS_001	CDS	1	1	ND1		NADH dehydrogenase subunit 1	NP_059331.1	3803	4777	+	1	2	none	3803..4777
+gene_007	gene	1	1	trnI				4781	4854	+			none	4781..4854
+tRNA_004	tRNA	1	1	trnI		tRNA-Ile		4781	4854	+			none	4781..4854
+gene_008	gene	1	1	trnQ				4852	4922	-			none	complement(4852..4922)
+tRNA_005	tRNA	1	1	trnQ		tRNA-Gln		4852	4922	-			none	complement(4852..4922)
+gene_009	gene	1	1	trnM				4924	4992	+			none	4924..4992
+tRNA_006	tRNA	1	1	trnM		tRNA-Met		4924	4992	+			none	4924..4992
+gene_010	gene	1	1	ND2				4993	6039	+			none	4993..6039
+CDS_002	CDS	1	1	ND2		NADH dehydrogenase subunit 2	NP_059332.1	4993	6039	+	1	2	none	4993..6039
+gene_011	gene	1	1	trnW				6038	6107	+			none	6038..6107
+tRNA_007	tRNA	1	1	trnW		tRNA-Trp		6038	6107	+			none	6038..6107
+gene_012	gene	1	1	trnA				6109	6176	-			none	complement(6109..6176)
+tRNA_008	tRNA	1	1	trnA		tRNA-Ala		6109	6176	-			none	complement(6109..6176)
+gene_013	gene	1	1	trnN				6178	6250	-			none	complement(6178..6250)
+tRNA_009	tRNA	1	1	trnN		tRNA-Asn		6178	6250	-			none	complement(6178..6250)
+rep_origin_001	rep_origin	1	1					6251	6282	-			none	complement(6251..6282)
+gene_014	gene	1	1	trnC	ZDB-GENE-011205-27			6283	6354	-			none	complement(6283..6354)
+tRNA_010	tRNA	1	1	trnC	ZDB-GENE-011205-27	tRNA-Cys		6283	6354	-			none	complement(6283..6354)
+gene_015	gene	1	1	trnY				6353	6423	-			none	complement(6353..6423)
+tRNA_011	tRNA	1	1	trnY		tRNA-Tyr		6353	6423	-			none	complement(6353..6423)
+gene_016	gene	1	1	COX1				6425	7975	+			none	6425..7975
+CDS_003	CDS	1	1	COX1		cytochrome c oxidase subunit I	NP_059333.1	6425	7975	+	1	2	none	6425..7975
+gene_017	gene	1	1	trnS1				7976	8046	-			none	complement(7976..8046)
+tRNA_012	tRNA	1	1	trnS1		tRNA-Ser		7976	8046	-			none	complement(7976..8046)
+gene_018	gene	1	1	trnD				8049	8117	+			none	8049..8117
+tRNA_013	tRNA	1	1	trnD		tRNA-Asp		8049	8117	+			none	8049..8117
+gene_019	gene	1	1	COX2				8130	8820	+			none	8130..8820
+CDS_004	CDS	1	1	COX2		cytochrome c oxidase subunit II	NP_059334.1	8130	8820	+	1	2	none	8130..8820
+gene_020	gene	1	1	trnK				8821	8893	+			none	8821..8893
+tRNA_014	tRNA	1	1	trnK		tRNA-Lys		8821	8893	+			none	8821..8893
+gene_021	gene	1	1	ATP8				8894	9058	+			none	8894..9058
+CDS_005	CDS	1	1	ATP8		ATP synthase F0 subunit 8	NP_059335.1	8894	9058	+	1	2	none	8894..9058
+gene_022	gene	1	1	ATP6				9052	9735	+			none	9052..9735
+CDS_006	CDS	1	1	ATP6		ATP synthase F0 subunit 6	NP_059336.1	9052	9735	+	1	2	none	9052..9735
+gene_023	gene	1	1	COX3				9735	10520	+			none	9735..10520
+CDS_007	CDS	1	1	COX3		cytochrome c oxidase subunit III	NP_059337.1	9735	10520	+	1	2	none	9735..10520
+gene_024	gene	1	1	trnG				10520	10589	+			none	10520..10589
+tRNA_015	tRNA	1	1	trnG		tRNA-Gly		10520	10589	+			none	10520..10589
+gene_025	gene	1	1	ND3				10590	10940	+			none	10590..10940
+CDS_008	CDS	1	1	ND3		NADH dehydrogenase subunit 3	NP_059338.1	10590	10940	+	1	2	none	10590..10940
+gene_026	gene	1	1	trnR				10939	11008	+			none	10939..11008
+tRNA_016	tRNA	1	1	trnR		tRNA-Arg		10939	11008	+			none	10939..11008
+gene_027	gene	1	1	ND4L				11009	11305	+			none	11009..11305
+CDS_009	CDS	1	1	ND4L		NADH dehydrogenase subunit 4L	NP_059339.1	11009	11305	+	1	2	none	11009..11305
+gene_028	gene	1	1	ND4				11299	12679	+			none	11299..12679
+CDS_010	CDS	1	1	ND4		NADH dehydrogenase subunit 4	NP_059340.1	11299	12679	+	1	2	none	11299..12679
+gene_029	gene	1	1	trnH				12681	12750	+			none	12681..12750
+tRNA_017	tRNA	1	1	trnH		tRNA-His		12681	12750	+			none	12681..12750
+gene_030	gene	1	1	trnS2				12750	12819	+			none	12750..12819
+tRNA_018	tRNA	1	1	trnS2		tRNA-Ser		12750	12819	+			none	12750..12819
+gene_031	gene	1	1	trnL2				12823	12895	+			none	12823..12895
+tRNA_019	tRNA	1	1	trnL2		tRNA-Leu		12823	12895	+			none	12823..12895
+gene_032	gene	1	1	ND5				12897	14717	+			none	12897..14717
+CDS_011	CDS	1	1	ND5		NADH dehydrogenase subunit 5	NP_059341.1	12897	14717	+	1	2	none	12897..14717
+gene_033	gene	1	1	ND6				14714	15232	-			none	complement(14714..15232)
+CDS_012	CDS	1	1	ND6		NADH dehydrogenase subunit 6	NP_059342.1	14714	15232	-	1	2	none	complement(14714..15232)
+gene_034	gene	1	1	trnE				15233	15301	-			none	complement(15233..15301)
+tRNA_020	tRNA	1	1	trnE		tRNA-Glu		15233	15301	-			none	complement(15233..15301)
+gene_035	gene	1	1	CYTB				15308	16448	+			none	15308..16448
+CDS_013	CDS	1	1	CYTB		cytochrome b	NP_059343.1	15308	16448	+	1	2	none	15308..16448
+gene_036	gene	1	1	trnT				16449	16520	+			none	16449..16520
+tRNA_021	tRNA	1	1	trnT		tRNA-Thr		16449	16520	+			none	16449..16520
+gene_037	gene	1	1	trnP				16527	16596	-			none	complement(16527..16596)
+tRNA_022	tRNA	1	1	trnP		tRNA-Pro		16527	16596	-			none	complement(16527..16596)
