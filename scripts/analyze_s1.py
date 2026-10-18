@@ -2,13 +2,14 @@
 import json
 from collections import defaultdict
 
-r = json.load(open("data/eval/s1_smoke/s1_report.json", encoding="utf-8"))
+with open("data/eval/s1_smoke/s1_report.json", encoding="utf-8") as fh:
+    r = json.load(fh)
 print("=== observations ===")
 for o in r["observations"]:
     print(f"{o['task'].split('_')[-1]:<12} {o['model_key']}/{o['strategy']} "
-          f"{o['status']:<9} dec={str(o['qc_decision']):<6} "
-          f"ev={str(o['evidence_validity']):<7} unres={o['unresolved_pointers']} "
-          f"rev={str(o['needs_human_review']):<5} tok={o['tokens']:>6} "
+          f"{o['status']:<9} dec={o['qc_decision']!s:<6} "
+          f"ev={o['evidence_validity']!s:<7} unres={o['unresolved_pointers']} "
+          f"rev={o['needs_human_review']!s:<5} tok={o['tokens']:>6} "
           f"req={o['requests']} prompt={o['prompt_version']} "
           f"sha_ok={bool(o['prompt_sha256'])} tools={o['tool_calls']}")
 
