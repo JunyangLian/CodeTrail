@@ -1,0 +1,13 @@
+{
+  "at": "2026-10-18T06:45:32+00:00",
+  "candidate_id": "CAND-loop-shadow-demo",
+  "human_approval": false,
+  "metrics": {
+    "critical_false_pass": 0,
+    "denominator": 40,
+    "judgment_pass_rate": 0.85,
+    "pointer_resolution_rate": 0.9934
+  },
+  "simulation": "offline_simulation",
+  "transition": "validated"
+}

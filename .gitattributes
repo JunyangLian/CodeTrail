@@ -1,0 +1,5 @@
+# Frozen experiment data and snapshots must keep exact bytes:
+# manifests hash working-tree bytes, and EOL conversion on checkout
+# would break hash re-verification (see scripts/restore_snapshot_bytes.py).
+data/** -text
+src/genomeqc_agent/adapters/v2_snapshot/** -text

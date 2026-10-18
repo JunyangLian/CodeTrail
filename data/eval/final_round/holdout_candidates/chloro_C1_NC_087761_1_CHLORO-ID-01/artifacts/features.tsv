@@ -1,0 +1,305 @@
+feature_id	feature_type	part_index	part_count	gene	locus_tag	product	protein_id	start	end	strand	codon_start	transl_table	partial_flags	location_raw
+source_001	source	1	1					1	159262	+			none	1..159262
+gene_001	gene	1	2	rps12	AADL03_pgp048			92444	93242	-			none	complement(join(92444..93242,63784..63897))
+gene_001	gene	2	2	rps12	AADL03_pgp048			63784	63897	-			none	complement(join(92444..93242,63784..63897))
+CDS_001	CDS	1	3	rps12	AADL03_pgp048	ribosomal protein S12	YP_011082192.2	92444	92470	-	1	11	none	complement(join(92444..92470,93012..93242,63784..63897))
+CDS_001	CDS	2	3	rps12	AADL03_pgp048	ribosomal protein S12	YP_011082192.2	93012	93242	-	1	11	none	complement(join(92444..92470,93012..93242,63784..63897))
+CDS_001	CDS	3	3	rps12	AADL03_pgp048	ribosomal protein S12	YP_011082192.2	63784	63897	-	1	11	none	complement(join(92444..92470,93012..93242,63784..63897))
+gene_002	gene	1	1	trnG-UCC	AADL03_pgt001			1045	1799	+			none	1045..1799
+tRNA_001	tRNA	1	2	trnG-UCC	AADL03_pgt001	tRNA-Gly		1045	1067	+			none	join(1045..1067,1752..1799)
+tRNA_001	tRNA	2	2	trnG-UCC	AADL03_pgt001	tRNA-Gly		1752	1799	+			none	join(1045..1067,1752..1799)
+gene_003	gene	1	1	trnR-UCU	AADL03_pgt002			1938	2009	+			none	1938..2009
+tRNA_002	tRNA	1	1	trnR-UCU	AADL03_pgt002	tRNA-Arg		1938	2009	+			none	1938..2009
+gene_004	gene	1	1	atpA	AADL03_pgp087			2124	3647	-			none	complement(2124..3647)
+CDS_002	CDS	1	1	atpA	AADL03_pgp087	CF1 subunit alpha	YP_011082193.1	2124	3647	-	1	11	none	complement(2124..3647)
+gene_005	gene	1	1	atpF	AADL03_pgp086			3727	5133	-			none	complement(3727..5133)
+CDS_003	CDS	1	2	atpF	AADL03_pgp086	CF0 subunit I	YP_011082194.1	3727	4136	-	1	11	none	complement(join(3727..4136,4989..5133))
+CDS_003	CDS	2	2	atpF	AADL03_pgp086	CF0 subunit I	YP_011082194.1	4989	5133	-	1	11	none	complement(join(3727..4136,4989..5133))
+gene_006	gene	1	1	atpH	AADL03_pgp085			5577	5822	-			none	complement(5577..5822)
+CDS_004	CDS	1	1	atpH	AADL03_pgp085	CF0 subunit III	YP_011082195.1	5577	5822	-	1	11	none	complement(5577..5822)
+gene_007	gene	1	1	atpI	AADL03_pgp084			6802	7545	-			none	complement(6802..7545)
+CDS_005	CDS	1	1	atpI	AADL03_pgp084	CF0 subunit IV	YP_011082196.1	6802	7545	-	1	11	none	complement(6802..7545)
+gene_008	gene	1	1	rps2	AADL03_pgp083			7817	8527	-			none	complement(7817..8527)
+CDS_006	CDS	1	1	rps2	AADL03_pgp083	ribosomal protein S2	YP_011082197.1	7817	8527	-	1	11	none	complement(7817..8527)
+gene_009	gene	1	1	rpoC2	AADL03_pgp082			8745	12902	-			none	complement(8745..12902)
+CDS_007	CDS	1	1	rpoC2	AADL03_pgp082	RNA polymerase beta'' subunit	YP_011082198.1	8745	12902	-	1	11	none	complement(8745..12902)
+gene_010	gene	1	1	rpoC1	AADL03_pgp081			13083	15843	-			none	complement(13083..15843)
+CDS_008	CDS	1	2	rpoC1	AADL03_pgp081	RNA polymerase beta' subunit	YP_011082199.1	13083	14699	-	1	11	none	complement(join(13083..14699,15412..15843))
+CDS_008	CDS	2	2	rpoC1	AADL03_pgp081	RNA polymerase beta' subunit	YP_011082199.1	15412	15843	-	1	11	none	complement(join(13083..14699,15412..15843))
+gene_011	gene	1	1	rpoB	AADL03_pgp080			15870	19088	-			none	complement(15870..19088)
+CDS_009	CDS	1	1	rpoB	AADL03_pgp080	RNA polymerase beta subunit	YP_011082200.1	15870	19088	-	1	11	none	complement(15870..19088)
+gene_012	gene	1	1	trnC-GCA	AADL03_pgt003			20469	20539	+			none	20469..20539
+tRNA_003	tRNA	1	1	trnC-GCA	AADL03_pgt003	tRNA-Cys		20469	20539	+			none	20469..20539
+gene_013	gene	1	1	petN	AADL03_pgp079			21601	21690	+			none	21601..21690
+CDS_010	CDS	1	1	petN	AADL03_pgp079	cytochrome b6/f subunit N	YP_011082201.1	21601	21690	+	1	11	none	21601..21690
+gene_014	gene	1	1	psbM	AADL03_pgp078			22911	23015	-			none	complement(22911..23015)
+CDS_011	CDS	1	1	psbM	AADL03_pgp078	photosystem II subunit M	YP_011082202.1	22911	23015	-	1	11	none	complement(22911..23015)
+gene_015	gene	1	1	trnD-GUC	AADL03_pgt004			24041	24114	-			none	complement(24041..24114)
+tRNA_004	tRNA	1	1	trnD-GUC	AADL03_pgt004	tRNA-Asp		24041	24114	-			none	complement(24041..24114)
+gene_016	gene	1	1	trnY-GUA	AADL03_pgt005			24537	24620	-			none	complement(24537..24620)
+tRNA_005	tRNA	1	1	trnY-GUA	AADL03_pgt005	tRNA-Tyr		24537	24620	-			none	complement(24537..24620)
+gene_017	gene	1	1	trnE-UUC	AADL03_pgt006			24680	24752	-			none	complement(24680..24752)
+tRNA_006	tRNA	1	1	trnE-UUC	AADL03_pgt006	tRNA-Glu		24680	24752	-			none	complement(24680..24752)
+gene_018	gene	1	1	trnT-GGU	AADL03_pgt007			25096	25167	+			none	25096..25167
+tRNA_007	tRNA	1	1	trnT-GGU	AADL03_pgt007	tRNA-Thr		25096	25167	+			none	25096..25167
+gene_019	gene	1	1	psbD	AADL03_pgp077			26213	27274	+			none	26213..27274
+CDS_012	CDS	1	1	psbD	AADL03_pgp077	photosystem II protein D2	YP_011082203.1	26213	27274	+	1	11	none	26213..27274
+gene_020	gene	1	1	psbC	AADL03_pgp076			27258	28643	+			none	27258..28643
+CDS_013	CDS	1	1	psbC	AADL03_pgp076	photosystem II 43 kDa protein	YP_011082204.1	27258	28643	+	1	11	none	27258..28643
+gene_021	gene	1	1	trnS-UGA	AADL03_pgt008			28781	28873	-			none	complement(28781..28873)
+tRNA_008	tRNA	1	1	trnS-UGA	AADL03_pgt008	tRNA-Ser		28781	28873	-			none	complement(28781..28873)
+gene_022	gene	1	1	psbZ	AADL03_pgp075			29200	29388	+			none	29200..29388
+CDS_014	CDS	1	1	psbZ	AADL03_pgp075	photosystem II subunit Z	YP_011082205.1	29200	29388	+	1	11	none	29200..29388
+gene_023	gene	1	1	trnG-GCC	AADL03_pgt009			29723	29793	+			none	29723..29793
+tRNA_009	tRNA	1	1	trnG-GCC	AADL03_pgt009	tRNA-Gly		29723	29793	+			none	29723..29793
+gene_024	gene	1	1	trnfM-CAU	AADL03_pgt010			29910	29983	-			none	complement(29910..29983)
+tRNA_010	tRNA	1	1	trnfM-CAU	AADL03_pgt010	tRNA-fMet		29910	29983	-			none	complement(29910..29983)
+gene_025	gene	1	1	rps14	AADL03_pgp074			30142	30444	-			none	complement(30142..30444)
+CDS_015	CDS	1	1	rps14	AADL03_pgp074	ribosomal protein S14	YP_011082206.1	30142	30444	-	1	11	none	complement(30142..30444)
+gene_026	gene	1	1	psaB	AADL03_pgp073			30583	32787	-			none	complement(30583..32787)
+CDS_016	CDS	1	1	psaB	AADL03_pgp073	photosystem I P700 apoprotein A2	YP_011082207.1	30583	32787	-	1	11	none	complement(30583..32787)
+gene_027	gene	1	1	psaA	AADL03_pgp072			32813	35065	-			none	complement(32813..35065)
+CDS_017	CDS	1	1	psaA	AADL03_pgp072	photosystem I P700 apoprotein A1	YP_011082208.1	32813	35065	-	1	11	none	complement(32813..35065)
+gene_028	gene	1	1	pafI	AADL03_pgp071			35714	37641	-			none	complement(35714..37641)
+CDS_018	CDS	1	3	pafI	AADL03_pgp071	photosystem I assembly factor I	YP_011082209.1	35714	35868	-	1	11	none	complement(join(35714..35868,36553..36780,37518..37641))
+CDS_018	CDS	2	3	pafI	AADL03_pgp071	photosystem I assembly factor I	YP_011082209.1	36553	36780	-	1	11	none	complement(join(35714..35868,36553..36780,37518..37641))
+CDS_018	CDS	3	3	pafI	AADL03_pgp071	photosystem I assembly factor I	YP_011082209.1	37518	37641	-	1	11	none	complement(join(35714..35868,36553..36780,37518..37641))
+gene_029	gene	1	1	trnS-GGA	AADL03_pgt011			38259	38345	+			none	38259..38345
+tRNA_011	tRNA	1	1	trnS-GGA	AADL03_pgt011	tRNA-Ser		38259	38345	+			none	38259..38345
+gene_030	gene	1	1	rps4	AADL03_pgp070			38623	39228	-			none	complement(38623..39228)
+CDS_019	CDS	1	1	rps4	AADL03_pgp070	ribosomal protein S4	YP_011082210.1	38623	39228	-	1	11	none	complement(38623..39228)
+gene_031	gene	1	1	trnT-UGU	AADL03_pgt012			39552	39624	-			none	complement(39552..39624)
+tRNA_012	tRNA	1	1	trnT-UGU	AADL03_pgt012	tRNA-Thr		39552	39624	-			none	complement(39552..39624)
+gene_032	gene	1	1	trnL-UAA	AADL03_pgt013			40402	41044	+			none	40402..41044
+tRNA_013	tRNA	1	2	trnL-UAA	AADL03_pgt013	tRNA-Leu		40402	40436	+			none	join(40402..40436,40995..41044)
+tRNA_013	tRNA	2	2	trnL-UAA	AADL03_pgt013	tRNA-Leu		40995	41044	+			none	join(40402..40436,40995..41044)
+gene_033	gene	1	1	trnF-GAA	AADL03_pgt014			41337	41409	+			none	41337..41409
+tRNA_014	tRNA	1	1	trnF-GAA	AADL03_pgt014	tRNA-Phe		41337	41409	+			none	41337..41409
+gene_034	gene	1	1	ndhJ	AADL03_pgp069			41970	42449	-			none	complement(41970..42449)
+CDS_020	CDS	1	1	ndhJ	AADL03_pgp069	NADH dehydrogenase subunit J	YP_011082211.1	41970	42449	-	1	11	none	complement(41970..42449)
+gene_035	gene	1	1	ndhK	AADL03_pgp068			42525	43292	-			none	complement(42525..43292)
+CDS_021	CDS	1	1	ndhK	AADL03_pgp068	NADH dehydrogenase subunit K	YP_011082212.1	42525	43292	-	1	11	none	complement(42525..43292)
+gene_036	gene	1	1	ndhC	AADL03_pgp067			43283	43645	-			none	complement(43283..43645)
+CDS_022	CDS	1	1	ndhC	AADL03_pgp067	NADH dehydrogenase subunit C	YP_011082213.1	43283	43645	-	1	11	none	complement(43283..43645)
+gene_037	gene	1	1	trnV-UAC	AADL03_pgt015			44729	45388	-			none	complement(44729..45388)
+tRNA_015	tRNA	1	2	trnV-UAC	AADL03_pgt015	tRNA-Val		44729	44763	-			none	complement(join(44729..44763,45350..45388))
+tRNA_015	tRNA	2	2	trnV-UAC	AADL03_pgt015	tRNA-Val		45350	45388	-			none	complement(join(44729..44763,45350..45388))
+gene_038	gene	1	1	trnM	AADL03_pgt016			45556	45628	+			none	45556..45628
+tRNA_016	tRNA	1	1	trnM	AADL03_pgt016	tRNA-Met		45556	45628	+			none	45556..45628
+gene_039	gene	1	1	atpE	AADL03_pgp066			45800	46204	-			none	complement(45800..46204)
+CDS_023	CDS	1	1	atpE	AADL03_pgp066	CF1 subunit epsilon	YP_011082214.1	45800	46204	-	1	11	none	complement(45800..46204)
+gene_040	gene	1	1	atpB	AADL03_pgp065			46201	47697	-			none	complement(46201..47697)
+CDS_024	CDS	1	1	atpB	AADL03_pgp065	CF1 subunit beta	YP_011082215.1	46201	47697	-	1	11	none	complement(46201..47697)
+gene_041	gene	1	1	rbcL	AADL03_pgp064			48497	49936	+			none	48497..49936
+CDS_025	CDS	1	1	rbcL	AADL03_pgp064	ribulose-1,5-bisphosphate carboxylase/oxygenaselarge subunit	YP_011082216.1	48497	49936	+	1	11	none	48497..49936
+gene_042	gene	1	1	accD	AADL03_pgp063			50660	52126	+			none	50660..52126
+CDS_026	CDS	1	1	accD	AADL03_pgp063	acetyl-CoA carboxylase subunit beta	YP_011082217.1	50660	52126	+	1	11	none	50660..52126
+gene_043	gene	1	1	psaI	AADL03_pgp062			53061	53171	+			none	53061..53171
+CDS_027	CDS	1	1	psaI	AADL03_pgp062	photosystem I subunit I	YP_011082218.1	53061	53171	+	1	11	none	53061..53171
+gene_044	gene	1	1	pafII	AADL03_pgp061			53516	54070	+			none	53516..54070
+CDS_028	CDS	1	1	pafII	AADL03_pgp061	photosystem I assembly factor II	YP_011082219.1	53516	54070	+	1	11	none	53516..54070
+gene_045	gene	1	1	cemA	AADL03_pgp060			54888	55577	+			none	54888..55577
+CDS_029	CDS	1	1	cemA	AADL03_pgp060	envelope membrane carbon uptake protein	YP_011082220.1	54888	55577	+	1	11	none	54888..55577
+gene_046	gene	1	1	petA	AADL03_pgp059			55808	56770	+			none	55808..56770
+CDS_030	CDS	1	1	petA	AADL03_pgp059	cytochrome f	YP_011082221.1	55808	56770	+	1	11	none	55808..56770
+gene_047	gene	1	1	psbJ	AADL03_pgp058			57572	57694	-			none	complement(57572..57694)
+CDS_031	CDS	1	1	psbJ	AADL03_pgp058	photosystem II subunit J	YP_011082222.1	57572	57694	-	1	11	none	complement(57572..57694)
+gene_048	gene	1	1	psbL	AADL03_pgp057			57820	57936	-			none	complement(57820..57936)
+CDS_032	CDS	1	1	psbL	AADL03_pgp057	photosystem II subunit L	YP_011082223.1	57820	57936	-	1	11	none	complement(57820..57936)
+gene_049	gene	1	1	psbF	AADL03_pgp056			57959	58078	-			none	complement(57959..58078)
+CDS_033	CDS	1	1	psbF	AADL03_pgp056	cytochrome b559 subunit beta	YP_011082224.1	57959	58078	-	1	11	none	complement(57959..58078)
+gene_050	gene	1	1	psbE	AADL03_pgp055			58089	58340	-			none	complement(58089..58340)
+CDS_034	CDS	1	1	psbE	AADL03_pgp055	cytochrome b559 subunit alpha	YP_011082225.1	58089	58340	-	1	11	none	complement(58089..58340)
+gene_051	gene	1	1	petL	AADL03_pgp054			59877	59972	+			none	59877..59972
+CDS_035	CDS	1	1	petL	AADL03_pgp054	cytochrome b6/f subunit L	YP_011082226.1	59877	59972	+	1	11	none	59877..59972
+gene_052	gene	1	1	petG	AADL03_pgp053			60148	60261	+			none	60148..60261
+CDS_036	CDS	1	1	petG	AADL03_pgp053	cytochrome b6/f subunit G	YP_011082227.1	60148	60261	+	1	11	none	60148..60261
+gene_053	gene	1	1	trnW-CCA	AADL03_pgt017			60384	60457	-			none	complement(60384..60457)
+tRNA_017	tRNA	1	1	trnW-CCA	AADL03_pgt017	tRNA-Trp		60384	60457	-			none	complement(60384..60457)
+gene_054	gene	1	1	trnP-UGG	AADL03_pgt018			60595	60668	-			none	complement(60595..60668)
+tRNA_018	tRNA	1	1	trnP-UGG	AADL03_pgt018	tRNA-Pro		60595	60668	-			none	complement(60595..60668)
+gene_055	gene	1	1	psaJ	AADL03_pgp052			61027	61161	+			none	61027..61161
+CDS_037	CDS	1	1	psaJ	AADL03_pgp052	photosystem I subunit J	YP_011082228.1	61027	61161	+	1	11	none	61027..61161
+gene_056	gene	1	1	rpl33	AADL03_pgp051			61704	61904	+			none	61704..61904
+CDS_038	CDS	1	1	rpl33	AADL03_pgp051	ribosomal protein L33	YP_011082229.1	61704	61904	+	1	11	none	61704..61904
+gene_057	gene	1	1	rps18	AADL03_pgp050			62147	62452	+			none	62147..62452
+CDS_039	CDS	1	1	rps18	AADL03_pgp050	ribosomal protein S18	YP_011082230.1	62147	62452	+	1	11	none	62147..62452
+gene_058	gene	1	1	rpl20	AADL03_pgp049			62721	63074	-			none	complement(62721..63074)
+CDS_040	CDS	1	1	rpl20	AADL03_pgp049	ribosomal protein L20	YP_011082231.1	62721	63074	-	1	11	none	complement(62721..63074)
+gene_059	gene	1	2	rps12	AADL03_pgp047			63784	63897	-			none	join(complement(63784..63897),135203..136001)
+gene_059	gene	2	2	rps12	AADL03_pgp047			135203	136001	+			none	join(complement(63784..63897),135203..136001)
+CDS_041	CDS	1	3	rps12	AADL03_pgp047	ribosomal protein S12	YP_011082232.1	63784	63897	-	1	11	none	join(complement(63784..63897),135203..135433, 135975..136001)
+CDS_041	CDS	2	3	rps12	AADL03_pgp047	ribosomal protein S12	YP_011082232.1	135203	135433	+	1	11	none	join(complement(63784..63897),135203..135433, 135975..136001)
+CDS_041	CDS	3	3	rps12	AADL03_pgp047	ribosomal protein S12	YP_011082232.1	135975	136001	+	1	11	none	join(complement(63784..63897),135203..135433, 135975..136001)
+gene_060	gene	1	1	clpP1	AADL03_pgp046			64038	66176	-			none	complement(64038..66176)
+CDS_042	CDS	1	3	clpP1	AADL03_pgp046	ATP-dependent Clp protease proteolytic subunit1	YP_011082233.1	64038	64289	-	1	11	none	complement(join(64038..64289,64961..65252,66106..66176))
+CDS_042	CDS	2	3	clpP1	AADL03_pgp046	ATP-dependent Clp protease proteolytic subunit1	YP_011082233.1	64961	65252	-	1	11	none	complement(join(64038..64289,64961..65252,66106..66176))
+CDS_042	CDS	3	3	clpP1	AADL03_pgp046	ATP-dependent Clp protease proteolytic subunit1	YP_011082233.1	66106	66176	-	1	11	none	complement(join(64038..64289,64961..65252,66106..66176))
+gene_061	gene	1	1	psbB	AADL03_pgp045			66626	68152	+			none	66626..68152
+CDS_043	CDS	1	1	psbB	AADL03_pgp045	photosystem II 47 kDa protein	YP_011082234.1	66626	68152	+	1	11	none	66626..68152
+gene_062	gene	1	1	psbT	AADL03_pgp044			68333	68440	+			none	68333..68440
+CDS_044	CDS	1	1	psbT	AADL03_pgp044	photosystem II subunit T	YP_011082235.1	68333	68440	+	1	11	none	68333..68440
+gene_063	gene	1	1	pbf1	AADL03_pgp043			68497	68628	-			none	complement(68497..68628)
+CDS_045	CDS	1	1	pbf1	AADL03_pgp043	photosystem biogenesis factor 1	YP_011082236.1	68497	68628	-	1	11	none	complement(68497..68628)
+gene_064	gene	1	1	psbH	AADL03_pgp042			68740	68961	+			none	68740..68961
+CDS_046	CDS	1	1	psbH	AADL03_pgp042	photosystem II subunit H	YP_011082237.1	68740	68961	+	1	11	none	68740..68961
+gene_065	gene	1	1	petB	AADL03_pgp041			69087	70516	+			none	69087..70516
+CDS_047	CDS	1	2	petB	AADL03_pgp041	cytochrome b6	YP_011082238.1	69087	69092	+	1	11	none	join(69087..69092,69875..70516)
+CDS_047	CDS	2	2	petB	AADL03_pgp041	cytochrome b6	YP_011082238.1	69875	70516	+	1	11	none	join(69087..69092,69875..70516)
+gene_066	gene	1	1	petD	AADL03_pgp040			70704	71983	+			none	70704..71983
+CDS_048	CDS	1	2	petD	AADL03_pgp040	cytochrome b6/f subunit IV	YP_011082239.1	70704	70711	+	1	11	none	join(70704..70711,71470..71983)
+CDS_048	CDS	2	2	petD	AADL03_pgp040	cytochrome b6/f subunit IV	YP_011082239.1	71470	71983	+	1	11	none	join(70704..70711,71470..71983)
+gene_067	gene	1	1	rpoA	AADL03_pgp039			72149	73168	-			none	complement(72149..73168)
+CDS_049	CDS	1	1	rpoA	AADL03_pgp039	RNA polymerase alpha subunit	YP_011082240.1	72149	73168	-	1	11	none	complement(72149..73168)
+gene_068	gene	1	1	rps11	AADL03_pgp038			73237	73653	-			none	complement(73237..73653)
+CDS_050	CDS	1	1	rps11	AADL03_pgp038	ribosomal protein S11	YP_011082241.1	73237	73653	-	1	11	none	complement(73237..73653)
+gene_069	gene	1	1	rpl36	AADL03_pgp037			73803	73916	-			none	complement(73803..73916)
+CDS_051	CDS	1	1	rpl36	AADL03_pgp037	ribosomal protein L36	YP_011082242.1	73803	73916	-	1	11	none	complement(73803..73916)
+gene_070	gene	1	1	infA	AADL03_pgp036			74025	74258	-			none	complement(74025..74258)
+CDS_052	CDS	1	1	infA	AADL03_pgp036	translational initiation factor 1	YP_011082243.1	74025	74258	-	1	11	none	complement(74025..74258)
+gene_071	gene	1	1	rps8	AADL03_pgp035			74375	74779	-			none	complement(74375..74779)
+CDS_053	CDS	1	1	rps8	AADL03_pgp035	ribosomal protein S8	YP_011082244.1	74375	74779	-	1	11	none	complement(74375..74779)
+gene_072	gene	1	1	rpl14	AADL03_pgp034			74925	75293	-			none	complement(74925..75293)
+CDS_054	CDS	1	1	rpl14	AADL03_pgp034	ribosomal protein L14	YP_011082245.1	74925	75293	-	1	11	none	complement(74925..75293)
+gene_073	gene	1	1	rpl16	AADL03_pgp033			75432	76888	-			none	complement(75432..76888)
+CDS_055	CDS	1	2	rpl16	AADL03_pgp033	ribosomal protein L16	YP_011082246.1	75432	75830	-	1	11	none	complement(join(75432..75830,76880..76888))
+CDS_055	CDS	2	2	rpl16	AADL03_pgp033	ribosomal protein L16	YP_011082246.1	76880	76888	-	1	11	none	complement(join(75432..75830,76880..76888))
+gene_074	gene	1	1	rps3	AADL03_pgp032			77031	77687	-			none	complement(77031..77687)
+CDS_056	CDS	1	1	rps3	AADL03_pgp032	ribosomal protein S3	YP_011082247.1	77031	77687	-	1	11	none	complement(77031..77687)
+gene_075	gene	1	1	rpl22	AADL03_pgp031			77729	78115	-			none	complement(77729..78115)
+CDS_057	CDS	1	1	rpl22	AADL03_pgp031	ribosomal protein L22	YP_011082248.1	77729	78115	-	1	11	none	complement(77729..78115)
+misc_feature_001	misc_feature	1	1					78185	150260	-			none	complement(78185..150260)
+repeat_region_001	repeat_region	1	1					78186	104923	+			none	78186..104923
+gene_076	gene	1	1	rps19	AADL03_pgp030			78232	78510	-			none	complement(78232..78510)
+CDS_058	CDS	1	1	rps19	AADL03_pgp030	ribosomal protein S19	YP_011082249.1	78232	78510	-	1	11	none	complement(78232..78510)
+gene_077	gene	1	1	trnH-GUG	AADL03_pgt019			78649	78723	+			none	78649..78723
+tRNA_019	tRNA	1	1	trnH-GUG	AADL03_pgt019	tRNA-His		78649	78723	+			none	78649..78723
+gene_078	gene	1	1	trnH-GUG	AADL03_pgt020			78650	78723	+			none	78650..78723
+tRNA_020	tRNA	1	1	trnH-GUG	AADL03_pgt020	tRNA-His		78650	78723	+			none	78650..78723
+gene_079	gene	1	1	rpl2	AADL03_pgp029			78767	80269	-			none	complement(78767..80269)
+CDS_059	CDS	1	2	rpl2	AADL03_pgp029	ribosomal protein L2	YP_011082250.1	78767	79197	-	1	11	none	complement(join(78767..79197,79867..80269))
+CDS_059	CDS	2	2	rpl2	AADL03_pgp029	ribosomal protein L2	YP_011082250.1	79867	80269	-	1	11	none	complement(join(78767..79197,79867..80269))
+gene_080	gene	1	1	rpl23	AADL03_pgp028			80276	80557	-			none	complement(80276..80557)
+CDS_060	CDS	1	1	rpl23	AADL03_pgp028	ribosomal protein L23	YP_011082251.1	80276	80557	-	1	11	none	complement(80276..80557)
+gene_081	gene	1	1	trnM-CAU	AADL03_pgt021			80723	80796	-			none	complement(80723..80796)
+tRNA_021	tRNA	1	1	trnM-CAU	AADL03_pgt021	tRNA-Met		80723	80796	-			none	complement(80723..80796)
+gene_082	gene	1	1	ycf2	AADL03_pgp027			80865	87689	+			none	80865..87689
+CDS_061	CDS	1	1	ycf2	AADL03_pgp027	Ycf2 protein	YP_011082252.1	80865	87689	+	1	11	none	80865..87689
+gene_083	gene	1	1	trnL-CAA	AADL03_pgt022			88744	88824	-			none	complement(88744..88824)
+tRNA_022	tRNA	1	1	trnL-CAA	AADL03_pgt022	tRNA-Leu		88744	88824	-			none	complement(88744..88824)
+gene_084	gene	1	1	ndhB	AADL03_pgp026			89373	91605	-			none	complement(89373..91605)
+CDS_062	CDS	1	2	ndhB	AADL03_pgp026	NADH dehydrogenase subunit B	YP_011082253.1	89373	90128	-	1	11	none	complement(join(89373..90128,90829..91605))
+CDS_062	CDS	2	2	ndhB	AADL03_pgp026	NADH dehydrogenase subunit B	YP_011082253.1	90829	91605	-	1	11	none	complement(join(89373..90128,90829..91605))
+gene_085	gene	1	1	rps7	AADL03_pgp025			91918	92385	-			none	complement(91918..92385)
+CDS_063	CDS	1	1	rps7	AADL03_pgp025	ribosomal protein S7	YP_011082254.1	91918	92385	-	1	11	none	complement(91918..92385)
+gene_086	gene	1	1	trnV-GAC	AADL03_pgt023			94956	95027	+			none	94956..95027
+tRNA_023	tRNA	1	1	trnV-GAC	AADL03_pgt023	tRNA-Val		94956	95027	+			none	94956..95027
+gene_087	gene	1	1	rrn16	AADL03_pgr008			95259	96749	+			none	95259..96749
+rRNA_001	rRNA	1	1	rrn16	AADL03_pgr008	16S ribosomal RNA		95259	96749	+			none	95259..96749
+gene_088	gene	1	1	trnI-GAU	AADL03_pgt024			97066	98079	+			none	97066..98079
+tRNA_024	tRNA	1	2	trnI-GAU	AADL03_pgt024	tRNA-Ile		97066	97102	+			none	join(97066..97102,98045..98079)
+tRNA_024	tRNA	2	2	trnI-GAU	AADL03_pgt024	tRNA-Ile		98045	98079	+			none	join(97066..97102,98045..98079)
+gene_089	gene	1	1	trnA-UGC	AADL03_pgt025			98144	99017	+			none	98144..99017
+tRNA_025	tRNA	1	2	trnA-UGC	AADL03_pgt025	tRNA-Ala		98144	98181	+			none	join(98144..98181,98983..99017)
+tRNA_025	tRNA	2	2	trnA-UGC	AADL03_pgt025	tRNA-Ala		98983	99017	+			none	join(98144..98181,98983..99017)
+gene_090	gene	1	1	rrn23	AADL03_pgr007			99163	101973	+			none	99163..101973
+rRNA_002	rRNA	1	1	rrn23	AADL03_pgr007	23S ribosomal RNA		99163	101973	+			none	99163..101973
+gene_091	gene	1	1	rrn4.5	AADL03_pgr006			102072	102174	+			none	102072..102174
+rRNA_003	rRNA	1	1	rrn4.5	AADL03_pgr006	4.5S ribosomal RNA		102072	102174	+			none	102072..102174
+gene_092	gene	1	1	rrn5	AADL03_pgr005			102399	102519	+			none	102399..102519
+rRNA_004	rRNA	1	1	rrn5	AADL03_pgr005	5S ribosomal RNA		102399	102519	+			none	102399..102519
+gene_093	gene	1	1	trnR-ACG	AADL03_pgt026			102775	102848	+			none	102775..102848
+tRNA_026	tRNA	1	1	trnR-ACG	AADL03_pgt026	tRNA-Arg		102775	102848	+			none	102775..102848
+gene_094	gene	1	1	trnN-GUU	AADL03_pgt027			103438	103509	-			none	complement(103438..103509)
+tRNA_027	tRNA	1	1	trnN-GUU	AADL03_pgt027	tRNA-Asn		103438	103509	-			none	complement(103438..103509)
+gene_095	gene	1	1	ycf1	AADL03_pgp024			103826	104971	+			none	103826..104971
+CDS_064	CDS	1	1	ycf1	AADL03_pgp024	Ycf1 protein	YP_011082255.1	103826	104971	+	1	11	none	103826..104971
+misc_feature_002	misc_feature	1	1					104924	123521	+			none	104924..123521
+gene_096	gene	1	1	ndhF	AADL03_pgp023			104929	107139	-			none	complement(104929..107139)
+CDS_065	CDS	1	1	ndhF	AADL03_pgp023	NADH dehydrogenase subunit F	YP_011082256.1	104929	107139	-	1	11	none	complement(104929..107139)
+gene_097	gene	1	1	rpl32	AADL03_pgp022			108258	108431	+			none	108258..108431
+CDS_066	CDS	1	1	rpl32	AADL03_pgp022	ribosomal protein L32	YP_011082257.1	108258	108431	+	1	11	none	108258..108431
+gene_098	gene	1	1	trnL-UAG	AADL03_pgt028			109198	109277	+			none	109198..109277
+tRNA_028	tRNA	1	1	trnL-UAG	AADL03_pgt028	tRNA-Leu		109198	109277	+			none	109198..109277
+gene_099	gene	1	1	ccsA	AADL03_pgp021			109353	110312	+			none	109353..110312
+CDS_067	CDS	1	1	ccsA	AADL03_pgp021	cytochrome c biogenesis protein	YP_011082258.1	109353	110312	+	1	11	none	109353..110312
+gene_100	gene	1	1	ndhD	AADL03_pgp020			110578	112128	-			none	complement(110578..112128)
+CDS_068	CDS	1	1	ndhD	AADL03_pgp020	NADH dehydrogenase subunit D	YP_011082259.1	110578	112128	-	1	11	none	complement(110578..112128)
+gene_101	gene	1	1	psaC	AADL03_pgp019			112209	112454	-			none	complement(112209..112454)
+CDS_069	CDS	1	1	psaC	AADL03_pgp019	photosystem I subunit C	YP_011082260.1	112209	112454	-	1	11	none	complement(112209..112454)
+gene_102	gene	1	1	ndhE	AADL03_pgp018			112845	113150	-			none	complement(112845..113150)
+CDS_070	CDS	1	1	ndhE	AADL03_pgp018	NADH dehydrogenase subunit E	YP_011082261.1	112845	113150	-	1	11	none	complement(112845..113150)
+gene_103	gene	1	1	ndhG	AADL03_pgp017			113353	113883	-			none	complement(113353..113883)
+CDS_071	CDS	1	1	ndhG	AADL03_pgp017	NADH dehydrogenase subunit G	YP_011082262.1	113353	113883	-	1	11	none	complement(113353..113883)
+gene_104	gene	1	1	ndhI	AADL03_pgp016			114298	114840	-			none	complement(114298..114840)
+CDS_072	CDS	1	1	ndhI	AADL03_pgp016	NADH dehydrogenase subunit I	YP_011082263.1	114298	114840	-	1	11	none	complement(114298..114840)
+gene_105	gene	1	1	ndhA	AADL03_pgp015			114929	117086	-			none	complement(114929..117086)
+CDS_073	CDS	1	2	ndhA	AADL03_pgp015	NADH dehydrogenase subunit A	YP_011082264.1	114929	115468	-	1	11	none	complement(join(114929..115468,116538..117086))
+CDS_073	CDS	2	2	ndhA	AADL03_pgp015	NADH dehydrogenase subunit A	YP_011082264.1	116538	117086	-	1	11	none	complement(join(114929..115468,116538..117086))
+gene_106	gene	1	1	ndhH	AADL03_pgp014			117088	118269	-			none	complement(117088..118269)
+CDS_074	CDS	1	1	ndhH	AADL03_pgp014	NADH dehydrogenase subunit H	YP_011082265.1	117088	118269	-	1	11	none	complement(117088..118269)
+gene_107	gene	1	1	rps15	AADL03_pgp013			118374	118646	-			none	complement(118374..118646)
+CDS_075	CDS	1	1	rps15	AADL03_pgp013	ribosomal protein S15	YP_011082266.1	118374	118646	-	1	11	none	complement(118374..118646)
+gene_108	gene	1	1	ycf1	AADL03_pgp012			119049	124619	-			none	complement(119049..124619)
+CDS_076	CDS	1	1	ycf1	AADL03_pgp012	Ycf1 protein	YP_011082267.1	119049	124619	-	1	11	none	complement(119049..124619)
+repeat_region_002	repeat_region	1	1					123522	150259	+			none	123522..150259
+gene_109	gene	1	1	trnN-GUU	AADL03_pgt029			124936	125007	+			none	124936..125007
+tRNA_029	tRNA	1	1	trnN-GUU	AADL03_pgt029	tRNA-Asn		124936	125007	+			none	124936..125007
+gene_110	gene	1	1	trnR-ACG	AADL03_pgt030			125597	125670	-			none	complement(125597..125670)
+tRNA_030	tRNA	1	1	trnR-ACG	AADL03_pgt030	tRNA-Arg		125597	125670	-			none	complement(125597..125670)
+gene_111	gene	1	1	rrn5	AADL03_pgr004			125926	126046	-			none	complement(125926..126046)
+rRNA_005	rRNA	1	1	rrn5	AADL03_pgr004	5S ribosomal RNA		125926	126046	-			none	complement(125926..126046)
+gene_112	gene	1	1	rrn4.5	AADL03_pgr003			126271	126373	-			none	complement(126271..126373)
+rRNA_006	rRNA	1	1	rrn4.5	AADL03_pgr003	4.5S ribosomal RNA		126271	126373	-			none	complement(126271..126373)
+gene_113	gene	1	1	rrn23	AADL03_pgr002			126671	129282	-			none	complement(126671..129282)
+rRNA_007	rRNA	1	1	rrn23	AADL03_pgr002	23S ribosomal RNA		126671	129282	-			none	complement(126671..129282)
+gene_114	gene	1	1	trnA-UGC	AADL03_pgt031			129428	130301	-			none	complement(129428..130301)
+tRNA_031	tRNA	1	2	trnA-UGC	AADL03_pgt031	tRNA-Ala		129428	129462	-			none	complement(join(129428..129462,130264..130301))
+tRNA_031	tRNA	2	2	trnA-UGC	AADL03_pgt031	tRNA-Ala		130264	130301	-			none	complement(join(129428..129462,130264..130301))
+gene_115	gene	1	1	trnI-GAU	AADL03_pgt032			130366	131379	-			none	complement(130366..131379)
+tRNA_032	tRNA	1	2	trnI-GAU	AADL03_pgt032	tRNA-Ile		130366	130400	-			none	complement(join(130366..130400,131343..131379))
+tRNA_032	tRNA	2	2	trnI-GAU	AADL03_pgt032	tRNA-Ile		131343	131379	-			none	complement(join(130366..130400,131343..131379))
+gene_116	gene	1	1	rrn16	AADL03_pgr001			131696	133186	-			none	complement(131696..133186)
+rRNA_008	rRNA	1	1	rrn16	AADL03_pgr001	16S ribosomal RNA		131696	133186	-			none	complement(131696..133186)
+gene_117	gene	1	1	trnV-GAC	AADL03_pgt033			133418	133489	-			none	complement(133418..133489)
+tRNA_033	tRNA	1	1	trnV-GAC	AADL03_pgt033	tRNA-Val		133418	133489	-			none	complement(133418..133489)
+gene_118	gene	1	1	rps7	AADL03_pgp011			136060	136527	+			none	136060..136527
+CDS_077	CDS	1	1	rps7	AADL03_pgp011	ribosomal protein S7	YP_011082268.1	136060	136527	+	1	11	none	136060..136527
+gene_119	gene	1	1	ndhB	AADL03_pgp010			136840	139072	+			none	136840..139072
+CDS_078	CDS	1	2	ndhB	AADL03_pgp010	NADH dehydrogenase subunit B	YP_011082269.1	136840	137616	+	1	11	none	join(136840..137616,138317..139072)
+CDS_078	CDS	2	2	ndhB	AADL03_pgp010	NADH dehydrogenase subunit B	YP_011082269.1	138317	139072	+	1	11	none	join(136840..137616,138317..139072)
+gene_120	gene	1	1	trnL-CAA	AADL03_pgt034			139621	139701	+			none	139621..139701
+tRNA_034	tRNA	1	1	trnL-CAA	AADL03_pgt034	tRNA-Leu		139621	139701	+			none	139621..139701
+gene_121	gene	1	1	ycf2	AADL03_pgp009			140756	147580	-			none	complement(140756..147580)
+CDS_079	CDS	1	1	ycf2	AADL03_pgp009	Ycf2 protein	YP_011082270.1	140756	147580	-	1	11	none	complement(140756..147580)
+gene_122	gene	1	1	trnM-CAU	AADL03_pgt035			147649	147722	+			none	147649..147722
+tRNA_035	tRNA	1	1	trnM-CAU	AADL03_pgt035	tRNA-Met		147649	147722	+			none	147649..147722
+gene_123	gene	1	1	rpl23	AADL03_pgp008			147888	148169	+			none	147888..148169
+CDS_080	CDS	1	1	rpl23	AADL03_pgp008	ribosomal protein L23	YP_011082271.1	147888	148169	+	1	11	none	147888..148169
+gene_124	gene	1	1	rpl2	AADL03_pgp007			148176	149678	+			none	148176..149678
+CDS_081	CDS	1	2	rpl2	AADL03_pgp007	ribosomal protein L2	YP_011082272.1	148176	148578	+	1	11	none	join(148176..148578,149248..149678)
+CDS_081	CDS	2	2	rpl2	AADL03_pgp007	ribosomal protein L2	YP_011082272.1	149248	149678	+	1	11	none	join(148176..148578,149248..149678)
+gene_125	gene	1	1	trnH-GUG	AADL03_pgt036			149722	149796	-			none	complement(149722..149796)
+tRNA_036	tRNA	1	1	trnH-GUG	AADL03_pgt036	tRNA-His		149722	149796	-			none	complement(149722..149796)
+gene_126	gene	1	1	trnH-GUG	AADL03_pgt037			149722	149795	-			none	complement(149722..149795)
+tRNA_037	tRNA	1	1	trnH-GUG	AADL03_pgt037	tRNA-His		149722	149795	-			none	complement(149722..149795)
+gene_127	gene	1	1	rps19	AADL03_pgp006			149935	150213	+			none	149935..150213
+CDS_082	CDS	1	1	rps19	AADL03_pgp006	ribosomal protein S19	YP_011082273.1	149935	150213	+	1	11	none	149935..150213
+gene_128	gene	1	1	psbA	AADL03_pgp005			150335	151396	-			none	complement(150335..151396)
+CDS_083	CDS	1	1	psbA	AADL03_pgp005	photosystem II protein D1	YP_011082274.1	150335	151396	-	1	11	none	complement(150335..151396)
+gene_129	gene	1	1	trnK-UUU	AADL03_pgt038			151631	154321	-			none	complement(151631..154321)
+tRNA_038	tRNA	1	2	trnK-UUU	AADL03_pgt038	tRNA-Lys		151631	151665	-			none	complement(join(151631..151665,154285..154321))
+tRNA_038	tRNA	2	2	trnK-UUU	AADL03_pgt038	tRNA-Lys		154285	154321	-			none	complement(join(151631..151665,154285..154321))
+gene_130	gene	1	1	matK	AADL03_pgp004			151924	153459	-			none	complement(151924..153459)
+CDS_084	CDS	1	1	matK	AADL03_pgp004	maturase K	YP_011082275.1	151924	153459	-	1	11	none	complement(151924..153459)
+gene_131	gene	1	1	rps16	AADL03_pgp003			155020	156100	-			none	complement(155020..156100)
+CDS_085	CDS	1	2	rps16	AADL03_pgp003	ribosomal protein S16	YP_011082276.1	155020	155231	-	1	11	none	complement(join(155020..155231,156061..156100))
+CDS_085	CDS	2	2	rps16	AADL03_pgp003	ribosomal protein S16	YP_011082276.1	156061	156100	-	1	11	none	complement(join(155020..155231,156061..156100))
+gene_132	gene	1	1	trnQ-UUG	AADL03_pgt039			157593	157664	-			none	complement(157593..157664)
+tRNA_039	tRNA	1	1	trnQ-UUG	AADL03_pgt039	tRNA-Gln		157593	157664	-			none	complement(157593..157664)
+gene_133	gene	1	1	psbK	AADL03_pgp002			158010	158195	+			none	158010..158195
+CDS_086	CDS	1	1	psbK	AADL03_pgp002	photosystem II subunit K	YP_011082277.1	158010	158195	+	1	11	none	158010..158195
+gene_134	gene	1	1	psbI	AADL03_pgp001			158619	158729	+			none	158619..158729
+CDS_087	CDS	1	1	psbI	AADL03_pgp001	photosystem II subunit I	YP_011082278.1	158619	158729	+	1	11	none	158619..158729
+gene_135	gene	1	1	trnS-GCU	AADL03_pgt040			158861	158948	-			none	complement(158861..158948)
+tRNA_040	tRNA	1	1	trnS-GCU	AADL03_pgt040	tRNA-Ser		158861	158948	-			none	complement(158861..158948)

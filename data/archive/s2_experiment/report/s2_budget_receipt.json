@@ -1,0 +1,16 @@
+{
+  "receipt": "V3_S2_BUDGET_RECEIPT/v1",
+  "finished_at": "2026-10-18T11:35:19+00:00",
+  "s1_tokens": 98851,
+  "s2": {
+    "tokens_spent": 672830,
+    "tokens_reserved": 0,
+    "token_cap": 901149,
+    "tokens_remaining_effective": 228319,
+    "requests_spent": 302,
+    "request_cap": 390
+  },
+  "project_total_tokens": 771681,
+  "project_cap": 1000000,
+  "aborted_budget": false
+}

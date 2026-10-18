@@ -1,0 +1,161 @@
+{
+  "simulation": "offline_simulation",
+  "m1_failure_pool": [
+    {
+      "pool_version": "failure_cases.v1",
+      "simulation": "offline_simulation",
+      "generated_at": "2026-10-18T04:37:21+00:00",
+      "candidates_root": "D:\\1_yanjiusheng\\AssemblyGenomics-Copilot_V2\\data\\organelle_v2\\candidates",
+      "model": {
+        "provider": "siliconflow",
+        "model_id": "zai-org/GLM-5.3-Flash"
+      },
+      "counts": {
+        "cases_total": 40,
+        "failures": 6,
+        "high_risk_successes": 1,
+        "by_category": {
+          "model_planning_error": 1,
+          "tool_error": 0,
+          "infrastructure_error": 6,
+          "data_or_scoring_defect": 0,
+          "unclassified": 0
+        }
+      }
+    },
+    {
+      "pool_version": "failure_cases.v1",
+      "simulation": "offline_simulation",
+      "generated_at": "2026-10-18T04:37:21+00:00",
+      "candidates_root": "D:\\1_yanjiusheng\\AssemblyGenomics-Copilot_V2\\data\\organelle_v2\\candidates",
+      "model": {
+        "provider": "siliconflow",
+        "model_id": "deepseek-ai/DeepSeek-V4.1-Flash"
+      },
+      "counts": {
+        "cases_total": 40,
+        "failures": 0,
+        "high_risk_successes": 0,
+        "by_category": {
+          "model_planning_error": 0,
+          "tool_error": 0,
+          "infrastructure_error": 0,
+          "data_or_scoring_defect": 0,
+          "unclassified": 0
+        }
+      }
+    }
+  ],
+  "m1_entries_total": 7,
+  "m2_proposal": {
+    "proposed": true,
+    "candidates": [
+      {
+        "config_delta": {
+          "gateway_timeout_s": 240
+        },
+        "resulting_config": {
+          "max_tokens": 8192,
+          "gateway_timeout_s": 240,
+          "verify_pointer_cap": 50
+        },
+        "root_cause": "2 read timeout(s) at the current timeout",
+        "failure_refs": [
+          "FC-71bd96e766",
+          "FC-ad31fc73fe"
+        ],
+        "rollback_ref": "{\"gateway_timeout_s\": 120, \"max_tokens\": 8192, \"verify_pointer_cap\": 50}",
+        "proposer": "StrategyProposer",
+        "simulation": "offline_simulation"
+      }
+    ],
+    "refusals": [
+      "1 model_planning_error case(s): no whitelisted parameter remediates hallucinated pointers; a prompt change requires a human-authored prompt candidate (outside proposer scope)"
+    ]
+  },
+  "m3_state_machine": {
+    "final_status": "published",
+    "human_gate_blocked_publish_without_approval": true,
+    "published_config": {
+      "max_tokens": 8192,
+      "gateway_timeout_s": 60,
+      "verify_pointer_cap": 50
+    },
+    "receipts_dir": "D:\\1_yanjiusheng\\AssemblyGenomics-Copilot_V3\\data\\evolution\\receipts\\CAND-4096-to-8192"
+  },
+  "m3_auto_reject": {
+    "status": "rejected",
+    "reason": "judgment_pass_rate regressed: 0.85 -> 0.6"
+  },
+  "m4_e2_pool": {
+    "imported_from_v2": 0,
+    "v3_added": [],
+    "entries_total": 14,
+    "regression": {
+      "simulation": "offline_simulation",
+      "executed_at": "2026-10-18T04:37:33+00:00",
+      "results": [
+        {
+          "entry_id": "V3-0aca5887",
+          "family": "planner.hallucinated_pointer",
+          "test": "tests/unit/test_evolution.py::test_hallucinated_pointer_downgrades_validity",
+          "executed": true,
+          "passed": true,
+          "output_tail": "s' or allowed_objects='core') to suppress this warning.\n    from langgraph.checkpoint.serde.jsonplus import JsonPlusSerializer\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n"
+        },
+        {
+          "entry_id": "V3-3cfa3e9e",
+          "family": "contract.null_tool_name",
+          "test": "tests/unit/test_evolution.py::test_null_tool_name_normalised",
+          "executed": true,
+          "passed": true,
+          "output_tail": "s' or allowed_objects='core') to suppress this warning.\n    from langgraph.checkpoint.serde.jsonplus import JsonPlusSerializer\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n"
+        },
+        {
+          "entry_id": "V3-7925b414",
+          "family": "planner.output_truncation",
+          "test": "tests/unit/test_evolution.py::test_truncation_is_attributed",
+          "executed": true,
+          "passed": true,
+          "output_tail": "s' or allowed_objects='core') to suppress this warning.\n    from langgraph.checkpoint.serde.jsonplus import JsonPlusSerializer\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n"
+        },
+        {
+          "entry_id": "V3-E2-2026-001",
+          "family": "output.file_dump",
+          "test": "bench/organelle_v2/tests/test_e2_regressions.py::test_e2_001_file_dump_is_unscorable",
+          "executed": false,
+          "note": "V2-frozen test; evidence = V2 run receipts"
+        },
+        {
+          "entry_id": "V3-E2-2026-002",
+          "family": "evidence.empty_array_pass",
+          "test": "bench/organelle_v2/tests/test_scoring_contract.py::test_empty_evidence_fails_the_frozen_contract",
+          "executed": false,
+          "note": "V2-frozen test; evidence = V2 run receipts"
+        },
+        {
+          "entry_id": "V3-E2-2026-003",
+          "family": "output.short_echo",
+          "test": "bench/organelle_v2/tests/test_e2_regressions.py::test_e2_003_short_echo_is_unscorable",
+          "executed": false,
+          "note": "V2-frozen test; evidence = V2 run receipts"
+        },
+        {
+          "entry_id": "V3-E2-2026-004",
+          "family": "verifier.bare_path_semantics",
+          "test": "bench/organelle_v2/tests/test_e2_regressions.py::test_e2_004_bare_path_pointer_stays_unresolved",
+          "executed": false,
+          "note": "V2-frozen test; evidence = V2 run receipts"
+        },
+        {
+          "entry_id": "V3-E2-2026-005",
+          "family": "evidence.placeholder_unreadable",
+          "test": "bench/organelle_v2/tests/test_e2_regressions.py::test_e2_005_placeholder_with_resolvable_pointers_is_rule_layer_blind",
+          "executed": false,
+          "note": "V2-frozen test; evidence = V2 run receipts"
+        }
+      ],
+      "all_passed": true
+    }
+  }
+}

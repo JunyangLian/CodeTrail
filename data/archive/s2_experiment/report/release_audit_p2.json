@@ -1,0 +1,18 @@
+{
+  "audit": "V3_1_RELEASE_AUDIT_P2/v1",
+  "at": "2026-10-18T12:25:59+00:00",
+  "findings": {
+    "promptv2_registered": true,
+    "promptv2_sha_matches_all_B_receipts": true,
+    "active_is_promptv1": true,
+    "candidates_present": true,
+    "status_cap_validated": true,
+    "none_published": true,
+    "all_approvals_simulated": true,
+    "no_published_receipts": true,
+    "decision_is_accept_candidate": true
+  },
+  "all_ok": true,
+  "verdict": "PASS",
+  "note": "promptv2 is marked DEV-verified / pending approval; the publish gate requires record_approval(real=True) by a named human approver - not executed in this audit"
+}

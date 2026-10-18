@@ -1,0 +1,303 @@
+feature_id	feature_type	part_index	part_count	gene	locus_tag	product	protein_id	start	end	strand	codon_start	transl_table	partial_flags	location_raw
+source_001	source	1	1					1	156385	+			none	1..156385
+gene_001	gene	1	2	rps12	Q6C33_pgp042			99503	100306	-			none	complement(join(99503..100306,71444..71557))
+gene_001	gene	2	2	rps12	Q6C33_pgp042			71444	71557	-			none	complement(join(99503..100306,71444..71557))
+CDS_001	CDS	1	3	rps12	Q6C33_pgp042	ribosomal protein S12	YP_010891702.1	99503	99528	-	1	11	none	complement(join(99503..99528,100075..100306,71444..71557))
+CDS_001	CDS	2	3	rps12	Q6C33_pgp042	ribosomal protein S12	YP_010891702.1	100075	100306	-	1	11	none	complement(join(99503..99528,100075..100306,71444..71557))
+CDS_001	CDS	3	3	rps12	Q6C33_pgp042	ribosomal protein S12	YP_010891702.1	71444	71557	-	1	11	none	complement(join(99503..99528,100075..100306,71444..71557))
+gene_002	gene	1	1	trnH-GUG	Q6C33_pgt001			12	86	-			none	complement(12..86)
+tRNA_001	tRNA	1	1	trnH-GUG	Q6C33_pgt001	tRNA-His		12	86	-			none	complement(12..86)
+gene_003	gene	1	1	psbA	Q6C33_pgp087			491	1552	-			none	complement(491..1552)
+CDS_002	CDS	1	1	psbA	Q6C33_pgp087	photosystem II Q protein (D1)	YP_010891703.1	491	1552	-	1	11	none	complement(491..1552)
+gene_004	gene	1	1	trnK-UUU	Q6C33_pgt002			1814	4378	-			none	complement(1814..4378)
+tRNA_002	tRNA	1	2	trnK-UUU	Q6C33_pgt002	tRNA-Lys		1814	1848	-			none	complement(join(1814..1848,4342..4378))
+tRNA_002	tRNA	2	2	trnK-UUU	Q6C33_pgt002	tRNA-Lys		4342	4378	-			none	complement(join(1814..1848,4342..4378))
+gene_005	gene	1	1	matK	Q6C33_pgp086			2065	3609	-			none	complement(2065..3609)
+CDS_003	CDS	1	1	matK	Q6C33_pgp086	maturase K	YP_010891704.1	2065	3609	-	1	11	none	complement(2065..3609)
+gene_006	gene	1	1	rps16	Q6C33_pgp085			5406	6460	-			none	complement(5406..6460)
+CDS_004	CDS	1	2	rps16	Q6C33_pgp085	ribosomal protein S16	YP_010891705.1	5406	5617	-	1	11	none	complement(join(5406..5617,6421..6460))
+CDS_004	CDS	2	2	rps16	Q6C33_pgp085	ribosomal protein S16	YP_010891705.1	6421	6460	-	1	11	none	complement(join(5406..5617,6421..6460))
+gene_007	gene	1	1	trnQ-UUG	Q6C33_pgt003			7603	7674	-			none	complement(7603..7674)
+tRNA_003	tRNA	1	1	trnQ-UUG	Q6C33_pgt003	tRNA-Gln		7603	7674	-			none	complement(7603..7674)
+gene_008	gene	1	1	psbK	Q6C33_pgp084			8029	8214	+			none	8029..8214
+CDS_005	CDS	1	1	psbK	Q6C33_pgp084	photosystem II protein K	YP_010891706.1	8029	8214	+	1	11	none	8029..8214
+gene_009	gene	1	1	psbI	Q6C33_pgp083			8595	8705	+			none	8595..8705
+CDS_006	CDS	1	1	psbI	Q6C33_pgp083	photosystem II protein I	YP_010891707.1	8595	8705	+	1	11	none	8595..8705
+gene_010	gene	1	1	trnS-GCU	Q6C33_pgt004			8851	8938	-			none	complement(8851..8938)
+tRNA_004	tRNA	1	1	trnS-GCU	Q6C33_pgt004	tRNA-Ser		8851	8938	-			none	complement(8851..8938)
+gene_011	gene	1	1	trnG	Q6C33_pgt005			9798	10588	+			none	9798..10588
+tRNA_005	tRNA	1	2	trnG	Q6C33_pgt005	tRNA-Gly		9798	9820	+			none	join(9798..9820,10540..10588)
+tRNA_005	tRNA	2	2	trnG	Q6C33_pgt005	tRNA-Gly		10540	10588	+			none	join(9798..9820,10540..10588)
+gene_012	gene	1	1	trnR-UCU	Q6C33_pgt006			10803	10874	+			none	10803..10874
+tRNA_006	tRNA	1	1	trnR-UCU	Q6C33_pgt006	tRNA-Arg		10803	10874	+			none	10803..10874
+gene_013	gene	1	1	atpA	Q6C33_pgp082			11152	12675	-			none	complement(11152..12675)
+CDS_007	CDS	1	1	atpA	Q6C33_pgp082	ATP synthase CF1 alpha subunit	YP_010891708.1	11152	12675	-	1	11	none	complement(11152..12675)
+gene_014	gene	1	1	atpF	Q6C33_pgp081			12729	14041	-			none	complement(12729..14041)
+CDS_008	CDS	1	2	atpF	Q6C33_pgp081	ATP synthase CF0 B subunit	YP_010891709.1	12729	13139	-	1	11	none	complement(join(12729..13139,13883..14041))
+CDS_008	CDS	2	2	atpF	Q6C33_pgp081	ATP synthase CF0 B subunit	YP_010891709.1	13883	14041	-	1	11	none	complement(join(12729..13139,13883..14041))
+gene_015	gene	1	1	atpH	Q6C33_pgp080			14098	14343	-			none	complement(14098..14343)
+CDS_009	CDS	1	1	atpH	Q6C33_pgp080	ATP synthase CF0 C subunit	YP_010891710.1	14098	14343	-	1	11	none	complement(14098..14343)
+gene_016	gene	1	1	atpI	Q6C33_pgp079			15475	16218	-			none	complement(15475..16218)
+CDS_010	CDS	1	1	atpI	Q6C33_pgp079	ATP synthase CF0 A subunit	YP_010891711.1	15475	16218	-	1	11	none	complement(15475..16218)
+gene_017	gene	1	1	rps2	Q6C33_pgp078			16439	16840	-			none	complement(16439..16840)
+CDS_011	CDS	1	1	rps2	Q6C33_pgp078	ribosomal protein S2	YP_010891712.1	16439	16840	-	1	11	none	complement(16439..16840)
+gene_018	gene	1	1	rpoC2	Q6C33_pgp077			17319	21590	-			none	complement(17319..21590)
+CDS_012	CDS	1	1	rpoC2	Q6C33_pgp077	RNA polymerase beta'' subunit	YP_010891713.1	17319	21590	-	1	11	none	complement(17319..21590)
+gene_019	gene	1	1	rpoC1	Q6C33_pgp076			21664	24413	-			none	complement(21664..24413)
+CDS_013	CDS	1	2	rpoC1	Q6C33_pgp076	RNA polymerase beta' subunit	YP_010891714.1	21664	23289	-	1	11	none	complement(join(21664..23289,23979..24413))
+CDS_013	CDS	2	2	rpoC1	Q6C33_pgp076	RNA polymerase beta' subunit	YP_010891714.1	23979	24413	-	1	11	none	complement(join(21664..23289,23979..24413))
+gene_020	gene	1	1	rpoB	Q6C33_pgp075			24440	27652	-			none	complement(24440..27652)
+CDS_014	CDS	1	1	rpoB	Q6C33_pgp075	RNA polymerase beta subunit	YP_010891715.1	24440	27652	-	1	11	none	complement(24440..27652)
+gene_021	gene	1	1	trnC-GCA	Q6C33_pgt007			28811	28891	+			none	28811..28891
+tRNA_007	tRNA	1	1	trnC-GCA	Q6C33_pgt007	tRNA-Cys		28811	28891	+			none	28811..28891
+gene_022	gene	1	1	petN	Q6C33_pgp074			29267	29356	+			none	29267..29356
+CDS_015	CDS	1	1	petN	Q6C33_pgp074	cytochrome b6-f complex subunit VIII	YP_010891716.1	29267	29356	+	1	11	none	29267..29356
+gene_023	gene	1	1	psbM	Q6C33_pgp073			30127	30231	-			none	complement(30127..30231)
+CDS_016	CDS	1	1	psbM	Q6C33_pgp073	photosystem II protein M	YP_010891717.1	30127	30231	-	1	11	none	complement(30127..30231)
+gene_024	gene	1	1	trnD-GUC	Q6C33_pgt008			30814	30887	-			none	complement(30814..30887)
+tRNA_008	tRNA	1	1	trnD-GUC	Q6C33_pgt008	tRNA-Asp		30814	30887	-			none	complement(30814..30887)
+gene_025	gene	1	1	trnY-GUA	Q6C33_pgt009			31363	31446	-			none	complement(31363..31446)
+tRNA_009	tRNA	1	1	trnY-GUA	Q6C33_pgt009	tRNA-Tyr		31363	31446	-			none	complement(31363..31446)
+gene_026	gene	1	1	trnE-UUC	Q6C33_pgt010			31506	31578	-			none	complement(31506..31578)
+tRNA_010	tRNA	1	1	trnE-UUC	Q6C33_pgt010	tRNA-Glu		31506	31578	-			none	complement(31506..31578)
+gene_027	gene	1	1	trnT-GGU	Q6C33_pgt011			32369	32440	+			none	32369..32440
+tRNA_011	tRNA	1	1	trnT-GGU	Q6C33_pgt011	tRNA-Thr		32369	32440	+			none	32369..32440
+gene_028	gene	1	1	trnM-CAU	Q6C33_pgt012			32375	32433	+			none	32375..32433
+tRNA_012	tRNA	1	1	trnM-CAU	Q6C33_pgt012	tRNA-Met		32375	32433	+			none	32375..32433
+gene_029	gene	1	1	psbD	Q6C33_pgp072			33924	34985	+			none	33924..34985
+CDS_017	CDS	1	1	psbD	Q6C33_pgp072	photosystem II D2 protein	YP_010891718.1	33924	34985	+	1	11	none	33924..34985
+gene_030	gene	1	1	psbC	Q6C33_pgp071			34933	36354	+			none	34933..36354
+CDS_018	CDS	1	1	psbC	Q6C33_pgp071	photosystem II 44 kDa apoprotein	YP_010891719.1	34933	36354	+	1	11	none	34933..36354
+gene_031	gene	1	1	trnS-UGA	Q6C33_pgt013			36598	36689	-			none	complement(36598..36689)
+tRNA_013	tRNA	1	1	trnS-UGA	Q6C33_pgt013	tRNA-Ser		36598	36689	-			none	complement(36598..36689)
+gene_032	gene	1	1	psbZ	Q6C33_pgp070			37043	37231	+			none	37043..37231
+CDS_019	CDS	1	1	psbZ	Q6C33_pgp070	photosystem II protein Z	YP_010891720.1	37043	37231	+	1	11	none	37043..37231
+gene_033	gene	1	1	trnG	Q6C33_pgt014			37803	37873	+			none	37803..37873
+tRNA_014	tRNA	1	1	trnG	Q6C33_pgt014	tRNA-Gly		37803	37873	+			none	37803..37873
+gene_034	gene	1	1	trnfM-CAU	Q6C33_pgt015			38038	38111	-			none	complement(38038..38111)
+tRNA_015	tRNA	1	1	trnfM-CAU	Q6C33_pgt015	tRNA-fMet		38038	38111	-			none	complement(38038..38111)
+gene_035	gene	1	1	rps14	Q6C33_pgp069			38274	38576	-			none	complement(38274..38576)
+CDS_020	CDS	1	1	rps14	Q6C33_pgp069	ribosomal protein S14	YP_010891721.1	38274	38576	-	1	11	none	complement(38274..38576)
+gene_036	gene	1	1	psaB	Q6C33_pgp068			38722	40926	-			none	complement(38722..40926)
+CDS_021	CDS	1	1	psaB	Q6C33_pgp068	photosystem I P700 chlorophyll A apoprotein A2	YP_010891722.1	38722	40926	-	1	11	none	complement(38722..40926)
+gene_037	gene	1	1	psaA	Q6C33_pgp067			40952	43204	-			none	complement(40952..43204)
+CDS_022	CDS	1	1	psaA	Q6C33_pgp067	photosystem I P700 chlorophyll A apoprotein A1	YP_010891723.1	40952	43204	-	1	11	none	complement(40952..43204)
+gene_038	gene	1	1	ycf3	Q6C33_pgp066			43960	45926	-			none	complement(43960..45926)
+CDS_023	CDS	1	3	ycf3	Q6C33_pgp066	photosystem I assembly protein Ycf3	YP_010891724.1	43960	44112	-	1	11	none	complement(join(43960..44112,44845..45072,45798..45926))
+CDS_023	CDS	2	3	ycf3	Q6C33_pgp066	photosystem I assembly protein Ycf3	YP_010891724.1	44845	45072	-	1	11	none	complement(join(43960..44112,44845..45072,45798..45926))
+CDS_023	CDS	3	3	ycf3	Q6C33_pgp066	photosystem I assembly protein Ycf3	YP_010891724.1	45798	45926	-	1	11	none	complement(join(43960..44112,44845..45072,45798..45926))
+gene_039	gene	1	1	trnS-GGA	Q6C33_pgt016			46815	46901	+			none	46815..46901
+tRNA_016	tRNA	1	1	trnS-GGA	Q6C33_pgt016	tRNA-Ser		46815	46901	+			none	46815..46901
+gene_040	gene	1	1	rps4	Q6C33_pgp065			47136	47741	-			none	complement(47136..47741)
+CDS_024	CDS	1	1	rps4	Q6C33_pgp065	ribosomal protein S4	YP_010891725.1	47136	47741	-	1	11	none	complement(47136..47741)
+gene_041	gene	1	1	trnT-UGU	Q6C33_pgt017			48092	48164	-			none	complement(48092..48164)
+tRNA_017	tRNA	1	1	trnT-UGU	Q6C33_pgt017	tRNA-Thr		48092	48164	-			none	complement(48092..48164)
+gene_042	gene	1	1	trnL-UAA	Q6C33_pgt018			49304	49929	+			none	49304..49929
+tRNA_018	tRNA	1	2	trnL-UAA	Q6C33_pgt018	tRNA-Leu		49304	49340	+			none	join(49304..49340,49881..49929)
+tRNA_018	tRNA	2	2	trnL-UAA	Q6C33_pgt018	tRNA-Leu		49881	49929	+			none	join(49304..49340,49881..49929)
+gene_043	gene	1	1	trnF-GAA	Q6C33_pgt019			50271	50343	+			none	50271..50343
+tRNA_019	tRNA	1	1	trnF-GAA	Q6C33_pgt019	tRNA-Phe		50271	50343	+			none	50271..50343
+gene_044	gene	1	1	ndhJ	Q6C33_pgp064			51112	51588	-			none	complement(51112..51588)
+CDS_025	CDS	1	1	ndhJ	Q6C33_pgp064	NADH-plastoquinone oxidoreductase subunit J	YP_010891726.1	51112	51588	-	1	11	none	complement(51112..51588)
+gene_045	gene	1	1	ndhK	Q6C33_pgp063			51710	52399	-			none	complement(51710..52399)
+CDS_026	CDS	1	1	ndhK	Q6C33_pgp063	NADH-plastoquinone oxidoreductase subunit K	YP_010891727.1	51710	52399	-	1	11	none	complement(51710..52399)
+gene_046	gene	1	1	ndhC	Q6C33_pgp062			52458	52820	-			none	complement(52458..52820)
+CDS_027	CDS	1	1	ndhC	Q6C33_pgp062	NADH-plastoquinone oxidoreductase subunit 3	YP_010891728.1	52458	52820	-	1	11	none	complement(52458..52820)
+gene_047	gene	1	1	trnV-UAC	Q6C33_pgt020			53717	54383	-			none	complement(53717..54383)
+tRNA_020	tRNA	1	2	trnV-UAC	Q6C33_pgt020	tRNA-Val		53717	53753	-			none	complement(join(53717..53753,54345..54383))
+tRNA_020	tRNA	2	2	trnV-UAC	Q6C33_pgt020	tRNA-Val		54345	54383	-			none	complement(join(53717..53753,54345..54383))
+gene_048	gene	1	1	trnM-CAU	Q6C33_pgt021			54575	54646	+			none	54575..54646
+tRNA_021	tRNA	1	1	trnM-CAU	Q6C33_pgt021	tRNA-Met		54575	54646	+			none	54575..54646
+gene_049	gene	1	1	trnT-GGU	Q6C33_pgt022			54580	54638	+			none	54580..54638
+tRNA_022	tRNA	1	1	trnT-GGU	Q6C33_pgt022	tRNA-Thr		54580	54638	+			none	54580..54638
+gene_050	gene	1	1	atpE	Q6C33_pgp061			54878	55279	-			none	complement(54878..55279)
+CDS_028	CDS	1	1	atpE	Q6C33_pgp061	ATP synthase CF1 epsilon subunit	YP_010891729.1	54878	55279	-	1	11	none	complement(54878..55279)
+gene_051	gene	1	1	atpB	Q6C33_pgp060			55276	56772	-			none	complement(55276..56772)
+CDS_029	CDS	1	1	atpB	Q6C33_pgp060	ATP synthase CF1 beta subunit	YP_010891730.1	55276	56772	-	1	11	none	complement(55276..56772)
+gene_052	gene	1	1	rbcL	Q6C33_pgp059			57505	58932	+			none	57505..58932
+CDS_030	CDS	1	1	rbcL	Q6C33_pgp059	ribulose-1,5-bisphosphate carboxylase/oxygenaselarge subunit	YP_010891731.1	57505	58932	+	1	11	none	57505..58932
+gene_053	gene	1	1	accD	Q6C33_pgp058			59501	60982	+			none	59501..60982
+CDS_031	CDS	1	1	accD	Q6C33_pgp058	acetyl-CoA carboxylase carboxyl transferasebeta	YP_010891732.1	59501	60982	+	1	11	none	59501..60982
+gene_054	gene	1	1	psaI	Q6C33_pgp057			61683	61796	+			none	61683..61796
+CDS_032	CDS	1	1	psaI	Q6C33_pgp057	photosystem I reaction center subunit VIII	YP_010891733.1	61683	61796	+	1	11	none	61683..61796
+gene_055	gene	1	1	ycf4	Q6C33_pgp056			62219	62773	+			none	62219..62773
+CDS_033	CDS	1	1	ycf4	Q6C33_pgp056	photosystem I assembly protein Ycf4	YP_010891734.1	62219	62773	+	1	11	none	62219..62773
+gene_056	gene	1	1	cemA	Q6C33_pgp055			63351	64049	+			none	63351..64049
+CDS_034	CDS	1	1	cemA	Q6C33_pgp055	chloroplast envelope protein	YP_010891735.1	63351	64049	+	1	11	none	63351..64049
+gene_057	gene	1	1	petA	Q6C33_pgp054			64255	65217	+			none	64255..65217
+CDS_035	CDS	1	1	petA	Q6C33_pgp054	cytochrome f	YP_010891736.1	64255	65217	+	1	11	none	64255..65217
+gene_058	gene	1	1	psbJ	Q6C33_pgp053			65986	66108	-			none	complement(65986..66108)
+CDS_036	CDS	1	1	psbJ	Q6C33_pgp053	photosystem II protein J	YP_010891737.1	65986	66108	-	1	11	none	complement(65986..66108)
+gene_059	gene	1	1	psbL	Q6C33_pgp052			66258	66374	-			none	complement(66258..66374)
+CDS_037	CDS	1	1	psbL	Q6C33_pgp052	photosystem II protein L	YP_010891738.1	66258	66374	-	1	11	none	complement(66258..66374)
+gene_060	gene	1	1	psbF	Q6C33_pgp051			66397	66516	-			none	complement(66397..66516)
+CDS_038	CDS	1	1	psbF	Q6C33_pgp051	cytochrome b559 beta subunit	YP_010891739.1	66397	66516	-	1	11	none	complement(66397..66516)
+gene_061	gene	1	1	psbE	Q6C33_pgp050			66526	66777	-			none	complement(66526..66777)
+CDS_039	CDS	1	1	psbE	Q6C33_pgp050	cytochrome b559 alpha subunit	YP_010891740.1	66526	66777	-	1	11	none	complement(66526..66777)
+gene_062	gene	1	1	petL	Q6C33_pgp049			67547	67642	+			none	67547..67642
+CDS_040	CDS	1	1	petL	Q6C33_pgp049	cytochrome b6-f complex subunit VI	YP_010891741.1	67547	67642	+	1	11	none	67547..67642
+gene_063	gene	1	1	petG	Q6C33_pgp048			67826	67939	+			none	67826..67939
+CDS_041	CDS	1	1	petG	Q6C33_pgp048	cytochrome b6-f complex subunit V	YP_010891742.1	67826	67939	+	1	11	none	67826..67939
+gene_064	gene	1	1	trnW-CCA	Q6C33_pgt023			68081	68154	-			none	complement(68081..68154)
+tRNA_023	tRNA	1	1	trnW-CCA	Q6C33_pgt023	tRNA-Trp		68081	68154	-			none	complement(68081..68154)
+gene_065	gene	1	1	trnP-UGG	Q6C33_pgt024			68363	68436	-			none	complement(68363..68436)
+tRNA_024	tRNA	1	1	trnP-UGG	Q6C33_pgt024	tRNA-Pro		68363	68436	-			none	complement(68363..68436)
+gene_066	gene	1	1	trnP-GGG	Q6C33_pgt025			68365	68435	-			none	complement(68365..68435)
+tRNA_025	tRNA	1	1	trnP-GGG	Q6C33_pgt025	tRNA-Pro		68365	68435	-			none	complement(68365..68435)
+gene_067	gene	1	1	psaJ	Q6C33_pgp047			68788	68922	+			none	68788..68922
+CDS_042	CDS	1	1	psaJ	Q6C33_pgp047	photosystem I reaction center subunit IX	YP_010891743.1	68788	68922	+	1	11	none	68788..68922
+gene_068	gene	1	1	rpl33	Q6C33_pgp046			69386	69586	+			none	69386..69586
+CDS_043	CDS	1	1	rpl33	Q6C33_pgp046	ribosomal protein L33	YP_010891744.1	69386	69586	+	1	11	none	69386..69586
+gene_069	gene	1	1	rps18	Q6C33_pgp045			69789	70094	+			none	69789..70094
+CDS_044	CDS	1	1	rps18	Q6C33_pgp045	ribosomal protein S18	YP_010891745.1	69789	70094	+	1	11	none	69789..70094
+gene_070	gene	1	1	rpl20	Q6C33_pgp044			70368	70721	-			none	complement(70368..70721)
+CDS_045	CDS	1	1	rpl20	Q6C33_pgp044	ribosomal protein L20	YP_010891746.1	70368	70721	-	1	11	none	complement(70368..70721)
+gene_071	gene	1	2	rps12	Q6C33_pgp043			71444	71557	-			none	join(complement(71444..71557),142262..143065)
+gene_071	gene	2	2	rps12	Q6C33_pgp043			142262	143065	+			none	join(complement(71444..71557),142262..143065)
+CDS_046	CDS	1	3	rps12	Q6C33_pgp043	ribosomal protein S12	YP_010891747.1	71444	71557	-	1	11	none	join(complement(71444..71557),142262..142493, 143040..143065)
+CDS_046	CDS	2	3	rps12	Q6C33_pgp043	ribosomal protein S12	YP_010891747.1	142262	142493	+	1	11	none	join(complement(71444..71557),142262..142493, 143040..143065)
+CDS_046	CDS	3	3	rps12	Q6C33_pgp043	ribosomal protein S12	YP_010891747.1	143040	143065	+	1	11	none	join(complement(71444..71557),142262..142493, 143040..143065)
+gene_072	gene	1	1	clpP	Q6C33_pgp041			71715	73783	-			none	complement(71715..73783)
+CDS_047	CDS	1	3	clpP	Q6C33_pgp041	ClpP-like protease	YP_010891748.1	71715	71942	-	1	11	none	complement(join(71715..71942,72551..72841,73715..73783))
+CDS_047	CDS	2	3	clpP	Q6C33_pgp041	ClpP-like protease	YP_010891748.1	72551	72841	-	1	11	none	complement(join(71715..71942,72551..72841,73715..73783))
+CDS_047	CDS	3	3	clpP	Q6C33_pgp041	ClpP-like protease	YP_010891748.1	73715	73783	-	1	11	none	complement(join(71715..71942,72551..72841,73715..73783))
+gene_073	gene	1	1	psbB	Q6C33_pgp040			74212	75738	+			none	74212..75738
+CDS_048	CDS	1	1	psbB	Q6C33_pgp040	photosystem II p680 chlorophyll A apoprotein	YP_010891749.1	74212	75738	+	1	11	none	74212..75738
+gene_074	gene	1	1	psbT	Q6C33_pgp039			75929	76030	+			none	75929..76030
+CDS_049	CDS	1	1	psbT	Q6C33_pgp039	photosystem II protein T	YP_010891750.1	75929	76030	+	1	11	none	75929..76030
+gene_075	gene	1	1	psbN	Q6C33_pgp038			76096	76227	-			none	complement(76096..76227)
+CDS_050	CDS	1	1	psbN	Q6C33_pgp038	photosystem II protein N	YP_010891751.1	76096	76227	-	1	11	none	complement(76096..76227)
+gene_076	gene	1	1	psbH	Q6C33_pgp037			76332	76553	+			none	76332..76553
+CDS_051	CDS	1	1	psbH	Q6C33_pgp037	photosystem II 10 kDa phosphoprotein	YP_010891752.1	76332	76553	+	1	11	none	76332..76553
+gene_077	gene	1	1	petB	Q6C33_pgp036			76701	78170	+			none	76701..78170
+CDS_052	CDS	1	2	petB	Q6C33_pgp036	cytochrome b6	YP_010891753.1	76701	76706	+	1	11	none	join(76701..76706,77514..78170)
+CDS_052	CDS	2	2	petB	Q6C33_pgp036	cytochrome b6	YP_010891753.1	77514	78170	+	1	11	none	join(76701..76706,77514..78170)
+gene_078	gene	1	1	petD	Q6C33_pgp035			78369	79613	+			none	78369..79613
+CDS_053	CDS	1	2	petD	Q6C33_pgp035	cytochrome b6-f complex subunit IV	YP_010891754.1	78369	78377	+	1	11	none	join(78369..78377,79089..79613)
+CDS_053	CDS	2	2	petD	Q6C33_pgp035	cytochrome b6-f complex subunit IV	YP_010891754.1	79089	79613	+	1	11	none	join(78369..78377,79089..79613)
+gene_079	gene	1	1	rpoA	Q6C33_pgp034			79866	80843	-			none	complement(79866..80843)
+CDS_054	CDS	1	1	rpoA	Q6C33_pgp034	RNA polymerase alpha subunit	YP_010891755.1	79866	80843	-	1	11	none	complement(79866..80843)
+gene_080	gene	1	1	rps11	Q6C33_pgp033			80908	81324	-			none	complement(80908..81324)
+CDS_055	CDS	1	1	rps11	Q6C33_pgp033	ribosomal protein S11	YP_010891756.1	80908	81324	-	1	11	none	complement(80908..81324)
+gene_081	gene	1	1	rpl36	Q6C33_pgp032			81442	81555	-			none	complement(81442..81555)
+CDS_056	CDS	1	1	rpl36	Q6C33_pgp032	ribosomal protein L36	YP_010891757.1	81442	81555	-	1	11	none	complement(81442..81555)
+gene_082	gene	1	1	rps8	Q6C33_pgp031			82037	82441	-			none	complement(82037..82441)
+CDS_057	CDS	1	1	rps8	Q6C33_pgp031	ribosomal protein S8	YP_010891758.1	82037	82441	-	1	11	none	complement(82037..82441)
+gene_083	gene	1	1	rpl14	Q6C33_pgp030			82601	82969	-			none	complement(82601..82969)
+CDS_058	CDS	1	1	rpl14	Q6C33_pgp030	ribosomal protein L14	YP_010891759.1	82601	82969	-	1	11	none	complement(82601..82969)
+gene_084	gene	1	1	rpl16	Q6C33_pgp029			83101	84571	-			none	complement(83101..84571)
+CDS_059	CDS	1	2	rpl16	Q6C33_pgp029	ribosomal protein L16	YP_010891760.1	83101	83502	-	1	11	none	complement(join(83101..83502,84563..84571))
+CDS_059	CDS	2	2	rpl16	Q6C33_pgp029	ribosomal protein L16	YP_010891760.1	84563	84571	-	1	11	none	complement(join(83101..83502,84563..84571))
+gene_085	gene	1	1	rps3	Q6C33_pgp028			84744	85406	-			none	complement(84744..85406)
+CDS_060	CDS	1	1	rps3	Q6C33_pgp028	ribosomal protein S3	YP_010891761.1	84744	85406	-	1	11	none	complement(84744..85406)
+gene_086	gene	1	1	rpl22	Q6C33_pgp027			85391	85879	-			none	complement(85391..85879)
+CDS_061	CDS	1	1	rpl22	Q6C33_pgp027	ribosomal protein L22	YP_010891762.1	85391	85879	-	1	11	none	complement(85391..85879)
+gene_087	gene	1	1	rps19	Q6C33_pgp026			85918	86196	-			none	complement(85918..86196)
+CDS_062	CDS	1	1	rps19	Q6C33_pgp026	ribosomal protein S19	YP_010891763.1	85918	86196	-	1	11	none	complement(85918..86196)
+repeat_region_001	repeat_region	1	1					86183	112252	+			none	86183..112252
+gene_088	gene	1	1	rpl2	Q6C33_pgp025			86245	87733	-			none	complement(86245..87733)
+CDS_063	CDS	1	2	rpl2	Q6C33_pgp025	ribosomal protein L2	YP_010891764.1	86245	86679	-	1	11	none	complement(join(86245..86679,87341..87733))
+CDS_063	CDS	2	2	rpl2	Q6C33_pgp025	ribosomal protein L2	YP_010891764.1	87341	87733	-	1	11	none	complement(join(86245..86679,87341..87733))
+gene_089	gene	1	1	rpl23	Q6C33_pgp024			87752	88033	-			none	complement(87752..88033)
+CDS_064	CDS	1	1	rpl23	Q6C33_pgp024	ribosomal protein L23	YP_010891765.1	87752	88033	-	1	11	none	complement(87752..88033)
+gene_090	gene	1	1	trnI-CAU	Q6C33_pgt026			88199	88272	-			none	complement(88199..88272)
+tRNA_026	tRNA	1	1	trnI-CAU	Q6C33_pgt026	tRNA-Ile		88199	88272	-			none	complement(88199..88272)
+gene_091	gene	1	1	ycf2	Q6C33_pgp023			88361	95212	+			none	88361..95212
+CDS_065	CDS	1	1	ycf2	Q6C33_pgp023	Ycf2	YP_010891766.1	88361	95212	+	1	11	none	88361..95212
+gene_092	gene	1	1	trnL-CAA	Q6C33_pgt027			95770	95850	-			none	complement(95770..95850)
+tRNA_027	tRNA	1	1	trnL-CAA	Q6C33_pgt027	tRNA-Leu		95770	95850	-			none	complement(95770..95850)
+gene_093	gene	1	1	ndhB	Q6C33_pgp022			96437	98651	-			none	complement(96437..98651)
+CDS_066	CDS	1	2	ndhB	Q6C33_pgp022	NADH-plastoquinone oxidoreductase subunit 2	YP_010891767.1	96437	97192	-	1	11	none	complement(join(96437..97192,97875..98651))
+CDS_066	CDS	2	2	ndhB	Q6C33_pgp022	NADH-plastoquinone oxidoreductase subunit 2	YP_010891767.1	97875	98651	-	1	11	none	complement(join(96437..97192,97875..98651))
+gene_094	gene	1	1	rps7	Q6C33_pgp021			98982	99449	-			none	complement(98982..99449)
+CDS_067	CDS	1	1	rps7	Q6C33_pgp021	ribosomal protein S7	YP_010891768.1	98982	99449	-	1	11	none	complement(98982..99449)
+gene_095	gene	1	1	ycf15	Q6C33_pgp020			101323	101514	-			none	complement(101323..101514)
+CDS_068	CDS	1	1	ycf15	Q6C33_pgp020	Ycf15	YP_010891769.1	101323	101514	-	1	11	none	complement(101323..101514)
+gene_096	gene	1	1	trnV-GAC	Q6C33_pgt028			102118	102189	+			none	102118..102189
+tRNA_028	tRNA	1	1	trnV-GAC	Q6C33_pgt028	tRNA-Val		102118	102189	+			none	102118..102189
+gene_097	gene	1	1	rrn16	Q6C33_pgr008			102424	103913	+			none	102424..103913
+rRNA_001	rRNA	1	1	rrn16	Q6C33_pgr008	16S ribosomal RNA		102424	103913	+			none	102424..103913
+gene_098	gene	1	1	trnI-GAU	Q6C33_pgt029			104209	105239	+			none	104209..105239
+tRNA_029	tRNA	1	2	trnI-GAU	Q6C33_pgt029	tRNA-Ile		104209	104250	+			none	join(104209..104250,105205..105239)
+tRNA_029	tRNA	2	2	trnI-GAU	Q6C33_pgt029	tRNA-Ile		105205	105239	+			none	join(104209..104250,105205..105239)
+gene_099	gene	1	1	trnA-UGC	Q6C33_pgt030			105304	106183	+			none	105304..106183
+tRNA_030	tRNA	1	2	trnA-UGC	Q6C33_pgt030	tRNA-Ala		105304	105341	+			none	join(105304..105341,106149..106183)
+tRNA_030	tRNA	2	2	trnA-UGC	Q6C33_pgt030	tRNA-Ala		106149	106183	+			none	join(105304..105341,106149..106183)
+gene_100	gene	1	1	rrn23	Q6C33_pgr007			106340	109149	+			none	106340..109149
+rRNA_002	rRNA	1	1	rrn23	Q6C33_pgr007	23S ribosomal RNA		106340	109149	+			none	106340..109149
+gene_101	gene	1	1	rrn4.5	Q6C33_pgr006			109248	109350	+			none	109248..109350
+rRNA_003	rRNA	1	1	rrn4.5	Q6C33_pgr006	4.5S ribosomal RNA		109248	109350	+			none	109248..109350
+gene_102	gene	1	1	rrn5	Q6C33_pgr005			109573	109693	+			none	109573..109693
+rRNA_004	rRNA	1	1	rrn5	Q6C33_pgr005	5S ribosomal RNA		109573	109693	+			none	109573..109693
+gene_103	gene	1	1	trnR-ACG	Q6C33_pgt031			109948	110021	+			none	109948..110021
+tRNA_031	tRNA	1	1	trnR-ACG	Q6C33_pgt031	tRNA-Arg		109948	110021	+			none	109948..110021
+gene_104	gene	1	1	trnN-GUU	Q6C33_pgt032			110573	110644	-			none	complement(110573..110644)
+tRNA_032	tRNA	1	1	trnN-GUU	Q6C33_pgt032	tRNA-Asn		110573	110644	-			none	complement(110573..110644)
+gene_105	gene	1	1	ycf1	Q6C33_pgp019			110980	112269	+			none	110980..112269
+CDS_069	CDS	1	1	ycf1	Q6C33_pgp019	hypothetical chloroplast RF1	YP_010891770.1	110980	112269	+	1	11	none	110980..112269
+gene_106	gene	1	1	ndhF	Q6C33_pgp018			112203	114464	-			none	complement(112203..114464)
+CDS_070	CDS	1	1	ndhF	Q6C33_pgp018	NADH-plastoquinone oxidoreductase subunit 5	YP_010891771.1	112203	114464	-	1	11	none	complement(112203..114464)
+gene_107	gene	1	1	rpl32	Q6C33_pgp017			115220	115372	+			none	115220..115372
+CDS_071	CDS	1	1	rpl32	Q6C33_pgp017	ribosomal protein L32	YP_010891772.1	115220	115372	+	1	11	none	115220..115372
+gene_108	gene	1	1	trnL-UAG	Q6C33_pgt033			116449	116528	+			none	116449..116528
+tRNA_033	tRNA	1	1	trnL-UAG	Q6C33_pgt033	tRNA-Leu		116449	116528	+			none	116449..116528
+gene_109	gene	1	1	ccsA	Q6C33_pgp016			116639	117595	+			none	116639..117595
+CDS_072	CDS	1	1	ccsA	Q6C33_pgp016	cytochrome c biogenesis protein	YP_010891773.1	116639	117595	+	1	11	none	116639..117595
+gene_110	gene	1	1	ndhD	Q6C33_pgp015			117789	119279	-			none	complement(117789..119279)
+CDS_073	CDS	1	1	ndhD	Q6C33_pgp015	NADH-plastoquinone oxidoreductase subunit 4	YP_010891774.1	117789	119279	-	1	11	none	complement(117789..119279)
+gene_111	gene	1	1	psaC	Q6C33_pgp014			119473	119718	-			none	complement(119473..119718)
+CDS_074	CDS	1	1	psaC	Q6C33_pgp014	photosystem I iron-sulfur center	YP_010891775.1	119473	119718	-	1	11	none	complement(119473..119718)
+gene_112	gene	1	1	ndhE	Q6C33_pgp013			119961	120266	-			none	complement(119961..120266)
+CDS_075	CDS	1	1	ndhE	Q6C33_pgp013	NADH-plastoquinone oxidoreductase subunit 4L	YP_010891776.1	119961	120266	-	1	11	none	complement(119961..120266)
+gene_113	gene	1	1	ndhG	Q6C33_pgp012			120499	121035	-			none	complement(120499..121035)
+CDS_076	CDS	1	1	ndhG	Q6C33_pgp012	NADH-plastoquinone oxidoreductase subunit 6	YP_010891777.1	120499	121035	-	1	11	none	complement(120499..121035)
+gene_114	gene	1	1	ndhI	Q6C33_pgp011			121389	121892	-			none	complement(121389..121892)
+CDS_077	CDS	1	1	ndhI	Q6C33_pgp011	NADH-plastoquinone oxidoreductase subunit I	YP_010891778.1	121389	121892	-	1	11	none	complement(121389..121892)
+gene_115	gene	1	1	ndhA	Q6C33_pgp010			121971	124156	-			none	complement(121971..124156)
+CDS_078	CDS	1	2	ndhA	Q6C33_pgp010	NADH-plastoquinone oxidoreductase subunit 1	YP_010891779.1	121971	122510	-	1	11	none	complement(join(121971..122510,123605..124156))
+CDS_078	CDS	2	2	ndhA	Q6C33_pgp010	NADH-plastoquinone oxidoreductase subunit 1	YP_010891779.1	123605	124156	-	1	11	none	complement(join(121971..122510,123605..124156))
+gene_116	gene	1	1	ndhH	Q6C33_pgp009			124158	125339	-			none	complement(124158..125339)
+CDS_079	CDS	1	1	ndhH	Q6C33_pgp009	NADH-plastoquinone oxidoreductase 49 kDasubunit	YP_010891780.1	124158	125339	-	1	11	none	complement(124158..125339)
+gene_117	gene	1	1	rps15	Q6C33_pgp008			125444	125716	-			none	complement(125444..125716)
+CDS_080	CDS	1	1	rps15	Q6C33_pgp008	ribosomal protein S15	YP_010891781.1	125444	125716	-	1	11	none	complement(125444..125716)
+gene_118	gene	1	1	ycf1	Q6C33_pgp007			126084	131588	-			none	complement(126084..131588)
+CDS_081	CDS	1	1	ycf1	Q6C33_pgp007	hypothetical chloroplast RF1	YP_010891782.1	126084	131588	-	1	11	none	complement(126084..131588)
+repeat_region_002	repeat_region	1	1					130316	156385	-			none	complement(130316..156385)
+gene_119	gene	1	1	trnN-GUU	Q6C33_pgt034			131924	131995	+			none	131924..131995
+tRNA_034	tRNA	1	1	trnN-GUU	Q6C33_pgt034	tRNA-Asn		131924	131995	+			none	131924..131995
+gene_120	gene	1	1	trnR-ACG	Q6C33_pgt035			132547	132620	-			none	complement(132547..132620)
+tRNA_035	tRNA	1	1	trnR-ACG	Q6C33_pgt035	tRNA-Arg		132547	132620	-			none	complement(132547..132620)
+gene_121	gene	1	1	rrn5	Q6C33_pgr004			132875	132995	-			none	complement(132875..132995)
+rRNA_005	rRNA	1	1	rrn5	Q6C33_pgr004	5S ribosomal RNA		132875	132995	-			none	complement(132875..132995)
+gene_122	gene	1	1	rrn4.5	Q6C33_pgr003			133218	133320	-			none	complement(133218..133320)
+rRNA_006	rRNA	1	1	rrn4.5	Q6C33_pgr003	4.5S ribosomal RNA		133218	133320	-			none	complement(133218..133320)
+gene_123	gene	1	1	rrn23	Q6C33_pgr002			133419	136228	-			none	complement(133419..136228)
+rRNA_007	rRNA	1	1	rrn23	Q6C33_pgr002	23S ribosomal RNA		133419	136228	-			none	complement(133419..136228)
+gene_124	gene	1	1	trnA-UGC	Q6C33_pgt036			136385	137264	-			none	complement(136385..137264)
+tRNA_036	tRNA	1	2	trnA-UGC	Q6C33_pgt036	tRNA-Ala		136385	136419	-			none	complement(join(136385..136419,137227..137264))
+tRNA_036	tRNA	2	2	trnA-UGC	Q6C33_pgt036	tRNA-Ala		137227	137264	-			none	complement(join(136385..136419,137227..137264))
+gene_125	gene	1	1	trnI-GAU	Q6C33_pgt037			137329	138359	-			none	complement(137329..138359)
+tRNA_037	tRNA	1	2	trnI-GAU	Q6C33_pgt037	tRNA-Ile		137329	137363	-			none	complement(join(137329..137363,138318..138359))
+tRNA_037	tRNA	2	2	trnI-GAU	Q6C33_pgt037	tRNA-Ile		138318	138359	-			none	complement(join(137329..137363,138318..138359))
+gene_126	gene	1	1	rrn16	Q6C33_pgr001			138654	140143	-			none	complement(138654..140143)
+rRNA_008	rRNA	1	1	rrn16	Q6C33_pgr001	16S ribosomal RNA		138654	140143	-			none	complement(138654..140143)
+gene_127	gene	1	1	trnV-GAC	Q6C33_pgt038			140379	140450	-			none	complement(140379..140450)
+tRNA_038	tRNA	1	1	trnV-GAC	Q6C33_pgt038	tRNA-Val		140379	140450	-			none	complement(140379..140450)
+gene_128	gene	1	1	ycf15	Q6C33_pgp006			141054	141245	+			none	141054..141245
+CDS_082	CDS	1	1	ycf15	Q6C33_pgp006	Ycf15	YP_010891783.1	141054	141245	+	1	11	none	141054..141245
+gene_129	gene	1	1	rps7	Q6C33_pgp005			143119	143586	+			none	143119..143586
+CDS_083	CDS	1	1	rps7	Q6C33_pgp005	ribosomal protein S7	YP_010891784.1	143119	143586	+	1	11	none	143119..143586
+gene_130	gene	1	1	ndhB	Q6C33_pgp004			143917	146131	+			none	143917..146131
+CDS_084	CDS	1	2	ndhB	Q6C33_pgp004	NADH-plastoquinone oxidoreductase subunit 2	YP_010891785.1	143917	144693	+	1	11	none	join(143917..144693,145376..146131)
+CDS_084	CDS	2	2	ndhB	Q6C33_pgp004	NADH-plastoquinone oxidoreductase subunit 2	YP_010891785.1	145376	146131	+	1	11	none	join(143917..144693,145376..146131)
+gene_131	gene	1	1	trnL-CAA	Q6C33_pgt039			146718	146798	+			none	146718..146798
+tRNA_039	tRNA	1	1	trnL-CAA	Q6C33_pgt039	tRNA-Leu		146718	146798	+			none	146718..146798
+gene_132	gene	1	1	ycf2	Q6C33_pgp003			147356	154207	-			none	complement(147356..154207)
+CDS_085	CDS	1	1	ycf2	Q6C33_pgp003	Ycf2	YP_010891786.1	147356	154207	-	1	11	none	complement(147356..154207)
+gene_133	gene	1	1	trnI-CAU	Q6C33_pgt040			154296	154369	+			none	154296..154369
+tRNA_040	tRNA	1	1	trnI-CAU	Q6C33_pgt040	tRNA-Ile		154296	154369	+			none	154296..154369
+gene_134	gene	1	1	rpl23	Q6C33_pgp002			154535	154816	+			none	154535..154816
+CDS_086	CDS	1	1	rpl23	Q6C33_pgp002	ribosomal protein L23	YP_010891787.1	154535	154816	+	1	11	none	154535..154816
+gene_135	gene	1	1	rpl2	Q6C33_pgp001			154835	156323	+			none	154835..156323
+CDS_087	CDS	1	2	rpl2	Q6C33_pgp001	ribosomal protein L2	YP_010891788.1	154835	155224	+	1	11	none	join(154835..155224,155889..156323)
+CDS_087	CDS	2	2	rpl2	Q6C33_pgp001	ribosomal protein L2	YP_010891788.1	155889	156323	+	1	11	none	join(154835..155224,155889..156323)

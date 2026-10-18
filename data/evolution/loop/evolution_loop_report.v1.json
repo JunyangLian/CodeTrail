@@ -1,0 +1,72 @@
+{
+  "simulation": "offline_simulation",
+  "started_at": "2026-10-18T06:45:18+00:00",
+  "stages": {
+    "regression_gate": {
+      "formal_entries": 8,
+      "executed": 3,
+      "all_passed": true,
+      "note": "executed deterministic regressions",
+      "verdict": "PASS"
+    },
+    "data_flywheel": {
+      "ingested": 0,
+      "skipped_duplicate": 7,
+      "pending_after": 1,
+      "simulated_review_pool_entry": "V3-3d7aa61d",
+      "simulated_review_promoted": false,
+      "pool_status_of_reviewed": "candidate",
+      "note": "user uploads are excluded by default (flag data_flywheel_auto_ingest=False); simulated review keeps the entry at candidate"
+    },
+    "failure_analyzer": {
+      "entries": 7,
+      "categories": {
+        "infrastructure_error": 6,
+        "model_planning_error": 1
+      },
+      "source": "historical trace replay"
+    },
+    "strategy_proposer": {
+      "config_candidates": [
+        {
+          "config_delta": {
+            "gateway_timeout_s": 240
+          },
+          "resulting_config": {
+            "max_tokens": 8192,
+            "gateway_timeout_s": 240,
+            "verify_pointer_cap": 50
+          },
+          "root_cause": "2 read timeout(s) at the current timeout",
+          "failure_refs": [
+            "FC-71bd96e766",
+            "FC-ad31fc73fe"
+          ],
+          "rollback_ref": "{\"gateway_timeout_s\": 120, \"max_tokens\": 8192, \"verify_pointer_cap\": 50}",
+          "proposer": "StrategyProposer",
+          "simulation": "offline_simulation"
+        }
+      ],
+      "refusals": [
+        "1 model_planning_error case(s): no whitelisted parameter remediates hallucinated pointers; a prompt change requires a human-authored prompt candidate (outside proposer scope)"
+      ],
+      "behavior_policy_proposed": true,
+      "behavior_status": "validated",
+      "status_cap": "validated"
+    },
+    "shadow_ab": {
+      "runs": 2,
+      "status": "shadow_tested",
+      "carrier": "CAND-loop-shadow-demo",
+      "strategy": "behavior-policy guards"
+    },
+    "promotion_gate": {
+      "simulated_approval_blocked_publishing": true,
+      "active_strategy_unchanged": true,
+      "candidate_status": "shadow_tested",
+      "capped_candidate_untouched": true
+    }
+  },
+  "verdict": "offline chain complete; human gates pending",
+  "finished_at": "2026-10-18T06:45:32+00:00"
+}

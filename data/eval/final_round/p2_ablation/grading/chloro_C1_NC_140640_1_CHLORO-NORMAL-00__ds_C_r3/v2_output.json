@@ -1,0 +1,32 @@
+{
+  "verdict": "pass",
+  "observed_defect": "",
+  "root_cause": "none",
+  "evidence": [
+    {
+      "pointer": "artifacts/sequence_stats.json:coordinate_system",
+      "note": "stats_consistency"
+    },
+    {
+      "pointer": "artifacts/sequence_stats.json:feature_counts",
+      "note": "stats_consistency"
+    },
+    {
+      "pointer": "artifacts/sequence_stats.json:gc_percent",
+      "note": "stats_consistency"
+    },
+    {
+      "pointer": "artifacts/sequence_stats.json:genome_record_count",
+      "note": "stats_consistency"
+    },
+    {
+      "pointer": "artifacts/sequence_stats.json:protein_count",
+      "note": "stats_consistency"
+    },
+    {
+      "pointer": "artifacts/sequence_stats.json:sequence_length",
+      "note": "stats_consistency"
+    }
+  ],
+  "action": "deliverable as-is"
+}

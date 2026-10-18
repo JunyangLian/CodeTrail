@@ -1,0 +1,334 @@
+feature_id	feature_type	part_index	part_count	gene	locus_tag	product	protein_id	start	end	strand	codon_start	transl_table	partial_flags	location_raw
+source_001	source	1	1					1	157521	+			none	1..157521
+gene_001	gene	1	2	rps12	QLP19_pgp041			100335	101129	-			none	complement(join(100335..101129,72016..72129))
+gene_001	gene	2	2	rps12	QLP19_pgp041			72016	72129	-			none	complement(join(100335..101129,72016..72129))
+CDS_001	CDS	1	3	rps12	QLP19_pgp041	ribosomal protein S12	YP_010834394.2	100335	100360	-	1	11	none	complement(join(100335..100360,100898..101129, 72016..72129))
+CDS_001	CDS	2	3	rps12	QLP19_pgp041	ribosomal protein S12	YP_010834394.2	100898	101129	-	1	11	none	complement(join(100335..100360,100898..101129, 72016..72129))
+CDS_001	CDS	3	3	rps12	QLP19_pgp041	ribosomal protein S12	YP_010834394.2	72016	72129	-	1	11	none	complement(join(100335..100360,100898..101129, 72016..72129))
+misc_feature_001	misc_feature	1	1					1	86651	+			none	1..86651
+gene_002	gene	1	1	trnH-GUG	QLP19_pgt001			7	80	-			none	complement(7..80)
+tRNA_001	tRNA	1	1	trnH-GUG	QLP19_pgt001	tRNA-His		7	80	-			none	complement(7..80)
+gene_003	gene	1	1	psbA	QLP19_pgp086			358	1419	-			none	complement(358..1419)
+CDS_002	CDS	1	1	psbA	QLP19_pgp086	photosystem II protein D1	YP_010834395.1	358	1419	-	1	11	none	complement(358..1419)
+gene_004	gene	1	1	trnK-UUU	QLP19_pgt002			1674	4263	-			none	complement(1674..4263)
+tRNA_002	tRNA	1	2	trnK-UUU	QLP19_pgt002	tRNA-Lys		1674	1708	-			none	complement(join(1674..1708,4227..4263))
+tRNA_002	tRNA	2	2	trnK-UUU	QLP19_pgt002	tRNA-Lys		4227	4263	-			none	complement(join(1674..1708,4227..4263))
+exon_001	exon	1	1	trnK-UUU	QLP19_pgt002			1674	1708	-			none	complement(1674..1708)
+gene_005	gene	1	1	matK	QLP19_pgp085			1977	3503	-			none	complement(1977..3503)
+CDS_003	CDS	1	1	matK	QLP19_pgp085	maturase K	YP_010834396.1	1977	3503	-	1	11	none	complement(1977..3503)
+exon_002	exon	1	1	trnK-UUU	QLP19_pgt002			4227	4263	-			none	complement(4227..4263)
+gene_006	gene	1	1	trnT-UGU	QLP19_pgt003			5042	5114	-			none	complement(5042..5114)
+tRNA_003	tRNA	1	1	trnT-UGU	QLP19_pgt003	tRNA-Thr		5042	5114	-			none	complement(5042..5114)
+gene_007	gene	1	1	rps4	QLP19_pgp084			5469	6074	+			none	5469..6074
+CDS_004	CDS	1	1	rps4	QLP19_pgp084	ribosomal protein S4	YP_010834397.1	5469	6074	+	1	11	none	5469..6074
+gene_008	gene	1	1	trnS-GGA	QLP19_pgt004			6401	6487	-			none	complement(6401..6487)
+tRNA_004	tRNA	1	1	trnS-GGA	QLP19_pgt004	tRNA-Ser		6401	6487	-			none	complement(6401..6487)
+gene_009	gene	1	1	ycf3	QLP19_pgp083			7344	9314	+			none	7344..9314
+CDS_005	CDS	1	3	ycf3	QLP19_pgp083	photosystem I assembly factor I	YP_010834398.1	7344	7468	+	1	11	none	join(7344..7468,8182..8410,9156..9314)
+CDS_005	CDS	2	3	ycf3	QLP19_pgp083	photosystem I assembly factor I	YP_010834398.1	8182	8410	+	1	11	none	join(7344..7468,8182..8410,9156..9314)
+CDS_005	CDS	3	3	ycf3	QLP19_pgp083	photosystem I assembly factor I	YP_010834398.1	9156	9314	+	1	11	none	join(7344..7468,8182..8410,9156..9314)
+exon_003	exon	1	1	ycf3	QLP19_pgp083			7344	7468	+			none	7344..7468
+exon_004	exon	1	1	ycf3	QLP19_pgp083			8182	8410	+			none	8182..8410
+exon_005	exon	1	1	ycf3	QLP19_pgp083			9156	9314	+			none	9156..9314
+gene_010	gene	1	1	psaA	QLP19_pgp082			9951	12203	+			none	9951..12203
+CDS_006	CDS	1	1	psaA	QLP19_pgp082	photosystem I P700 apoprotein A1	YP_010834399.1	9951	12203	+	1	11	none	9951..12203
+gene_011	gene	1	1	psaB	QLP19_pgp081			12229	14433	+			none	12229..14433
+CDS_007	CDS	1	1	psaB	QLP19_pgp081	photosystem I P700 apoprotein A2	YP_010834400.1	12229	14433	+	1	11	none	12229..14433
+gene_012	gene	1	1	rps14	QLP19_pgp080			14575	14877	+			none	14575..14877
+CDS_008	CDS	1	1	rps14	QLP19_pgp080	ribosomal protein S14	YP_010834401.1	14575	14877	+	1	11	none	14575..14877
+gene_013	gene	1	1	trnfM-CAU	QLP19_pgt005			15038	15111	+			none	15038..15111
+tRNA_005	tRNA	1	1	trnfM-CAU	QLP19_pgt005	tRNA-fMet		15038	15111	+			none	15038..15111
+gene_014	gene	1	1	trnG-GCC	QLP19_pgt006			15293	15363	-			none	complement(15293..15363)
+tRNA_006	tRNA	1	1	trnG-GCC	QLP19_pgt006	tRNA-Gly		15293	15363	-			none	complement(15293..15363)
+gene_015	gene	1	1	psbZ	QLP19_pgp079			15747	15935	-			none	complement(15747..15935)
+CDS_009	CDS	1	1	psbZ	QLP19_pgp079	photosystem II subunit Z	YP_010834402.1	15747	15935	-	1	11	none	complement(15747..15935)
+gene_016	gene	1	1	trnS-UGA	QLP19_pgt007			16298	16390	+			none	16298..16390
+tRNA_007	tRNA	1	1	trnS-UGA	QLP19_pgt007	tRNA-Ser		16298	16390	+			none	16298..16390
+gene_017	gene	1	1	psbC	QLP19_pgp078			16579	18000	-			none	complement(16579..18000)
+CDS_010	CDS	1	1	psbC	QLP19_pgp078	photosystem II 43 kDa protein	YP_010834403.1	16579	18000	-	1	11	none	complement(16579..18000)
+gene_018	gene	1	1	psbD	QLP19_pgp077			17948	19009	-			none	complement(17948..19009)
+CDS_011	CDS	1	1	psbD	QLP19_pgp077	photosystem II protein D2	YP_010834404.1	17948	19009	-	1	11	none	complement(17948..19009)
+gene_019	gene	1	1	trnT-GGU	QLP19_pgt008			20497	20568	-			none	complement(20497..20568)
+tRNA_008	tRNA	1	1	trnT-GGU	QLP19_pgt008	tRNA-Thr		20497	20568	-			none	complement(20497..20568)
+gene_020	gene	1	1	trnE-UUC	QLP19_pgt009			21265	21337	+			none	21265..21337
+tRNA_009	tRNA	1	1	trnE-UUC	QLP19_pgt009	tRNA-Glu		21265	21337	+			none	21265..21337
+gene_021	gene	1	1	trnY-GUA	QLP19_pgt010			21397	21480	+			none	21397..21480
+tRNA_010	tRNA	1	1	trnY-GUA	QLP19_pgt010	tRNA-Tyr		21397	21480	+			none	21397..21480
+gene_022	gene	1	1	trnD-GUC	QLP19_pgt011			21909	21980	+			none	21909..21980
+tRNA_011	tRNA	1	1	trnD-GUC	QLP19_pgt011	tRNA-Asp		21909	21980	+			none	21909..21980
+gene_023	gene	1	1	psbM	QLP19_pgp076			22586	22690	+			none	22586..22690
+CDS_012	CDS	1	1	psbM	QLP19_pgp076	photosystem II subunit M	YP_010834405.1	22586	22690	+	1	11	none	22586..22690
+gene_024	gene	1	1	petN	QLP19_pgp075			23871	23960	-			none	complement(23871..23960)
+CDS_013	CDS	1	1	petN	QLP19_pgp075	cytochrome b6/f subunit N	YP_010834406.1	23871	23960	-	1	11	none	complement(23871..23960)
+gene_025	gene	1	1	trnC-GCA	QLP19_pgt012			24816	24886	-			none	complement(24816..24886)
+tRNA_012	tRNA	1	1	trnC-GCA	QLP19_pgt012	tRNA-Cys		24816	24886	-			none	complement(24816..24886)
+gene_026	gene	1	1	rpoB	QLP19_pgp074			26154	29369	+			none	26154..29369
+CDS_014	CDS	1	1	rpoB	QLP19_pgp074	RNA polymerase beta subunit	YP_010834407.1	26154	29369	+	1	11	none	26154..29369
+gene_027	gene	1	1	rpoC1	QLP19_pgp073			29396	32198	+			none	29396..32198
+CDS_015	CDS	1	2	rpoC1	QLP19_pgp073	RNA polymerase beta' subunit	YP_010834408.1	29396	29827	+	1	11	none	join(29396..29827,30594..32198)
+CDS_015	CDS	2	2	rpoC1	QLP19_pgp073	RNA polymerase beta' subunit	YP_010834408.1	30594	32198	+	1	11	none	join(29396..29827,30594..32198)
+exon_006	exon	1	1	rpoC1	QLP19_pgp073			29396	29827	+			none	29396..29827
+exon_007	exon	1	1	rpoC1	QLP19_pgp073			30594	32198	+			none	30594..32198
+gene_028	gene	1	1	rpoC2	QLP19_pgp072			32374	36519	+			none	32374..36519
+CDS_016	CDS	1	1	rpoC2	QLP19_pgp072	RNA polymerase beta'' subunit	YP_010834409.1	32374	36519	+	1	11	none	32374..36519
+gene_029	gene	1	1	rps2	QLP19_pgp071			36695	37405	+			none	36695..37405
+CDS_017	CDS	1	1	rps2	QLP19_pgp071	ribosomal protein S2	YP_010834410.1	36695	37405	+	1	11	none	36695..37405
+gene_030	gene	1	1	atpI	QLP19_pgp070			37624	38367	+			none	37624..38367
+CDS_018	CDS	1	1	atpI	QLP19_pgp070	CF0 subunit IV	YP_010834411.1	37624	38367	+	1	11	none	37624..38367
+gene_031	gene	1	1	atpH	QLP19_pgp069			39345	39590	+			none	39345..39590
+CDS_019	CDS	1	1	atpH	QLP19_pgp069	CF0 subunit III	YP_010834412.1	39345	39590	+	1	11	none	39345..39590
+gene_032	gene	1	1	atpF	QLP19_pgp068			40076	41372	+			none	40076..41372
+CDS_020	CDS	1	2	atpF	QLP19_pgp068	CF0 subunit I	YP_010834413.1	40076	40219	+	1	11	none	join(40076..40219,40962..41372)
+CDS_020	CDS	2	2	atpF	QLP19_pgp068	CF0 subunit I	YP_010834413.1	40962	41372	+	1	11	none	join(40076..40219,40962..41372)
+exon_008	exon	1	1	atpF	QLP19_pgp068			40076	40219	+			none	40076..40219
+exon_009	exon	1	1	atpF	QLP19_pgp068			40962	41372	+			none	40962..41372
+gene_033	gene	1	1	atpA	QLP19_pgp067			41439	42962	+			none	41439..42962
+CDS_021	CDS	1	1	atpA	QLP19_pgp067	CF1 subunit alpha	YP_010834414.1	41439	42962	+	1	11	none	41439..42962
+gene_034	gene	1	1	trnR-UCU	QLP19_pgt013			43133	43204	-			none	complement(43133..43204)
+tRNA_013	tRNA	1	1	trnR-UCU	QLP19_pgt013	tRNA-Arg		43133	43204	-			none	complement(43133..43204)
+gene_035	gene	1	1	trnS-GCU	QLP19_pgt014			44789	44876	+			none	44789..44876
+tRNA_014	tRNA	1	1	trnS-GCU	QLP19_pgt014	tRNA-Ser		44789	44876	+			none	44789..44876
+gene_036	gene	1	1	psbI	QLP19_pgp066			44960	45070	-			none	complement(44960..45070)
+CDS_022	CDS	1	1	psbI	QLP19_pgp066	photosystem II subunit I	YP_010834415.1	44960	45070	-	1	11	none	complement(44960..45070)
+gene_037	gene	1	1	psbK	QLP19_pgp065			45544	45729	-			none	complement(45544..45729)
+CDS_023	CDS	1	1	psbK	QLP19_pgp065	photosystem II subunit K	YP_010834416.1	45544	45729	-	1	11	none	complement(45544..45729)
+gene_038	gene	1	1	trnQ-UUG	QLP19_pgt015			46053	46124	+			none	46053..46124
+tRNA_015	tRNA	1	1	trnQ-UUG	QLP19_pgt015	tRNA-Gln		46053	46124	+			none	46053..46124
+gene_039	gene	1	1	rps16	QLP19_pgp064			46479	47623	+			none	46479..47623
+CDS_024	CDS	1	2	rps16	QLP19_pgp064	ribosomal protein S16	YP_010834417.1	46479	46519	+	1	11	none	join(46479..46519,47395..47623)
+CDS_024	CDS	2	2	rps16	QLP19_pgp064	ribosomal protein S16	YP_010834417.1	47395	47623	+	1	11	none	join(46479..46519,47395..47623)
+exon_010	exon	1	1	rps16	QLP19_pgp064			46479	46519	+			none	46479..46519
+exon_011	exon	1	1	rps16	QLP19_pgp064			47395	47623	+			none	47395..47623
+gene_040	gene	1	1	trnL-UAA	QLP19_pgt016			49536	50107	+			none	49536..50107
+tRNA_016	tRNA	1	2	trnL-UAA	QLP19_pgt016	tRNA-Leu		49536	49570	+			none	join(49536..49570,50058..50107)
+tRNA_016	tRNA	2	2	trnL-UAA	QLP19_pgt016	tRNA-Leu		50058	50107	+			none	join(49536..49570,50058..50107)
+exon_012	exon	1	1	trnL-UAA	QLP19_pgt016			49536	49570	+			none	49536..49570
+exon_013	exon	1	1	trnL-UAA	QLP19_pgt016			50058	50107	+			none	50058..50107
+gene_041	gene	1	1	trnF-GAA	QLP19_pgt017			50536	50608	+			none	50536..50608
+tRNA_017	tRNA	1	1	trnF-GAA	QLP19_pgt017	tRNA-Phe		50536	50608	+			none	50536..50608
+gene_042	gene	1	1	ndhJ	QLP19_pgp063			51328	51804	-			none	complement(51328..51804)
+CDS_025	CDS	1	1	ndhJ	QLP19_pgp063	NADH dehydrogenase subunit J	YP_010834418.1	51328	51804	-	1	11	none	complement(51328..51804)
+gene_043	gene	1	1	ndhK	QLP19_pgp062			51953	52636	-			none	complement(51953..52636)
+CDS_026	CDS	1	1	ndhK	QLP19_pgp062	NADH dehydrogenase subunit K	YP_010834419.1	51953	52636	-	1	11	none	complement(51953..52636)
+gene_044	gene	1	1	ndhC	QLP19_pgp061			52691	53053	-			none	complement(52691..53053)
+CDS_027	CDS	1	1	ndhC	QLP19_pgp061	NADH dehydrogenase subunit C	YP_010834420.1	52691	53053	-	1	11	none	complement(52691..53053)
+gene_045	gene	1	1	trnV-UAC	QLP19_pgt018			54438	55097	-			none	complement(54438..55097)
+tRNA_018	tRNA	1	2	trnV-UAC	QLP19_pgt018	tRNA-Val		54438	54472	-			none	complement(join(54438..54472,55059..55097))
+tRNA_018	tRNA	2	2	trnV-UAC	QLP19_pgt018	tRNA-Val		55059	55097	-			none	complement(join(54438..54472,55059..55097))
+exon_014	exon	1	1	trnV-UAC	QLP19_pgt018			54438	54472	-			none	complement(54438..54472)
+exon_015	exon	1	1	trnV-UAC	QLP19_pgt018			55059	55097	-			none	complement(55059..55097)
+gene_046	gene	1	1	trnM-CAU	QLP19_pgt019			55280	55352	+			none	55280..55352
+tRNA_019	tRNA	1	1	trnM-CAU	QLP19_pgt019	tRNA-Met		55280	55352	+			none	55280..55352
+gene_047	gene	1	1	atpE	QLP19_pgp060			55634	56035	-			none	complement(55634..56035)
+CDS_028	CDS	1	1	atpE	QLP19_pgp060	CF1 subunit epsilon	YP_010834421.1	55634	56035	-	1	11	none	complement(55634..56035)
+gene_048	gene	1	1	atpB	QLP19_pgp059			56032	57528	-			none	complement(56032..57528)
+CDS_029	CDS	1	1	atpB	QLP19_pgp059	CF1 subunit beta	YP_010834422.1	56032	57528	-	1	11	none	complement(56032..57528)
+gene_049	gene	1	1	rbcL	QLP19_pgp058			58260	59687	+			none	58260..59687
+CDS_030	CDS	1	1	rbcL	QLP19_pgp058	ribulose-1,5-bisphosphate carboxylase/oxygenaselarge subunit	YP_010834423.1	58260	59687	+	1	11	none	58260..59687
+gene_050	gene	1	1	accD	QLP19_pgp057			60347	61825	+			none	60347..61825
+CDS_031	CDS	1	1	accD	QLP19_pgp057	acetyl-CoA carboxylase subunit beta	YP_010834424.1	60347	61825	+	1	11	none	60347..61825
+gene_051	gene	1	1	psaI	QLP19_pgp056			62516	62626	+			none	62516..62626
+CDS_032	CDS	1	1	psaI	QLP19_pgp056	photosystem I subunit I	YP_010834425.1	62516	62626	+	1	11	none	62516..62626
+gene_052	gene	1	1	ycf4	QLP19_pgp055			63062	63616	+			none	63062..63616
+CDS_033	CDS	1	1	ycf4	QLP19_pgp055	photosystem I assembly factor II	YP_010834426.1	63062	63616	+	1	11	none	63062..63616
+gene_053	gene	1	1	cemA	QLP19_pgp054			63933	64622	+			none	63933..64622
+CDS_034	CDS	1	1	cemA	QLP19_pgp054	envelope membrane carbon uptake protein	YP_010834427.1	63933	64622	+	1	11	none	63933..64622
+gene_054	gene	1	1	petA	QLP19_pgp053			64828	65796	+			none	64828..65796
+CDS_035	CDS	1	1	petA	QLP19_pgp053	cytochrome f	YP_010834428.1	64828	65796	+	1	11	none	64828..65796
+gene_055	gene	1	1	psbJ	QLP19_pgp052			66164	66286	-			none	complement(66164..66286)
+CDS_036	CDS	1	1	psbJ	QLP19_pgp052	photosystem II subunit J	YP_010834429.1	66164	66286	-	1	11	none	complement(66164..66286)
+gene_056	gene	1	1	psbL	QLP19_pgp051			66406	66522	-			none	complement(66406..66522)
+CDS_037	CDS	1	1	psbL	QLP19_pgp051	photosystem II subunit L	YP_010834430.1	66406	66522	-	1	11	none	complement(66406..66522)
+gene_057	gene	1	1	psbF	QLP19_pgp050			66545	66664	-			none	complement(66545..66664)
+CDS_038	CDS	1	1	psbF	QLP19_pgp050	cytochrome b559 subunit beta	YP_010834431.1	66545	66664	-	1	11	none	complement(66545..66664)
+gene_058	gene	1	1	psbE	QLP19_pgp049			66674	66925	-			none	complement(66674..66925)
+CDS_039	CDS	1	1	psbE	QLP19_pgp049	cytochrome b559 subunit alpha	YP_010834432.1	66674	66925	-	1	11	none	complement(66674..66925)
+gene_059	gene	1	1	petL	QLP19_pgp048			68112	68207	+			none	68112..68207
+CDS_040	CDS	1	1	petL	QLP19_pgp048	cytochrome b6/f subunit L	YP_010834433.1	68112	68207	+	1	11	none	68112..68207
+gene_060	gene	1	1	petG	QLP19_pgp047			68385	68498	+			none	68385..68498
+CDS_041	CDS	1	1	petG	QLP19_pgp047	cytochrome b6/f subunit G	YP_010834434.1	68385	68498	+	1	11	none	68385..68498
+gene_061	gene	1	1	trnW-CCA	QLP19_pgt020			68638	68712	-			none	complement(68638..68712)
+tRNA_020	tRNA	1	1	trnW-CCA	QLP19_pgt020	tRNA-Trp		68638	68712	-			none	complement(68638..68712)
+gene_062	gene	1	1	trnP-UGG	QLP19_pgt021			68866	68939	-			none	complement(68866..68939)
+tRNA_021	tRNA	1	1	trnP-UGG	QLP19_pgt021	tRNA-Pro		68866	68939	-			none	complement(68866..68939)
+gene_063	gene	1	1	psaJ	QLP19_pgp046			69344	69478	+			none	69344..69478
+CDS_042	CDS	1	1	psaJ	QLP19_pgp046	photosystem I subunit J	YP_010834435.1	69344	69478	+	1	11	none	69344..69478
+gene_064	gene	1	1	rpl33	QLP19_pgp045			69892	70092	+			none	69892..70092
+CDS_043	CDS	1	1	rpl33	QLP19_pgp045	ribosomal protein L33	YP_010834436.1	69892	70092	+	1	11	none	69892..70092
+gene_065	gene	1	1	rps18	QLP19_pgp044			70296	70601	+			none	70296..70601
+CDS_044	CDS	1	1	rps18	QLP19_pgp044	ribosomal protein S18	YP_010834437.1	70296	70601	+	1	11	none	70296..70601
+gene_066	gene	1	1	rpl20	QLP19_pgp043			70869	71222	-			none	complement(70869..71222)
+CDS_045	CDS	1	1	rpl20	QLP19_pgp043	ribosomal protein L20	YP_010834438.1	70869	71222	-	1	11	none	complement(70869..71222)
+gene_067	gene	1	2	rps12	QLP19_pgp042			72016	72129	-			none	join(complement(72016..72129),143044..143838)
+gene_067	gene	2	2	rps12	QLP19_pgp042			143044	143838	+			none	join(complement(72016..72129),143044..143838)
+CDS_046	CDS	1	3	rps12	QLP19_pgp042	ribosomal protein S12	YP_010834439.1	72016	72129	-	1	11	none	join(complement(72016..72129),143044..143275, 143813..143838)
+CDS_046	CDS	2	3	rps12	QLP19_pgp042	ribosomal protein S12	YP_010834439.1	143044	143275	+	1	11	none	join(complement(72016..72129),143044..143275, 143813..143838)
+CDS_046	CDS	3	3	rps12	QLP19_pgp042	ribosomal protein S12	YP_010834439.1	143813	143838	+	1	11	none	join(complement(72016..72129),143044..143275, 143813..143838)
+gene_068	gene	1	1	clpP	QLP19_pgp040			72369	74450	-			none	complement(72369..74450)
+CDS_047	CDS	1	3	clpP	QLP19_pgp040	ATP-dependent Clp protease proteolytic subunit1	YP_010834440.1	72369	72614	-	1	11	none	complement(join(72369..72614,73259..73550,74380..74450))
+CDS_047	CDS	2	3	clpP	QLP19_pgp040	ATP-dependent Clp protease proteolytic subunit1	YP_010834440.1	73259	73550	-	1	11	none	complement(join(72369..72614,73259..73550,74380..74450))
+CDS_047	CDS	3	3	clpP	QLP19_pgp040	ATP-dependent Clp protease proteolytic subunit1	YP_010834440.1	74380	74450	-	1	11	none	complement(join(72369..72614,73259..73550,74380..74450))
+exon_016	exon	1	1	clpP	QLP19_pgp040			72369	72614	-			none	complement(72369..72614)
+exon_017	exon	1	1	clpP	QLP19_pgp040			73259	73550	-			none	complement(73259..73550)
+exon_018	exon	1	1	clpP	QLP19_pgp040			74380	74450	-			none	complement(74380..74450)
+gene_069	gene	1	1	psbB	QLP19_pgp039			74877	76403	+			none	74877..76403
+CDS_048	CDS	1	1	psbB	QLP19_pgp039	photosystem II 47 kDa protein	YP_010834441.1	74877	76403	+	1	11	none	74877..76403
+gene_070	gene	1	1	psbT	QLP19_pgp038			76587	76688	+			none	76587..76688
+CDS_049	CDS	1	1	psbT	QLP19_pgp038	photosystem II subunit T	YP_010834442.1	76587	76688	+	1	11	none	76587..76688
+gene_071	gene	1	1	psbN	QLP19_pgp037			76766	76897	-			none	complement(76766..76897)
+CDS_050	CDS	1	1	psbN	QLP19_pgp037	photosystem biogenesis factor 1	YP_010834443.1	76766	76897	-	1	11	none	complement(76766..76897)
+gene_072	gene	1	1	psbH	QLP19_pgp036			77000	77221	+			none	77000..77221
+CDS_051	CDS	1	1	psbH	QLP19_pgp036	photosystem II subunit H	YP_010834444.1	77000	77221	+	1	11	none	77000..77221
+gene_073	gene	1	1	petB	QLP19_pgp035			77348	78771	+			none	77348..78771
+CDS_052	CDS	1	2	petB	QLP19_pgp035	cytochrome b6	YP_010834445.1	77348	77352	+	1	11	none	join(77348..77352,78129..78771)
+CDS_052	CDS	2	2	petB	QLP19_pgp035	cytochrome b6	YP_010834445.1	78129	78771	+	1	11	none	join(77348..77352,78129..78771)
+exon_019	exon	1	1	petB	QLP19_pgp035			77348	77352	+			none	77348..77352
+exon_020	exon	1	1	petB	QLP19_pgp035			78129	78771	+			none	78129..78771
+gene_074	gene	1	1	petD	QLP19_pgp034			78965	80169	+			none	78965..80169
+CDS_053	CDS	1	2	petD	QLP19_pgp034	cytochrome b6/f subunit IV	YP_010834446.1	78965	78971	+	1	11	none	join(78965..78971,79673..80169)
+CDS_053	CDS	2	2	petD	QLP19_pgp034	cytochrome b6/f subunit IV	YP_010834446.1	79673	80169	+	1	11	none	join(78965..78971,79673..80169)
+exon_021	exon	1	1	petD	QLP19_pgp034			78965	78971	+			none	78965..78971
+exon_022	exon	1	1					79673	80196	+			none	79673..80196
+gene_075	gene	1	1	rpoA	QLP19_pgp033			80379	81365	-			none	complement(80379..81365)
+CDS_054	CDS	1	1	rpoA	QLP19_pgp033	RNA polymerase alpha subunit	YP_010834447.1	80379	81365	-	1	11	none	complement(80379..81365)
+gene_076	gene	1	1	rps11	QLP19_pgp032			81432	81848	-			none	complement(81432..81848)
+CDS_055	CDS	1	1	rps11	QLP19_pgp032	ribosomal protein S11	YP_010834448.1	81432	81848	-	1	11	none	complement(81432..81848)
+gene_077	gene	1	1	rpl36	QLP19_pgp031			81962	82075	-			none	complement(81962..82075)
+CDS_056	CDS	1	1	rpl36	QLP19_pgp031	ribosomal protein L36	YP_010834449.1	81962	82075	-	1	11	none	complement(81962..82075)
+gene_078	gene	1	1	infA	QLP19_pgp030			82191	82424	-			none	complement(82191..82424)
+CDS_057	CDS	1	1	infA	QLP19_pgp030	translational initiation factor 1	YP_010834450.1	82191	82424	-	1	11	none	complement(82191..82424)
+gene_079	gene	1	1	rps8	QLP19_pgp029			82550	82948	-			none	complement(82550..82948)
+CDS_058	CDS	1	1	rps8	QLP19_pgp029	ribosomal protein S8	YP_010834451.1	82550	82948	-	1	11	none	complement(82550..82948)
+gene_080	gene	1	1	rpl14	QLP19_pgp028			83141	83509	-			none	complement(83141..83509)
+CDS_059	CDS	1	1	rpl14	QLP19_pgp028	ribosomal protein L14	YP_010834452.1	83141	83509	-	1	11	none	complement(83141..83509)
+gene_081	gene	1	1	rpl16	QLP19_pgp027			83650	85068	-			none	complement(83650..85068)
+CDS_060	CDS	1	2	rpl16	QLP19_pgp027	ribosomal protein L16	YP_010834453.1	83650	84048	-	1	11	none	complement(join(83650..84048,85060..85068))
+CDS_060	CDS	2	2	rpl16	QLP19_pgp027	ribosomal protein L16	YP_010834453.1	85060	85068	-	1	11	none	complement(join(83650..84048,85060..85068))
+exon_023	exon	1	1	rpl16	QLP19_pgp027			83650	84048	-			none	complement(83650..84048)
+exon_024	exon	1	1	rpl16	QLP19_pgp027			85060	85068	-			none	complement(85060..85068)
+gene_082	gene	1	1	rps3	QLP19_pgp026			85212	85868	-			none	complement(85212..85868)
+CDS_061	CDS	1	1	rps3	QLP19_pgp026	ribosomal protein S3	YP_010834454.1	85212	85868	-	1	11	none	complement(85212..85868)
+gene_083	gene	1	1	rpl22	QLP19_pgp025			85853	86392	-			none	complement(85853..86392)
+CDS_062	CDS	1	1	rpl22	QLP19_pgp025	ribosomal protein L22	YP_010834455.1	85853	86392	-	1	11	none	complement(85853..86392)
+gene_084	gene	1	1	rps19	QLP19_pgp024			86459	86737	-			none	complement(86459..86737)
+CDS_063	CDS	1	1	rps19	QLP19_pgp024	ribosomal protein S19	YP_010834456.1	86459	86737	-	1	11	none	complement(86459..86737)
+repeat_region_001	repeat_region	1	1					86652	112983	+			none	86652..112983
+gene_085	gene	1	1	rpl2	QLP19_pgp023			86803	88280	-			none	complement(86803..88280)
+CDS_064	CDS	1	2	rpl2	QLP19_pgp023	ribosomal protein L2	YP_010834457.1	86803	87236	-	1	11	none	complement(join(86803..87236,87896..88280))
+CDS_064	CDS	2	2	rpl2	QLP19_pgp023	ribosomal protein L2	YP_010834457.1	87896	88280	-	1	11	none	complement(join(86803..87236,87896..88280))
+exon_025	exon	1	1	rpl2	QLP19_pgp023			86803	87236	-			none	complement(86803..87236)
+exon_026	exon	1	1	rpl2	QLP19_pgp023			87896	88280	-			none	complement(87896..88280)
+gene_086	gene	1	1	rpl23	QLP19_pgp022			88299	88580	-			none	complement(88299..88580)
+CDS_065	CDS	1	1	rpl23	QLP19_pgp022	ribosomal protein L23	YP_010834458.1	88299	88580	-	1	11	none	complement(88299..88580)
+gene_087	gene	1	1	trnI-CAU	QLP19_pgt022			88746	88819	-			none	complement(88746..88819)
+tRNA_022	tRNA	1	1	trnI-CAU	QLP19_pgt022	tRNA-Ile		88746	88819	-			none	complement(88746..88819)
+gene_088	gene	1	1	ycf2	QLP19_pgp021			88888	95532	+			none	88888..95532
+CDS_066	CDS	1	1	ycf2	QLP19_pgp021	Ycf2 protein	YP_010834459.1	88888	95532	+	1	11	none	88888..95532
+gene_089	gene	1	1	trnL-CAA	QLP19_pgt023			96596	96676	-			none	complement(96596..96676)
+tRNA_023	tRNA	1	1	trnL-CAA	QLP19_pgt023	tRNA-Leu		96596	96676	-			none	complement(96596..96676)
+gene_090	gene	1	1	ndhB	QLP19_pgp020			97244	99489	-			none	complement(97244..99489)
+CDS_067	CDS	1	2	ndhB	QLP19_pgp020	NADH dehydrogenase subunit B	YP_010834460.1	97244	97999	-	1	11	none	complement(join(97244..97999,98713..99489))
+CDS_067	CDS	2	2	ndhB	QLP19_pgp020	NADH dehydrogenase subunit B	YP_010834460.1	98713	99489	-	1	11	none	complement(join(97244..97999,98713..99489))
+exon_027	exon	1	1	ndhB	QLP19_pgp020			97244	97999	-			none	complement(97244..97999)
+exon_028	exon	1	1	ndhB	QLP19_pgp020			98713	99489	-			none	complement(98713..99489)
+gene_091	gene	1	1	rps7	QLP19_pgp019			99814	100281	-			none	complement(99814..100281)
+CDS_068	CDS	1	1	rps7	QLP19_pgp019	ribosomal protein S7	YP_010834461.1	99814	100281	-	1	11	none	complement(99814..100281)
+gene_092	gene	1	1	trnV-GAC	QLP19_pgt024			103006	103077	+			none	103006..103077
+tRNA_024	tRNA	1	1	trnV-GAC	QLP19_pgt024	tRNA-Val		103006	103077	+			none	103006..103077
+gene_093	gene	1	1	rrn16	QLP19_pgr008			103305	104795	+			none	103305..104795
+rRNA_001	rRNA	1	1	rrn16	QLP19_pgr008	16S ribosomal RNA		103305	104795	+			none	103305..104795
+gene_094	gene	1	1	trnI-GAU	QLP19_pgt025			105091	106109	+			none	105091..106109
+tRNA_025	tRNA	1	2	trnI-GAU	QLP19_pgt025	tRNA-Ile		105091	105127	+			none	join(105091..105127,106075..106109)
+tRNA_025	tRNA	2	2	trnI-GAU	QLP19_pgt025	tRNA-Ile		106075	106109	+			none	join(105091..105127,106075..106109)
+exon_029	exon	1	1	trnI-GAU	QLP19_pgt025			105091	105127	+			none	105091..105127
+exon_030	exon	1	1	trnI-GAU	QLP19_pgt025			106075	106109	+			none	106075..106109
+gene_095	gene	1	1	trnA-UGC	QLP19_pgt026			106174	107045	+			none	106174..107045
+tRNA_026	tRNA	1	2	trnA-UGC	QLP19_pgt026	tRNA-Ala		106174	106211	+			none	join(106174..106211,107011..107045)
+tRNA_026	tRNA	2	2	trnA-UGC	QLP19_pgt026	tRNA-Ala		107011	107045	+			none	join(106174..106211,107011..107045)
+exon_031	exon	1	1	trnA-UGC	QLP19_pgt026			106174	106211	+			none	106174..106211
+exon_032	exon	1	1	trnA-UGC	QLP19_pgt026			107011	107045	+			none	107011..107045
+gene_096	gene	1	1	rrn23	QLP19_pgr007			107198	110007	+			none	107198..110007
+rRNA_002	rRNA	1	1	rrn23	QLP19_pgr007	23S ribosomal RNA		107198	110007	+			none	107198..110007
+gene_097	gene	1	1	rrn4.5	QLP19_pgr006			110106	110208	+			none	110106..110208
+rRNA_003	rRNA	1	1	rrn4.5	QLP19_pgr006	4.5S ribosomal RNA		110106	110208	+			none	110106..110208
+gene_098	gene	1	1	rrn5	QLP19_pgr005			110434	110554	+			none	110434..110554
+rRNA_004	rRNA	1	1	rrn5	QLP19_pgr005	5S ribosomal RNA		110434	110554	+			none	110434..110554
+gene_099	gene	1	1	tRNA-ACG	QLP19_pgt027			110809	110882	+			none	110809..110882
+tRNA_027	tRNA	1	1	tRNA-ACG	QLP19_pgt027	tRNA-Arg		110809	110882	+			none	110809..110882
+gene_100	gene	1	1	trnN-GUU	QLP19_pgt028			111442	111514	-			none	complement(111442..111514)
+tRNA_028	tRNA	1	1	trnN-GUU	QLP19_pgt028	tRNA-Asn		111442	111514	-			none	complement(111442..111514)
+gene_101	gene	1	1	ycf1	QLP19_pgp018			111843	112979	+			none	111843..112979
+gene_102	gene	1	1	ndhF	QLP19_pgp017			113036	115261	-			none	complement(113036..115261)
+CDS_069	CDS	1	1	ndhF	QLP19_pgp017	NADH dehydrogenase subunit F	YP_010834462.1	113036	115261	-	1	11	none	complement(113036..115261)
+gene_103	gene	1	1	trnL-UAG	QLP19_pgt029			117117	117196	+			none	117117..117196
+tRNA_029	tRNA	1	1	trnL-UAG	QLP19_pgt029	tRNA-Leu		117117	117196	+			none	117117..117196
+gene_104	gene	1	1	ccsA	QLP19_pgp016			117320	118291	+			none	117320..118291
+CDS_070	CDS	1	1	ccsA	QLP19_pgp016	cytochrome c biogenesis protein	YP_010834463.1	117320	118291	+	1	11	none	117320..118291
+gene_105	gene	1	1	ndhD	QLP19_pgp015			118551	120053	-			none	complement(118551..120053)
+CDS_071	CDS	1	1	ndhD	QLP19_pgp015	NADH dehydrogenase subunit D	YP_010834464.1	118551	120053	-	1	11	none	complement(118551..120053)
+gene_106	gene	1	1	psaC	QLP19_pgp014			120185	120430	-			none	complement(120185..120430)
+CDS_072	CDS	1	1	psaC	QLP19_pgp014	photosystem I subunit C	YP_010834465.1	120185	120430	-	1	11	none	complement(120185..120430)
+gene_107	gene	1	1	ndhE	QLP19_pgp013			120697	121002	-			none	complement(120697..121002)
+CDS_073	CDS	1	1	ndhE	QLP19_pgp013	NADH dehydrogenase subunit E	YP_010834466.1	120697	121002	-	1	11	none	complement(120697..121002)
+gene_108	gene	1	1	ndhG	QLP19_pgp012			121274	121807	-			none	complement(121274..121807)
+CDS_074	CDS	1	1	ndhG	QLP19_pgp012	NADH dehydrogenase subunit G	YP_010834467.1	121274	121807	-	1	11	none	complement(121274..121807)
+gene_109	gene	1	1	ndhI	QLP19_pgp011			122285	122845	-			none	complement(122285..122845)
+CDS_075	CDS	1	1	ndhI	QLP19_pgp011	NADH dehydrogenase subunit I	YP_010834468.1	122285	122845	-	1	11	none	complement(122285..122845)
+gene_110	gene	1	1	ndhA	QLP19_pgp010			122923	125043	-			none	complement(122923..125043)
+CDS_076	CDS	1	2	ndhA	QLP19_pgp010	NADH dehydrogenase subunit A	YP_010834469.1	122923	123467	-	1	11	none	complement(join(122923..123467,124491..125043))
+CDS_076	CDS	2	2	ndhA	QLP19_pgp010	NADH dehydrogenase subunit A	YP_010834469.1	124491	125043	-	1	11	none	complement(join(122923..123467,124491..125043))
+exon_033	exon	1	1	ndhA	QLP19_pgp010			122923	123467	-			none	complement(122923..123467)
+misc_feature_002	misc_feature	1	1					122984	131189	+			none	122984..131189
+exon_034	exon	1	1	ndhA	QLP19_pgp010			124491	125043	-			none	complement(124491..125043)
+gene_111	gene	1	1	ndhH	QLP19_pgp009			125045	126226	-			none	complement(125045..126226)
+CDS_077	CDS	1	1	ndhH	QLP19_pgp009	NADH dehydrogenase subunit H	YP_010834470.1	125045	126226	-	1	11	none	complement(125045..126226)
+gene_112	gene	1	1	rps15	QLP19_pgp008			126370	126633	-			none	complement(126370..126633)
+CDS_078	CDS	1	1	rps15	QLP19_pgp008	ribosomal protein S15	YP_010834471.1	126370	126633	-	1	11	none	complement(126370..126633)
+gene_113	gene	1	1	ycf1	QLP19_pgp007			127066	132330	-			none	complement(127066..132330)
+CDS_079	CDS	1	1	ycf1	QLP19_pgp007	Ycf1 protein	YP_010834472.1	127066	132330	-	1	11	none	complement(127066..132330)
+repeat_region_002	repeat_region	1	1					131190	157521	+			none	131190..157521
+gene_114	gene	1	1	trnN-GUU	QLP19_pgt030			132659	132730	+			none	132659..132730
+tRNA_030	tRNA	1	1	trnN-GUU	QLP19_pgt030	tRNA-Asn		132659	132730	+			none	132659..132730
+gene_115	gene	1	1	trnR-ACG	QLP19_pgt031			133291	133364	-			none	complement(133291..133364)
+tRNA_031	tRNA	1	1	trnR-ACG	QLP19_pgt031	tRNA-Arg		133291	133364	-			none	complement(133291..133364)
+gene_116	gene	1	1	rrn5	QLP19_pgr004			133619	133739	-			none	complement(133619..133739)
+rRNA_005	rRNA	1	1	rrn5	QLP19_pgr004	5S ribosomal RNA		133619	133739	-			none	complement(133619..133739)
+gene_117	gene	1	1	rrn4.5	QLP19_pgr003			133965	134067	-			none	complement(133965..134067)
+rRNA_006	rRNA	1	1	rrn4.5	QLP19_pgr003	4.5S ribosomal RNA		133965	134067	-			none	complement(133965..134067)
+gene_118	gene	1	1	rrn23	QLP19_pgr002			134166	136975	-			none	complement(134166..136975)
+rRNA_007	rRNA	1	1	rrn23	QLP19_pgr002	23S ribosomal RNA		134166	136975	-			none	complement(134166..136975)
+gene_119	gene	1	1	trnA-UGC	QLP19_pgt032			137128	137999	-			none	complement(137128..137999)
+tRNA_032	tRNA	1	2	trnA-UGC	QLP19_pgt032	tRNA-Ala		137128	137162	-			none	complement(join(137128..137162,137962..137999))
+tRNA_032	tRNA	2	2	trnA-UGC	QLP19_pgt032	tRNA-Ala		137962	137999	-			none	complement(join(137128..137162,137962..137999))
+exon_035	exon	1	1	trnA-UGC	QLP19_pgt032			137128	137162	-			none	complement(137128..137162)
+exon_036	exon	1	1	trnA-UGC	QLP19_pgt032			137962	137999	-			none	complement(137962..137999)
+gene_120	gene	1	1	trnI-GAU	QLP19_pgt033			138064	139082	-			none	complement(138064..139082)
+tRNA_033	tRNA	1	2	trnI-GAU	QLP19_pgt033	tRNA-Ile		138064	138098	-			none	complement(join(138064..138098,139046..139082))
+tRNA_033	tRNA	2	2	trnI-GAU	QLP19_pgt033	tRNA-Ile		139046	139082	-			none	complement(join(138064..138098,139046..139082))
+exon_037	exon	1	1	trnI-GAU	QLP19_pgt033			138064	138098	-			none	complement(138064..138098)
+exon_038	exon	1	1	trnI-GAU	QLP19_pgt033			139046	139082	-			none	complement(139046..139082)
+gene_121	gene	1	1	rrn16	QLP19_pgr001			139378	140868	-			none	complement(139378..140868)
+rRNA_008	rRNA	1	1	rrn16	QLP19_pgr001	16S ribosomal RNA		139378	140868	-			none	complement(139378..140868)
+gene_122	gene	1	1	trnV-GAC	QLP19_pgt034			141096	141167	-			none	complement(141096..141167)
+tRNA_034	tRNA	1	1	trnV-GAC	QLP19_pgt034	tRNA-Val		141096	141167	-			none	complement(141096..141167)
+gene_123	gene	1	1	rps7	QLP19_pgp006			143892	144359	+			none	143892..144359
+CDS_080	CDS	1	1	rps7	QLP19_pgp006	ribosomal protein S7	YP_010834473.1	143892	144359	+	1	11	none	143892..144359
+gene_124	gene	1	1	ndhB	QLP19_pgp005			144684	146929	+			none	144684..146929
+CDS_081	CDS	1	2	ndhB	QLP19_pgp005	NADH dehydrogenase subunit B	YP_010834474.1	144684	145460	+	1	11	none	join(144684..145460,146174..146929)
+CDS_081	CDS	2	2	ndhB	QLP19_pgp005	NADH dehydrogenase subunit B	YP_010834474.1	146174	146929	+	1	11	none	join(144684..145460,146174..146929)
+exon_039	exon	1	1	ndhB	QLP19_pgp005			144684	145460	+			none	144684..145460
+exon_040	exon	1	1	ndhB	QLP19_pgp005			146174	146929	+			none	146174..146929
+gene_125	gene	1	1	trnL-CAA	QLP19_pgt035			147497	147577	+			none	147497..147577
+tRNA_035	tRNA	1	1	trnL-CAA	QLP19_pgt035	tRNA-Leu		147497	147577	+			none	147497..147577
+gene_126	gene	1	1	ycf2	QLP19_pgp004			148641	155285	-			none	complement(148641..155285)
+CDS_082	CDS	1	1	ycf2	QLP19_pgp004	Ycf2 protein	YP_010834475.1	148641	155285	-	1	11	none	complement(148641..155285)
+gene_127	gene	1	1	trnI-CAU	QLP19_pgt036			155354	155427	-			none	complement(155354..155427)
+tRNA_036	tRNA	1	1	trnI-CAU	QLP19_pgt036	tRNA-Ile		155354	155427	-			none	complement(155354..155427)
+gene_128	gene	1	1	rpl23	QLP19_pgp003			155593	155874	+			none	155593..155874
+CDS_083	CDS	1	1	rpl23	QLP19_pgp003	ribosomal protein L23	YP_010834476.1	155593	155874	+	1	11	none	155593..155874
+gene_129	gene	1	1	rpl2	QLP19_pgp002			155893	157370	+			none	155893..157370
+CDS_084	CDS	1	2	rpl2	QLP19_pgp002	ribosomal protein L2	YP_010834477.1	155893	156277	+	1	11	none	join(155893..156277,156937..157370)
+CDS_084	CDS	2	2	rpl2	QLP19_pgp002	ribosomal protein L2	YP_010834477.1	156937	157370	+	1	11	none	join(155893..156277,156937..157370)
+exon_041	exon	1	1	rpl2	QLP19_pgp002			155893	156277	+			none	155893..156277
+exon_042	exon	1	1	rpl2	QLP19_pgp002			156937	157370	+			none	156937..157370
+gene_130	gene	1	1	rps19	QLP19_pgp001			157436	157521	-			none	complement(157436..157521)

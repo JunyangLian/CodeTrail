@@ -1,0 +1,12 @@
+{
+  "verdict": "block",
+  "observed_defect": "coordinate_bounds: 1 feature row(s) fall outside the genome sequence bounds (e.g. CDS_002 spans 694..183072 while the sequence length is 182935)",
+  "root_cause": "coordinate_out_of_bounds",
+  "evidence": [
+    {
+      "pointer": "artifacts/features.tsv:13",
+      "note": "coordinate_bounds"
+    }
+  ],
+  "action": "withhold delivery until every blocked finding is resolved"
+}

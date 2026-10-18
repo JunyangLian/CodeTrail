@@ -1,0 +1,8 @@
+{
+  "candidate_id": "CAND-contextv1-pointer-guard",
+  "status": "validated",
+  "status_cap": "validated",
+  "publish_blocked_without_real_approval": true,
+  "active_strategy_unchanged": "promptv1",
+  "receipts": "D:\\1_yanjiusheng\\AssemblyGenomics-Copilot_V3\\evolution_state\\receipts\\v32_context_candidate"
+}

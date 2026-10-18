@@ -1,0 +1,53 @@
+{
+  "pool_version": "failure_cases.v1",
+  "simulation": "offline_simulation",
+  "generated_at": "2026-10-18T04:37:21+00:00",
+  "pool_file": "D:\\1_yanjiusheng\\AssemblyGenomics-Copilot_V3\\data\\failure_pool\\failure_cases.v1.jsonl",
+  "entries_total": 7,
+  "reports": [
+    {
+      "pool_version": "failure_cases.v1",
+      "simulation": "offline_simulation",
+      "generated_at": "2026-10-18T04:37:21+00:00",
+      "candidates_root": "D:\\1_yanjiusheng\\AssemblyGenomics-Copilot_V2\\data\\organelle_v2\\candidates",
+      "model": {
+        "provider": "siliconflow",
+        "model_id": "zai-org/GLM-5.3-Flash"
+      },
+      "counts": {
+        "cases_total": 40,
+        "failures": 6,
+        "high_risk_successes": 1,
+        "by_category": {
+          "model_planning_error": 1,
+          "tool_error": 0,
+          "infrastructure_error": 6,
+          "data_or_scoring_defect": 0,
+          "unclassified": 0
+        }
+      }
+    },
+    {
+      "pool_version": "failure_cases.v1",
+      "simulation": "offline_simulation",
+      "generated_at": "2026-10-18T04:37:21+00:00",
+      "candidates_root": "D:\\1_yanjiusheng\\AssemblyGenomics-Copilot_V2\\data\\organelle_v2\\candidates",
+      "model": {
+        "provider": "siliconflow",
+        "model_id": "deepseek-ai/DeepSeek-V4.1-Flash"
+      },
+      "counts": {
+        "cases_total": 40,
+        "failures": 0,
+        "high_risk_successes": 0,
+        "by_category": {
+          "model_planning_error": 0,
+          "tool_error": 0,
+          "infrastructure_error": 0,
+          "data_or_scoring_defect": 0,
+          "unclassified": 0
+        }
+      }
+    }
+  ]
+}

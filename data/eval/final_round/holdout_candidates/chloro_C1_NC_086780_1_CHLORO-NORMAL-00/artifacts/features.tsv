@@ -1,0 +1,309 @@
+feature_id	feature_type	part_index	part_count	gene	locus_tag	product	protein_id	start	end	strand	codon_start	transl_table	partial_flags	location_raw
+source_001	source	1	1					1	152805	+			none	1..152805
+gene_001	gene	1	2	rps12	V9327_pgp044			97306	98098	-			none	complement(join(97306..98098,69724..69837))
+gene_001	gene	2	2	rps12	V9327_pgp044			69724	69837	-			none	complement(join(97306..98098,69724..69837))
+CDS_001	CDS	1	3	rps12	V9327_pgp044	ribosomal protein S12	YP_011052623.1	97306	97331	-	1	11	none	complement(join(97306..97331,97867..98098,69724..69837))
+CDS_001	CDS	2	3	rps12	V9327_pgp044	ribosomal protein S12	YP_011052623.1	97867	98098	-	1	11	none	complement(join(97306..97331,97867..98098,69724..69837))
+CDS_001	CDS	3	3	rps12	V9327_pgp044	ribosomal protein S12	YP_011052623.1	69724	69837	-	1	11	none	complement(join(97306..97331,97867..98098,69724..69837))
+misc_feature_001	misc_feature	1	1					1	84121	+			none	1..84121
+gene_002	gene	1	1	trnH-GUG	V9327_pgt001			21	94	-			none	complement(21..94)
+tRNA_001	tRNA	1	1	trnH-GUG	V9327_pgt001	tRNA-His		21	94	-			none	complement(21..94)
+gene_003	gene	1	1	psbA	V9327_pgp089			486	1547	-			none	complement(486..1547)
+CDS_002	CDS	1	1	psbA	V9327_pgp089	photosystem II protein D1	YP_011052624.1	486	1547	-	1	11	none	complement(486..1547)
+gene_004	gene	1	1	trnK-UUU	V9327_pgt002			1772	4364	+			none	1772..4364
+tRNA_002	tRNA	1	2	trnK-UUU	V9327_pgt002	tRNA-Lys		1772	1807	+			none	join(1772..1807,4328..4364)
+tRNA_002	tRNA	2	2	trnK-UUU	V9327_pgt002	tRNA-Lys		4328	4364	+			none	join(1772..1807,4328..4364)
+gene_005	gene	1	1	matK	V9327_pgp088			2071	3591	-			none	complement(2071..3591)
+CDS_003	CDS	1	1	matK	V9327_pgp088	maturase K	YP_011052625.1	2071	3591	-	1	11	none	complement(2071..3591)
+gene_006	gene	1	1	rps16	V9327_pgp087			5167	6295	-			none	complement(5167..6295)
+CDS_004	CDS	1	2	rps16	V9327_pgp087	ribosomal protein S16	YP_011052626.1	5167	5381	-	1	11	none	complement(join(5167..5381,6256..6295))
+CDS_004	CDS	2	2	rps16	V9327_pgp087	ribosomal protein S16	YP_011052626.1	6256	6295	-	1	11	none	complement(join(5167..5381,6256..6295))
+gene_007	gene	1	1	trnQ-UUG	V9327_pgt003			7251	7322	-			none	complement(7251..7322)
+tRNA_003	tRNA	1	1	trnQ-UUG	V9327_pgt003	tRNA-Gln		7251	7322	-			none	complement(7251..7322)
+gene_008	gene	1	1	psbK	V9327_pgp086			7683	7862	+			none	7683..7862
+CDS_005	CDS	1	1	psbK	V9327_pgp086	photosystem II subunit K	YP_011052627.1	7683	7862	+	1	11	none	7683..7862
+gene_009	gene	1	1	psbI	V9327_pgp085			8277	8387	+			none	8277..8387
+CDS_006	CDS	1	1	psbI	V9327_pgp085	photosystem II subunit I	YP_011052628.1	8277	8387	+	1	11	none	8277..8387
+gene_010	gene	1	1	trnS-GCU	V9327_pgt004			8530	8617	-			none	complement(8530..8617)
+tRNA_004	tRNA	1	1	trnS-GCU	V9327_pgt004	tRNA-Ser		8530	8617	-			none	complement(8530..8617)
+gene_011	gene	1	1	trnC-GCA	V9327_pgt005			9385	9455	+			none	9385..9455
+tRNA_005	tRNA	1	1	trnC-GCA	V9327_pgt005	tRNA-Cys		9385	9455	+			none	9385..9455
+gene_012	gene	1	1	petN	V9327_pgp084			10283	10372	+			none	10283..10372
+CDS_007	CDS	1	1	petN	V9327_pgp084	cytochrome b6/f subunit N	YP_011052629.1	10283	10372	+	1	11	none	10283..10372
+gene_013	gene	1	1	psbM	V9327_pgp083			10872	10976	-			none	complement(10872..10976)
+CDS_008	CDS	1	1	psbM	V9327_pgp083	photosystem II subunit M	YP_011052630.1	10872	10976	-	1	11	none	complement(10872..10976)
+gene_014	gene	1	1	trnD-GUC	V9327_pgt006			11635	11708	-			none	complement(11635..11708)
+tRNA_006	tRNA	1	1	trnD-GUC	V9327_pgt006	tRNA-Asp		11635	11708	-			none	complement(11635..11708)
+gene_015	gene	1	1	trnY-GUA	V9327_pgt007			11828	11911	-			none	complement(11828..11911)
+tRNA_007	tRNA	1	1	trnY-GUA	V9327_pgt007	tRNA-Tyr		11828	11911	-			none	complement(11828..11911)
+gene_016	gene	1	1	trnE-UUC	V9327_pgt008			12081	12151	-			none	complement(12081..12151)
+tRNA_008	tRNA	1	1	trnE-UUC	V9327_pgt008	tRNA-Glu		12081	12151	-			none	complement(12081..12151)
+gene_017	gene	1	1	rpoB	V9327_pgp082			13074	16256	+			none	13074..16256
+CDS_009	CDS	1	1	rpoB	V9327_pgp082	RNA polymerase beta subunit	YP_011052631.1	13074	16256	+	1	11	none	13074..16256
+gene_018	gene	1	1	rpoC1	V9327_pgp081			16283	19090	+			none	16283..19090
+CDS_010	CDS	1	2	rpoC1	V9327_pgp081	RNA polymerase beta' subunit	YP_011052632.1	16283	16714	+	1	11	none	join(16283..16714,17453..19090)
+CDS_010	CDS	2	2	rpoC1	V9327_pgp081	RNA polymerase beta' subunit	YP_011052632.1	17453	19090	+	1	11	none	join(16283..16714,17453..19090)
+gene_019	gene	1	1	rpoC2	V9327_pgp080			19192	23307	+			none	19192..23307
+CDS_011	CDS	1	1	rpoC2	V9327_pgp080	RNA polymerase beta'' subunit	YP_011052633.1	19192	23307	+	1	11	none	19192..23307
+gene_020	gene	1	1	rps2	V9327_pgp079			23572	24282	+			none	23572..24282
+CDS_012	CDS	1	1	rps2	V9327_pgp079	ribosomal protein S2	YP_011052634.1	23572	24282	+	1	11	none	23572..24282
+gene_021	gene	1	1	atpI	V9327_pgp078			24498	25241	+			none	24498..25241
+CDS_013	CDS	1	1	atpI	V9327_pgp078	CF0 subunit IV	YP_011052635.1	24498	25241	+	1	11	none	24498..25241
+gene_022	gene	1	1	atpH	V9327_pgp077			26418	26663	+			none	26418..26663
+CDS_014	CDS	1	1	atpH	V9327_pgp077	CF0 subunit III	YP_011052636.1	26418	26663	+	1	11	none	26418..26663
+gene_023	gene	1	1	atpF	V9327_pgp076			27050	28312	+			none	27050..28312
+CDS_015	CDS	1	2	atpF	V9327_pgp076	CF0 subunit I	YP_011052637.1	27050	27194	+	1	11	none	join(27050..27194,27903..28312)
+CDS_015	CDS	2	2	atpF	V9327_pgp076	CF0 subunit I	YP_011052637.1	27903	28312	+	1	11	none	join(27050..27194,27903..28312)
+gene_024	gene	1	1	atpA	V9327_pgp075			28378	29904	+			none	28378..29904
+CDS_016	CDS	1	1	atpA	V9327_pgp075	CF1 subunit alpha	YP_011052638.1	28378	29904	+	1	11	none	28378..29904
+gene_025	gene	1	1	trnR-UCU	V9327_pgt009			30031	30102	-			none	complement(30031..30102)
+tRNA_009	tRNA	1	1	trnR-UCU	V9327_pgt009	tRNA-Arg		30031	30102	-			none	complement(30031..30102)
+gene_026	gene	1	1	trnG-UCC	V9327_pgt010			30304	31081	-			none	complement(30304..31081)
+tRNA_010	tRNA	1	2	trnG-UCC	V9327_pgt010	tRNA-Gly		30304	30352	-			none	complement(join(30304..30352,31059..31081))
+tRNA_010	tRNA	2	2	trnG-UCC	V9327_pgt010	tRNA-Gly		31059	31081	-			none	complement(join(30304..30352,31059..31081))
+gene_027	gene	1	1	trnT-GGU	V9327_pgt011			31253	31324	+			none	31253..31324
+tRNA_011	tRNA	1	1	trnT-GGU	V9327_pgt011	tRNA-Thr		31253	31324	+			none	31253..31324
+gene_028	gene	1	1	psbD	V9327_pgp074			32538	33599	+			none	32538..33599
+CDS_017	CDS	1	1	psbD	V9327_pgp074	photosystem II protein D2	YP_011052639.1	32538	33599	+	1	11	none	32538..33599
+gene_029	gene	1	1	psbC	V9327_pgp073			33547	34968	+			none	33547..34968
+CDS_018	CDS	1	1	psbC	V9327_pgp073	photosystem II 43 kDa protein	YP_011052640.1	33547	34968	+	1	11	none	33547..34968
+gene_030	gene	1	1	trnS-UGA	V9327_pgt012			35206	35288	-			none	complement(35206..35288)
+tRNA_012	tRNA	1	1	trnS-UGA	V9327_pgt012	tRNA-Ser		35206	35288	-			none	complement(35206..35288)
+gene_031	gene	1	1	psbZ	V9327_pgp072			35676	35864	+			none	35676..35864
+CDS_019	CDS	1	1	psbZ	V9327_pgp072	photosystem II subunit Z	YP_011052641.1	35676	35864	+	1	11	none	35676..35864
+gene_032	gene	1	1	trnG-UCC	V9327_pgt013			36178	36248	+			none	36178..36248
+tRNA_013	tRNA	1	1	trnG-UCC	V9327_pgt013	tRNA-Gly		36178	36248	+			none	36178..36248
+gene_033	gene	1	1	trnfM-CAU	V9327_pgt014			36424	36497	-			none	complement(36424..36497)
+tRNA_014	tRNA	1	1	trnfM-CAU	V9327_pgt014	tRNA-fMet		36424	36497	-			none	complement(36424..36497)
+gene_034	gene	1	1	rps14	V9327_pgp071			36652	36954	-			none	complement(36652..36954)
+CDS_020	CDS	1	1	rps14	V9327_pgp071	ribosomal protein S14	YP_011052642.1	36652	36954	-	1	11	none	complement(36652..36954)
+gene_035	gene	1	1	psaB	V9327_pgp070			37088	39292	-			none	complement(37088..39292)
+CDS_021	CDS	1	1	psaB	V9327_pgp070	photosystem I P700 apoprotein A2	YP_011052643.1	37088	39292	-	1	11	none	complement(37088..39292)
+gene_036	gene	1	1	psaA	V9327_pgp069			39318	41570	-			none	complement(39318..41570)
+CDS_022	CDS	1	1	psaA	V9327_pgp069	photosystem I P700 apoprotein A1	YP_011052644.1	39318	41570	-	1	11	none	complement(39318..41570)
+gene_037	gene	1	1	ycf3	V9327_pgp068			42321	44281	-			none	complement(42321..44281)
+CDS_023	CDS	1	3	ycf3	V9327_pgp068	hypothetical chloroplast RF34	YP_011052645.1	42321	42473	-	1	11	none	complement(join(42321..42473,43226..43455,44158..44281))
+CDS_023	CDS	2	3	ycf3	V9327_pgp068	hypothetical chloroplast RF34	YP_011052645.1	43226	43455	-	1	11	none	complement(join(42321..42473,43226..43455,44158..44281))
+CDS_023	CDS	3	3	ycf3	V9327_pgp068	hypothetical chloroplast RF34	YP_011052645.1	44158	44281	-	1	11	none	complement(join(42321..42473,43226..43455,44158..44281))
+gene_038	gene	1	1	trnS-GGA	V9327_pgt015			45184	45270	+			none	45184..45270
+tRNA_015	tRNA	1	1	trnS-GGA	V9327_pgt015	tRNA-Ser		45184	45270	+			none	45184..45270
+gene_039	gene	1	1	rps4	V9327_pgp067			45581	46186	-			none	complement(45581..46186)
+CDS_024	CDS	1	1	rps4	V9327_pgp067	ribosomal protein S4	YP_011052646.1	45581	46186	-	1	11	none	complement(45581..46186)
+gene_040	gene	1	1	trnT-UGU	V9327_pgt016			46539	46611	-			none	complement(46539..46611)
+tRNA_016	tRNA	1	1	trnT-UGU	V9327_pgt016	tRNA-Thr		46539	46611	-			none	complement(46539..46611)
+gene_041	gene	1	1	trnL-UAA	V9327_pgt017			47203	47722	+			none	47203..47722
+tRNA_017	tRNA	1	2	trnL-UAA	V9327_pgt017	tRNA-Leu		47203	47239	+			none	join(47203..47239,47673..47722)
+tRNA_017	tRNA	2	2	trnL-UAA	V9327_pgt017	tRNA-Leu		47673	47722	+			none	join(47203..47239,47673..47722)
+tRNA_018	tRNA	1	2	trnL-UAA	V9327_pgt017	tRNA-Leu		47203	47237	+			none	join(47203..47237,47673..47722)
+tRNA_018	tRNA	2	2	trnL-UAA	V9327_pgt017	tRNA-Leu		47673	47722	+			none	join(47203..47237,47673..47722)
+gene_042	gene	1	1	trnF-GAA	V9327_pgt018			48078	48150	+			none	48078..48150
+tRNA_019	tRNA	1	1	trnF-GAA	V9327_pgt018	tRNA-Phe		48078	48150	+			none	48078..48150
+gene_043	gene	1	1	ndhJ	V9327_pgp066			48751	49227	-			none	complement(48751..49227)
+CDS_025	CDS	1	1	ndhJ	V9327_pgp066	NADH dehydrogenase subunit J	YP_011052647.1	48751	49227	-	1	11	none	complement(48751..49227)
+gene_044	gene	1	1	ndhK	V9327_pgp065			49331	50008	-			none	complement(49331..50008)
+CDS_026	CDS	1	1	ndhK	V9327_pgp065	NADH dehydrogenase subunit K	YP_011052648.1	49331	50008	-	1	11	none	complement(49331..50008)
+gene_045	gene	1	1	ndhC	V9327_pgp064			50060	50422	-			none	complement(50060..50422)
+CDS_027	CDS	1	1	ndhC	V9327_pgp064	NADH dehydrogenase subunit C	YP_011052649.1	50060	50422	-	1	11	none	complement(50060..50422)
+gene_046	gene	1	1	trnV-UAC	V9327_pgt019			51588	52237	-			none	complement(51588..52237)
+tRNA_020	tRNA	1	2	trnV-UAC	V9327_pgt019	tRNA-Val		51588	51622	-			none	complement(join(51588..51622,52200..52237))
+tRNA_020	tRNA	2	2	trnV-UAC	V9327_pgt019	tRNA-Val		52200	52237	-			none	complement(join(51588..51622,52200..52237))
+tRNA_021	tRNA	1	2	trnV-UAC	V9327_pgt019	tRNA-Val		51588	51624	-			none	complement(join(51588..51624,52200..52237))
+tRNA_021	tRNA	2	2	trnV-UAC	V9327_pgt019	tRNA-Val		52200	52237	-			none	complement(join(51588..51624,52200..52237))
+gene_047	gene	1	1	trnM-CAU	V9327_pgt020			52413	52485	+			none	52413..52485
+tRNA_022	tRNA	1	1	trnM-CAU	V9327_pgt020	tRNA-Met		52413	52485	+			none	52413..52485
+gene_048	gene	1	1	atpE	V9327_pgp063			52699	53100	-			none	complement(52699..53100)
+CDS_028	CDS	1	1	atpE	V9327_pgp063	CF1 subunit epsilon	YP_011052650.1	52699	53100	-	1	11	none	complement(52699..53100)
+gene_049	gene	1	1	atpB	V9327_pgp062			53097	54593	-			none	complement(53097..54593)
+CDS_029	CDS	1	1	atpB	V9327_pgp062	CF1 subunit beta	YP_011052651.1	53097	54593	-	1	11	none	complement(53097..54593)
+gene_050	gene	1	1	rbcL	V9327_pgp061			55353	56780	+			none	55353..56780
+CDS_030	CDS	1	1	rbcL	V9327_pgp061	ribulose-1,5-bisphosphate carboxylase/oxygenaselarge subunit	YP_011052652.1	55353	56780	+	1	11	none	55353..56780
+gene_051	gene	1	1	accD	V9327_pgp060			57270	58799	+			none	57270..58799
+CDS_031	CDS	1	1	accD	V9327_pgp060	acetyl-CoA carboxylase carboxyltransferase betasubunit	YP_011052653.1	57270	58799	+	1	11	none	57270..58799
+gene_052	gene	1	1	psaI	V9327_pgp059			59502	59612	+			none	59502..59612
+CDS_032	CDS	1	1	psaI	V9327_pgp059	photosystem I subunit VIII	YP_011052654.1	59502	59612	+	1	11	none	59502..59612
+gene_053	gene	1	1	ycf4	V9327_pgp058			60014	60571	+			none	60014..60571
+CDS_033	CDS	1	1	ycf4	V9327_pgp058	photosystem I assembly protein Ycf4	YP_011052655.1	60014	60571	+	1	11	none	60014..60571
+gene_054	gene	1	1	cemA	V9327_pgp057			61208	61897	+			none	61208..61897
+CDS_034	CDS	1	1	cemA	V9327_pgp057	chloroplast envelope membrane protein	YP_011052656.1	61208	61897	+	1	11	none	61208..61897
+gene_055	gene	1	1	petA	V9327_pgp056			62124	63086	+			none	62124..63086
+CDS_035	CDS	1	1	petA	V9327_pgp056	cytochrome f	YP_011052657.1	62124	63086	+	1	11	none	62124..63086
+gene_056	gene	1	1	psbJ	V9327_pgp055			63874	63996	-			none	complement(63874..63996)
+CDS_036	CDS	1	1	psbJ	V9327_pgp055	photosystem II subunit J	YP_011052658.1	63874	63996	-	1	11	none	complement(63874..63996)
+gene_057	gene	1	1	psbL	V9327_pgp054			64145	64261	-			none	complement(64145..64261)
+CDS_037	CDS	1	1	psbL	V9327_pgp054	photosystem II subunit L	YP_011052659.1	64145	64261	-	1	11	none	complement(64145..64261)
+gene_058	gene	1	1	psbF	V9327_pgp053			64284	64403	-			none	complement(64284..64403)
+CDS_038	CDS	1	1	psbF	V9327_pgp053	cytochrome b559 subunit beta	YP_011052660.1	64284	64403	-	1	11	none	complement(64284..64403)
+gene_059	gene	1	1	psbE	V9327_pgp052			64413	64664	-			none	complement(64413..64664)
+CDS_039	CDS	1	1	psbE	V9327_pgp052	cytochrome b559 subunit alpha	YP_011052661.1	64413	64664	-	1	11	none	complement(64413..64664)
+gene_060	gene	1	1	petL	V9327_pgp051			65965	66060	+			none	65965..66060
+CDS_040	CDS	1	1	petL	V9327_pgp051	cytochrome b6/f subunit L	YP_011052662.1	65965	66060	+	1	11	none	65965..66060
+gene_061	gene	1	1	petG	V9327_pgp050			66233	66346	+			none	66233..66346
+CDS_041	CDS	1	1	petG	V9327_pgp050	cytochrome b6/f subunit G	YP_011052663.1	66233	66346	+	1	11	none	66233..66346
+gene_062	gene	1	1	trnW-CCA	V9327_pgt021			66464	66537	-			none	complement(66464..66537)
+tRNA_023	tRNA	1	1	trnW-CCA	V9327_pgt021	tRNA-Trp		66464	66537	-			none	complement(66464..66537)
+gene_063	gene	1	1	trnP-UGG	V9327_pgt022			66695	66768	-			none	complement(66695..66768)
+tRNA_024	tRNA	1	1	trnP-UGG	V9327_pgt022	tRNA-Pro		66695	66768	-			none	complement(66695..66768)
+gene_064	gene	1	1	psaJ	V9327_pgp049			67089	67223	+			none	67089..67223
+CDS_042	CDS	1	1	psaJ	V9327_pgp049	photosystem I subunit J	YP_011052664.1	67089	67223	+	1	11	none	67089..67223
+gene_065	gene	1	1	rpl33	V9327_pgp048			67661	67867	+			none	67661..67867
+CDS_043	CDS	1	1	rpl33	V9327_pgp048	ribosomal protein L33	YP_011052665.1	67661	67867	+	1	11	none	67661..67867
+gene_066	gene	1	1	rps18	V9327_pgp047			68048	68353	+			none	68048..68353
+CDS_044	CDS	1	1	rps18	V9327_pgp047	ribosomal protein S18	YP_011052666.1	68048	68353	+	1	11	none	68048..68353
+gene_067	gene	1	1	rpl20	V9327_pgp046			68601	68981	-			none	complement(68601..68981)
+CDS_045	CDS	1	1	rpl20	V9327_pgp046	ribosomal protein L20	YP_011052667.1	68601	68981	-	1	11	none	complement(68601..68981)
+gene_068	gene	1	2	rps12	V9327_pgp045			69724	69837	-			none	join(complement(69724..69837),138829..139621)
+gene_068	gene	2	2	rps12	V9327_pgp045			138829	139621	+			none	join(complement(69724..69837),138829..139621)
+CDS_046	CDS	1	3	rps12	V9327_pgp045	ribosomal protein S12	YP_011052668.1	69724	69837	-	1	11	none	join(complement(69724..69837),138829..139060, 139596..139621)
+CDS_046	CDS	2	3	rps12	V9327_pgp045	ribosomal protein S12	YP_011052668.1	138829	139060	+	1	11	none	join(complement(69724..69837),138829..139060, 139596..139621)
+CDS_046	CDS	3	3	rps12	V9327_pgp045	ribosomal protein S12	YP_011052668.1	139596	139621	+	1	11	none	join(complement(69724..69837),138829..139060, 139596..139621)
+gene_069	gene	1	1	clpP1	V9327_pgp043			70000	72002	-			none	complement(70000..72002)
+CDS_047	CDS	1	3	clpP1	V9327_pgp043	ATP-dependent Clp protease proteolytic subunit1	YP_011052669.1	70000	70228	-	1	11	none	complement(join(70000..70228,70855..71145,71932..72002))
+CDS_047	CDS	2	3	clpP1	V9327_pgp043	ATP-dependent Clp protease proteolytic subunit1	YP_011052669.1	70855	71145	-	1	11	none	complement(join(70000..70228,70855..71145,71932..72002))
+CDS_047	CDS	3	3	clpP1	V9327_pgp043	ATP-dependent Clp protease proteolytic subunit1	YP_011052669.1	71932	72002	-	1	11	none	complement(join(70000..70228,70855..71145,71932..72002))
+gene_070	gene	1	1	psbB	V9327_pgp042			72451	73977	+			none	72451..73977
+CDS_048	CDS	1	1	psbB	V9327_pgp042	photosystem II 47 kDa protein	YP_011052670.1	72451	73977	+	1	11	none	72451..73977
+gene_071	gene	1	1	psbT	V9327_pgp041			74107	74208	+			none	74107..74208
+CDS_049	CDS	1	1	psbT	V9327_pgp041	photosystem II subunit T	YP_011052671.1	74107	74208	+	1	11	none	74107..74208
+gene_072	gene	1	1	pbf1	V9327_pgp040			74282	74413	-			none	complement(74282..74413)
+CDS_050	CDS	1	1	pbf1	V9327_pgp040	photosystem biogenesis factor 1	YP_011052672.1	74282	74413	-	1	11	none	complement(74282..74413)
+gene_073	gene	1	1	psbH	V9327_pgp039			74516	74737	+			none	74516..74737
+CDS_051	CDS	1	1	psbH	V9327_pgp039	photosystem II subunit H	YP_011052673.1	74516	74737	+	1	11	none	74516..74737
+gene_074	gene	1	1	petB	V9327_pgp038			74862	76262	+			none	74862..76262
+CDS_052	CDS	1	2	petB	V9327_pgp038	cytochrome b6	YP_011052674.1	74862	74867	+	1	11	none	join(74862..74867,75621..76262)
+CDS_052	CDS	2	2	petB	V9327_pgp038	cytochrome b6	YP_011052674.1	75621	76262	+	1	11	none	join(74862..74867,75621..76262)
+gene_075	gene	1	1	petD	V9327_pgp037			76459	77647	+			none	76459..77647
+CDS_053	CDS	1	2	petD	V9327_pgp037	cytochrome b6/f subunit IV	YP_011052675.1	76459	76466	+	1	11	none	join(76459..76466,77173..77647)
+CDS_053	CDS	2	2	petD	V9327_pgp037	cytochrome b6/f subunit IV	YP_011052675.1	77173	77647	+	1	11	none	join(76459..76466,77173..77647)
+gene_076	gene	1	1	rpoA	V9327_pgp036			77857	78864	-			none	complement(77857..78864)
+CDS_054	CDS	1	1	rpoA	V9327_pgp036	RNA polymerase alpha subunit	YP_011052676.1	77857	78864	-	1	11	none	complement(77857..78864)
+gene_077	gene	1	1	rps11	V9327_pgp035			78945	79355	-			none	complement(78945..79355)
+CDS_055	CDS	1	1	rps11	V9327_pgp035	ribosomal protein S11	YP_011052677.1	78945	79355	-	1	11	none	complement(78945..79355)
+gene_078	gene	1	1	rpl36	V9327_pgp034			79461	79574	-			none	complement(79461..79574)
+CDS_056	CDS	1	1	rpl36	V9327_pgp034	ribosomal protein L36	YP_011052678.1	79461	79574	-	1	11	none	complement(79461..79574)
+gene_079	gene	1	1	infA	V9327_pgp033			79690	79923	-			none	complement(79690..79923)
+CDS_057	CDS	1	1	infA	V9327_pgp033	translational initiation factor 1	YP_011052679.1	79690	79923	-	1	11	none	complement(79690..79923)
+gene_080	gene	1	1	rps8	V9327_pgp032			80044	80448	-			none	complement(80044..80448)
+CDS_058	CDS	1	1	rps8	V9327_pgp032	ribosomal protein S8	YP_011052680.1	80044	80448	-	1	11	none	complement(80044..80448)
+gene_081	gene	1	1	rpl14	V9327_pgp031			80632	81000	-			none	complement(80632..81000)
+CDS_059	CDS	1	1	rpl14	V9327_pgp031	ribosomal protein L14	YP_011052681.1	80632	81000	-	1	11	none	complement(80632..81000)
+gene_082	gene	1	1	rpl16	V9327_pgp030			81127	82553	-			none	complement(81127..82553)
+CDS_060	CDS	1	2	rpl16	V9327_pgp030	ribosomal protein L16	YP_011052682.1	81127	81525	-	1	11	none	complement(join(81127..81525,82545..82553))
+CDS_060	CDS	2	2	rpl16	V9327_pgp030	ribosomal protein L16	YP_011052682.1	82545	82553	-	1	11	none	complement(join(81127..81525,82545..82553))
+gene_083	gene	1	1	rps3	V9327_pgp029			82721	83377	-			none	complement(82721..83377)
+CDS_061	CDS	1	1	rps3	V9327_pgp029	ribosomal protein S3	YP_011052683.1	82721	83377	-	1	11	none	complement(82721..83377)
+gene_084	gene	1	1	rpl22	V9327_pgp028			83362	83835	-			none	complement(83362..83835)
+CDS_062	CDS	1	1	rpl22	V9327_pgp028	ribosomal protein L22	YP_011052684.1	83362	83835	-	1	11	none	complement(83362..83835)
+gene_085	gene	1	1	rps19	V9327_pgp027			83904	84182	-			none	complement(83904..84182)
+CDS_063	CDS	1	1	rps19	V9327_pgp027	ribosomal protein S19	YP_011052685.1	83904	84182	-	1	11	none	complement(83904..84182)
+repeat_region_001	repeat_region	1	1					84122	109274	+			none	84122..109274
+gene_086	gene	1	1	rpl2	V9327_pgp026			84238	85727	-			none	complement(84238..85727)
+CDS_064	CDS	1	2	rpl2	V9327_pgp026	ribosomal protein L2	YP_011052686.1	84238	84671	-	1	11	none	complement(join(84238..84671,85337..85727))
+CDS_064	CDS	2	2	rpl2	V9327_pgp026	ribosomal protein L2	YP_011052686.1	85337	85727	-	1	11	none	complement(join(84238..84671,85337..85727))
+gene_087	gene	1	1	rpl23	V9327_pgp025			85746	86027	-			none	complement(85746..86027)
+CDS_065	CDS	1	1	rpl23	V9327_pgp025	ribosomal protein L23	YP_011052687.1	85746	86027	-	1	11	none	complement(85746..86027)
+gene_088	gene	1	1	trnI-CAU	V9327_pgt023			86193	86266	-			none	complement(86193..86266)
+tRNA_025	tRNA	1	1	trnI-CAU	V9327_pgt023	tRNA-Ile		86193	86266	-			none	complement(86193..86266)
+gene_089	gene	1	1	ycf2	V9327_pgp024			86378	93235	+			none	86378..93235
+CDS_066	CDS	1	1	ycf2	V9327_pgp024	hypothetical chloroplast RF21	YP_011052688.1	86378	93235	+	1	11	none	86378..93235
+gene_090	gene	1	1	trnL-CAA	V9327_pgt024			93635	93715	-			none	complement(93635..93715)
+tRNA_026	tRNA	1	1	trnL-CAA	V9327_pgt024	tRNA-Leu		93635	93715	-			none	complement(93635..93715)
+gene_091	gene	1	1	ndhB	V9327_pgp023			94293	96495	-			none	complement(94293..96495)
+CDS_067	CDS	1	2	ndhB	V9327_pgp023	NADH-plastoquinone oxidoreductase subunit 2	YP_011052689.1	94293	95048	-	1	11	none	complement(join(94293..95048,95719..96495))
+CDS_067	CDS	2	2	ndhB	V9327_pgp023	NADH-plastoquinone oxidoreductase subunit 2	YP_011052689.1	95719	96495	-	1	11	none	complement(join(94293..95048,95719..96495))
+gene_092	gene	1	1	rps7	V9327_pgp022			96785	97252	-			none	complement(96785..97252)
+CDS_068	CDS	1	1	rps7	V9327_pgp022	ribosomal protein S7	YP_011052690.1	96785	97252	-	1	11	none	complement(96785..97252)
+gene_093	gene	1	1	ycf15	V9327_pgp021			99062	99253	-			none	complement(99062..99253)
+CDS_069	CDS	1	1	ycf15	V9327_pgp021	Ycf15 protein	YP_011052691.1	99062	99253	-	1	11	none	complement(99062..99253)
+gene_094	gene	1	1	trnV-GAC	V9327_pgt025			99938	100009	+			none	99938..100009
+tRNA_027	tRNA	1	1	trnV-GAC	V9327_pgt025	tRNA-Val		99938	100009	+			none	99938..100009
+gene_095	gene	1	1	rrn16	V9327_pgr008			100238	101727	+			none	100238..101727
+rRNA_001	rRNA	1	1	rrn16	V9327_pgr008	16S ribosomal RNA		100238	101727	+			none	100238..101727
+gene_096	gene	1	1	trnI-GAU	V9327_pgt026			102021	103040	+			none	102021..103040
+tRNA_028	tRNA	1	2	trnI-GAU	V9327_pgt026	tRNA-Ile		102021	102063	+			none	join(102021..102063,103006..103040)
+tRNA_028	tRNA	2	2	trnI-GAU	V9327_pgt026	tRNA-Ile		103006	103040	+			none	join(102021..102063,103006..103040)
+tRNA_029	tRNA	1	2	trnI-GAU	V9327_pgt026	tRNA-Ile		102021	102058	+			none	join(102021..102058,103006..103040)
+tRNA_029	tRNA	2	2	trnI-GAU	V9327_pgt026	tRNA-Ile		103006	103040	+			none	join(102021..102058,103006..103040)
+gene_097	gene	1	1	trnA-UGC	V9327_pgt027			103105	103998	+			none	103105..103998
+tRNA_030	tRNA	1	2	trnA-UGC	V9327_pgt027	tRNA-Ala		103105	103142	+			none	join(103105..103142,103964..103998)
+tRNA_030	tRNA	2	2	trnA-UGC	V9327_pgt027	tRNA-Ala		103964	103998	+			none	join(103105..103142,103964..103998)
+gene_098	gene	1	1	rrn23	V9327_pgr007			104152	106960	+			none	104152..106960
+rRNA_002	rRNA	1	1	rrn23	V9327_pgr007	23S ribosomal RNA		104152	106960	+			none	104152..106960
+gene_099	gene	1	1	rrn4.5	V9327_pgr006			107059	107161	+			none	107059..107161
+rRNA_003	rRNA	1	1	rrn4.5	V9327_pgr006	4.5S ribosomal RNA		107059	107161	+			none	107059..107161
+gene_100	gene	1	1	rrn5	V9327_pgr005			107407	107527	+			none	107407..107527
+rRNA_004	rRNA	1	1	rrn5	V9327_pgr005	5S ribosomal RNA		107407	107527	+			none	107407..107527
+gene_101	gene	1	1	trnR-ACG	V9327_pgt028			107780	107853	+			none	107780..107853
+tRNA_031	tRNA	1	1	trnR-ACG	V9327_pgt028	tRNA-Arg		107780	107853	+			none	107780..107853
+gene_102	gene	1	1	trnN-GUU	V9327_pgt029			108312	108383	-			none	complement(108312..108383)
+tRNA_032	tRNA	1	1	trnN-GUU	V9327_pgt029	tRNA-Asn		108312	108383	-			none	complement(108312..108383)
+gene_103	gene	1	1	ycf1	V9327_pgp020			108711	109310	+			none	108711..109310
+misc_feature_002	misc_feature	1	1					109275	127652	+			none	109275..127652
+gene_104	gene	1	1	ndhF	V9327_pgp019			109307	111541	-			none	complement(109307..111541)
+CDS_070	CDS	1	1	ndhF	V9327_pgp019	NADH dehydrogenase subunit F	YP_011052692.1	109307	111541	-	1	11	none	complement(109307..111541)
+gene_105	gene	1	1	rpl32	V9327_pgp018			112595	112759	+			none	112595..112759
+CDS_071	CDS	1	1	rpl32	V9327_pgp018	ribosomal protein L32	YP_011052693.1	112595	112759	+	1	11	none	112595..112759
+gene_106	gene	1	1	trnL-UAG	V9327_pgt030			113641	113720	+			none	113641..113720
+tRNA_033	tRNA	1	1	trnL-UAG	V9327_pgt030	tRNA-Leu		113641	113720	+			none	113641..113720
+gene_107	gene	1	1	ccsA	V9327_pgp017			113828	114796	+			none	113828..114796
+CDS_072	CDS	1	1	ccsA	V9327_pgp017	cytochrome c biogenesis protein	YP_011052694.1	113828	114796	+	1	11	none	113828..114796
+gene_108	gene	1	1	ndhD	V9327_pgp016			115180	116562	-			none	complement(115180..116562)
+CDS_073	CDS	1	1	ndhD	V9327_pgp016	NADH dehydrogenase subunit D	YP_011052695.1	115180	116562	-	1	11	none	complement(115180..116562)
+gene_109	gene	1	1	psaC	V9327_pgp015			116680	116925	-			none	complement(116680..116925)
+CDS_074	CDS	1	1	psaC	V9327_pgp015	photosystem I subunit C	YP_011052696.1	116680	116925	-	1	11	none	complement(116680..116925)
+gene_110	gene	1	1	ndhE	V9327_pgp014			117175	117480	-			none	complement(117175..117480)
+CDS_075	CDS	1	1	ndhE	V9327_pgp014	NADH dehydrogenase subunit E	YP_011052697.1	117175	117480	-	1	11	none	complement(117175..117480)
+gene_111	gene	1	1	ndhG	V9327_pgp013			117693	118223	-			none	complement(117693..118223)
+CDS_076	CDS	1	1	ndhG	V9327_pgp013	NADH dehydrogenase subunit G	YP_011052698.1	117693	118223	-	1	11	none	complement(117693..118223)
+gene_112	gene	1	1	ndhI	V9327_pgp012			118442	118942	-			none	complement(118442..118942)
+CDS_077	CDS	1	1	ndhI	V9327_pgp012	NADH dehydrogenase subunit I	YP_011052699.1	118442	118942	-	1	11	none	complement(118442..118942)
+gene_113	gene	1	1	ndhA	V9327_pgp011			119021	121168	-			none	complement(119021..121168)
+CDS_078	CDS	1	2	ndhA	V9327_pgp011	NADH-plastoquinone oxidoreductase subunit 1	YP_011052700.1	119021	119559	-	1	11	none	complement(join(119021..119559,120616..121168))
+CDS_078	CDS	2	2	ndhA	V9327_pgp011	NADH-plastoquinone oxidoreductase subunit 1	YP_011052700.1	120616	121168	-	1	11	none	complement(join(119021..119559,120616..121168))
+gene_114	gene	1	1	ndhH	V9327_pgp010			121170	122351	-			none	complement(121170..122351)
+CDS_079	CDS	1	1	ndhH	V9327_pgp010	NADH dehydrogenase subunit H	YP_011052701.1	121170	122351	-	1	11	none	complement(121170..122351)
+gene_115	gene	1	1	rps15	V9327_pgp009			122443	122721	-			none	complement(122443..122721)
+CDS_080	CDS	1	1	rps15	V9327_pgp009	ribosomal protein S15	YP_011052702.1	122443	122721	-	1	11	none	complement(122443..122721)
+gene_116	gene	1	1	ycf1	V9327_pgp008			123138	128216	-			none	complement(123138..128216)
+CDS_081	CDS	1	1	ycf1	V9327_pgp008	hypothetical chloroplast RF19	YP_011052703.1	123138	128216	-	1	11	none	complement(123138..128216)
+repeat_region_002	repeat_region	1	1					127653	152805	+			none	127653..152805
+gene_117	gene	1	1	trnN-GUU	V9327_pgt031			128544	128615	+			none	128544..128615
+tRNA_034	tRNA	1	1	trnN-GUU	V9327_pgt031	tRNA-Asn		128544	128615	+			none	128544..128615
+gene_118	gene	1	1	trnR-ACG	V9327_pgt032			129074	129147	-			none	complement(129074..129147)
+tRNA_035	tRNA	1	1	trnR-ACG	V9327_pgt032	tRNA-Arg		129074	129147	-			none	complement(129074..129147)
+gene_119	gene	1	1	rrn5	V9327_pgr004			129400	129520	-			none	complement(129400..129520)
+rRNA_005	rRNA	1	1	rrn5	V9327_pgr004	5S ribosomal RNA		129400	129520	-			none	complement(129400..129520)
+gene_120	gene	1	1	rrn4.5	V9327_pgr003			129766	129868	-			none	complement(129766..129868)
+rRNA_006	rRNA	1	1	rrn4.5	V9327_pgr003	4.5S ribosomal RNA		129766	129868	-			none	complement(129766..129868)
+gene_121	gene	1	1	rrn23	V9327_pgr002			129968	132776	-			none	complement(129968..132776)
+rRNA_007	rRNA	1	1	rrn23	V9327_pgr002	23S ribosomal RNA		129968	132776	-			none	complement(129968..132776)
+gene_122	gene	1	1	trnA-UGC	V9327_pgt033			132929	133822	-			none	complement(132929..133822)
+tRNA_036	tRNA	1	2	trnA-UGC	V9327_pgt033	tRNA-Ala		132929	132963	-			none	complement(join(132929..132963,133785..133822))
+tRNA_036	tRNA	2	2	trnA-UGC	V9327_pgt033	tRNA-Ala		133785	133822	-			none	complement(join(132929..132963,133785..133822))
+gene_123	gene	1	1	trnI-GAU	V9327_pgt034			133887	134906	-			none	complement(133887..134906)
+tRNA_037	tRNA	1	2	trnI-GAU	V9327_pgt034	tRNA-Ile		133887	133921	-			none	complement(join(133887..133921,134869..134906))
+tRNA_037	tRNA	2	2	trnI-GAU	V9327_pgt034	tRNA-Ile		134869	134906	-			none	complement(join(133887..133921,134869..134906))
+tRNA_038	tRNA	1	2	trnI-GAU	V9327_pgt034	tRNA-Ile		133887	133921	-			none	complement(join(133887..133921,134864..134906))
+tRNA_038	tRNA	2	2	trnI-GAU	V9327_pgt034	tRNA-Ile		134864	134906	-			none	complement(join(133887..133921,134864..134906))
+gene_124	gene	1	1	rrn16	V9327_pgr001			135201	136690	-			none	complement(135201..136690)
+rRNA_008	rRNA	1	1	rrn16	V9327_pgr001	16S ribosomal RNA		135201	136690	-			none	complement(135201..136690)
+gene_125	gene	1	1	trnV-GAC	V9327_pgt035			136918	136989	-			none	complement(136918..136989)
+tRNA_039	tRNA	1	1	trnV-GAC	V9327_pgt035	tRNA-Val		136918	136989	-			none	complement(136918..136989)
+gene_126	gene	1	1	ycf15	V9327_pgp007			137674	137865	+			none	137674..137865
+CDS_082	CDS	1	1	ycf15	V9327_pgp007	Ycf15 protein	YP_011052704.1	137674	137865	+	1	11	none	137674..137865
+gene_127	gene	1	1	rps7	V9327_pgp006			139675	140142	+			none	139675..140142
+CDS_083	CDS	1	1	rps7	V9327_pgp006	ribosomal protein S7	YP_011052705.1	139675	140142	+	1	11	none	139675..140142
+gene_128	gene	1	1	ndhB	V9327_pgp005			140432	142634	+			none	140432..142634
+CDS_084	CDS	1	2	ndhB	V9327_pgp005	NADH-plastoquinone oxidoreductase subunit 2	YP_011052706.1	140432	141208	+	1	11	none	join(140432..141208,141879..142634)
+CDS_084	CDS	2	2	ndhB	V9327_pgp005	NADH-plastoquinone oxidoreductase subunit 2	YP_011052706.1	141879	142634	+	1	11	none	join(140432..141208,141879..142634)
+gene_129	gene	1	1	trnL-CAA	V9327_pgt036			143212	143292	+			none	143212..143292
+tRNA_040	tRNA	1	1	trnL-CAA	V9327_pgt036	tRNA-Leu		143212	143292	+			none	143212..143292
+gene_130	gene	1	1	ycf2	V9327_pgp004			143692	150549	-			none	complement(143692..150549)
+CDS_085	CDS	1	1	ycf2	V9327_pgp004	Ycf2 protein	YP_011052707.1	143692	150549	-	1	11	none	complement(143692..150549)
+gene_131	gene	1	1	trnI-CAU	V9327_pgt037			150661	150734	+			none	150661..150734
+tRNA_041	tRNA	1	1	trnI-CAU	V9327_pgt037	tRNA-Ile		150661	150734	+			none	150661..150734
+gene_132	gene	1	1	rpl23	V9327_pgp003			150900	151181	+			none	150900..151181
+CDS_086	CDS	1	1	rpl23	V9327_pgp003	ribosomal protein L23	YP_011052708.1	150900	151181	+	1	11	none	150900..151181
+gene_133	gene	1	1	rpl2	V9327_pgp002			151200	152689	+			none	151200..152689
+CDS_087	CDS	1	2	rpl2	V9327_pgp002	ribosomal protein L2	YP_011052709.1	151200	151590	+	1	11	none	join(151200..151590,152256..152689)
+CDS_087	CDS	2	2	rpl2	V9327_pgp002	ribosomal protein L2	YP_011052709.1	152256	152689	+	1	11	none	join(151200..151590,152256..152689)
+gene_134	gene	1	1	rps19	V9327_pgp001			152745	152805	+			none	152745..152805

@@ -1,0 +1,87 @@
+{
+  "simulation": "offline_simulation",
+  "p0": {
+    "prompt_versions": {
+      "promptv1": {
+        "sha256": "f4f02d462a48182d…"
+      },
+      "promptv2": {
+        "sha256": "594650c0ecd12806…"
+      }
+    },
+    "active_prompt": "promptv1",
+    "active_config": {
+      "max_tokens": 8192,
+      "gateway_timeout_s": 120,
+      "verify_pointer_cap": 50
+    },
+    "integrity": "registered contents hash-verified on every read"
+  },
+  "m1": {
+    "entries": 7,
+    "report": {
+      "cases_total": 40,
+      "failures": 6,
+      "high_risk_successes": 1,
+      "by_category": {
+        "model_planning_error": 1,
+        "tool_error": 0,
+        "infrastructure_error": 6,
+        "data_or_scoring_defect": 0,
+        "unclassified": 0
+      }
+    }
+  },
+  "p1": {
+    "candidate_id": "CAND-promptv2-pointer-guard",
+    "status": "validated",
+    "status_cap_enforced": true,
+    "config_delta": {
+      "evidence_enforce_manifest": true,
+      "pre_verify_pointers": true,
+      "unresolved_requires_review": true
+    },
+    "prompt_diff_lines": 16,
+    "root_cause": "1 real invalid_evidence_pointer failure(s): planner cited pointers outside the packet manifest or with invented locators",
+    "failure_refs": [
+      {
+        "case_id": "chloro_C1_NC_088770_1_CHLORO-CDS-03",
+        "unresolved_pointers": [
+          "artifacts/genome.fa:all_sequences",
+          "artifacts/proteins.fa:all_records"
+        ]
+      }
+    ],
+    "rollback_ref": "{\"config_delta\": {}, \"prompt_version\": \"promptv1\"}"
+  },
+  "p2": {
+    "rejection_blocked_candidate": true,
+    "rejection_keeps_active_strategy": true,
+    "approval_receipt": {
+      "candidate_id": "CAND-promptv2-pointer-guard-v2",
+      "candidate_version": 1,
+      "approver": "offline_simulation:phase15-driver",
+      "decision": "approve",
+      "real": false,
+      "active_config_sha256": "a12ca6731080ba9804763f729e2d0af33d6011768847d7f9756e796ca6d35a44",
+      "at": "2026-10-18T06:13:59+00:00",
+      "simulation": "offline_simulation"
+    },
+    "approver_identity_recorded": true,
+    "note": "approvals in Phase 1.5 are simulated identities; a real human approver flow arrives with Phase 2"
+  },
+  "p3": {
+    "frozen_models": [
+      "deepseek-ai/DeepSeek-V4.1-Flash",
+      "zai-org/GLM-5.3-Flash"
+    ],
+    "dev_slice": "chloro candidates 40 (local pool), source_group frozen",
+    "strategies": {
+      "baseline": "promptv1 + ACTIVE_CONFIG",
+      "candidate": "promptv2 pointer-guard (validated)"
+    },
+    "scorer": "organelle_v2.rubric.deterministic_grader/v1 (frozen)",
+    "protocol_doc": "docs/V3_1_REAL_AB_PROTOCOL.md",
+    "api_calls_this_phase": 0
+  }
+}

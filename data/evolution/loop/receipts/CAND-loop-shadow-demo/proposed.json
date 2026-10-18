@@ -1,0 +1,9 @@
+{
+  "at": "2026-10-18T06:45:32+00:00",
+  "candidate_id": "CAND-loop-shadow-demo",
+  "config_delta": {
+    "gateway_timeout_s": 240
+  },
+  "simulation": "offline_simulation",
+  "transition": "proposed"
+}

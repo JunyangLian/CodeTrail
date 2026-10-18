@@ -1,0 +1,45 @@
+{
+  "audit": "V3_1_RELEASE_AUDIT_P0/v1",
+  "first_run": {
+    "observations": 120,
+    "succeeded": 119,
+    "failed_infra": 1,
+    "failed_case_arms": [
+      "chloro_C1_NC_088771_1_CHLORO-ID-01:glm_B"
+    ],
+    "judgment_pass_of_graded": "119/119",
+    "qc_pass_on_fault": 0,
+    "invalid_pointer_obs": 1,
+    "tokens": 672830,
+    "requests": 302
+  },
+  "post_repair_effective": {
+    "observations": 120,
+    "succeeded": 120,
+    "failed_infra": 0,
+    "failed_case_arms": [],
+    "judgment_pass_of_graded": "120/120",
+    "qc_pass_on_fault": 0,
+    "invalid_pointer_obs": 1,
+    "tokens": 678916,
+    "requests": 303
+  },
+  "delta_note": "the ONLY difference is cell glm_B x NC_088771_1_CHLORO-ID-01: first-run 503 infra failure, repair succeeded (block); tokens include both attempts",
+  "protocol": {
+    "infra_failure_rule": "failed observations stay in the ledger as failed; no auto-retry inside a run",
+    "repair_rule": "bounded single rerun, recorded as kind=repair with repairs_original; original never overwritten",
+    "repair_count": 1,
+    "repair_cells": [
+      "chloro_C1_NC_088771_1_CHLORO-ID-01:glm_B"
+    ],
+    "paired_denominator_rule": "quality comparisons use cells with both arms gradeable; completion rate is reported separately",
+    "complete_pairs_after_repair": 40,
+    "denominator_120_positions": true
+  },
+  "significance_language_scan": {
+    "banned_matches": [],
+    "ceiling_effect_disclosed": true,
+    "claim_language": "directional evidence on a 40-pair DEV slice; no statistical significance claimed"
+  },
+  "verdict": "PASS"
+}

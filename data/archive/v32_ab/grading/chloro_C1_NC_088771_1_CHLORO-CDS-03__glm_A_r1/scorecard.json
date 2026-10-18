@@ -1,0 +1,61 @@
+{
+  "action_quality": {
+    "method": "pending_human",
+    "score": null,
+    "status": "needs_review"
+  },
+  "contract_version": "chloro_qc_v1",
+  "critical_failure": {
+    "flag": false,
+    "rules": []
+  },
+  "decision_joint": {
+    "method": "rule",
+    "score": 1
+  },
+  "defect_localization": {
+    "detail": "every declared token and file located",
+    "method": "rule",
+    "score": 2
+  },
+  "evidence_locator_validity": {
+    "all_resolved": true,
+    "pointers": [
+      {
+        "pointer": "artifacts/features.tsv:13",
+        "resolved": true
+      }
+    ]
+  },
+  "evidence_support": {
+    "method": "pending_human",
+    "score": null,
+    "status": "needs_review"
+  },
+  "grader_version": "organelle_v2.rubric.deterministic_grader/v1",
+  "judgment": "pass",
+  "output_contract": {
+    "error": null,
+    "method": "rule",
+    "score": 1
+  },
+  "root_cause": {
+    "delivered": "coordinate_out_of_bounds",
+    "expected": [
+      "coordinate_out_of_bounds"
+    ],
+    "method": "rule",
+    "score": 1
+  },
+  "task_type": "fault",
+  "template_id": "CHLORO-CDS-03",
+  "unscorable_reason": null,
+  "verdict": {
+    "delivered": "block",
+    "expected": [
+      "block"
+    ],
+    "method": "rule",
+    "score": 1
+  }
+}

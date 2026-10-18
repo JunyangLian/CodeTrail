@@ -1,0 +1,366 @@
+feature_id	feature_type	part_index	part_count	gene	locus_tag	product	protein_id	start	end	strand	codon_start	transl_table	partial_flags	location_raw
+source_001	source	1	1					1	156277	+			none	1..156277
+gene_001	gene	1	2	rps12	AADL20_pgp042			99173	99966	-			none	complement(join(99173..99966,71143..71256))
+gene_001	gene	2	2	rps12	AADL20_pgp042			71143	71256	-			none	complement(join(99173..99966,71143..71256))
+CDS_001	CDS	1	3	rps12	AADL20_pgp042	ribosomal protein S12	YP_011083108.1	99173	99198	-	1	11	none	complement(join(99173..99198,99735..99966,71143..71256))
+CDS_001	CDS	2	3	rps12	AADL20_pgp042	ribosomal protein S12	YP_011083108.1	99735	99966	-	1	11	none	complement(join(99173..99198,99735..99966,71143..71256))
+CDS_001	CDS	3	3	rps12	AADL20_pgp042	ribosomal protein S12	YP_011083108.1	71143	71256	-	1	11	none	complement(join(99173..99198,99735..99966,71143..71256))
+gene_002	gene	1	1	trnH-GUG	AADL20_pgt001			23	96	-			none	complement(23..96)
+tRNA_001	tRNA	1	1	trnH-GUG	AADL20_pgt001	tRNA-His		23	96	-			none	complement(23..96)
+gene_003	gene	1	1	psbA	AADL20_pgp086			459	1520	-			none	complement(459..1520)
+CDS_002	CDS	1	1	psbA	AADL20_pgp086	photosystem II protein D1	YP_011083109.1	459	156414	-	1	11	none	complement(459..1520)
+gene_004	gene	1	1	trnK-UUU	AADL20_pgt002			1741	4331	-			none	complement(1741..4331)
+tRNA_002	tRNA	1	2	trnK-UUU	AADL20_pgt002	tRNA-Lys		1741	1775	-			none	complement(join(1741..1775,4295..4331))
+tRNA_002	tRNA	2	2	trnK-UUU	AADL20_pgt002	tRNA-Lys		4295	4331	-			none	complement(join(1741..1775,4295..4331))
+exon_001	exon	1	1	trnK-UUU	AADL20_pgt002			1741	1775	-			none	complement(1741..1775)
+intron_001	intron	1	1	trnK-UUU	AADL20_pgt002			1776	4294	-			none	complement(1776..4294)
+gene_005	gene	1	1	matK	AADL20_pgp085			2051	3577	-			none	complement(2051..3577)
+CDS_003	CDS	1	1	matK	AADL20_pgp085	maturase K	YP_011083110.1	2051	3577	-	1	11	none	complement(2051..3577)
+exon_002	exon	1	1	trnK-UUU	AADL20_pgt002			4295	4331	-			none	complement(4295..4331)
+gene_006	gene	1	1	rps16	AADL20_pgp084			5182	6306	-			none	complement(5182..6306)
+CDS_004	CDS	1	2	rps16	AADL20_pgp084	ribosomal protein S16	YP_011083111.1	5182	5408	-	1	11	none	complement(join(5182..5408,6267..6306))
+CDS_004	CDS	2	2	rps16	AADL20_pgp084	ribosomal protein S16	YP_011083111.1	6267	6306	-	1	11	none	complement(join(5182..5408,6267..6306))
+exon_003	exon	1	1	rps16	AADL20_pgp084			5182	5408	-			none	complement(5182..5408)
+intron_002	intron	1	1	rps16	AADL20_pgp084			5409	6266	-			none	complement(5409..6266)
+exon_004	exon	1	1	rps16	AADL20_pgp084			6267	6306	-			none	complement(6267..6306)
+gene_007	gene	1	1	trnQ-UUG	AADL20_pgt003			7357	7428	-			none	complement(7357..7428)
+tRNA_003	tRNA	1	1	trnQ-UUG	AADL20_pgt003	tRNA-Gln		7357	7428	-			none	complement(7357..7428)
+gene_008	gene	1	1	psbK	AADL20_pgp083			7767	7946	+			none	7767..7946
+CDS_005	CDS	1	1	psbK	AADL20_pgp083	photosystem II protein K	YP_011083112.1	7767	7946	+	1	11	none	7767..7946
+gene_009	gene	1	1	psbI	AADL20_pgp082			8337	8447	+			none	8337..8447
+CDS_006	CDS	1	1	psbI	AADL20_pgp082	photosystem II protein I	YP_011083113.1	8337	8447	+	1	11	none	8337..8447
+gene_010	gene	1	1	trnS-GCU	AADL20_pgt004			8577	8664	-			none	complement(8577..8664)
+tRNA_004	tRNA	1	1	trnS-GCU	AADL20_pgt004	tRNA-Ser		8577	8664	-			none	complement(8577..8664)
+gene_011	gene	1	1	trnG-UCC	AADL20_pgt005			9352	10099	+			none	9352..10099
+tRNA_005	tRNA	1	2	trnG-UCC	AADL20_pgt005	tRNA-Gly		9352	9374	+			none	join(9352..9374,10052..10099)
+tRNA_005	tRNA	2	2	trnG-UCC	AADL20_pgt005	tRNA-Gly		10052	10099	+			none	join(9352..9374,10052..10099)
+exon_005	exon	1	1	trnG-UCC	AADL20_pgt005			9352	9374	+			none	9352..9374
+intron_003	intron	1	1	trnG-UCC	AADL20_pgt005			9375	10051	+			none	9375..10051
+exon_006	exon	1	1	trnG-UCC	AADL20_pgt005			10052	10099	+			none	10052..10099
+gene_012	gene	1	1	trnR-UCU	AADL20_pgt006			10374	10445	+			none	10374..10445
+tRNA_006	tRNA	1	1	trnR-UCU	AADL20_pgt006	tRNA-Arg		10374	10445	+			none	10374..10445
+gene_013	gene	1	1	atpA	AADL20_pgp081			10556	12079	-			none	complement(10556..12079)
+CDS_007	CDS	1	1	atpA	AADL20_pgp081	ATP synthase CF1 alpha subunit	YP_011083114.1	10556	12079	-	1	11	none	complement(10556..12079)
+gene_014	gene	1	1	atpF	AADL20_pgp080			12136	13412	-			none	complement(12136..13412)
+CDS_008	CDS	1	2	atpF	AADL20_pgp080	ATPase subunit I	YP_011083115.1	12136	12545	-	1	11	none	complement(join(12136..12545,13268..13412))
+CDS_008	CDS	2	2	atpF	AADL20_pgp080	ATPase subunit I	YP_011083115.1	13268	13412	-	1	11	none	complement(join(12136..12545,13268..13412))
+exon_007	exon	1	1	atpF	AADL20_pgp080			12136	12545	-			none	complement(12136..12545)
+intron_004	intron	1	1	atpF	AADL20_pgp080			12546	13267	-			none	complement(12546..13267)
+exon_008	exon	1	1	atpF	AADL20_pgp080			13268	13412	-			none	complement(13268..13412)
+gene_015	gene	1	1	atpH	AADL20_pgp079			13793	14038	-			none	complement(13793..14038)
+CDS_009	CDS	1	1	atpH	AADL20_pgp079	ATPase subunit III	YP_011083116.1	13793	14038	-	1	11	none	complement(13793..14038)
+gene_016	gene	1	1	atpI	AADL20_pgp078			15162	15905	-			none	complement(15162..15905)
+CDS_010	CDS	1	1	atpI	AADL20_pgp078	ATPase subunit IV	YP_011083117.1	15162	15905	-	1	11	none	complement(15162..15905)
+gene_017	gene	1	1	rps2	AADL20_pgp077			16114	16824	-			none	complement(16114..16824)
+CDS_011	CDS	1	1	rps2	AADL20_pgp077	ribosomal protein S2	YP_011083118.1	16114	16824	-	1	11	none	complement(16114..16824)
+gene_018	gene	1	1	rpoC2	AADL20_pgp076			17042	21202	-			none	complement(17042..21202)
+CDS_012	CDS	1	1	rpoC2	AADL20_pgp076	RNA polymerase beta'' subunit	YP_011083119.1	17042	21202	-	1	11	none	complement(17042..21202)
+gene_019	gene	1	1	rpoC1	AADL20_pgp075			21380	24184	-			none	complement(21380..24184)
+CDS_013	CDS	1	2	rpoC1	AADL20_pgp075	RNA polymerase beta' subunit	YP_011083120.1	21380	22996	-	1	11	none	complement(join(21380..22996,23753..24184))
+CDS_013	CDS	2	2	rpoC1	AADL20_pgp075	RNA polymerase beta' subunit	YP_011083120.1	23753	24184	-	1	11	none	complement(join(21380..22996,23753..24184))
+exon_009	exon	1	1	rpoC1	AADL20_pgp075			21380	22996	-			none	complement(21380..22996)
+intron_005	intron	1	1	rpoC1	AADL20_pgp075			22997	23752	-			none	complement(22997..23752)
+exon_010	exon	1	1	rpoC1	AADL20_pgp075			23753	24184	-			none	complement(23753..24184)
+gene_020	gene	1	1	rpoB	AADL20_pgp074			24211	27399	-			none	complement(24211..27399)
+CDS_014	CDS	1	1	rpoB	AADL20_pgp074	RNA polymerase beta subunit	YP_011083121.1	24211	27399	-	1	11	none	complement(24211..27399)
+gene_021	gene	1	1	trnC-GCA	AADL20_pgt007			28485	28555	+			none	28485..28555
+tRNA_007	tRNA	1	1	trnC-GCA	AADL20_pgt007	tRNA-Cys		28485	28555	+			none	28485..28555
+gene_022	gene	1	1	petN	AADL20_pgp073			29130	29219	+			none	29130..29219
+CDS_015	CDS	1	1	petN	AADL20_pgp073	cytochrome b6/f complex subunit VIII	YP_011083122.1	29130	29219	+	1	11	none	29130..29219
+gene_023	gene	1	1	psbM	AADL20_pgp072			30326	30430	-			none	complement(30326..30430)
+CDS_016	CDS	1	1	psbM	AADL20_pgp072	PSII low MW protein M	YP_011083123.1	30326	30430	-	1	11	none	complement(30326..30430)
+gene_024	gene	1	1	trnD-GUC	AADL20_pgt008			31393	31466	-			none	complement(31393..31466)
+tRNA_008	tRNA	1	1	trnD-GUC	AADL20_pgt008	tRNA-Asp		31393	31466	-			none	complement(31393..31466)
+gene_025	gene	1	1	trnY-GUA	AADL20_pgt009			31573	31656	-			none	complement(31573..31656)
+tRNA_009	tRNA	1	1	trnY-GUA	AADL20_pgt009	tRNA-Tyr		31573	31656	-			none	complement(31573..31656)
+gene_026	gene	1	1	trnE-UUC	AADL20_pgt010			31722	31794	-			none	complement(31722..31794)
+tRNA_010	tRNA	1	1	trnE-UUC	AADL20_pgt010	tRNA-Glu		31722	31794	-			none	complement(31722..31794)
+gene_027	gene	1	1	trnT-GGU	AADL20_pgt011			32595	32666	+			none	32595..32666
+tRNA_011	tRNA	1	1	trnT-GGU	AADL20_pgt011	tRNA-Thr		32595	32666	+			none	32595..32666
+gene_028	gene	1	1	psbD	AADL20_pgp071			33730	34791	+			none	33730..34791
+CDS_017	CDS	1	1	psbD	AADL20_pgp071	photosystem II protein D2	YP_011083124.1	33730	34791	+	1	11	none	33730..34791
+gene_029	gene	1	1	psbC	AADL20_pgp070			34739	36160	+			none	34739..36160
+CDS_018	CDS	1	1	psbC	AADL20_pgp070	photosystem II 44 kDa protein	YP_011083125.1	34739	36160	+	1	11	none	34739..36160
+gene_030	gene	1	1	trnS-UGA	AADL20_pgt012			36398	36490	-			none	complement(36398..36490)
+tRNA_012	tRNA	1	1	trnS-UGA	AADL20_pgt012	tRNA-Ser		36398	36490	-			none	complement(36398..36490)
+gene_031	gene	1	1	psbZ	AADL20_pgp069			36831	37019	+			none	36831..37019
+CDS_019	CDS	1	1	psbZ	AADL20_pgp069	photosystem II protein Z	YP_011083126.1	36831	37019	+	1	11	none	36831..37019
+gene_032	gene	1	1	trnG-GCC	AADL20_pgt013			37288	37358	+			none	37288..37358
+tRNA_013	tRNA	1	1	trnG-GCC	AADL20_pgt013	tRNA-Gly		37288	37358	+			none	37288..37358
+gene_033	gene	1	1	trnfM-CAU	AADL20_pgt014			37514	37587	-			none	complement(37514..37587)
+tRNA_014	tRNA	1	1	trnfM-CAU	AADL20_pgt014	tRNA-fMet		37514	37587	-			none	complement(37514..37587)
+gene_034	gene	1	1	rps14	AADL20_pgp068			37738	38043	-			none	complement(37738..38043)
+CDS_020	CDS	1	1	rps14	AADL20_pgp068	ribosomal protein S14	YP_011083127.1	37738	38043	-	1	11	none	complement(37738..38043)
+gene_035	gene	1	1	psaB	AADL20_pgp067			38167	40371	-			none	complement(38167..40371)
+CDS_021	CDS	1	1	psaB	AADL20_pgp067	photosystem I P700 apoprotein A2	YP_011083128.1	38167	40371	-	1	11	none	complement(38167..40371)
+gene_036	gene	1	1	psaA	AADL20_pgp066			40397	42649	-			none	complement(40397..42649)
+CDS_022	CDS	1	1	psaA	AADL20_pgp066	photosystem I P700 apoprotein A1	YP_011083129.1	40397	42649	-	1	11	none	complement(40397..42649)
+gene_037	gene	1	1	ycf3	AADL20_pgp065			43386	45348	-			none	complement(43386..45348)
+CDS_023	CDS	1	3	ycf3	AADL20_pgp065	photosystem I assembly protein Ycf3	YP_011083130.1	43386	43538	-	1	11	none	complement(join(43386..43538,44276..44503,45223..45348))
+CDS_023	CDS	2	3	ycf3	AADL20_pgp065	photosystem I assembly protein Ycf3	YP_011083130.1	44276	44503	-	1	11	none	complement(join(43386..43538,44276..44503,45223..45348))
+CDS_023	CDS	3	3	ycf3	AADL20_pgp065	photosystem I assembly protein Ycf3	YP_011083130.1	45223	45348	-	1	11	none	complement(join(43386..43538,44276..44503,45223..45348))
+exon_011	exon	1	1	ycf3	AADL20_pgp065			43386	43538	-			none	complement(43386..43538)
+intron_006	intron	1	1	ycf3	AADL20_pgp065			43539	44275	-			none	complement(43539..44275)
+exon_012	exon	1	1	ycf3	AADL20_pgp065			44276	44503	-			none	complement(44276..44503)
+intron_007	intron	1	1	ycf3	AADL20_pgp065			44504	45222	-			none	complement(44504..45222)
+exon_013	exon	1	1	ycf3	AADL20_pgp065			45223	45348	-			none	complement(45223..45348)
+gene_038	gene	1	1	trnS-GGA	AADL20_pgt015			46177	46263	+			none	46177..46263
+tRNA_015	tRNA	1	1	trnS-GGA	AADL20_pgt015	tRNA-Ser		46177	46263	+			none	46177..46263
+gene_039	gene	1	1	rps4	AADL20_pgp064			46558	47163	-			none	complement(46558..47163)
+CDS_024	CDS	1	1	rps4	AADL20_pgp064	ribosomal protein S4	YP_011083131.1	46558	47163	-	1	11	none	complement(46558..47163)
+gene_040	gene	1	1	trnT-UGU	AADL20_pgt016			47505	47577	-			none	complement(47505..47577)
+tRNA_016	tRNA	1	1	trnT-UGU	AADL20_pgt016	tRNA-Thr		47505	47577	-			none	complement(47505..47577)
+gene_041	gene	1	1	trnL-UAA	AADL20_pgt017			48573	49167	+			none	48573..49167
+tRNA_017	tRNA	1	2	trnL-UAA	AADL20_pgt017	tRNA-Leu		48573	48607	+			none	join(48573..48607,49118..49167)
+tRNA_017	tRNA	2	2	trnL-UAA	AADL20_pgt017	tRNA-Leu		49118	49167	+			none	join(48573..48607,49118..49167)
+exon_014	exon	1	1	trnL-UAA	AADL20_pgt017			48573	48607	+			none	48573..48607
+intron_008	intron	1	1	trnL-UAA	AADL20_pgt017			48608	49117	+			none	48608..49117
+exon_015	exon	1	1	trnL-UAA	AADL20_pgt017			49118	49167	+			none	49118..49167
+gene_042	gene	1	1	trnF-GAA	AADL20_pgt018			49526	49598	+			none	49526..49598
+tRNA_018	tRNA	1	1	trnF-GAA	AADL20_pgt018	tRNA-Phe		49526	49598	+			none	49526..49598
+gene_043	gene	1	1	ndhJ	AADL20_pgp063			50298	50774	-			none	complement(50298..50774)
+CDS_025	CDS	1	1	ndhJ	AADL20_pgp063	NADH-plastoquinone oxidoreductase subunit J	YP_011083132.1	50298	50774	-	1	11	none	complement(50298..50774)
+gene_044	gene	1	1	ndhK	AADL20_pgp062			50880	51557	-			none	complement(50880..51557)
+CDS_026	CDS	1	1	ndhK	AADL20_pgp062	NADH-plastoquinone oxidoreductase subunit K	YP_011083133.1	50880	51557	-	1	11	none	complement(50880..51557)
+gene_045	gene	1	1	ndhC	AADL20_pgp061			51616	51978	-			none	complement(51616..51978)
+CDS_027	CDS	1	1	ndhC	AADL20_pgp061	NADH-plastoquinone oxidoreductase subunit 3	YP_011083134.1	51616	51978	-	1	11	none	complement(51616..51978)
+gene_046	gene	1	1	trnV-UAC	AADL20_pgt019			52285	52946	-			none	complement(52285..52946)
+tRNA_019	tRNA	1	2	trnV-UAC	AADL20_pgt019	tRNA-Val		52285	52319	-			none	complement(join(52285..52319,52908..52946))
+tRNA_019	tRNA	2	2	trnV-UAC	AADL20_pgt019	tRNA-Val		52908	52946	-			none	complement(join(52285..52319,52908..52946))
+exon_016	exon	1	1	trnV-UAC	AADL20_pgt019			52285	52319	-			none	complement(52285..52319)
+intron_009	intron	1	1	trnV-UAC	AADL20_pgt019			52320	52907	-			none	complement(52320..52907)
+exon_017	exon	1	1	trnV-UAC	AADL20_pgt019			52908	52946	-			none	complement(52908..52946)
+gene_047	gene	1	1	trnM-CAU	AADL20_pgt020			53128	53200	+			none	53128..53200
+tRNA_020	tRNA	1	1	trnM-CAU	AADL20_pgt020	tRNA-Met		53128	53200	+			none	53128..53200
+gene_048	gene	1	1	atpE	AADL20_pgp060			53439	53846	-			none	complement(53439..53846)
+CDS_028	CDS	1	1	atpE	AADL20_pgp060	ATP synthase CF1 epsilon subunit	YP_011083135.1	53439	53846	-	1	11	none	complement(53439..53846)
+gene_049	gene	1	1	atpB	AADL20_pgp059			53843	55339	-			none	complement(53843..55339)
+CDS_029	CDS	1	1	atpB	AADL20_pgp059	ATP synthase CF1 beta subunit	YP_011083136.1	53843	55339	-	1	11	none	complement(53843..55339)
+gene_050	gene	1	1	rbcL	AADL20_pgp058			56090	57517	+			none	56090..57517
+CDS_030	CDS	1	1	rbcL	AADL20_pgp058	ribulose-1,5-bisphosphate carboxylase/oxygenaselarge subunit	YP_011083137.1	56090	57517	+	1	11	none	56090..57517
+gene_051	gene	1	1	accD	AADL20_pgp057			58106	59596	+			none	58106..59596
+CDS_031	CDS	1	1	accD	AADL20_pgp057	acetyl-CoA carboxylase carboxyltransferase beta	YP_011083138.1	58106	59596	+	1	11	none	58106..59596
+gene_052	gene	1	1	psaI	AADL20_pgp056			60386	60496	+			none	60386..60496
+CDS_032	CDS	1	1	psaI	AADL20_pgp056	photosystem I reaction center subunit VIII	YP_011083139.1	60386	60496	+	1	11	none	60386..60496
+gene_053	gene	1	1	ycf4	AADL20_pgp055			60921	61475	+			none	60921..61475
+CDS_033	CDS	1	1	ycf4	AADL20_pgp055	photosystem I assembly protein Ycf4	YP_011083140.1	60921	61475	+	1	11	none	60921..61475
+gene_054	gene	1	1	cemA	AADL20_pgp054			62376	63065	+			none	62376..63065
+CDS_034	CDS	1	1	cemA	AADL20_pgp054	chloroplast envelope membrane protein	YP_011083141.1	62376	63065	+	1	11	none	62376..63065
+gene_055	gene	1	1	petA	AADL20_pgp053			63294	64256	+			none	63294..64256
+CDS_035	CDS	1	1	petA	AADL20_pgp053	cytochrome f	YP_011083142.1	63294	64256	+	1	11	none	63294..64256
+gene_056	gene	1	1	psbJ	AADL20_pgp052			65263	65385	-			none	complement(65263..65385)
+CDS_036	CDS	1	1	psbJ	AADL20_pgp052	photosystem II protein J	YP_011083143.1	65263	65385	-	1	11	none	complement(65263..65385)
+gene_057	gene	1	1	psbL	AADL20_pgp051			65524	65640	-			none	complement(65524..65640)
+CDS_037	CDS	1	1	psbL	AADL20_pgp051	photosystem II protein L	YP_011083144.1	65524	65640	-	1	11	none	complement(65524..65640)
+gene_058	gene	1	1	psbF	AADL20_pgp050			65663	65782	-			none	complement(65663..65782)
+CDS_038	CDS	1	1	psbF	AADL20_pgp050	photosystem II protein VI	YP_011083145.1	65663	65782	-	1	11	none	complement(65663..65782)
+gene_059	gene	1	1	psbE	AADL20_pgp049			65792	66043	-			none	complement(65792..66043)
+CDS_039	CDS	1	1	psbE	AADL20_pgp049	photosystem II protein V	YP_011083146.1	65792	66043	-	1	11	none	complement(65792..66043)
+gene_060	gene	1	1	petL	AADL20_pgp048			67260	67355	+			none	67260..67355
+CDS_040	CDS	1	1	petL	AADL20_pgp048	cytochrome b6/f complex subunit VI	YP_011083147.1	67260	67355	+	1	11	none	67260..67355
+gene_061	gene	1	1	petG	AADL20_pgp047			67529	67642	+			none	67529..67642
+CDS_041	CDS	1	1	petG	AADL20_pgp047	cytochrome b6/f complex subunit V	YP_011083148.1	67529	67642	+	1	11	none	67529..67642
+gene_062	gene	1	1	trnW-CCA	AADL20_pgt021			67768	67841	-			none	complement(67768..67841)
+tRNA_021	tRNA	1	1	trnW-CCA	AADL20_pgt021	tRNA-Trp		67768	67841	-			none	complement(67768..67841)
+gene_063	gene	1	1	trnP-UGG	AADL20_pgt022			68012	68085	-			none	complement(68012..68085)
+tRNA_022	tRNA	1	1	trnP-UGG	AADL20_pgt022	tRNA-Pro		68012	68085	-			none	complement(68012..68085)
+gene_064	gene	1	1	psaJ	AADL20_pgp046			68490	68624	+			none	68490..68624
+CDS_042	CDS	1	1	psaJ	AADL20_pgp046	photosystem I subunit IX	YP_011083149.1	68490	68624	+	1	11	none	68490..68624
+gene_065	gene	1	1	rpl33	AADL20_pgp045			69079	69279	+			none	69079..69279
+CDS_043	CDS	1	1	rpl33	AADL20_pgp045	ribosomal protein L33	YP_011083150.1	69079	69279	+	1	11	none	69079..69279
+gene_066	gene	1	1	rps18	AADL20_pgp044			69457	69762	+			none	69457..69762
+CDS_044	CDS	1	1	rps18	AADL20_pgp044	ribosomal protein S18	YP_011083151.1	69457	69762	+	1	11	none	69457..69762
+gene_067	gene	1	1	rpl20	AADL20_pgp043			70028	70381	-			none	complement(70028..70381)
+CDS_045	CDS	1	1	rpl20	AADL20_pgp043	ribosomal protein L20	YP_011083152.1	70028	70381	-	1	11	none	complement(70028..70381)
+gene_068	gene	1	2	rps12	AADL20_pgp041			71143	71256	-			none	join(complement(71143..71256),141997..142790)
+gene_068	gene	2	2	rps12	AADL20_pgp041			141997	142790	+			none	join(complement(71143..71256),141997..142790)
+CDS_046	CDS	1	3	rps12	AADL20_pgp041	ribosomal protein S12	YP_011083153.1	71143	71256	-	1	11	none	join(complement(71143..71256),141997..142228, 142765..142790)
+CDS_046	CDS	2	3	rps12	AADL20_pgp041	ribosomal protein S12	YP_011083153.1	141997	142228	+	1	11	none	join(complement(71143..71256),141997..142228, 142765..142790)
+CDS_046	CDS	3	3	rps12	AADL20_pgp041	ribosomal protein S12	YP_011083153.1	142765	142790	+	1	11	none	join(complement(71143..71256),141997..142228, 142765..142790)
+exon_018	exon	1	1	rps12	AADL20_pgp042			71143	71256	-			none	complement(71143..71256)
+gene_069	gene	1	1	clpP	AADL20_pgp040			71395	73455	-			none	complement(71395..73455)
+CDS_047	CDS	1	3	clpP	AADL20_pgp040	clp protease proteolytic subunit	YP_011083154.1	71395	71622	-	1	11	none	complement(join(71395..71622,72278..72568,73387..73455))
+CDS_047	CDS	2	3	clpP	AADL20_pgp040	clp protease proteolytic subunit	YP_011083154.1	72278	72568	-	1	11	none	complement(join(71395..71622,72278..72568,73387..73455))
+CDS_047	CDS	3	3	clpP	AADL20_pgp040	clp protease proteolytic subunit	YP_011083154.1	73387	73455	-	1	11	none	complement(join(71395..71622,72278..72568,73387..73455))
+exon_019	exon	1	1	clpP	AADL20_pgp040			71395	71622	-			none	complement(71395..71622)
+intron_010	intron	1	1	clpP	AADL20_pgp040			71623	72277	-			none	complement(71623..72277)
+exon_020	exon	1	1	clpP	AADL20_pgp040			72278	72568	-			none	complement(72278..72568)
+intron_011	intron	1	1	clpP	AADL20_pgp040			72569	73386	-			none	complement(72569..73386)
+exon_021	exon	1	1	clpP	AADL20_pgp040			73387	73455	-			none	complement(73387..73455)
+gene_070	gene	1	1	psbB	AADL20_pgp039			73922	75448	+			none	73922..75448
+CDS_048	CDS	1	1	psbB	AADL20_pgp039	photosystem II 47 kDa protein	YP_011083155.1	73922	75448	+	1	11	none	73922..75448
+gene_071	gene	1	1	psbT	AADL20_pgp038			75632	75739	+			none	75632..75739
+CDS_049	CDS	1	1	psbT	AADL20_pgp038	photosystem II protein T	YP_011083156.1	75632	75739	+	1	11	none	75632..75739
+gene_072	gene	1	1	psbN	AADL20_pgp037			75800	75931	-			none	complement(75800..75931)
+CDS_050	CDS	1	1	psbN	AADL20_pgp037	photosystem II protein N	YP_011083157.1	75800	75931	-	1	11	none	complement(75800..75931)
+gene_073	gene	1	1	psbH	AADL20_pgp036			76040	76261	+			none	76040..76261
+CDS_051	CDS	1	1	psbH	AADL20_pgp036	photosystem II protein H	YP_011083158.1	76040	76261	+	1	11	none	76040..76261
+gene_074	gene	1	1	petB	AADL20_pgp035			76385	77807	+			none	76385..77807
+CDS_052	CDS	1	2	petB	AADL20_pgp035	cytochrome b6	YP_011083159.1	76385	76390	+	1	11	none	join(76385..76390,77166..77807)
+CDS_052	CDS	2	2	petB	AADL20_pgp035	cytochrome b6	YP_011083159.1	77166	77807	+	1	11	none	join(76385..76390,77166..77807)
+exon_022	exon	1	1	petB	AADL20_pgp035			76385	76390	+			none	76385..76390
+intron_012	intron	1	1	petB	AADL20_pgp035			76391	77165	+			none	76391..77165
+exon_023	exon	1	1	petB	AADL20_pgp035			77166	77807	+			none	77166..77807
+gene_075	gene	1	1	petD	AADL20_pgp034			78007	79276	+			none	78007..79276
+CDS_053	CDS	1	2	petD	AADL20_pgp034	cytochrome b6/f complex subunit IV	YP_011083160.1	78007	78014	+	1	11	none	join(78007..78014,78802..79276)
+CDS_053	CDS	2	2	petD	AADL20_pgp034	cytochrome b6/f complex subunit IV	YP_011083160.1	78802	79276	+	1	11	none	join(78007..78014,78802..79276)
+exon_024	exon	1	1	petD	AADL20_pgp034			78007	78014	+			none	78007..78014
+intron_013	intron	1	1	petD	AADL20_pgp034			78015	78801	+			none	78015..78801
+exon_025	exon	1	1	petD	AADL20_pgp034			78802	79276	+			none	78802..79276
+gene_076	gene	1	1	rpoA	AADL20_pgp033			79423	80436	-			none	complement(79423..80436)
+CDS_054	CDS	1	1	rpoA	AADL20_pgp033	RNA polymerase alpha subunit	YP_011083161.1	79423	80436	-	1	11	none	complement(79423..80436)
+gene_077	gene	1	1	rps11	AADL20_pgp032			80502	80918	-			none	complement(80502..80918)
+CDS_055	CDS	1	1	rps11	AADL20_pgp032	ribosomal protein S11	YP_011083162.1	80502	80918	-	1	11	none	complement(80502..80918)
+gene_078	gene	1	1	rpl36	AADL20_pgp031			81030	81143	-			none	complement(81030..81143)
+CDS_056	CDS	1	1	rpl36	AADL20_pgp031	ribosomal protein L36	YP_011083163.1	81030	81143	-	1	11	none	complement(81030..81143)
+gene_079	gene	1	1	infA	AADL20_pgp030			81220	81453	-			none	complement(81220..81453)
+CDS_057	CDS	1	1	infA	AADL20_pgp030	translational initiation factor 1	YP_011083164.1	81220	81453	-	1	11	none	complement(81220..81453)
+gene_080	gene	1	1	rps8	AADL20_pgp029			81575	81979	-			none	complement(81575..81979)
+CDS_058	CDS	1	1	rps8	AADL20_pgp029	ribosomal protein S8	YP_011083165.1	81575	81979	-	1	11	none	complement(81575..81979)
+gene_081	gene	1	1	rpl14	AADL20_pgp028			82181	82549	-			none	complement(82181..82549)
+CDS_059	CDS	1	1	rpl14	AADL20_pgp028	ribosomal protein L14	YP_011083166.1	82181	82549	-	1	11	none	complement(82181..82549)
+gene_082	gene	1	1	rpl16	AADL20_pgp027			82667	84152	-			none	complement(82667..84152)
+CDS_060	CDS	1	2	rpl16	AADL20_pgp027	ribosomal protein L16	YP_011083167.1	82667	83065	-	1	11	none	complement(join(82667..83065,84144..84152))
+CDS_060	CDS	2	2	rpl16	AADL20_pgp027	ribosomal protein L16	YP_011083167.1	84144	84152	-	1	11	none	complement(join(82667..83065,84144..84152))
+exon_026	exon	1	1	rpl16	AADL20_pgp027			82667	83065	-			none	complement(82667..83065)
+intron_014	intron	1	1	rpl16	AADL20_pgp027			83066	84143	-			none	complement(83066..84143)
+exon_027	exon	1	1	rpl16	AADL20_pgp027			84144	84152	-			none	complement(84144..84152)
+gene_083	gene	1	1	rps3	AADL20_pgp026			84307	84963	-			none	complement(84307..84963)
+CDS_061	CDS	1	1	rps3	AADL20_pgp026	ribosomal protein S3	YP_011083168.1	84307	84963	-	1	11	none	complement(84307..84963)
+gene_084	gene	1	1	rpl22	AADL20_pgp025			84948	85367	-			none	complement(84948..85367)
+CDS_062	CDS	1	1	rpl22	AADL20_pgp025	ribosomal protein L22	YP_011083169.1	84948	85367	-	1	11	none	complement(84948..85367)
+gene_085	gene	1	1	rps19	AADL20_pgp024			85413	85691	-			none	complement(85413..85691)
+CDS_063	CDS	1	1	rps19	AADL20_pgp024	ribosomal protein S19	YP_011083170.1	85413	85691	-	1	11	none	complement(85413..85691)
+gene_086	gene	1	1	rpl2	AADL20_pgp023			85747	87236	-			none	complement(85747..87236)
+CDS_064	CDS	1	2	rpl2	AADL20_pgp023	ribosomal protein L2	YP_011083171.1	85747	86180	-	1	11	none	complement(join(85747..86180,86846..87236))
+CDS_064	CDS	2	2	rpl2	AADL20_pgp023	ribosomal protein L2	YP_011083171.1	86846	87236	-	1	11	none	complement(join(85747..86180,86846..87236))
+exon_028	exon	1	1	rpl2	AADL20_pgp023			85747	86180	-			none	complement(85747..86180)
+intron_015	intron	1	1	rpl2	AADL20_pgp023			86181	86845	-			none	complement(86181..86845)
+exon_029	exon	1	1	rpl2	AADL20_pgp023			86846	87236	-			none	complement(86846..87236)
+gene_087	gene	1	1	rpl23	AADL20_pgp022			87255	87536	-			none	complement(87255..87536)
+CDS_065	CDS	1	1	rpl23	AADL20_pgp022	ribosomal protein L23	YP_011083172.1	87255	87536	-	1	11	none	complement(87255..87536)
+gene_088	gene	1	1	trnI-CAU	AADL20_pgt023			87702	87775	-			none	complement(87702..87775)
+tRNA_023	tRNA	1	1	trnI-CAU	AADL20_pgt023	tRNA-Ile		87702	87775	-			none	complement(87702..87775)
+gene_089	gene	1	1	ycf2	AADL20_pgp021			87864	94760	+			none	87864..94760
+CDS_066	CDS	1	1	ycf2	AADL20_pgp021	hypothetical chloroplast RF2	YP_011083173.1	87864	94760	+	1	11	none	87864..94760
+gene_090	gene	1	1	trnL-CAA	AADL20_pgt024			95480	95560	-			none	complement(95480..95560)
+tRNA_024	tRNA	1	1	trnL-CAA	AADL20_pgt024	tRNA-Leu		95480	95560	-			none	complement(95480..95560)
+gene_091	gene	1	1	ndhB	AADL20_pgp020			96115	98326	-			none	complement(96115..98326)
+CDS_067	CDS	1	2	ndhB	AADL20_pgp020	NADH-plastoquinone oxidoreductase subunit 2	YP_011083174.1	96115	96870	-	1	11	none	complement(join(96115..96870,97550..98326))
+CDS_067	CDS	2	2	ndhB	AADL20_pgp020	NADH-plastoquinone oxidoreductase subunit 2	YP_011083174.1	97550	98326	-	1	11	none	complement(join(96115..96870,97550..98326))
+exon_030	exon	1	1	ndhB	AADL20_pgp020			96115	96870	-			none	complement(96115..96870)
+intron_016	intron	1	1	ndhB	AADL20_pgp020			96871	97549	-			none	complement(96871..97549)
+exon_031	exon	1	1	ndhB	AADL20_pgp020			97550	98326	-			none	complement(97550..98326)
+gene_092	gene	1	1	rps7	AADL20_pgp019			98652	99119	-			none	complement(98652..99119)
+CDS_068	CDS	1	1	rps7	AADL20_pgp019	ribosomal protein S7	YP_011083175.1	98652	99119	-	1	11	none	complement(98652..99119)
+exon_032	exon	1	1	rps12	AADL20_pgp042			99173	99198	-			none	complement(99173..99198)
+intron_017	intron	1	1	rps12	AADL20_pgp042			99199	99734	-			none	complement(99199..99734)
+exon_033	exon	1	1	rps12	AADL20_pgp042			99735	99966	-			none	complement(99735..99966)
+gene_093	gene	1	1	trnV-GAC	AADL20_pgt025			101828	101899	+			none	101828..101899
+tRNA_025	tRNA	1	1	trnV-GAC	AADL20_pgt025	tRNA-Val		101828	101899	+			none	101828..101899
+gene_094	gene	1	1	rrn16	AADL20_pgr008			102127	103617	+			none	102127..103617
+rRNA_001	rRNA	1	1	rrn16	AADL20_pgr008	16S ribosomal RNA		102127	103617	+			none	102127..103617
+gene_095	gene	1	1	trnI-GAU	AADL20_pgt026			103912	104933	+			none	103912..104933
+tRNA_026	tRNA	1	2	trnI-GAU	AADL20_pgt026	tRNA-Ile		103912	103948	+			none	join(103912..103948,104899..104933)
+tRNA_026	tRNA	2	2	trnI-GAU	AADL20_pgt026	tRNA-Ile		104899	104933	+			none	join(103912..103948,104899..104933)
+exon_034	exon	1	1	trnI-GAU	AADL20_pgt026			103912	103948	+			none	103912..103948
+intron_018	intron	1	1	trnI-GAU	AADL20_pgt026			103949	104898	+			none	103949..104898
+exon_035	exon	1	1	trnI-GAU	AADL20_pgt026			104899	104933	+			none	104899..104933
+gene_096	gene	1	1	trnA-UGC	AADL20_pgt027			104998	105877	+			none	104998..105877
+tRNA_027	tRNA	1	2	trnA-UGC	AADL20_pgt027	tRNA-Ala		104998	105035	+			none	join(104998..105035,105843..105877)
+tRNA_027	tRNA	2	2	trnA-UGC	AADL20_pgt027	tRNA-Ala		105843	105877	+			none	join(104998..105035,105843..105877)
+exon_036	exon	1	1	trnA-UGC	AADL20_pgt027			104998	105035	+			none	104998..105035
+intron_019	intron	1	1	trnA-UGC	AADL20_pgt027			105036	105842	+			none	105036..105842
+exon_037	exon	1	1	trnA-UGC	AADL20_pgt027			105843	105877	+			none	105843..105877
+gene_097	gene	1	1	rrn23	AADL20_pgr007			106030	108839	+			none	106030..108839
+rRNA_002	rRNA	1	1	rrn23	AADL20_pgr007	23S ribosomal RNA		106030	108839	+			none	106030..108839
+gene_098	gene	1	1	rrn4.5	AADL20_pgr006			108938	109040	+			none	108938..109040
+rRNA_003	rRNA	1	1	rrn4.5	AADL20_pgr006	4.5S ribosomal RNA		108938	109040	+			none	108938..109040
+gene_099	gene	1	1	rrn5	AADL20_pgr005			109300	109420	+			none	109300..109420
+rRNA_004	rRNA	1	1	rrn5	AADL20_pgr005	5S ribosomal RNA		109300	109420	+			none	109300..109420
+gene_100	gene	1	1	trnR-ACG	AADL20_pgt028			109671	109744	+			none	109671..109744
+tRNA_028	tRNA	1	1	trnR-ACG	AADL20_pgt028	tRNA-Arg		109671	109744	+			none	109671..109744
+gene_101	gene	1	1	trnN-GUU	AADL20_pgt029			110328	110399	-			none	complement(110328..110399)
+tRNA_029	tRNA	1	1	trnN-GUU	AADL20_pgt029	tRNA-Asn		110328	110399	-			none	complement(110328..110399)
+gene_102	gene	1	1	ycf1	AADL20_pgp018			110712	111778	+			none	110712..111778
+gene_103	gene	1	1	ndhF	AADL20_pgp017			111774	114014	-			none	complement(111774..114014)
+CDS_069	CDS	1	1	ndhF	AADL20_pgp017	NADH-plastoquinone oxidoreductase subunit 5	YP_011083176.1	111774	114014	-	1	11	none	complement(111774..114014)
+gene_104	gene	1	1	rpl32	AADL20_pgp016			114971	115132	+			none	114971..115132
+CDS_070	CDS	1	1	rpl32	AADL20_pgp016	ribosomal protein L32	YP_011083177.1	114971	115132	+	1	11	none	114971..115132
+gene_105	gene	1	1	trnL-UAG	AADL20_pgt030			116037	116116	+			none	116037..116116
+tRNA_030	tRNA	1	1	trnL-UAG	AADL20_pgt030	tRNA-Leu		116037	116116	+			none	116037..116116
+gene_106	gene	1	1	ccsA	AADL20_pgp015			116231	117196	+			none	116231..117196
+CDS_071	CDS	1	1	ccsA	AADL20_pgp015	cytochrome c biogenesis/heme attachment protein	YP_011083178.1	116231	117196	+	1	11	none	116231..117196
+gene_107	gene	1	1	ndhD	AADL20_pgp014			117439	118959	-			none	complement(117439..118959)
+CDS_072	CDS	1	1	ndhD	AADL20_pgp014	NADH-plastoquinone oxidoreductase subunit 4	YP_011083179.1	117439	118959	-	1	11	none	complement(117439..118959)
+gene_108	gene	1	1	psaC	AADL20_pgp013			119072	119317	-			none	complement(119072..119317)
+CDS_073	CDS	1	1	psaC	AADL20_pgp013	photosystem I subunit VII	YP_011083180.1	119072	119317	-	1	11	none	complement(119072..119317)
+gene_109	gene	1	1	ndhE	AADL20_pgp012			119565	119870	-			none	complement(119565..119870)
+CDS_074	CDS	1	1	ndhE	AADL20_pgp012	NADH-plastoquinone oxidoreductase subunit 4L	YP_011083181.1	119565	119870	-	1	11	none	complement(119565..119870)
+gene_110	gene	1	1	ndhG	AADL20_pgp011			120090	120620	-			none	complement(120090..120620)
+CDS_075	CDS	1	1	ndhG	AADL20_pgp011	NADH-plastoquinone oxidoreductase subunit 6	YP_011083182.1	120090	120620	-	1	11	none	complement(120090..120620)
+gene_111	gene	1	1	ndhI	AADL20_pgp010			120978	121481	-			none	complement(120978..121481)
+CDS_076	CDS	1	1	ndhI	AADL20_pgp010	NADH-plastoquinone oxidoreductase subunit I	YP_011083183.1	120978	121481	-	1	11	none	complement(120978..121481)
+gene_112	gene	1	1	ndhA	AADL20_pgp009			121582	123726	-			none	complement(121582..123726)
+CDS_077	CDS	1	2	ndhA	AADL20_pgp009	NADH-plastoquinone oxidoreductase subunit 1	YP_011083184.1	121582	122120	-	1	11	none	complement(join(121582..122120,123174..123726))
+CDS_077	CDS	2	2	ndhA	AADL20_pgp009	NADH-plastoquinone oxidoreductase subunit 1	YP_011083184.1	123174	123726	-	1	11	none	complement(join(121582..122120,123174..123726))
+exon_038	exon	1	1	ndhA	AADL20_pgp009			121582	122120	-			none	complement(121582..122120)
+intron_020	intron	1	1	ndhA	AADL20_pgp009			122121	123173	-			none	complement(122121..123173)
+exon_039	exon	1	1	ndhA	AADL20_pgp009			123174	123726	-			none	complement(123174..123726)
+gene_113	gene	1	1	ndhH	AADL20_pgp008			123728	124909	-			none	complement(123728..124909)
+CDS_078	CDS	1	1	ndhH	AADL20_pgp008	NADH-plastoquinone oxidoreductase subunit 7	YP_011083185.1	123728	124909	-	1	11	none	complement(123728..124909)
+gene_114	gene	1	1	rps15	AADL20_pgp007			125001	125267	-			none	complement(125001..125267)
+CDS_079	CDS	1	1	rps15	AADL20_pgp007	ribosomal protein S15	YP_011083186.1	125001	125267	-	1	11	none	complement(125001..125267)
+gene_115	gene	1	1	ycf1	AADL20_pgp006			125651	131251	-			none	complement(125651..131251)
+CDS_080	CDS	1	1	ycf1	AADL20_pgp006	hypothetical chloroplast RF1	YP_011083187.1	125651	131251	-	1	11	none	complement(125651..131251)
+gene_116	gene	1	1	trnN-GUU	AADL20_pgt031			131564	131635	+			none	131564..131635
+tRNA_031	tRNA	1	1	trnN-GUU	AADL20_pgt031	tRNA-Asn		131564	131635	+			none	131564..131635
+gene_117	gene	1	1	trnR-ACG	AADL20_pgt032			132219	132292	-			none	complement(132219..132292)
+tRNA_032	tRNA	1	1	trnR-ACG	AADL20_pgt032	tRNA-Arg		132219	132292	-			none	complement(132219..132292)
+gene_118	gene	1	1	rrn5	AADL20_pgr004			132543	132663	-			none	complement(132543..132663)
+rRNA_005	rRNA	1	1	rrn5	AADL20_pgr004	5S ribosomal RNA		132543	132663	-			none	complement(132543..132663)
+gene_119	gene	1	1	rrn4.5	AADL20_pgr003			132923	133025	-			none	complement(132923..133025)
+rRNA_006	rRNA	1	1	rrn4.5	AADL20_pgr003	4.5S ribosomal RNA		132923	133025	-			none	complement(132923..133025)
+gene_120	gene	1	1	rrn23	AADL20_pgr002			133124	135933	-			none	complement(133124..135933)
+rRNA_007	rRNA	1	1	rrn23	AADL20_pgr002	23S ribosomal RNA		133124	135933	-			none	complement(133124..135933)
+gene_121	gene	1	1	trnA-UGC	AADL20_pgt033			136086	136965	-			none	complement(136086..136965)
+tRNA_033	tRNA	1	2	trnA-UGC	AADL20_pgt033	tRNA-Ala		136086	136120	-			none	complement(join(136086..136120,136928..136965))
+tRNA_033	tRNA	2	2	trnA-UGC	AADL20_pgt033	tRNA-Ala		136928	136965	-			none	complement(join(136086..136120,136928..136965))
+exon_040	exon	1	1	trnA-UGC	AADL20_pgt033			136086	136120	-			none	complement(136086..136120)
+intron_021	intron	1	1	trnA-UGC	AADL20_pgt033			136121	136927	-			none	complement(136121..136927)
+exon_041	exon	1	1	trnA-UGC	AADL20_pgt033			136928	136965	-			none	complement(136928..136965)
+gene_122	gene	1	1	trnI-GAU	AADL20_pgt034			137030	138051	-			none	complement(137030..138051)
+tRNA_034	tRNA	1	2	trnI-GAU	AADL20_pgt034	tRNA-Ile		137030	137064	-			none	complement(join(137030..137064,138015..138051))
+tRNA_034	tRNA	2	2	trnI-GAU	AADL20_pgt034	tRNA-Ile		138015	138051	-			none	complement(join(137030..137064,138015..138051))
+exon_042	exon	1	1	trnI-GAU	AADL20_pgt034			137030	137064	-			none	complement(137030..137064)
+intron_022	intron	1	1	trnI-GAU	AADL20_pgt034			137065	138014	-			none	complement(137065..138014)
+exon_043	exon	1	1	trnI-GAU	AADL20_pgt034			138015	138051	-			none	complement(138015..138051)
+gene_123	gene	1	1	rrn16	AADL20_pgr001			138346	139836	-			none	complement(138346..139836)
+rRNA_008	rRNA	1	1	rrn16	AADL20_pgr001	16S ribosomal RNA		138346	139836	-			none	complement(138346..139836)
+gene_124	gene	1	1	trnV-GAC	AADL20_pgt035			140064	140135	-			none	complement(140064..140135)
+tRNA_035	tRNA	1	1	trnV-GAC	AADL20_pgt035	tRNA-Val		140064	140135	-			none	complement(140064..140135)
+exon_044	exon	1	1	rps12	AADL20_pgp041			141997	142228	+			none	141997..142228
+intron_023	intron	1	1	rps12	AADL20_pgp041			142229	142764	+			none	142229..142764
+exon_045	exon	1	1	rps12	AADL20_pgp041			142765	142790	+			none	142765..142790
+gene_125	gene	1	1	rps7	AADL20_pgp005			142844	143311	+			none	142844..143311
+CDS_081	CDS	1	1	rps7	AADL20_pgp005	ribosomal protein S7	YP_011083188.1	142844	143311	+	1	11	none	142844..143311
+gene_126	gene	1	1	ndhB	AADL20_pgp004			143637	145848	+			none	143637..145848
+CDS_082	CDS	1	2	ndhB	AADL20_pgp004	NADH-plastoquinone oxidoreductase subunit 2	YP_011083189.1	143637	144413	+	1	11	none	join(143637..144413,145093..145848)
+CDS_082	CDS	2	2	ndhB	AADL20_pgp004	NADH-plastoquinone oxidoreductase subunit 2	YP_011083189.1	145093	145848	+	1	11	none	join(143637..144413,145093..145848)
+exon_046	exon	1	1	ndhB	AADL20_pgp004			143637	144413	+			none	143637..144413
+intron_024	intron	1	1	ndhB	AADL20_pgp004			144414	145092	+			none	144414..145092
+exon_047	exon	1	1	ndhB	AADL20_pgp004			145093	145848	+			none	145093..145848
+gene_127	gene	1	1	trnL-CAA	AADL20_pgt036			146403	146483	+			none	146403..146483
+tRNA_036	tRNA	1	1	trnL-CAA	AADL20_pgt036	tRNA-Leu		146403	146483	+			none	146403..146483
+gene_128	gene	1	1	ycf2	AADL20_pgp003			147203	154099	-			none	complement(147203..154099)
+CDS_083	CDS	1	1	ycf2	AADL20_pgp003	hypothetical chloroplast RF2	YP_011083190.1	147203	154099	-	1	11	none	complement(147203..154099)
+gene_129	gene	1	1	trnI-CAU	AADL20_pgt037			154188	154261	+			none	154188..154261
+tRNA_037	tRNA	1	1	trnI-CAU	AADL20_pgt037	tRNA-Ile		154188	154261	+			none	154188..154261
+gene_130	gene	1	1	rpl23	AADL20_pgp002			154427	154708	+			none	154427..154708
+CDS_084	CDS	1	1	rpl23	AADL20_pgp002	ribosomal protein L23	YP_011083191.1	154427	154708	+	1	11	none	154427..154708
+gene_131	gene	1	1	rpl2	AADL20_pgp001			154727	156216	+			none	154727..156216
+CDS_085	CDS	1	2	rpl2	AADL20_pgp001	ribosomal protein L2	YP_011083192.1	154727	155117	+	1	11	none	join(154727..155117,155783..156216)
+CDS_085	CDS	2	2	rpl2	AADL20_pgp001	ribosomal protein L2	YP_011083192.1	155783	156216	+	1	11	none	join(154727..155117,155783..156216)
+exon_048	exon	1	1	rpl2	AADL20_pgp001			154727	155117	+			none	154727..155117
+intron_025	intron	1	1	rpl2	AADL20_pgp001			155118	155782	+			none	155118..155782
+exon_049	exon	1	1	rpl2	AADL20_pgp001			155783	156216	+			none	155783..156216
