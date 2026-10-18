@@ -8,17 +8,29 @@ Agent 基于当前证据动态选择**只读工具**，执行生信质控、定�
 
 ## 当前状态
 
-**G0–G6 总控里程碑全部完成** — 状态标记均为 `implemented/tested`。
+**V3.2 Release Candidate（RC-FINAL，commit `df02a07`）** — G0–G6 总控里程碑 + V3.1 进化闭环 + V3.2 能力增强全部完成。
 
-- G0：V2 资产审计（[V2_ASSET_AUDIT.md](docs/V2_ASSET_AUDIT.md)）+ V2 公开工具只读快照（哈希锚定）
-- G1：Packet/Tool/Report Pydantic 合同、V2Port 适配层、4 个只读工具、离线 smoke
-- G2：LangGraph StateGraph runtime（条件路由、有界恢复、SQLite checkpoint、中断/恢复等价性）
-- G3：FastAPI 七端点 + Streamlit 五页面 + SQLite 业务账本（真实 HTTP 全链路实证）
-- G4：双模型受控验证（[G4_GLM_RECEIPT.md](docs/G4_GLM_RECEIPT.md) / [G4_DEEPSEEK_RECEIPT.md](docs/G4_DEEPSEEK_RECEIPT.md)）——chloro 40 全量：GLM 40/40、DeepSeek 40/40，**判定一致率 40/40**
-- G5：V2 冻结评分器对接（[EVAL_PROTOCOL.md](docs/EVAL_PROTOCOL.md)；隔离 grader 进程）
-- G6：v2.1.1 基线升级完成（[V2_TO_V3_UPGRADE_REPORT.md](docs/V2_TO_V3_UPGRADE_REPORT.md)，零行为差异）
+- **G0–G6**：V2 资产审计与只读快照、Pydantic 合同 + V2Port 适配、LangGraph runtime（中断/恢复等价性）、FastAPI 七端点 + Streamlit 五页面、双模型受控验证（chloro 40 全量判定一致率 40/40）、冻结评分器对接、v2.1.1 基线升级
+- **V3.1 进化闭环**：失败情报池 → 策略提议 → 审批硬门（模拟审批阻断实测）→ E2 回归池；S1/S2 真实 A/B（16 + 120 观测，含 503 冻结协议修复与断点恢复实测）
+- **V3.2**：ContextBuilder（protected 块 + 逐调用溯源 receipt）、Failure Attribution 2.0（规则只播种、升级必经单因素干预）、Harness 稳健性注入（10 域）、144 观测重复 A/B（4 进程×5 线程）
 
-测试：`93 passed`（Mock 全绿，CI 无网络；真实模型调用仅在授权下经 `--planner llm` 发生）。
+测试：`206 passed`（Mock 全绿，CI 无网络；真实模型调用仅在授权下发生）。
+
+## 最终发布证据（400 次真实付费观测）
+
+| 实验 | 规模 | 关键结果 |
+|---|---|---|
+| S1 / S2（V3.1） | 16 + 120 观测 | 幻觉指针黄金对照；503 冻结协议修复双口径归档 |
+| V3.2 DEV A/B | 144 观测（3 重复） | 无效指针 A=4/72 vs B=0/72；质量层 72/72 双臂满分 |
+| 归因消融 | 24 观测 | C（仅证据块）0/12 vs D（token 等量填充）1/12 |
+| **独立 Holdout** | **96 观测** | **8 个全新属 × 24 任务，双臂 48/48 满分、0 无效指针、0 critical false pass** |
+
+- 有效性审计：[V3_2_AB_VALIDITY_AUDIT.md](docs/V3_2_AB_VALIDITY_AUDIT.md)（16 字段配置逐项对照 + 删证据负例排除 + 统计重分析）
+- 归因终验：[V3_2_FAILURE_ATTRIBUTION_FINAL.md](docs/V3_2_FAILURE_ATTRIBUTION_FINAL.md)（8 类失败完整证据链：4 confirmed / 3 experimentally_supported / 1 无实战实例）
+- 独立 Holdout：[V3_2_INDEPENDENT_HOLDOUT_REPORT.md](docs/V3_2_INDEPENDENT_HOLDOUT_REPORT.md)（NCBI 检索 → 隔离校验 → 先冻结后运行）
+- 发布决策：[V3_2_FINAL_RELEASE_REPORT.md](V3_2_FINAL_RELEASE_REPORT.md) + [Manifest](V3_2_FINAL_RELEASE_MANIFEST.json)（38 文件 SHA256）
+
+统计诚实声明：无效指针 4→0 为方向性/计数证据；Token 成本 +12.7~13.5% 为点估计（任务级配对 CI 含 0）；所有候选未经人工发布审批，active strategy 保持 promptv1。
 
 ## 运行
 
@@ -38,6 +50,9 @@ uv sync --all-extras
 
 # G5/G4 评测（脚本化 planner / 授权后真实模型）
 .venv\Scripts\python.exe scripts\eval_offline.py --candidates ..\AssemblyGenomics-Copilot_V2\data\organelle_v2\candidates --limit 8 --match chloro [--planner llm]
+
+# 最终回归（10 项稳定性 + 全套件）
+.venv\Scripts\python.exe -m pytest tests\unit\test_final_stability.py -q
 ```
 
 ## 边界
