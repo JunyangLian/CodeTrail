@@ -176,11 +176,21 @@ class QCGraph:
         # instance is shared across runs, so its own counter must not gate here
         if budgets.get("model_requests", 0) >= int(budgets.get("max_model_requests", 0)):
             return self._budget_stop(state, "model budget exhausted: model_requests")
+        plan_context = {"tool_trace": _trace(state),
+                        "denial": _runtime(state).get("denial")}
+        strategy = state.get("strategy") or {}
+        if (strategy.get("features") or {}).get("context_builder_v1"):
+            # V3.2 ContextBuilder path (opt-in): pass the extra state the
+            # builder needs; the baseline context stays byte-identical
+            plan_context["builder_inputs"] = {
+                "task": "decide the next QC action",
+                "packet_id": state["input"]["packet_id"],
+                "evidence": state.get("evidence") or {},
+                "user_goal": state["input"].get("user_goal", ""),
+            }
         try:
             action: PlannedAction = self.planner.next_action(
-                state.get("facts"),
-                {"tool_trace": _trace(state),
-                 "denial": _runtime(state).get("denial")})
+                state.get("facts"), plan_context)
         except PlannerError as error:
             # paid calls are never auto-retried (master plan §6): one failed
             # plan is a recorded terminal outcome, not a loop

@@ -49,11 +49,13 @@ class LLMPlanner:
 
     def __init__(self, gateway: ChatGateway, max_tokens: int = 4096,
                  prompt_registry: PromptRegistry | None = None,
-                 prompt_version: str = SYSTEM_PROMPT_VERSION):
+                 prompt_version: str = SYSTEM_PROMPT_VERSION,
+                 context_builder=None):
         self.gateway = gateway
         self.model_id = gateway.model_id
         self.max_tokens = max_tokens
         self.last_usage: dict | None = None  # read by the graph right after a call
+        self.context_builder = context_builder  # V3.2: optional ContextBuilder
         # Runtime prompt binding (Phase 2 P0): the version, the content and
         # the SHA256 are pinned together at construction. Loading through the
         # registry re-verifies the content hash on every read, so a drifted
@@ -69,13 +71,31 @@ class LLMPlanner:
             self.prompt_sha256 = PromptRegistry.sha256(SYSTEM_PROMPT)
 
     def next_action(self, facts: dict | None, context: dict) -> PlannedAction:
-        user = json.dumps({
-            "facts": facts,
-            "tool_trace": context.get("tool_trace") or {},
-            "previous_denial": context.get("denial"),
-            "notes": ("facts keys expected: " + ", ".join(FACT_KEYS)
-                      if facts and any(k not in (facts or {}) for k in FACT_KEYS) else ""),
-        }, ensure_ascii=False)
+        builder_inputs = context.get("builder_inputs")
+        context_receipt = None
+        if self.context_builder is not None and builder_inputs:
+            built = self.context_builder.build(
+                facts=facts,
+                tool_trace=context.get("tool_trace") or {},
+                denial=context.get("denial"),
+                **builder_inputs)
+            user = built["render"]
+            receipt = built["receipt"]
+            context_receipt = {"context_sha256": receipt["sha256"],
+                               "context_builder_version":
+                                   receipt["context_builder_version"],
+                               "completeness": receipt["completeness"],
+                               "tokens_est": receipt["tokens_est"],
+                               "omitted": len(receipt["omitted"]),
+                               "blocks": [b["name"] for b in receipt["blocks"]]}
+        else:
+            user = json.dumps({
+                "facts": facts,
+                "tool_trace": context.get("tool_trace") or {},
+                "previous_denial": context.get("denial"),
+                "notes": ("facts keys expected: " + ", ".join(FACT_KEYS)
+                          if facts and any(k not in (facts or {}) for k in FACT_KEYS) else ""),
+            }, ensure_ascii=False)
         try:
             call = self.gateway.chat_json(self.system_prompt, user,
                                           max_tokens=self.max_tokens)
@@ -91,6 +111,8 @@ class LLMPlanner:
             "prompt_version": self.prompt_version,
             "prompt_sha256": self.prompt_sha256,
         }
+        if context_receipt is not None:
+            self.last_usage["context"] = context_receipt
         try:
             payload = json.loads(_strip_fences(call["content"]))
             return PlannedAction.model_validate(payload)
