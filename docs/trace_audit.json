@@ -1,0 +1,84 @@
+{
+  "glm-5.3-flash": {
+    "runs": 40,
+    "statuses": {
+      "failed": 6,
+      "succeeded": 34
+    },
+    "tool_call_totals": {
+      "calls": 135,
+      "recorded_in_trace": true,
+      "trace_shapes": {
+        "inspect_packet/lookup_feature/organelle_summary/verify_evidence_pointer": 17,
+        "inspect_packet/organelle_summary/verify_evidence_pointer": 20,
+        "inspect_packet/organelle_summary": 3
+      }
+    },
+    "routing": {
+      "distinct_routes": 2,
+      "lookup_branch": 17,
+      "direct_verify": 23
+    },
+    "planning": {
+      "plan_events": 89,
+      "tool_plans": 55,
+      "synthesize_plans": 34,
+      "dynamic": true
+    },
+    "recovery": {
+      "bounded_recovery_events": 0
+    },
+    "evidence": {
+      "pointers_cited": 304,
+      "pointers_resolved": 302,
+      "resolution_rate": 0.9934
+    },
+    "cost_latency": {
+      "calls": 89,
+      "total_tokens": 172246,
+      "latency_ms_median": 14344,
+      "latency_ms_p95": 45890
+    },
+    "label": "glm-5.3-flash"
+  },
+  "deepseek-v4.1-flash": {
+    "runs": 40,
+    "statuses": {
+      "succeeded": 40
+    },
+    "tool_call_totals": {
+      "calls": 141,
+      "recorded_in_trace": true,
+      "trace_shapes": {
+        "inspect_packet/organelle_summary/verify_evidence_pointer": 20,
+        "inspect_packet/lookup_feature/organelle_summary/verify_evidence_pointer": 20
+      }
+    },
+    "routing": {
+      "distinct_routes": 2,
+      "lookup_branch": 20,
+      "direct_verify": 20
+    },
+    "planning": {
+      "plan_events": 101,
+      "tool_plans": 61,
+      "synthesize_plans": 40,
+      "dynamic": true
+    },
+    "recovery": {
+      "bounded_recovery_events": 0
+    },
+    "evidence": {
+      "pointers_cited": 319,
+      "pointers_resolved": 319,
+      "resolution_rate": 1.0
+    },
+    "cost_latency": {
+      "calls": 101,
+      "total_tokens": 214962,
+      "latency_ms_median": 9577,
+      "latency_ms_p95": 38797
+    },
+    "label": "deepseek-v4.1-flash"
+  }
+}
