@@ -1,0 +1,9 @@
+{
+  "at": "2026-10-18T15:19:55+00:00",
+  "candidate_id": "CAND-contextv1-pointer-guard",
+  "config_delta": {
+    "context_builder_v1": true
+  },
+  "simulation": "offline_simulation",
+  "transition": "proposed"
+}

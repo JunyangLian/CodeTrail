@@ -1,0 +1,14 @@
+{
+  "at": "2026-10-18T15:19:55+00:00",
+  "candidate_id": "CAND-contextv1-pointer-guard",
+  "human_approval": false,
+  "metrics": {
+    "critical_false_pass": 0,
+    "denominator": 72,
+    "judgment_pass_rate": 1.0,
+    "note": "B-arm effective rate; A arm comparison in decision evidence",
+    "pointer_resolution_rate": 1.0
+  },
+  "simulation": "offline_simulation",
+  "transition": "validated"
+}
