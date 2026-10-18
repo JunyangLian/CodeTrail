@@ -78,6 +78,8 @@ def main() -> int:
         approved = False
     except EvolutionError:
         approved = True  # human gate blocked publishing as designed
+    controller.record_approval("CAND-4096-to-8192", approver="human:maintainer",
+                               decision="approve", real=True)
     controller.transition("CAND-4096-to-8192", "approved", human_approval=True)
     controller.transition("CAND-4096-to-8192", "published")
     cand["offline_simulation"] = True

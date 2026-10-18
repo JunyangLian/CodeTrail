@@ -1,0 +1,32 @@
+{
+  "active_config": {
+    "gateway_timeout_s": 120,
+    "max_tokens": 8192,
+    "verify_pointer_cap": 50
+  },
+  "active_config_sha256": "a12ca6731080ba9804763f729e2d0af33d6011768847d7f9756e796ca6d35a44",
+  "at": "2026-10-18T06:17:24+00:00",
+  "candidate_id": "CAND-promptv2-preflight-shadow",
+  "candidate_version": 2,
+  "kind": "behavior_policy",
+  "runs": [
+    {
+      "decision": "block",
+      "evidence_validity": "valid",
+      "model_output_ref": "mock://925edd5b-1fe2-4231-9a60-5ab27725ee2d/QC_REPORT.json",
+      "packet_id": "chloro_C1_NC_013991_2_CHLORO-CDS-03",
+      "run_id": "925edd5b-1fe2-4231-9a60-5ab27725ee2d",
+      "status": "succeeded"
+    }
+  ],
+  "simulation": "offline_simulation",
+  "strategy": {
+    "policy_guards": {
+      "evidence_enforce_manifest": true,
+      "pre_verify_pointers": true,
+      "unresolved_requires_review": true
+    },
+    "prompt_sha256": "594650c0ecd12806a672c2eded11d8ff1a5784a1f7a7927b6249da22df6835d3",
+    "prompt_version": "promptv2"
+  }
+}

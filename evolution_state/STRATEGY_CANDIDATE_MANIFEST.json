@@ -1,7 +1,7 @@
 {
   "manifest": "STRATEGY_CANDIDATE_MANIFEST/v1",
   "simulation": "offline_simulation",
-  "generated_at": "2026-10-18T05:36:10+00:00",
+  "generated_at": "2026-10-18T06:13:59+00:00",
   "active_strategy": {
     "prompt_version": "promptv1",
     "prompt_sha256": "f4f02d462a48182dee544ae1611377d640029063c53c2f8cca1a81c9133e4a1e",
@@ -41,7 +41,9 @@
           "candidate_version": 1,
           "approver": "offline_simulation:phase15-driver",
           "decision": "reject",
-          "at": "2026-10-18T05:36:10+00:00",
+          "real": false,
+          "active_config_sha256": "a12ca6731080ba9804763f729e2d0af33d6011768847d7f9756e796ca6d35a44",
+          "at": "2026-10-18T06:13:59+00:00",
           "simulation": "offline_simulation"
         }
       ]
@@ -75,7 +77,9 @@
           "candidate_version": 1,
           "approver": "offline_simulation:phase15-driver",
           "decision": "approve",
-          "at": "2026-10-18T05:36:10+00:00",
+          "real": false,
+          "active_config_sha256": "a12ca6731080ba9804763f729e2d0af33d6011768847d7f9756e796ca6d35a44",
+          "at": "2026-10-18T06:13:59+00:00",
           "simulation": "offline_simulation"
         }
       ]

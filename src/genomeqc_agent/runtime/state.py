@@ -28,6 +28,9 @@ class QCState(TypedDict, total=False):
     planned: dict | None # {kind: tool|synthesize, tool_name, arguments, reason}
     pending_call: dict | None
     last_result: dict | None  # ToolResult dump of the most recent execution
+    # strategy (Phase 2 A/B): {prompt_version, prompt_sha256, policy_guards{}}
+    # absent/empty = baseline active strategy; guards all default OFF
+    strategy: dict
     # output ----------------------------------------------------------------
     report: dict | None
     events: list[dict]   # [{step, node, summary}] - append-only audit trail

@@ -109,7 +109,8 @@ def qc_decision(findings: list[Finding]) -> str:
 def compose_report(run_id: str, packet_meta: dict, domain: str, model_id: str,
                    tool_results: list[ToolResult], facts: dict | None,
                    versions: dict[str, str], unresolved_count: int = 0,
-                   tool_calls: dict[str, int] | None = None) -> QCReport:
+                   tool_calls: dict[str, int] | None = None,
+                   unresolved_requires_review: bool = False) -> QCReport:
     findings = compose_findings(facts)
     if facts is None:
         evidence_validity = "invalid"
@@ -127,7 +128,10 @@ def compose_report(run_id: str, packet_meta: dict, domain: str, model_id: str,
         evidence_validity=evidence_validity,
         findings=findings,
         not_checked=list(NOT_CHECKED),
-        needs_human_review=False,
+        # Phase 2 guard (unresolved_requires_review): unresolved pointers
+        # escalate to human review. Baseline (guard off) keeps the historical
+        # False - the guard can only escalate, never silence.
+        needs_human_review=bool(unresolved_requires_review and unresolved_count),
         tool_calls=(tool_calls if tool_calls is not None else
                     {name: sum(1 for r in tool_results if r.tool_name == name and r.ok)
                      for name in {r.tool_name for r in tool_results}}),

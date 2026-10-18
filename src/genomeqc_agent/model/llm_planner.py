@@ -13,6 +13,7 @@ import re
 
 from pydantic import ValidationError
 
+from genomeqc_agent.evolution.prompts import PromptRegistry
 from genomeqc_agent.model.gateway import ChatGateway, GatewayError
 from genomeqc_agent.model.scripted_planner import FACT_KEYS, PlannedAction
 
@@ -45,13 +46,27 @@ class PlannerError(RuntimeError):
 
 class LLMPlanner:
     provider = "siliconflow"
-    prompt_version = SYSTEM_PROMPT_VERSION  # E1: strategy candidates version this
 
-    def __init__(self, gateway: ChatGateway, max_tokens: int = 4096):
+    def __init__(self, gateway: ChatGateway, max_tokens: int = 4096,
+                 prompt_registry: PromptRegistry | None = None,
+                 prompt_version: str = SYSTEM_PROMPT_VERSION):
         self.gateway = gateway
         self.model_id = gateway.model_id
         self.max_tokens = max_tokens
         self.last_usage: dict | None = None  # read by the graph right after a call
+        # Runtime prompt binding (Phase 2 P0): the version, the content and
+        # the SHA256 are pinned together at construction. Loading through the
+        # registry re-verifies the content hash on every read, so a drifted
+        # or tampered prompt can never reach a model call. Without a registry
+        # the module SYSTEM_PROMPT is used and bound to its own hash.
+        self.prompt_version = prompt_version
+        if prompt_registry is not None:
+            record = prompt_registry.get(prompt_version)  # integrity-checked
+            self.system_prompt: str = record["content"]
+            self.prompt_sha256: str = record["sha256"]
+        else:
+            self.system_prompt = SYSTEM_PROMPT
+            self.prompt_sha256 = PromptRegistry.sha256(SYSTEM_PROMPT)
 
     def next_action(self, facts: dict | None, context: dict) -> PlannedAction:
         user = json.dumps({
@@ -62,7 +77,7 @@ class LLMPlanner:
                       if facts and any(k not in (facts or {}) for k in FACT_KEYS) else ""),
         }, ensure_ascii=False)
         try:
-            call = self.gateway.chat_json(SYSTEM_PROMPT, user,
+            call = self.gateway.chat_json(self.system_prompt, user,
                                           max_tokens=self.max_tokens)
         except GatewayError as error:
             self.last_usage = {"error": str(error)}
@@ -73,6 +88,8 @@ class LLMPlanner:
             "completion_tokens": call["usage"].get("completion_tokens"),
             "total_tokens": call["usage"].get("total_tokens"),
             "reasoning_chars": call.get("reasoning_chars"),
+            "prompt_version": self.prompt_version,
+            "prompt_sha256": self.prompt_sha256,
         }
         try:
             payload = json.loads(_strip_fences(call["content"]))

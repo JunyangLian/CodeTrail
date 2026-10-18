@@ -1,8 +1,10 @@
 {
+  "active_config_sha256": "a12ca6731080ba9804763f729e2d0af33d6011768847d7f9756e796ca6d35a44",
   "approver": "offline_simulation:phase15-driver",
-  "at": "2026-10-18T05:36:10+00:00",
+  "at": "2026-10-18T06:13:59+00:00",
   "candidate_id": "CAND-promptv2-pointer-guard-v2",
   "candidate_version": 1,
   "decision": "approve",
+  "real": false,
   "simulation": "offline_simulation"
 }

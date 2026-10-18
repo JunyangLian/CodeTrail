@@ -15,6 +15,8 @@ import json
 from datetime import UTC, datetime
 from pathlib import Path
 
+from genomeqc_agent.evolution.prompts import PromptRegistry
+
 SIMULATION_MARK = "offline_simulation"
 
 # M2: the ONLY config fields a proposer may touch (whitelist).
@@ -205,6 +207,17 @@ class EvolutionController:
             raise EvolutionError(
                 "human approval required: accepted candidates cannot be "
                 "approved or published without human_approval=True")
+        if target == "approved":
+            # Phase 2 P2: a SIMULATED approval receipt can never authorize
+            # publishing - the receipt must exist, say approve, and be marked
+            # real. This is a state assertion, not an honour-system flag.
+            approval = candidate.get("approval") or {}
+            if not (approval.get("decision") == "approve"
+                    and approval.get("real") is True):
+                raise EvolutionError(
+                    "real human approval receipt required: a simulated "
+                    "approval cannot authorize publishing (record one via "
+                    "record_approval(..., real=True))")
         if target == "rejected":
             reason = (metrics or {}).get("reason") or candidate.get("gate", {}).get("reason")
             candidate["rejection_reason"] = reason
@@ -290,10 +303,16 @@ class EvolutionController:
     # -- Phase 1.5 (P2): governed human approvals ---------------------------
 
     def record_approval(self, candidate_id: str, approver: str, decision: str,
-                        candidate_version: int = 1) -> dict:
+                        candidate_version: int = 1,
+                        real: bool = False) -> dict:
         """Record a human approval decision (approve|reject) with identity.
-        A rejection moves the candidate to the rejected terminal state and
-        leaves the active strategy untouched; approval unlocks promotion."""
+
+        ``real=True`` marks an actual human decision by a named approver;
+        simulated drivers must leave it False. Only a real approval receipt
+        can unlock the approved -> published transition (Phase 2 P2). A
+        rejection moves the candidate to the rejected terminal state and
+        leaves the active strategy untouched.
+        """
         candidate = self.state.get(candidate_id)
         if candidate is None:
             raise EvolutionError(f"unknown candidate: {candidate_id}")
@@ -304,6 +323,9 @@ class EvolutionController:
             "candidate_version": candidate_version,
             "approver": approver,
             "decision": decision,
+            "real": bool(real),
+            "active_config_sha256": PromptRegistry.sha256(
+                json.dumps(self.active_config, sort_keys=True)),
             "at": _now(),
             "simulation": self.simulation,
         }
@@ -316,6 +338,42 @@ class EvolutionController:
             candidate = self._reject(candidate_id, candidate,
                                      f"human rejection by {approver}")
         candidate["approval"] = receipt
+        return receipt
+
+    def shadow_receipt(self, candidate_id: str, runs: list[dict],
+                       strategy: dict | None = None) -> dict:
+        """Write a shadow-execution receipt (Phase 2 P2.5): candidate version,
+        the exact strategy (prompt version + SHA256 + guards), the runtime
+        config hash, and per-run model-output references. Shadow runs never
+        touch the active config - this receipt only RECORDS what ran."""
+        candidate = self.state.get(candidate_id)
+        if candidate is None:
+            raise EvolutionError(f"unknown candidate: {candidate_id}")
+        proposal = candidate.get("proposal") or {}
+        receipt = {
+            "candidate_id": candidate_id,
+            "candidate_version": len(candidate.get("history", [])),
+            "kind": proposal.get("kind", "config_candidate"),
+            "strategy": strategy or {
+                "prompt_version": proposal.get("prompt_version"),
+                "prompt_sha256": proposal.get("prompt_sha256"),
+                "policy_guards": proposal.get("config_delta"),
+            },
+            "active_config": dict(self.active_config),
+            "active_config_sha256": PromptRegistry.sha256(
+                json.dumps(self.active_config, sort_keys=True)),
+            "runs": runs,
+            "simulation": self.simulation,
+            "at": _now(),
+        }
+        target = self.receipts_dir / candidate_id
+        target.mkdir(parents=True, exist_ok=True)
+        (target / "shadow_tested.json").write_text(
+            json.dumps(receipt, ensure_ascii=False, indent=2, sort_keys=True) + "\n",
+            encoding="utf-8")
+        candidate["shadow"] = {"result": {"runs": len(runs)},
+                               "receipt": str(target / "shadow_tested.json"),
+                               "simulation": self.simulation}
         return receipt
 
     def _receipt(self, candidate_id: str, transition: str, payload: dict) -> None:

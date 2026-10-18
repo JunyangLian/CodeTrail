@@ -1,14 +1,14 @@
 {
   "pool_version": "failure_cases.v1",
   "simulation": "offline_simulation",
-  "generated_at": "2026-10-18T05:36:10+00:00",
+  "generated_at": "2026-10-18T06:13:58+00:00",
   "pool_file": "D:\\1_yanjiusheng\\AssemblyGenomics-Copilot_V3\\evolution_state\\failure_pool\\failure_cases.v1.jsonl",
   "entries_total": 7,
   "reports": [
     {
       "pool_version": "failure_cases.v1",
       "simulation": "offline_simulation",
-      "generated_at": "2026-10-18T05:36:10+00:00",
+      "generated_at": "2026-10-18T06:13:58+00:00",
       "candidates_root": "D:\\1_yanjiusheng\\AssemblyGenomics-Copilot_V2\\data\\organelle_v2\\candidates",
       "model": {
         "provider": "siliconflow",
@@ -30,7 +30,7 @@
     {
       "pool_version": "failure_cases.v1",
       "simulation": "offline_simulation",
-      "generated_at": "2026-10-18T05:36:10+00:00",
+      "generated_at": "2026-10-18T06:13:58+00:00",
       "candidates_root": "D:\\1_yanjiusheng\\AssemblyGenomics-Copilot_V2\\data\\organelle_v2\\candidates",
       "model": {
         "provider": "siliconflow",

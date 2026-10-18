@@ -23,7 +23,7 @@ from genomeqc_agent.jobs.smoke_pipeline import default_registry
 from genomeqc_agent.model.llm_planner import PlannerError
 from genomeqc_agent.model.scripted_planner import PlannedAction, ScriptedPlanner
 from genomeqc_agent.reports.composer import compose_report, render_markdown
-from genomeqc_agent.runtime.policy import MAX_VIOLATIONS, evaluate, retries_left
+from genomeqc_agent.runtime.policy import MAX_VIOLATIONS, evaluate, retries_left, strategy_guards
 from genomeqc_agent.runtime.state import TERMINAL_STATUSES, QCState
 from genomeqc_agent.schemas.report import QCReport
 from genomeqc_agent.schemas.tool import ToolRequest
@@ -207,17 +207,28 @@ class QCGraph:
                 "budgets": budgets, "events": events}
 
     def node_policy(self, state: QCState) -> dict:
-        verdict = evaluate(state, self.registry.tool_names())
+        guards = strategy_guards(state)
+        allowed_paths: set[str] | None = None
+        if guards.get("evidence_enforce_manifest"):
+            try:
+                files = self.registry.files_for(state["input"]["packet_id"])
+                allowed_paths = {entry["path"] for entry in files.manifest()}
+            except KeyError:
+                allowed_paths = set()  # no manifest -> nothing is citable
+        verdict = evaluate(state, self.registry.tool_names(),
+                           allowed_paths=allowed_paths, guards=guards)
         runtime = dict(_runtime(state))
         runtime["step"] = runtime.get("step", 0) + 1
+        planned = dict(state.get("planned") or {})
         if verdict["allowed"]:
-            planned = dict(state.get("planned") or {})
             events = list(state.get("events", [])) + [
                 {"step": runtime["step"], "node": "policy_gate",
-                 "summary": f"allowed: {planned.get('tool_name')}"}]
-            return {"pending_call": {"tool_name": planned.get("tool_name"),
-                                     "arguments": planned.get("arguments", {})},
-                    "runtime": runtime, "events": events}
+                 "summary": f"allowed: {planned.get('tool_name') or planned.get('kind')}"}]
+            updates: dict = {"runtime": runtime, "events": events}
+            if planned.get("kind") == "tool":
+                updates["pending_call"] = {"tool_name": planned.get("tool_name"),
+                                           "arguments": planned.get("arguments", {})}
+            return updates
         runtime["violations"] = runtime.get("violations", 0) + 1
         runtime["denial"] = verdict
         events = list(state.get("events", [])) + [
@@ -309,6 +320,12 @@ class QCGraph:
         evidence = state.get("evidence") or {}
         unresolved = evidence.get("unresolved", [])
         trace = _trace(state)
+        strategy = state.get("strategy") or {}
+        guards = strategy.get("policy_guards") or {}
+        prompt_version = strategy.get("prompt_version",
+                                      getattr(self.planner, "prompt_version", "unknown"))
+        prompt_sha = strategy.get("prompt_sha256",
+                                  getattr(self.planner, "prompt_sha256", ""))
         report = compose_report(
             run_id=state["run_id"],
             packet_meta=state["input"],
@@ -318,8 +335,12 @@ class QCGraph:
             facts=state.get("facts"),
             unresolved_count=len(unresolved),
             tool_calls={name: len(calls) for name, calls in trace.items()},
+            unresolved_requires_review=bool(guards.get("unresolved_requires_review")),
             versions={"planner": self.planner.model_id,
-                      "prompt": getattr(self.planner, "prompt_version", "unknown"),
+                      "prompt": str(prompt_version),
+                      "prompt_sha256": str(prompt_sha),
+                      "policy_guards": ",".join(
+                          sorted(k for k, v in guards.items() if v)) or "none",
                       "graph": "qc-stategraph-v1"})
         report_dict = report.model_dump()
         runtime = dict(_runtime(state))
@@ -384,14 +405,21 @@ class QCGraph:
     def route_after_plan(self, state: QCState) -> str:
         if _runtime(state).get("status") in TERMINAL_STATUSES:
             return "stop"
-        return "policy" if (state.get("planned") or {}).get("kind") == "tool" else "synthesize"
+        if (state.get("planned") or {}).get("kind") == "tool":
+            return "policy"
+        # synthesize passes the gate only under the pre_verify_pointers guard;
+        # with guards off the baseline topology is unchanged
+        guards = strategy_guards(state)
+        return "policy" if guards.get("pre_verify_pointers") else "synthesize"
 
     def route_after_policy(self, state: QCState) -> str:
         denial = _runtime(state).get("denial")
         if denial and denial.get("code") == "budget_exhausted":
             return "budget"  # dedicated terminal, not a replan situation
-        if _runtime(state).get("violations", 0) > 0 and not state.get("pending_call"):
+        if denial and not state.get("pending_call"):
             return "violation"
+        if (state.get("planned") or {}).get("kind") == "synthesize":
+            return "synthesize"
         return "execute"
 
     def route_after_verify(self, state: QCState) -> str:
@@ -437,7 +465,7 @@ class QCGraph:
         builder.add_conditional_edges(
             "policy_gate", self.route_after_policy,
             {"execute": "execute_tool", "violation": "record_violation",
-             "budget": "budget_stop"})
+             "budget": "budget_stop", "synthesize": "synthesize_report"})
         builder.add_conditional_edges(
             "record_violation",
             lambda s: "plan" if _runtime(s).get("violations", 0) <= MAX_VIOLATIONS else "fail",
@@ -461,7 +489,8 @@ class QCGraph:
     def run(self, run_id: str, packet_id: str, packet_dir: str | Path,
             domain: str = "auto_detect_supported", user_goal: str = "",
             input_sha256: str = "", max_tool_calls: int = 32,
-            max_model_requests: int = 8, max_retries_per_tool: int = 1) -> QCState:
+            max_model_requests: int = 8, max_retries_per_tool: int = 1,
+            strategy: dict | None = None) -> QCState:
         initial: QCState = {
             "run_id": run_id,
             "input": {"packet_id": packet_id, "packet_dir": str(packet_dir),
@@ -473,6 +502,10 @@ class QCGraph:
                         "max_model_requests": max_model_requests,
                         "max_retries_per_tool": max_retries_per_tool,
                         "tool_calls": 0, "model_requests": 0},
+            # A/B strategy block (Phase 2): absent/empty = baseline strategy.
+            # Shadow runs pass the candidate here - the active strategy is
+            # never mutated by a run.
+            "strategy": dict(strategy or {}),
             "events": [],
         }
         config = {"configurable": {"thread_id": run_id}}

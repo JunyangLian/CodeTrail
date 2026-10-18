@@ -106,6 +106,8 @@ def test_state_machine_happy_path_publishes(tmp_path):
     controller.transition("C1", "shadow_tested",
                           shadow_result={"replay": "historical"})
     controller.transition("C1", "accepted")
+    controller.record_approval("C1", approver="human:maintainer",
+                               decision="approve", real=True)
     controller.transition("C1", "approved", human_approval=True)
     controller.transition("C1", "published")
     assert controller.state["C1"]["status"] == "published"
