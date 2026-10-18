@@ -1,22 +1,13 @@
 {
   "manifest": "V3_1_RELEASE_CANDIDATE_MANIFEST/v1",
-  "created_at": "2026-10-18T12:27:47+00:00",
+  "created_at": "2026-10-18T13:16:10+00:00",
   "release_candidate": {
-    "git_commit": "7e330abe7219189dcc9a8be5c4ce12d837732255",
-    "git_dirty_paths": [
-      "M evolution_state/STRATEGY_CANDIDATE_MANIFEST.json",
-      " M scripts/run_s2_experiment.py",
-      "?? scripts/archive_s2_rc.py",
-      "?? scripts/release_audit_p0.py",
-      "?? scripts/release_audit_p2.py",
-      "?? src/genomeqc_agent/eval/safety.py",
-      "?? src/genomeqc_agent/evolution/budget.py",
-      "?? tests/unit/test_release_audit.py"
-    ],
+    "git_commit": "0a06cc649596d8428de2d62565e17001fef10bd9",
+    "git_dirty_paths": [],
     "tests": {
-      "total": 153,
-      "passed": 153,
-      "note": "pytest exit 0 (145 prior + 8 release-audit)"
+      "total": 161,
+      "passed": 161,
+      "note": "pytest exit 0 (161 collected: 145 prior + 8 release-audit + 8 user-added)"
     },
     "ruff": "clean",
     "secrets_scan": "CLEAN"
