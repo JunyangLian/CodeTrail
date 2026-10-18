@@ -174,3 +174,71 @@ def test_budget_cannot_exceed_service_defaults(client):
     response = client.post("/api/v1/jobs", json={
         "packet_id": NORMAL_PACKET, "max_tool_calls": 10_000})
     assert response.status_code == 422  # pydantic le=DEFAULT_MAX_TOOL_CALLS
+
+
+# -- P4: model/strategy selection authorization boundary + new endpoints -------
+
+def test_paid_run_requires_authorization(client):
+    response = client.post("/api/v1/jobs", json={
+        "packet_id": NORMAL_PACKET, "planner_kind": "llm",
+        "model_id": "zai-org/GLM-5.3-Flash"})
+    assert response.status_code == 403
+    assert response.json()["detail"]["error_code"] == "payment_not_authorized"
+
+
+def test_paid_run_unknown_model_rejected_even_when_authorized(client, monkeypatch):
+    monkeypatch.setenv("GENOMEQC_PAID_AUTHORIZED", "true")
+    response = client.post("/api/v1/jobs", json={
+        "packet_id": NORMAL_PACKET, "planner_kind": "llm",
+        "model_id": "totally-fake-model"})
+    assert response.status_code == 422
+    assert response.json()["detail"]["error_code"] == "unknown_model"
+
+
+def test_paid_run_without_credentials_never_submits(client, monkeypatch):
+    monkeypatch.setenv("GENOMEQC_PAID_AUTHORIZED", "true")
+    response = client.post("/api/v1/jobs", json={
+        "packet_id": NORMAL_PACKET, "planner_kind": "llm",
+        "model_id": "zai-org/GLM-5.3-Flash"})
+    assert response.status_code == 422
+    assert response.json()["detail"]["error_code"] == "gateway_unconfigured"
+
+
+def test_strategy_versions_endpoint(client):
+    body = client.get("/api/v1/strategy/versions").json()
+    versions = {v["version"] for v in body["versions"]}
+    assert {"promptv1", "promptv2"} <= versions
+    assert body["active_prompt_version"] == "promptv1"
+    assert body["prompt_diff_v1_v2"]  # real diff text
+    assert body["paid_runs_authorized"] is False  # default: no paid runs
+
+
+def test_strategy_approvals_endpoint(client):
+    body = client.get("/api/v1/strategy/approvals").json()
+    assert isinstance(body["approvals"], list)
+    assert body["approvals"]  # phase 1.5/2 receipts exist in evolution_state
+    assert all(a["real"] is False for a in body["approvals"])  # all simulated
+
+
+def test_evidence_and_refinement_endpoints(client):
+    run_id = client.post("/api/v1/jobs", json={"packet_id": NORMAL_PACKET}).json()["run_id"]
+    _wait_terminal(client, run_id)
+    evidence = client.get(f"/api/v1/jobs/{run_id}/evidence").json()
+    assert evidence["evidence"].get("pointers")
+    assert "verify_evidence_pointer" in evidence["tool_trace"]
+    refinement = client.get(f"/api/v1/jobs/{run_id}/refinement").json()
+    assert refinement["refinement"] is None  # feature off -> engine never ran
+
+
+def test_scripted_run_with_candidate_strategy_and_refinement(client):
+    response = client.post("/api/v1/jobs", json={
+        "packet_id": NORMAL_PACKET,
+        "policy_guards": {"evidence_enforce_manifest": True,
+                          "pre_verify_pointers": True},
+        "features": {"self_refinement": True}})
+    assert response.status_code == 202
+    run_id = response.json()["run_id"]
+    _wait_terminal(client, run_id)
+    report = client.get(f"/api/v1/jobs/{run_id}/report").json()["report"]
+    assert report["versions"]["policy_guards"] != "none"
+    assert report["versions"]["prompt"] == "promptv1"

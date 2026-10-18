@@ -23,6 +23,13 @@ class JobSubmitRequest(BaseModel):
     max_model_requests: int = Field(default=DEFAULT_MAX_MODEL_REQUESTS, ge=1,
                                    le=DEFAULT_MAX_MODEL_REQUESTS)
     max_retries_per_tool: int = Field(default=1, ge=0, le=3)
+    # P4 model/strategy selection: "llm" requires explicit paid-run
+    # authorisation (GENOMEQC_PAID_AUTHORIZED=true) and is rejected otherwise.
+    planner_kind: Literal["scripted", "llm"] = "scripted"
+    model_id: str | None = None
+    prompt_version: str = "promptv1"
+    policy_guards: dict[str, bool] = Field(default_factory=dict)
+    features: dict[str, bool] = Field(default_factory=dict)
 
 
 class JobSubmitted(BaseModel):
@@ -84,3 +91,47 @@ class Healthz(BaseModel):
     status: str = "ok"
     version: str
     supported_domains: list[str] = sorted(SUPPORTED_DOMAINS)
+
+
+# -- P4: evidence / refinement / strategy endpoints ---------------------------
+
+class EvidenceResponse(BaseModel):
+    run_id: str
+    evidence: dict
+    tool_trace: dict
+
+
+class RefinementResponse(BaseModel):
+    run_id: str
+    refinement: dict | None
+
+
+class StrategyVersionInfo(BaseModel):
+    version: str
+    sha256: str
+    registered_at: str = ""
+    author: str = ""
+    notes: str = ""
+
+
+class StrategyVersionsResponse(BaseModel):
+    active_prompt_version: str
+    active_config: dict
+    paid_runs_authorized: bool
+    versions: list[StrategyVersionInfo]
+    prompt_diff_v1_v2: str = ""
+    candidates: list[dict] = Field(default_factory=list)
+
+
+class ApprovalRecord(BaseModel):
+    candidate_id: str
+    approver: str
+    decision: str
+    real: bool
+    at: str
+    simulation: str = ""
+    candidate_version: int = 1
+
+
+class StrategyApprovalsResponse(BaseModel):
+    approvals: list[ApprovalRecord]
