@@ -7,7 +7,10 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
-from genomeqc_agent.evolution.controller import EvolutionController
+from genomeqc_agent.evolution.controller import (
+    EvolutionController,
+    EvolutionError,
+)
 from genomeqc_agent.evolution.prompts import PromptRegistry
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -62,7 +65,7 @@ try:
     controller.transition("CAND-contextv1-pointer-guard", "approved",
                           human_approval=True)
     blocked = False
-except Exception:
+except EvolutionError:
     blocked = True
 assert blocked and controller.active_config["max_tokens"] == 8192
 
