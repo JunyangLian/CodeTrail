@@ -1,0 +1,55 @@
+{
+  "manifest": "V3_1_RELEASE_CANDIDATE_MANIFEST/v1",
+  "created_at": "2026-10-18T12:27:47+00:00",
+  "release_candidate": {
+    "git_commit": "7e330abe7219189dcc9a8be5c4ce12d837732255",
+    "git_dirty_paths": [
+      "M evolution_state/STRATEGY_CANDIDATE_MANIFEST.json",
+      " M scripts/run_s2_experiment.py",
+      "?? scripts/archive_s2_rc.py",
+      "?? scripts/release_audit_p0.py",
+      "?? scripts/release_audit_p2.py",
+      "?? src/genomeqc_agent/eval/safety.py",
+      "?? src/genomeqc_agent/evolution/budget.py",
+      "?? tests/unit/test_release_audit.py"
+    ],
+    "tests": {
+      "total": 153,
+      "passed": 153,
+      "note": "pytest exit 0 (145 prior + 8 release-audit)"
+    },
+    "ruff": "clean",
+    "secrets_scan": "CLEAN"
+  },
+  "archives": {
+    "s1": {
+      "path": "D:\\1_yanjiusheng\\AssemblyGenomics-Copilot_V3\\data\\archive\\s1_smoke",
+      "file_count": 41,
+      "manifest": "V3_S1_ARCHIVE_MANIFEST.json"
+    },
+    "s2": {
+      "path": "D:\\1_yanjiusheng\\AssemblyGenomics-Copilot_V3\\data\\archive\\s2_experiment",
+      "file_count": 248,
+      "manifest": "D:\\1_yanjiusheng\\AssemblyGenomics-Copilot_V3\\data\\archive\\s2_experiment\\s2_archive_manifest.json"
+    }
+  },
+  "frozen_deliverables": [
+    "V3_S1_FINAL_SCORE_AUDIT.md",
+    "V3_S1_ARCHIVE_MANIFEST.json",
+    "V3_S2_FROZEN_PLAN.json",
+    "V3_S2_RUN_LEDGER.jsonl",
+    "V3_S2_EVALUATION_REPORT.md",
+    "V3_S2_EVOLUTION_DECISION.json",
+    "V3_S2_BUDGET_RECEIPT.json",
+    "V3_FINAL_EXPERIMENT_REPORT.md",
+    "docs/S1_SMOKE_RECEIPT.md",
+    "docs/V3_AB_SCALE_BUDGET_AUDIT.md",
+    "docs/V3_1_AB_PREFLIGHT_REPORT.md",
+    "docs/V3_1_AB_EXECUTION_PLAN.md"
+  ],
+  "strategy_state": {
+    "active": "promptv1 (UNTOUCHED - no publish executed)",
+    "promptv2_candidate": "DEV-verified, pending human approval (status cap: validated)"
+  },
+  "rollback": "git reset/checkout to the pinned commit; archives are outside git (data/) - keep directory-level backups"
+}

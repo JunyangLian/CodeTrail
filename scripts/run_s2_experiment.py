@@ -31,6 +31,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
 from genomeqc_agent import config
 from genomeqc_agent.eval.adapter import map_report
+from genomeqc_agent.evolution.budget import BudgetGuard
 from genomeqc_agent.evolution.prompts import PromptRegistry
 from genomeqc_agent.model.gateway import ChatGateway, GatewayError
 from genomeqc_agent.model.llm_planner import LLMPlanner, PlannerError
@@ -83,45 +84,6 @@ def _frozen_cases() -> list[str]:
 def _source_group(case_id: str) -> str:
     m = re.search(r"(NC_\d+_\d+)", case_id)
     return m.group(1) if m else "unknown"
-
-
-class BudgetGuard:
-    """Process-global ledger with worst-case reservation (P2.4-P2.6)."""
-
-    def __init__(self, token_cap: int, request_cap: int):
-        self.token_cap = token_cap
-        self.request_cap = request_cap
-        self.tokens = 0
-        self.requests = 0
-        self.reserved_tokens = 0
-        self.reserved_requests = 0
-
-    def reserve(self, tokens: int, requests: int) -> bool:
-        """Reserve worst-case before starting an observation."""
-        if (self.tokens + self.reserved_tokens + tokens > self.token_cap
-                or self.requests + self.reserved_requests + requests
-                > self.request_cap):
-            return False
-        self.reserved_tokens += tokens
-        self.reserved_requests += requests
-        return True
-
-    def settle(self, tokens: int, requests: int) -> None:
-        """Replace the reservation with actual usage (reservations are
-        tracked in whole worst-case units; release one unit)."""
-        self.reserved_tokens = max(0, self.reserved_tokens - WORST_CASE_TOKENS_PER_RUN)
-        self.reserved_requests = max(0, self.reserved_requests - MAX_REQUESTS_PER_RUN)
-        self.tokens += tokens
-        self.requests += requests
-
-    def snapshot(self) -> dict:
-        return {"tokens_spent": self.tokens,
-                "tokens_reserved": self.reserved_tokens,
-                "token_cap": self.token_cap,
-                "tokens_remaining_effective": self.token_cap - self.tokens
-                - self.reserved_tokens,
-                "requests_spent": self.requests,
-                "request_cap": self.request_cap}
 
 
 def _run_observation(planner: LLMPlanner, case_id: str, packet_dir: str,
@@ -314,7 +276,8 @@ def main() -> int:
                    "model_id": MODELS[model_key],
                    "source_group": _source_group(case_id),
                    "at": _now(), **obs, **grade_info}
-            guard.settle(tokens, requests)
+            guard.settle(tokens, requests,
+                         WORST_CASE_TOKENS_PER_RUN, MAX_REQUESTS_PER_RUN)
             ledger_fh.write(json.dumps(rec, ensure_ascii=False) + "\n")
             ledger_fh.flush()
             completed += 1

@@ -46,7 +46,14 @@
           "at": "2026-10-18T06:13:59+00:00",
           "simulation": "offline_simulation"
         }
-      ]
+      ],
+      "dev_verification": {
+        "status": "DEV-verified, pending human approval",
+        "evidence": "V3_S2_EVOLUTION_DECISION.json: ACCEPT_CANDIDATE (120 real observations, frozen thresholds)",
+        "status_cap_unchanged": "validated",
+        "published": false,
+        "marked_at": "2026-10-18T12:25:59+00:00"
+      }
     },
     {
       "candidate_id": "CAND-promptv2-pointer-guard-v2",
@@ -82,7 +89,14 @@
           "at": "2026-10-18T06:13:59+00:00",
           "simulation": "offline_simulation"
         }
-      ]
+      ],
+      "dev_verification": {
+        "status": "DEV-verified, pending human approval",
+        "evidence": "V3_S2_EVOLUTION_DECISION.json: ACCEPT_CANDIDATE (120 real observations, frozen thresholds)",
+        "status_cap_unchanged": "validated",
+        "published": false,
+        "marked_at": "2026-10-18T12:25:59+00:00"
+      }
     }
   ],
   "prompt_registry": {
@@ -91,5 +105,6 @@
       "promptv1": "f4f02d462a48182dee544ae1611377d640029063c53c2f8cca1a81c9133e4a1e",
       "promptv2": "594650c0ecd12806a672c2eded11d8ff1a5784a1f7a7927b6249da22df6835d3"
     }
-  }
+  },
+  "dev_verification_marked_at": "2026-10-18T12:25:59+00:00"
 }
