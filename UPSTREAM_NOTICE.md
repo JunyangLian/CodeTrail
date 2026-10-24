@@ -9,3 +9,5 @@ CodeTrail 的 Agent Harness 核心来自 Pico：
 CodeTrail 的后续改进包括本地网页交互、Chat Completions 接入、中文词法召回、Windows 执行兼容、结果状态与验证、修复案例及证据审计。仓库中的历史评测快照与本次真实验证分别说明，不将既有代码或历史实验重新标为独立原创成果。
 
 收到的源码归档未包含独立 LICENSE 文件，因此本次整理没有为继承代码擅自添加 MIT 等许可证。上游代码的使用和再分发应以原作者的授权为准。
+
+真实修复评测 v1 还包含 boltons 与 python-humanize/humanize 的8个故障最小复现。原始版本、修复提交、提取符号、SHA-256及各项目许可证保存在 `benchmarks/repair_suite_v1/sources/`；这些上游实现不标为 CodeTrail 独立原创代码。参考实现不进入被评测 Agent 的工作区。

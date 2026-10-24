@@ -73,7 +73,33 @@ python examples/interview-demo/demo.py reset
 
 ## 验证与证据
 
+新增 **20 个独立修复任务 × 每题3次** 的冻结评测协议，覆盖单文件逻辑5题、跨文件契约7题、未知位置定位4题、回归与兼容4题；其中8题来自两个真实开源项目的故障最小复现。题目、验收测试、统一参数、运行计划及源码哈希在模型运行前冻结，详见[评测协议与复现](docs/repair-suite-v1-protocol.md)。
+
+60次真实运行已全部完成并独立重测，未筛选或替换失败记录。模型为 `zai-org/GLM-5.3-Flash`：
+
+| 来源 | 独立任务 | 运行次数 | 功能验收 | 完整流程 |
+|---|---:|---:|---:|---:|
+| 全部 | 20 | 60 | **43/60（71.67%）** | **42/60（70.00%）** |
+| 自编题（含此前两题） | 12 | 36 | 34/36 | 34/36 |
+| 真实上游故障最小复现 | 8 | 24 | 9/24 | 8/24 |
+
+失败包括15次请求读取超时、1次无代码变更、1次修复不完整，以及1次外部测试通过但Agent未重测。平均工具调用6.95次，平均执行及外部验收139.071秒；可观测输入/输出Token为977528/294946，15次超时请求的用量未知。工作区内未授权最终变更为0；本轮不是对抗安全测试。
+
+详见[最终报告](benchmarks/results/repair-suite-v1-2026-10-24/report.md)、[完整审计JSON](benchmarks/results/repair-suite-v1-2026-10-24/audit.json)与[失败案例分析](docs/repair-suite-v1-failure-analysis.md)。[完整证据包](benchmarks/results/repair-suite-v1-2026-10-24/evidence.zip)包含60次完整Prompt/可见模型回复、未裁剪工具输出、session/trace、代码差异、测试和哈希清单；解压到项目根目录即可离线核对或回放。
+
+本轮Harness及评测设施的全量自动化测试 **225项全部通过**，见[JUnit记录](benchmarks/results/repair-suite-v1-2026-10-24/full-tests.xml)。这些测试不计为独立Agent任务。公开故障、可见测试和小型复现不能代表复杂仓库泛化能力，60次重复也不等于60个独立任务。
+
+可运行的上游故障 Demo：
+
+```powershell
+python -X utf8 -m pico.web --cwd examples/repair-suite-demo --model-timeout 120 --open
+```
+
+任务提示在示例 README 中，初始测试故意失败。使用 `scripts/prepare_suite_demo.py` 可从20道冻结题中另建全新示例目录；不包含参考补丁。
+
 固定回归、受控消融和真实模型任务分开报告，不把单元测试数量当作独立任务数量。
+
+此前的独立验证批次（不并入上述60次）：
 
 - 订单演示：真实模型修复后 15/15 测试通过，独立重测通过，测试文件未修改。
 - 两类新增修复任务，各运行两次：原始四次中功能验收 3/4、完整流程 2/4；参数反馈改进后的 1 次定向回归单独记录。
@@ -92,10 +118,10 @@ python examples/interview-demo/demo.py reset
 ```powershell
 python -m pip install pytest
 $env:PYTEST_DISABLE_PLUGIN_AUTOLOAD='1'
-python -m pytest tests/test_web.py tests/test_web_status.py tests/test_tool_executor.py tests/test_memory.py tests/test_verifier.py -q -p no:cacheprovider
+python -X utf8 -m pytest tests -q -p no:cacheprovider
 ```
 
-真实模型实验脚本会调用自己的模型接口；固定单元与集成回归使用预设响应。原始私人会话、Key、缓存和生成工作区不随源码发布。
+真实模型实验脚本会调用自己的模型接口；固定单元与集成回归使用预设响应。Key和私人会话不随源码发布。本轮固定公开题的运行证据经过凭据扫描后单独打包，原始本地目录仍被Git忽略。
 
 ## 使用范围
 
