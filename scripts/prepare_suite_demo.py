@@ -5,7 +5,8 @@ import sys
 
 ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT))
-from pico.evaluation.repair_suite import SUITE, check_freeze, install, load_json
+from pico.evaluation.repair_suite import SUITE, install, load_json
+from pico.evaluation.baseline_assets import verify_baseline_assets
 
 def main():
     tasks={task['id']:task for task in load_json(SUITE/'tasks.json')['tasks']}
@@ -16,12 +17,12 @@ def main():
     destination=(ROOT/args.destination).resolve()
     if ROOT not in destination.parents:
         parser.error('destination must be inside project')
-    check_freeze()
+    verify_baseline_assets()
     task=tasks[args.task]
     install(destination,task['files'])
     relative=destination.relative_to(ROOT).as_posix()
     print('Prepared frozen buggy task: '+args.task)
-    print(f'python -X utf8 -m pico.web --cwd "{relative}" --model-timeout 120 --open')
+    print(f'python -X utf8 -m pico.web --cwd "{relative}" --model-timeout 180 --verify-command "python -B -m unittest discover -v" --open')
     print('Task instructions: '+str(destination/'README.md'))
     print('Tests initially fail by design; no reference solution was copied.')
 

@@ -6,12 +6,12 @@ CodeTrail 表示“代码执行轨迹”，用于查看从任务输入、工具�
 
 ```powershell
 # 在 CodeTrail 项目根目录执行
-python -X utf8 -m pico.web --cwd examples/interview-demo --model-timeout 120 --open
+python -X utf8 -m pico.web --cwd examples/interview-demo --model-timeout 180 --open
 ```
 
 Windows 可双击项目根目录的 `start-web.cmd`。默认网址是 `http://127.0.0.1:8765`。
 服务只绑定本机；不需要账号、前端构建或新的运行依赖。已有服务时直接访问网址。
-`--model-timeout` 可设置单次模型请求等待时间（1–300 秒），模块默认 60 秒，双击启动脚本使用 120 秒。修改后重启服务；这不会改变工具命令自身的超时限制。
+`--model-timeout` 可设置单次模型请求的socket等待时间（1–300秒），模块和双击脚本默认180秒。OpenAI兼容后端最多3次传输尝试，重试前检查2倍配置超时的剩余预算；这不是严格的任务墙钟截止时间。修改后重启服务；工具命令有独立超时限制。失败传输用量未知，重试可能额外计费。
 
 ## 一次完整操作
 
@@ -43,7 +43,7 @@ Windows 可双击项目根目录的 `start-web.cmd`。默认网址是 `http://12
 python -m pico.web --cwd path/to/project --verify-command "python -m pytest -q"
 ```
 
-这个参数只定义结果判定依据，不会自动执行命令。“验证命令通过”表示该命令退出码为 0，测试覆盖范围、测试是否被修改以及修复是否符合需求，仍需结合代码差异检查。
+这个参数定义结果判定依据及完成门槛，不会自动执行命令。模型必须调用正常工具并获得审批；最近一次修改后没有匹配命令的真实退出码0时，Harness要求继续修复。预算耗尽或验证被阻止时记录未完成。只读解释任务不强制运行shell。“验证命令通过”只表示该命令退出码为0，测试覆盖范围、测试是否被修改以及修复是否符合需求，仍需结合代码差异检查。
 
 ## 实现范围
 

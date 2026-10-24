@@ -73,6 +73,7 @@ class Pico:
         secret_env_names=None,
         feature_flags=None,
         allowed_tools=None,
+        verification_command=None,
     ):
         self.model_client = model_client
         self.workspace = workspace
@@ -84,6 +85,10 @@ class Pico:
         self.depth = depth
         self.max_depth = max_depth
         self.read_only = read_only
+        if verification_command is not None and (not isinstance(verification_command, str) or not verification_command.strip()):
+            raise ValueError('verification_command must be a non-empty string or None')
+        self.verification_command = verification_command.strip() if verification_command else None
+        self.last_verification = {}
         self.shell_env_allowlist = tuple(shell_env_allowlist or DEFAULT_SHELL_ENV_ALLOWLIST)
         self.secret_env_names = {str(name).upper() for name in (secret_env_names or ())}
         self.feature_flags = dict(DEFAULT_FEATURE_FLAGS)
@@ -209,7 +214,8 @@ class Pico:
         return tool_signature(self.tools)
 
     def build_prefix(self):
-        return build_prompt_prefix(workspace=self.workspace, tools=self.tools)
+        return build_prompt_prefix(workspace=self.workspace, tools=self.tools,
+                                   verification_command=self.verification_command if not self.read_only else None)
 
     def _apply_prefix_state(self, prefix_state):
         self.prefix_state = prefix_state
@@ -567,6 +573,7 @@ class Pico:
             "resume_status": task_state.resume_status,
             "task_state": task_state.to_dict(),
             "prompt_metadata": self.last_prompt_metadata,
+            "completion_verification": dict(self.last_verification),
             "durable_promotions": list(self.last_durable_promotions),
             "durable_rejections": list(self.last_durable_rejections),
             "durable_superseded": list(self.last_durable_superseded),
@@ -695,7 +702,7 @@ class Pico:
             return "retry", Pico.retry_notice("model returned an empty <final> answer")
         raw = raw.strip()
         if raw:
-            return "final", raw
+            return "retry", Pico.retry_notice("unstructured progress text is not a final answer; use an explicit <tool> or <final> block")
         return "retry", Pico.retry_notice("model returned an empty response")
 
     @staticmethod

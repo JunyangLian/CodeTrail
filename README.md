@@ -39,7 +39,7 @@ PICO_OPENAI_API_KEY=填写自己的Key
 启动工作台：
 
 ```powershell
-python -X utf8 -m pico.web --cwd examples/interview-demo --model-timeout 120 --open
+python -X utf8 -m pico.web --cwd examples/interview-demo --model-timeout 180 --open
 ```
 
 Windows 也可以双击 `start-web.cmd`。默认网址为 **http://127.0.0.1:8765/**。修改 `.env` 后需要重启服务。
@@ -50,7 +50,7 @@ Windows 也可以双击 `start-web.cmd`。默认网址为 **http://127.0.0.1:876
 
 ```powershell
 codetrail --cwd examples/interview-demo --approval ask
-codetrail-web --cwd examples/interview-demo --model-timeout 120
+codetrail-web --cwd examples/interview-demo --model-timeout 180
 ```
 
 未安装命令入口时，可使用 `python -m pico` 和 `python -m pico.web`。底层 Python 包名、`PICO_*` 环境变量与 `.pico/` 数据目录保留兼容性。
@@ -92,12 +92,27 @@ python examples/interview-demo/demo.py reset
 可运行的上游故障 Demo：
 
 ```powershell
-python -X utf8 -m pico.web --cwd examples/repair-suite-demo --model-timeout 120 --open
+python -X utf8 -m pico.web --cwd examples/repair-suite-demo --model-timeout 180 --open
 ```
 
 任务提示在示例 README 中，初始测试故意失败。使用 `scripts/prepare_suite_demo.py` 可从20道冻结题中另建全新示例目录；不包含参考补丁。
 
 固定回归、受控消融和真实模型任务分开报告，不把单元测试数量当作独立任务数量。
+
+### 运行问题修复
+
+修复了普通进度文字被当作最终回答的问题。CLI、网页和恢复会话可通过 `--verify-command` 指定验收命令：最近一次修改后没有真实退出码0时，Harness拒绝结束并要求继续修复；预算耗尽或验证被拒绝时保留未完成状态。命令仍需正常审批，测试通过本身不保证测试覆盖充分。
+
+OpenAI兼容接口增加读取超时、断连、限流等有限重试及逐次传输审计。每个逻辑请求最多3次尝试，重试前检查2倍配置超时的预算；socket超时不是严格墙钟截止时间。失败请求的Token保持未知。网页默认单次等待180秒，外部服务持续超时仍会失败。
+
+```powershell
+python -m pico --cwd path/to/project --verify-command "python -m pytest -q"
+python scripts/check_repair_baseline.py
+```
+
+原始60次评测及证据包保持原样。当前运行时代码已升级，旧 `run_repair_suite.py --check` 应在原始证据包解压的独立目录或原始提交中执行；上面的资产检查器验证当前金标和归档内的原始运行时代码。修复后的定向回归单独记录，不能替换原始总体成功率。
+
+本次全量软件测试 **242/242通过**。另外冻结6道已知问题题目、每题2次的真实回归，独立重测结果为功能与完整流程均 **5/12（41.67%）**，7次因接口读取超时失败；1次在传输失败后重试并完成。库存与UTC契约两题各2/2通过，splitlines为1/2，另外三题各0/2。本轮未触发最终回答拦截事件，门槛机制的行为由软件测试验证，不能归因于真实成功率变化。详见[修复说明](docs/recovery-fixes.md)、[单独回归报告](benchmarks/results/repair-regression-v2-2026-10-24/report.md)、[独立审计](benchmarks/results/repair-regression-v2-2026-10-24/audit.json)和[完整证据包](benchmarks/results/repair-regression-v2-2026-10-24/evidence.zip)。
 
 此前的独立验证批次（不并入上述60次）：
 

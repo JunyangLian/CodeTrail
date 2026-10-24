@@ -1,0 +1,62 @@
+[
+  {
+    "task_id": "humanize_size",
+    "repeat": 1,
+    "run_key": "01-humanize_size-r1"
+  },
+  {
+    "task_id": "humanize_metric",
+    "repeat": 2,
+    "run_key": "02-humanize_metric-r2"
+  },
+  {
+    "task_id": "humanize_metric",
+    "repeat": 1,
+    "run_key": "03-humanize_metric-r1"
+  },
+  {
+    "task_id": "utc_storage_contract",
+    "repeat": 1,
+    "run_key": "04-utc_storage_contract-r1"
+  },
+  {
+    "task_id": "boltons_splitlines",
+    "repeat": 1,
+    "run_key": "05-boltons_splitlines-r1"
+  },
+  {
+    "task_id": "boltons_splitlines",
+    "repeat": 2,
+    "run_key": "06-boltons_splitlines-r2"
+  },
+  {
+    "task_id": "inventory_reservation",
+    "repeat": 1,
+    "run_key": "07-inventory_reservation-r1"
+  },
+  {
+    "task_id": "utc_storage_contract",
+    "repeat": 2,
+    "run_key": "08-utc_storage_contract-r2"
+  },
+  {
+    "task_id": "boltons_xfrange",
+    "repeat": 2,
+    "run_key": "09-boltons_xfrange-r2"
+  },
+  {
+    "task_id": "boltons_xfrange",
+    "repeat": 1,
+    "run_key": "10-boltons_xfrange-r1"
+  },
+  {
+    "task_id": "humanize_size",
+    "repeat": 2,
+    "run_key": "11-humanize_size-r2"
+  },
+  {
+    "task_id": "inventory_reservation",
+    "repeat": 2,
+    "run_key": "12-inventory_reservation-r2"
+  }
+]

@@ -4,6 +4,7 @@ import time
 
 from .checkpoint import CHECKPOINT_NONE_STATUS, CHECKPOINT_PARTIAL_STALE_STATUS, CHECKPOINT_WORKSPACE_MISMATCH_STATUS
 from .task_state import TaskState
+from .completion import CompletionGate
 from .workspace import clip, now
 
 
@@ -60,6 +61,14 @@ class AgentLoop:
             prompt_cache_key = prompt_metadata.get("prompt_cache_key")
             prompt_cache_retention = "in_memory"
         model_started_at = time.monotonic()
+        transport_hook = hasattr(agent.model_client, 'on_transport_event')
+        previous_hook = getattr(agent.model_client, 'on_transport_event', None)
+        if transport_hook:
+            def observe_transport(event):
+                agent.emit_trace(task_state, 'model_transport', {'purpose':purpose, **event})
+                if previous_hook:
+                    previous_hook(event)
+            agent.model_client.on_transport_event = observe_transport
         try:
             raw = agent.model_client.complete(
                 prompt,
@@ -75,6 +84,9 @@ class AgentLoop:
             agent.last_prompt_metadata = prompt_metadata
             self._persist_model_failure(task_state, user_message, exc, run_started_at, prompt_metadata)
             raise
+        finally:
+            if transport_hook:
+                agent.model_client.on_transport_event = previous_hook
         completion_metadata = dict(getattr(agent.model_client, "last_completion_metadata", {}) or {})
         if completion_metadata:
             prompt_metadata.update(completion_metadata)
@@ -123,6 +135,7 @@ class AgentLoop:
 
     def run(self, user_message):
         agent = self.agent
+        completion = CompletionGate(agent)
         run_started_at = time.monotonic()
         agent.memory.set_task_summary(user_message)
         agent.record({"role": "user", "content": user_message, "created_at": now()})
@@ -220,6 +233,7 @@ class AgentLoop:
                 task_state.record_tool(name)
                 tool_started_at = time.monotonic()
                 tool_result = agent.execute_tool(name, args)
+                completion.observe(name, args, tool_result.metadata)
                 result = tool_result.content
                 agent.record(
                     {
@@ -260,6 +274,13 @@ class AgentLoop:
                 continue
 
             final = (payload or raw).strip()
+            problem = completion.problem()
+            if problem:
+                agent.emit_trace(task_state, 'completion_rejected', dict(completion.state))
+                agent.record({'role':'assistant', 'content':problem, 'created_at':now()})
+                if completion.state['status']=='blocked':
+                    return self._finish_stopped(task_state, user_message, 'verification_incomplete', problem, run_started_at)
+                continue
             return self._finish_success(task_state, user_message, final, run_started_at)
 
         if tool_steps >= agent.max_steps:
@@ -292,7 +313,11 @@ class AgentLoop:
             )
             if kind == "final":
                 final = (payload or raw).strip()
-                return self._finish_success(task_state, user_message, final, run_started_at)
+                problem = completion.problem()
+                if not problem:
+                    return self._finish_success(task_state, user_message, final, run_started_at)
+                agent.emit_trace(task_state, 'completion_rejected', dict(completion.state))
+                return self._finish_stopped(task_state, user_message, 'verification_incomplete', problem, run_started_at)
 
         if attempts >= max_attempts and tool_steps < agent.max_steps:
             final = "Stopped after too many malformed model responses without a valid tool call or final answer."
@@ -300,8 +325,12 @@ class AgentLoop:
         else:
             final = "Stopped after reaching the step limit without a final answer."
             task_state.stop_step_limit(final)
+        return self._finish_stopped(task_state, user_message, task_state.stop_reason, final, run_started_at)
+
+    def _finish_stopped(self, task_state, user_message, reason, final, run_started_at):
+        agent = self.agent
+        task_state.stop(reason, final_answer=final)
         agent.record({"role": "assistant", "content": final, "created_at": now()})
-        agent.promote_durable_memory(user_message, final)
         agent.run_store.write_task_state(task_state)
         checkpoint = agent.create_checkpoint(task_state, user_message, trigger=task_state.stop_reason or "run_stopped")
         agent.emit_trace(

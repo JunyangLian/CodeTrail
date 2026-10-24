@@ -1,0 +1,15 @@
+{
+  "model": "zai-org/GLM-5.3-Flash",
+  "temperature": 0.2,
+  "max_steps": 20,
+  "max_new_tokens": 3072,
+  "request_timeout_seconds": 180,
+  "max_transport_attempts": 3,
+  "retry_time_budget_multiplier": 2,
+  "run_deadline_seconds": 1200,
+  "repetitions": 2,
+  "concurrency": 3,
+  "verify_command": "python -B -m unittest discover -v",
+  "scope": "Post-hoc targeted regression on six known problem tasks; not a replacement or updated overall 20-task score.",
+  "changes": "Strict response protocol + completion test gate + bounded timeout retries + per-attempt telemetry. Timeout180 vs v1 120; combined intervention, not an ablation."
+}

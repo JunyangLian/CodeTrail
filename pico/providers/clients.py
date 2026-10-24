@@ -7,7 +7,7 @@ runtime 只关心一件事：给我一个 prompt，我拿回一段文本。
 
 import json
 import time
-from http.client import RemoteDisconnected
+from http.client import RemoteDisconnected, IncompleteRead
 import urllib.error
 import urllib.request
 
@@ -239,6 +239,18 @@ class OpenAICompatibleModelClient:
             host in self.base_url for host in ("openai.com", "right.codes")
         )
         self.last_completion_metadata = {}
+        self.max_transport_attempts = 3
+        self.on_transport_event = None
+
+    def _transport_event(self, event):
+        self.transport_events.append(event)
+        failures = sum(not item['ok'] for item in self.transport_events)
+        self.last_completion_metadata.update(
+            transport_attempts=len(self.transport_events), transport_failures=failures,
+            unknown_usage_attempts=failures, transport_usage_complete=failures==0,
+            transport_events=list(self.transport_events))
+        if self.on_transport_event:
+            self.on_transport_event(dict(event))
 
     def complete(self, prompt, max_new_tokens, prompt_cache_key=None, prompt_cache_retention=None):
         """向配置的 Responses 或 Chat Completions 接口发起一次模型调用。
@@ -258,6 +270,7 @@ class OpenAICompatibleModelClient:
         落到 provider API 的地方。
         """
         self.last_completion_metadata = {}
+        self.transport_events = []
         if self.api_format == "chat_completions":
             endpoint = "/chat/completions"
             payload = {
@@ -302,24 +315,48 @@ class OpenAICompatibleModelClient:
             headers=headers,
             method="POST",
         )
-        attempts = 3
+        attempts = self.max_transport_attempts
+        deadline = time.monotonic() + self.timeout * 2
         for attempt in range(attempts):
+            started = time.monotonic()
+            remaining = deadline - started
+            if remaining <= 0:
+                raise TimeoutError('OpenAI-compatible transport retry budget exhausted; failed-request usage is unknown')
             try:
-                with urllib.request.urlopen(request, timeout=self.timeout) as response:
+                with urllib.request.urlopen(request, timeout=min(self.timeout, remaining)) as response:
                     body_text = response.read().decode("utf-8")
                     headers = getattr(response, "headers", {}) or {}
                     content_type = headers.get("Content-Type", "")
+                self._transport_event({'attempt':attempt+1, 'ok':True,
+                    'request_id':headers.get('x-request-id') or headers.get('X-Request-ID'),
+                    'elapsed_ms':round((time.monotonic()-started)*1000)})
                 break
             except urllib.error.HTTPError as exc:
                 body = exc.read().decode("utf-8", errors="replace")
-                if exc.code >= 500 and attempt < attempts - 1:
-                    time.sleep(0.5 * (attempt + 1))
+                delay = 0.5 * (attempt + 1)
+                if exc.code==429:
+                    retry_after = exc.headers.get('Retry-After','') if exc.headers else ''
+                    if str(retry_after).isdigit():
+                        delay = min(10, int(retry_after))
+                retry = (exc.code in {408,429} or exc.code>=500) and attempt<attempts-1 and deadline-time.monotonic()>delay
+                self._transport_event({'attempt':attempt+1,'ok':False,'status_code':exc.code,
+                    'error_type':type(exc).__name__,'will_retry':retry,'retry_delay_seconds':delay if retry else 0,
+                    'elapsed_ms':round((time.monotonic()-started)*1000)})
+                if retry:
+                    time.sleep(delay)
                     continue
                 raise RuntimeError(f"OpenAI-compatible request failed with HTTP {exc.code}: {body}") from exc
-            except (urllib.error.URLError, RemoteDisconnected) as exc:
-                if attempt < attempts - 1:
-                    time.sleep(0.5 * (attempt + 1))
+            except (urllib.error.URLError, RemoteDisconnected, TimeoutError, ConnectionResetError, IncompleteRead) as exc:
+                delay = 0.5 * (attempt + 1)
+                retry = attempt<attempts-1 and deadline-time.monotonic()>delay
+                self._transport_event({'attempt':attempt+1,'ok':False,'error_type':type(exc).__name__,
+                    'will_retry':retry,'retry_delay_seconds':delay if retry else 0,
+                    'elapsed_ms':round((time.monotonic()-started)*1000)})
+                if retry:
+                    time.sleep(delay)
                     continue
+                if isinstance(exc, TimeoutError) or isinstance(getattr(exc, 'reason', None), TimeoutError):
+                    raise TimeoutError(f'OpenAI-compatible request timed out after {attempt+1} transport attempts; failed-request usage is unknown') from exc
                 raise RuntimeError(
                     "Could not reach the OpenAI-compatible backend.\n"
                     f"Base URL: {self.base_url}\n"
@@ -334,6 +371,7 @@ class OpenAICompatibleModelClient:
                 # 这些元数据会一路传回 runtime，进入 trace 和 report，
                 # 用来观察 prompt cache 是否真的命中。
                 self.last_completion_metadata = {
+                    **self.last_completion_metadata,
                     "prompt_cache_supported": self.supports_prompt_cache,
                     "prompt_cache_key": prompt_cache_key,
                     "prompt_cache_retention": prompt_cache_retention,
@@ -352,6 +390,7 @@ class OpenAICompatibleModelClient:
         if data.get("error"):
             raise RuntimeError(f"OpenAI-compatible error: {data['error']}")
         self.last_completion_metadata = {
+            **self.last_completion_metadata,
             "prompt_cache_supported": self.supports_prompt_cache,
             "prompt_cache_key": prompt_cache_key,
             "prompt_cache_retention": prompt_cache_retention,

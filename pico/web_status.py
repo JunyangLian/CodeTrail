@@ -72,6 +72,10 @@ def run_summary(status, events, stop_reason="", error="", verification_command=N
         code, title = "step_limit", "工具步数已耗尽"
         detail = "本次运行未获得有效的最终回答。"
         action = "查看最后一步；缩小任务或增加步数后继续会话。"
+    elif reason == 'verification_incomplete':
+        code, title = 'verification_incomplete', '验证条件未满足，任务未完成'
+        detail = '指定验证命令尚未在最后一次修改后通过，或执行审批被拒绝。'
+        action = '查看测试输出和审批记录，再决定是否继续修复。'
     elif reason == "retry_limit_reached":
         code, title = "response_format", "模型回复格式多次无效"
         action = "查看模型回复记录，核对模型与工具调用协议。"

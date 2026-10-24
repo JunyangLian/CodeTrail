@@ -1,0 +1,2155 @@
+{
+  "audited_at": "2026-10-24T16:10:07.044508+00:00",
+  "auditor_sha256": "a28ed153b0f64d14aa110ae6f1e2f4dd6aad3c5023205f8ad246c473f79fccb0",
+  "configuration": {
+    "model": "zai-org/GLM-5.3-Flash",
+    "temperature": 0.2,
+    "max_steps": 20,
+    "max_new_tokens": 3072,
+    "request_timeout_seconds": 180,
+    "max_transport_attempts": 3,
+    "retry_time_budget_multiplier": 2,
+    "run_deadline_seconds": 1200,
+    "repetitions": 2,
+    "concurrency": 3,
+    "verify_command": "python -B -m unittest discover -v",
+    "scope": "Post-hoc targeted regression on six known problem tasks; not a replacement or updated overall 20-task score.",
+    "changes": "Strict response protocol + completion test gate + bounded timeout retries + per-attempt telemetry. Timeout180 vs v1 120; combined intervention, not an ablation."
+  },
+  "freeze_sha256": "85b3669931dda1baf99beb40445b88f11beac19ea65cfbc2dd8cc7b495731fc3",
+  "baseline_full_score_unchanged": {
+    "unique_tasks": 20,
+    "runs": 60,
+    "functional_passes": 43,
+    "functional_rate": 0.7166666666666667,
+    "workflow_passes": 42,
+    "workflow_rate": 0.7,
+    "failure_categories": {
+      "model_or_runtime_error": 15,
+      "no_code_change": 1,
+      "test_regression_or_incomplete_fix": 1,
+      "missing_reverification_or_incomplete_workflow": 1
+    },
+    "tool_steps": {
+      "observed_runs": 60,
+      "total": 417,
+      "mean": 6.95
+    },
+    "elapsed_ms": {
+      "observed_runs": 60,
+      "total": 8344265,
+      "mean": 139071.08333333334
+    },
+    "input_tokens_observed": 977528,
+    "output_tokens_observed": 294946,
+    "token_complete_runs": 45,
+    "security_blocked_events": 0,
+    "unauthorized_final_change_runs": 0,
+    "per_task": {
+      "boltons_isoparse": {
+        "runs": 3,
+        "functional_passes": 1,
+        "workflow_passes": 1
+      },
+      "boltons_multireplace": {
+        "runs": 3,
+        "functional_passes": 3,
+        "workflow_passes": 3
+      },
+      "boltons_splitlines": {
+        "runs": 3,
+        "functional_passes": 1,
+        "workflow_passes": 0
+      },
+      "boltons_xfrange": {
+        "runs": 3,
+        "functional_passes": 0,
+        "workflow_passes": 0
+      },
+      "config_precedence": {
+        "runs": 3,
+        "functional_passes": 3,
+        "workflow_passes": 3
+      },
+      "cursor_roundtrip": {
+        "runs": 3,
+        "functional_passes": 3,
+        "workflow_passes": 3
+      },
+      "dependency_order": {
+        "runs": 3,
+        "functional_passes": 3,
+        "workflow_passes": 3
+      },
+      "error_response_contract": {
+        "runs": 3,
+        "functional_passes": 3,
+        "workflow_passes": 3
+      },
+      "humanize_fractional": {
+        "runs": 3,
+        "functional_passes": 1,
+        "workflow_passes": 1
+      },
+      "humanize_list": {
+        "runs": 3,
+        "functional_passes": 3,
+        "workflow_passes": 3
+      },
+      "humanize_metric": {
+        "runs": 3,
+        "functional_passes": 0,
+        "workflow_passes": 0
+      },
+      "humanize_size": {
+        "runs": 3,
+        "functional_passes": 0,
+        "workflow_passes": 0
+      },
+      "interval_union": {
+        "runs": 3,
+        "functional_passes": 3,
+        "workflow_passes": 3
+      },
+      "inventory_reservation": {
+        "runs": 3,
+        "functional_passes": 2,
+        "workflow_passes": 2
+      },
+      "money_minor_units": {
+        "runs": 3,
+        "functional_passes": 3,
+        "workflow_passes": 3
+      },
+      "pagination_boundaries": {
+        "runs": 3,
+        "functional_passes": 3,
+        "workflow_passes": 3
+      },
+      "retry_schedule": {
+        "runs": 3,
+        "functional_passes": 3,
+        "workflow_passes": 3
+      },
+      "ttl_expiry": {
+        "runs": 3,
+        "functional_passes": 3,
+        "workflow_passes": 3
+      },
+      "user_lookup_contract": {
+        "runs": 3,
+        "functional_passes": 3,
+        "workflow_passes": 3
+      },
+      "utc_storage_contract": {
+        "runs": 3,
+        "functional_passes": 2,
+        "workflow_passes": 2
+      }
+    },
+    "per_category": {
+      "single_file": {
+        "runs": 15,
+        "functional_passes": 15,
+        "workflow_passes": 15
+      },
+      "cross_file": {
+        "runs": 21,
+        "functional_passes": 19,
+        "workflow_passes": 19
+      },
+      "unknown_location": {
+        "runs": 12,
+        "functional_passes": 5,
+        "workflow_passes": 4
+      },
+      "regression_compatibility": {
+        "runs": 12,
+        "functional_passes": 4,
+        "workflow_passes": 4
+      }
+    },
+    "failure_subcategories": {
+      "provider_request_timeout": 15,
+      "premature_final_without_code_change": 1,
+      "test_regression_or_incomplete_fix": 1,
+      "missing_post_edit_test": 1
+    },
+    "model_requests": 481,
+    "failed_model_requests": 15,
+    "tool_issue_counts": {
+      "tool_failed": 67,
+      "invalid_arguments": 16
+    },
+    "security_event_types": {},
+    "per_origin": {
+      "author_created": {
+        "unique_tasks": 12,
+        "runs": 36,
+        "functional_passes": 34,
+        "workflow_passes": 34
+      },
+      "upstream_minimal_reproduction": {
+        "unique_tasks": 8,
+        "runs": 24,
+        "functional_passes": 9,
+        "workflow_passes": 8
+      }
+    },
+    "batch_wall_seconds": 2874.598792
+  },
+  "baseline_selected_same_six_tasks": {
+    "runs": 18,
+    "functional": 5,
+    "workflow": 4
+  },
+  "summary": {
+    "unique_tasks": 6,
+    "runs": 12,
+    "functional_passes": 5,
+    "functional_rate": 0.4166666666666667,
+    "workflow_passes": 5,
+    "workflow_rate": 0.4166666666666667,
+    "failure_categories": {
+      "model_or_runtime_error": 7
+    },
+    "tool_steps": {
+      "observed_runs": 12,
+      "total": 93,
+      "mean": 7.75
+    },
+    "elapsed_ms": {
+      "observed_runs": 12,
+      "total": 3769813,
+      "mean": 314151.0833333333
+    },
+    "input_tokens_observed": 212665,
+    "output_tokens_observed": 35860,
+    "token_complete_runs": 4,
+    "security_blocked_events": 0,
+    "unauthorized_final_change_runs": 0,
+    "per_task": {
+      "boltons_splitlines": {
+        "runs": 2,
+        "functional_passes": 1,
+        "workflow_passes": 1
+      },
+      "boltons_xfrange": {
+        "runs": 2,
+        "functional_passes": 0,
+        "workflow_passes": 0
+      },
+      "humanize_metric": {
+        "runs": 2,
+        "functional_passes": 0,
+        "workflow_passes": 0
+      },
+      "humanize_size": {
+        "runs": 2,
+        "functional_passes": 0,
+        "workflow_passes": 0
+      },
+      "inventory_reservation": {
+        "runs": 2,
+        "functional_passes": 2,
+        "workflow_passes": 2
+      },
+      "utc_storage_contract": {
+        "runs": 2,
+        "functional_passes": 2,
+        "workflow_passes": 2
+      }
+    },
+    "per_category": {
+      "cross_file": {
+        "runs": 4,
+        "functional_passes": 4,
+        "workflow_passes": 4
+      },
+      "unknown_location": {
+        "runs": 4,
+        "functional_passes": 1,
+        "workflow_passes": 1
+      },
+      "regression_compatibility": {
+        "runs": 4,
+        "functional_passes": 0,
+        "workflow_passes": 0
+      }
+    },
+    "transport_attempts": 113,
+    "transport_failures": 15,
+    "completion_rejections": 0,
+    "runs_recovered_after_rejected_final": 0,
+    "runs_completed_after_transport_failure": 1,
+    "final_timeout_runs": 7,
+    "runs_with_transport_failures": 8
+  },
+  "rows": [
+    {
+      "task_id": "humanize_size",
+      "repeat": 1,
+      "run_key": "01-humanize_size-r1",
+      "category": "regression_compatibility",
+      "origin_kind": "upstream_minimal_reproduction",
+      "started_at": "2026-10-24T15:44:50.689928+00:00",
+      "initial_sha256": {
+        "formatter.py": "1b456af3a429486e22d535e17aed023f1966e133a294c2fb7355f35569522120",
+        "README.md": "e2db7cd0a934e867084a5c95e2e5cfd8f1530dde74465d6c0082569c9304a89d",
+        "test_acceptance.py": "df2c9bf91ccb13b3a750d932adcd346f2105cc1c49e29f53f05feec4776bc84e",
+        "UPSTREAM_LICENSE.txt": "8ba6c18112a431400ad3c743f70670079b302545d98884fc2f28a91c383a0380"
+      },
+      "approvals": [
+        {
+          "name": "run_shell",
+          "allowed": true,
+          "args": {
+            "command": "python -B -m unittest discover -v",
+            "timeout": 60
+          },
+          "at": "2026-10-24T15:44:55.075173+00:00"
+        },
+        {
+          "name": "run_shell",
+          "allowed": true,
+          "args": {
+            "command": "python -B -m unittest discover -v",
+            "timeout": 60
+          },
+          "at": "2026-10-24T15:45:19.357036+00:00"
+        }
+      ],
+      "functional_passed": false,
+      "workflow_passed": false,
+      "workspace": "artifacts/repair-regression-v2-2026-10-24/runs/01-humanize_size-r1/workspace",
+      "session_id": "20261024-234450-17afb2",
+      "error": "TimeoutError: OpenAI-compatible request timed out after 2 transport attempts; failed-request usage is unknown",
+      "agent_elapsed_ms": 390250,
+      "final_sha256": {
+        "formatter.py": "1b456af3a429486e22d535e17aed023f1966e133a294c2fb7355f35569522120",
+        "README.md": "e2db7cd0a934e867084a5c95e2e5cfd8f1530dde74465d6c0082569c9304a89d",
+        "test_acceptance.py": "df2c9bf91ccb13b3a750d932adcd346f2105cc1c49e29f53f05feec4776bc84e",
+        "UPSTREAM_LICENSE.txt": "8ba6c18112a431400ad3c743f70670079b302545d98884fc2f28a91c383a0380"
+      },
+      "changed_files": [],
+      "scope_valid": true,
+      "protected_files_unchanged": true,
+      "external_verifier": {
+        "successful": false,
+        "tests_run": 8,
+        "failures": 5,
+        "errors": 0,
+        "skipped": 0,
+        "expected_failures": 0,
+        "unexpected_successes": 0,
+        "output": "test_01 (test_acceptance.RepairTests) ... FAIL\ntest_02 (test_acceptance.RepairTests) ... FAIL\ntest_03 (test_acceptance.RepairTests) ... FAIL\ntest_04 (test_acceptance.RepairTests) ... FAIL\ntest_05 (test_acceptance.RepairTests) ... FAIL\ntest_06 (test_acceptance.RepairTests) ... ok\ntest_07 (test_acceptance.RepairTests) ... ok\ntest_08 (test_acceptance.RepairTests) ... ok\n\n======================================================================\nFAIL: test_01 (test_acceptance.RepairTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-regression-v2-2026-10-24\\runs\\01-humanize_size-r1\\external_final\\test_acceptance.py\", line 6, in test_01\n    self.assertEqual(fmt(999999),'1.0 MB')\nAssertionError: '1000.0 kB' != '1.0 MB'\n- 1000.0 kB\n+ 1.0 MB\n\n\n======================================================================\nFAIL: test_02 (test_acceptance.RepairTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-regression-v2-2026-10-24\\runs\\01-humanize_size-r1\\external_final\\test_acceptance.py\", line 8, in test_02\n    self.assertEqual(fmt(999999999),'1.0 GB')\nAssertionError: '1000.0 MB' != '1.0 GB'\n- 1000.0 MB\n+ 1.0 GB\n\n\n======================================================================\nFAIL: test_03 (test_acceptance.RepairTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-regression-v2-2026-10-24\\runs\\01-humanize_size-r1\\external_final\\test_acceptance.py\", line 10, in test_03\n    self.assertEqual(fmt(1024**2-1,binary=True),'1.0 MiB')\nAssertionError: '1024.0 KiB' != '1.0 MiB'\n- 1024.0 KiB\n+ 1.0 MiB\n\n\n======================================================================\nFAIL: test_04 (test_acceptance.RepairTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-regression-v2-2026-10-24\\runs\\01-humanize_size-r1\\external_final\\test_acceptance.py\", line 12, in test_04\n    self.assertEqual(fmt(1024**2-1,gnu=True),'1.0M')\nAssertionError: '1024.0K' != '1.0M'\n- 1024.0K\n+ 1.0M\n\n\n======================================================================\nFAIL: test_05 (test_acceptance.RepairTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-regression-v2-2026-10-24\\runs\\01-humanize_size-r1\\external_final\\test_acceptance.py\", line 14, in test_05\n    self.assertEqual(fmt(-999999),'-1.0 MB')\nAssertionError: '-1000.0 kB' != '-1.0 MB'\n- -1000.0 kB\n+ -1.0 MB\n\n\n----------------------------------------------------------------------\nRan 8 tests in 0.003s\n\nFAILED (failures=5)\n",
+        "elapsed_ms": 219,
+        "exit_code": 1,
+        "stderr": "",
+        "accepted": false
+      },
+      "run_id": "run_20261024-234450-83e3cd",
+      "status": "failed",
+      "stop_reason": "model_error",
+      "attempts": 8,
+      "trace": "artifacts/repair-regression-v2-2026-10-24/runs/01-humanize_size-r1/workspace/.pico/runs/run_20261024-234450-83e3cd/trace.jsonl",
+      "trace_sha256": "8e33eb2eb080334718fb3eecce07ff929d50c8fa4c732721190840559ab4265b",
+      "completion_verification": {
+        "command": "python -B -m unittest discover -v",
+        "required": true,
+        "status": "failed",
+        "exit_code": 1
+      },
+      "input_tokens": {
+        "observed_total": 16188,
+        "observed_calls": 7,
+        "successful_calls": 7,
+        "complete": false
+      },
+      "output_tokens": {
+        "observed_total": 687,
+        "observed_calls": 7,
+        "successful_calls": 7,
+        "complete": false
+      },
+      "successful_model_calls": 7,
+      "tool_steps": 7,
+      "agent_verified_after_last_write": false,
+      "tool_issues": [
+        {
+          "trace_line": 6,
+          "name": "run_shell",
+          "code": "tool_failed",
+          "exit_code": 1
+        },
+        {
+          "trace_line": 42,
+          "name": "run_shell",
+          "code": "tool_failed",
+          "exit_code": 1
+        }
+      ],
+      "security_events": [],
+      "final_state_matches_agent_verification": false,
+      "completion_rejections": [],
+      "transport_attempts": 9,
+      "transport_failures": 2,
+      "failure_category": "model_or_runtime_error",
+      "elapsed_ms": 390516,
+      "finished_at": "2026-10-24T15:51:21.196512+00:00",
+      "independent_recheck": {
+        "successful": false,
+        "tests_run": 8,
+        "failures": 5,
+        "errors": 0,
+        "skipped": 0,
+        "expected_failures": 0,
+        "unexpected_successes": 0,
+        "output": "test_01 (test_acceptance.RepairTests) ... FAIL\ntest_02 (test_acceptance.RepairTests) ... FAIL\ntest_03 (test_acceptance.RepairTests) ... FAIL\ntest_04 (test_acceptance.RepairTests) ... FAIL\ntest_05 (test_acceptance.RepairTests) ... FAIL\ntest_06 (test_acceptance.RepairTests) ... ok\ntest_07 (test_acceptance.RepairTests) ... ok\ntest_08 (test_acceptance.RepairTests) ... ok\n\n======================================================================\nFAIL: test_01 (test_acceptance.RepairTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-regression-v2-release-audit-2026-10-25\\rechecks\\01-humanize_size-r1\\test_acceptance.py\", line 6, in test_01\n    self.assertEqual(fmt(999999),'1.0 MB')\nAssertionError: '1000.0 kB' != '1.0 MB'\n- 1000.0 kB\n+ 1.0 MB\n\n\n======================================================================\nFAIL: test_02 (test_acceptance.RepairTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-regression-v2-release-audit-2026-10-25\\rechecks\\01-humanize_size-r1\\test_acceptance.py\", line 8, in test_02\n    self.assertEqual(fmt(999999999),'1.0 GB')\nAssertionError: '1000.0 MB' != '1.0 GB'\n- 1000.0 MB\n+ 1.0 GB\n\n\n======================================================================\nFAIL: test_03 (test_acceptance.RepairTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-regression-v2-release-audit-2026-10-25\\rechecks\\01-humanize_size-r1\\test_acceptance.py\", line 10, in test_03\n    self.assertEqual(fmt(1024**2-1,binary=True),'1.0 MiB')\nAssertionError: '1024.0 KiB' != '1.0 MiB'\n- 1024.0 KiB\n+ 1.0 MiB\n\n\n======================================================================\nFAIL: test_04 (test_acceptance.RepairTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-regression-v2-release-audit-2026-10-25\\rechecks\\01-humanize_size-r1\\test_acceptance.py\", line 12, in test_04\n    self.assertEqual(fmt(1024**2-1,gnu=True),'1.0M')\nAssertionError: '1024.0K' != '1.0M'\n- 1024.0K\n+ 1.0M\n\n\n======================================================================\nFAIL: test_05 (test_acceptance.RepairTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-regression-v2-release-audit-2026-10-25\\rechecks\\01-humanize_size-r1\\test_acceptance.py\", line 14, in test_05\n    self.assertEqual(fmt(-999999),'-1.0 MB')\nAssertionError: '-1000.0 kB' != '-1.0 MB'\n- -1000.0 kB\n+ -1.0 MB\n\n\n----------------------------------------------------------------------\nRan 8 tests in 0.002s\n\nFAILED (failures=5)\n",
+        "elapsed_ms": 219,
+        "exit_code": 1,
+        "stderr": "",
+        "accepted": false
+      },
+      "completion_rejection_count": 0,
+      "raw_record": "artifacts/repair-regression-v2-2026-10-24/runs/01-humanize_size-r1/result.json",
+      "raw_record_sha256": "3bcd3260e1766126c5fcda5bd2cca332d0ebcc04b0e14668d9dc9f3141c09219"
+    },
+    {
+      "task_id": "humanize_metric",
+      "repeat": 2,
+      "run_key": "02-humanize_metric-r2",
+      "category": "regression_compatibility",
+      "origin_kind": "upstream_minimal_reproduction",
+      "started_at": "2026-10-24T15:44:50.717621+00:00",
+      "initial_sha256": {
+        "formatter.py": "fe08cf68c4d8de14c7fa44c485fd84c740cd2027bccadc0aaab8405302aac7a1",
+        "README.md": "4f0746b87c2dcb107fe2adf3cbf08eb51950588b11d7ec3703f9ba2fc786a245",
+        "test_acceptance.py": "464111112f9cd1a97bab6ea8ef2f271ec74b63473b3d8efe3bdd626a248dc2fd",
+        "UPSTREAM_LICENSE.txt": "8ba6c18112a431400ad3c743f70670079b302545d98884fc2f28a91c383a0380"
+      },
+      "approvals": [
+        {
+          "name": "run_shell",
+          "allowed": true,
+          "args": {
+            "command": "python -B -m unittest discover -v",
+            "timeout": 60
+          },
+          "at": "2026-10-24T15:44:55.879179+00:00"
+        },
+        {
+          "name": "run_shell",
+          "allowed": true,
+          "args": {
+            "command": "python -B -m unittest discover -v",
+            "timeout": 60
+          },
+          "at": "2026-10-24T15:45:25.613810+00:00"
+        }
+      ],
+      "functional_passed": false,
+      "workflow_passed": false,
+      "workspace": "artifacts/repair-regression-v2-2026-10-24/runs/02-humanize_metric-r2/workspace",
+      "session_id": "20261024-234450-4553c5",
+      "error": "TimeoutError: OpenAI-compatible request timed out after 2 transport attempts; failed-request usage is unknown",
+      "agent_elapsed_ms": 409766,
+      "final_sha256": {
+        "formatter.py": "fe08cf68c4d8de14c7fa44c485fd84c740cd2027bccadc0aaab8405302aac7a1",
+        "README.md": "4f0746b87c2dcb107fe2adf3cbf08eb51950588b11d7ec3703f9ba2fc786a245",
+        "test_acceptance.py": "464111112f9cd1a97bab6ea8ef2f271ec74b63473b3d8efe3bdd626a248dc2fd",
+        "UPSTREAM_LICENSE.txt": "8ba6c18112a431400ad3c743f70670079b302545d98884fc2f28a91c383a0380"
+      },
+      "changed_files": [],
+      "scope_valid": true,
+      "protected_files_unchanged": true,
+      "external_verifier": {
+        "successful": false,
+        "tests_run": 8,
+        "failures": 4,
+        "errors": 0,
+        "skipped": 0,
+        "expected_failures": 0,
+        "unexpected_successes": 0,
+        "output": "test_01 (test_acceptance.RepairTests) ... FAIL\ntest_02 (test_acceptance.RepairTests) ... FAIL\ntest_03 (test_acceptance.RepairTests) ... FAIL\ntest_04 (test_acceptance.RepairTests) ... ok\ntest_05 (test_acceptance.RepairTests) ... FAIL\ntest_06 (test_acceptance.RepairTests) ... ok\ntest_07 (test_acceptance.RepairTests) ... ok\ntest_08 (test_acceptance.RepairTests) ... ok\n\n======================================================================\nFAIL: test_01 (test_acceptance.RepairTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-regression-v2-2026-10-24\\runs\\02-humanize_metric-r2\\external_final\\test_acceptance.py\", line 6, in test_01\n    self.assertEqual(fmt(999.9,'V'),'1.00 kV')\nAssertionError: '1000 V' != '1.00 kV'\n- 1000 V\n+ 1.00 kV\n\n\n======================================================================\nFAIL: test_02 (test_acceptance.RepairTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-regression-v2-2026-10-24\\runs\\02-humanize_metric-r2\\external_final\\test_acceptance.py\", line 8, in test_02\n    self.assertEqual(fmt(999999,'V'),'1.00 MV')\nAssertionError: '1000 kV' != '1.00 MV'\n- 1000 kV\n+ 1.00 MV\n\n\n======================================================================\nFAIL: test_03 (test_acceptance.RepairTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-regression-v2-2026-10-24\\runs\\02-humanize_metric-r2\\external_final\\test_acceptance.py\", line 10, in test_03\n    self.assertEqual(fmt(.0009999,'V'),'1.00 mV')\nAssertionError: '1000 μV' != '1.00 mV'\n- 1000 μV\n+ 1.00 mV\n\n\n======================================================================\nFAIL: test_05 (test_acceptance.RepairTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-regression-v2-2026-10-24\\runs\\02-humanize_metric-r2\\external_final\\test_acceptance.py\", line 14, in test_05\n    self.assertEqual(fmt(-999.9,'V'),'-1.00 kV')\nAssertionError: '-1000 V' != '-1.00 kV'\n- -1000 V\n+ -1.00 kV\n\n\n----------------------------------------------------------------------\nRan 8 tests in 0.004s\n\nFAILED (failures=4)\n",
+        "elapsed_ms": 266,
+        "exit_code": 1,
+        "stderr": "",
+        "accepted": false
+      },
+      "run_id": "run_20261024-234450-3768df",
+      "status": "failed",
+      "stop_reason": "model_error",
+      "attempts": 11,
+      "trace": "artifacts/repair-regression-v2-2026-10-24/runs/02-humanize_metric-r2/workspace/.pico/runs/run_20261024-234450-3768df/trace.jsonl",
+      "trace_sha256": "70a13d3908982fe254f7cbb2c0a6acc2614846edb8b6d8bc94fe87ed516ecc54",
+      "completion_verification": {
+        "command": "python -B -m unittest discover -v",
+        "required": true,
+        "status": "failed",
+        "exit_code": 1
+      },
+      "input_tokens": {
+        "observed_total": 23402,
+        "observed_calls": 10,
+        "successful_calls": 10,
+        "complete": false
+      },
+      "output_tokens": {
+        "observed_total": 1133,
+        "observed_calls": 10,
+        "successful_calls": 10,
+        "complete": false
+      },
+      "successful_model_calls": 10,
+      "tool_steps": 10,
+      "agent_verified_after_last_write": false,
+      "tool_issues": [
+        {
+          "trace_line": 6,
+          "name": "run_shell",
+          "code": "tool_failed",
+          "exit_code": 1
+        },
+        {
+          "trace_line": 48,
+          "name": "run_shell",
+          "code": "tool_failed",
+          "exit_code": 1
+        }
+      ],
+      "security_events": [],
+      "final_state_matches_agent_verification": false,
+      "completion_rejections": [],
+      "transport_attempts": 12,
+      "transport_failures": 2,
+      "failure_category": "model_or_runtime_error",
+      "elapsed_ms": 410094,
+      "finished_at": "2026-10-24T15:51:40.800381+00:00",
+      "independent_recheck": {
+        "successful": false,
+        "tests_run": 8,
+        "failures": 4,
+        "errors": 0,
+        "skipped": 0,
+        "expected_failures": 0,
+        "unexpected_successes": 0,
+        "output": "test_01 (test_acceptance.RepairTests) ... FAIL\ntest_02 (test_acceptance.RepairTests) ... FAIL\ntest_03 (test_acceptance.RepairTests) ... FAIL\ntest_04 (test_acceptance.RepairTests) ... ok\ntest_05 (test_acceptance.RepairTests) ... FAIL\ntest_06 (test_acceptance.RepairTests) ... ok\ntest_07 (test_acceptance.RepairTests) ... ok\ntest_08 (test_acceptance.RepairTests) ... ok\n\n======================================================================\nFAIL: test_01 (test_acceptance.RepairTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-regression-v2-release-audit-2026-10-25\\rechecks\\02-humanize_metric-r2\\test_acceptance.py\", line 6, in test_01\n    self.assertEqual(fmt(999.9,'V'),'1.00 kV')\nAssertionError: '1000 V' != '1.00 kV'\n- 1000 V\n+ 1.00 kV\n\n\n======================================================================\nFAIL: test_02 (test_acceptance.RepairTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-regression-v2-release-audit-2026-10-25\\rechecks\\02-humanize_metric-r2\\test_acceptance.py\", line 8, in test_02\n    self.assertEqual(fmt(999999,'V'),'1.00 MV')\nAssertionError: '1000 kV' != '1.00 MV'\n- 1000 kV\n+ 1.00 MV\n\n\n======================================================================\nFAIL: test_03 (test_acceptance.RepairTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-regression-v2-release-audit-2026-10-25\\rechecks\\02-humanize_metric-r2\\test_acceptance.py\", line 10, in test_03\n    self.assertEqual(fmt(.0009999,'V'),'1.00 mV')\nAssertionError: '1000 μV' != '1.00 mV'\n- 1000 μV\n+ 1.00 mV\n\n\n======================================================================\nFAIL: test_05 (test_acceptance.RepairTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-regression-v2-release-audit-2026-10-25\\rechecks\\02-humanize_metric-r2\\test_acceptance.py\", line 14, in test_05\n    self.assertEqual(fmt(-999.9,'V'),'-1.00 kV')\nAssertionError: '-1000 V' != '-1.00 kV'\n- -1000 V\n+ -1.00 kV\n\n\n----------------------------------------------------------------------\nRan 8 tests in 0.003s\n\nFAILED (failures=4)\n",
+        "elapsed_ms": 266,
+        "exit_code": 1,
+        "stderr": "",
+        "accepted": false
+      },
+      "completion_rejection_count": 0,
+      "raw_record": "artifacts/repair-regression-v2-2026-10-24/runs/02-humanize_metric-r2/result.json",
+      "raw_record_sha256": "0c940ba81f2cab3b9fc6e820d1c62a83f56a971ac669a477e3b698cf0bde4df6"
+    },
+    {
+      "task_id": "humanize_metric",
+      "repeat": 1,
+      "run_key": "03-humanize_metric-r1",
+      "category": "regression_compatibility",
+      "origin_kind": "upstream_minimal_reproduction",
+      "started_at": "2026-10-24T15:44:50.749462+00:00",
+      "initial_sha256": {
+        "formatter.py": "fe08cf68c4d8de14c7fa44c485fd84c740cd2027bccadc0aaab8405302aac7a1",
+        "README.md": "4f0746b87c2dcb107fe2adf3cbf08eb51950588b11d7ec3703f9ba2fc786a245",
+        "test_acceptance.py": "464111112f9cd1a97bab6ea8ef2f271ec74b63473b3d8efe3bdd626a248dc2fd",
+        "UPSTREAM_LICENSE.txt": "8ba6c18112a431400ad3c743f70670079b302545d98884fc2f28a91c383a0380"
+      },
+      "approvals": [
+        {
+          "name": "run_shell",
+          "allowed": true,
+          "args": {
+            "command": "python -B -m unittest discover -v",
+            "timeout": 60
+          },
+          "at": "2026-10-24T15:44:54.342399+00:00"
+        },
+        {
+          "name": "run_shell",
+          "allowed": true,
+          "args": {
+            "command": "python -B -m unittest discover -v",
+            "timeout": 30
+          },
+          "at": "2026-10-24T15:45:18.305041+00:00"
+        }
+      ],
+      "functional_passed": false,
+      "workflow_passed": false,
+      "workspace": "artifacts/repair-regression-v2-2026-10-24/runs/03-humanize_metric-r1/workspace",
+      "session_id": "20261024-234450-3bea81",
+      "error": "TimeoutError: OpenAI-compatible request timed out after 2 transport attempts; failed-request usage is unknown",
+      "agent_elapsed_ms": 399484,
+      "final_sha256": {
+        "formatter.py": "fe08cf68c4d8de14c7fa44c485fd84c740cd2027bccadc0aaab8405302aac7a1",
+        "README.md": "4f0746b87c2dcb107fe2adf3cbf08eb51950588b11d7ec3703f9ba2fc786a245",
+        "test_acceptance.py": "464111112f9cd1a97bab6ea8ef2f271ec74b63473b3d8efe3bdd626a248dc2fd",
+        "UPSTREAM_LICENSE.txt": "8ba6c18112a431400ad3c743f70670079b302545d98884fc2f28a91c383a0380"
+      },
+      "changed_files": [],
+      "scope_valid": true,
+      "protected_files_unchanged": true,
+      "external_verifier": {
+        "successful": false,
+        "tests_run": 8,
+        "failures": 4,
+        "errors": 0,
+        "skipped": 0,
+        "expected_failures": 0,
+        "unexpected_successes": 0,
+        "output": "test_01 (test_acceptance.RepairTests) ... FAIL\ntest_02 (test_acceptance.RepairTests) ... FAIL\ntest_03 (test_acceptance.RepairTests) ... FAIL\ntest_04 (test_acceptance.RepairTests) ... ok\ntest_05 (test_acceptance.RepairTests) ... FAIL\ntest_06 (test_acceptance.RepairTests) ... ok\ntest_07 (test_acceptance.RepairTests) ... ok\ntest_08 (test_acceptance.RepairTests) ... ok\n\n======================================================================\nFAIL: test_01 (test_acceptance.RepairTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-regression-v2-2026-10-24\\runs\\03-humanize_metric-r1\\external_final\\test_acceptance.py\", line 6, in test_01\n    self.assertEqual(fmt(999.9,'V'),'1.00 kV')\nAssertionError: '1000 V' != '1.00 kV'\n- 1000 V\n+ 1.00 kV\n\n\n======================================================================\nFAIL: test_02 (test_acceptance.RepairTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-regression-v2-2026-10-24\\runs\\03-humanize_metric-r1\\external_final\\test_acceptance.py\", line 8, in test_02\n    self.assertEqual(fmt(999999,'V'),'1.00 MV')\nAssertionError: '1000 kV' != '1.00 MV'\n- 1000 kV\n+ 1.00 MV\n\n\n======================================================================\nFAIL: test_03 (test_acceptance.RepairTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-regression-v2-2026-10-24\\runs\\03-humanize_metric-r1\\external_final\\test_acceptance.py\", line 10, in test_03\n    self.assertEqual(fmt(.0009999,'V'),'1.00 mV')\nAssertionError: '1000 μV' != '1.00 mV'\n- 1000 μV\n+ 1.00 mV\n\n\n======================================================================\nFAIL: test_05 (test_acceptance.RepairTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-regression-v2-2026-10-24\\runs\\03-humanize_metric-r1\\external_final\\test_acceptance.py\", line 14, in test_05\n    self.assertEqual(fmt(-999.9,'V'),'-1.00 kV')\nAssertionError: '-1000 V' != '-1.00 kV'\n- -1000 V\n+ -1.00 kV\n\n\n----------------------------------------------------------------------\nRan 8 tests in 0.003s\n\nFAILED (failures=4)\n",
+        "elapsed_ms": 219,
+        "exit_code": 1,
+        "stderr": "",
+        "accepted": false
+      },
+      "run_id": "run_20261024-234450-3c0b57",
+      "status": "failed",
+      "stop_reason": "model_error",
+      "attempts": 11,
+      "trace": "artifacts/repair-regression-v2-2026-10-24/runs/03-humanize_metric-r1/workspace/.pico/runs/run_20261024-234450-3c0b57/trace.jsonl",
+      "trace_sha256": "ab11bc5da8d2e02c75896a935df9c74266dd1c2d6f5a072f982b0e8bb1892933",
+      "completion_verification": {
+        "command": "python -B -m unittest discover -v",
+        "required": true,
+        "status": "failed",
+        "exit_code": 1
+      },
+      "input_tokens": {
+        "observed_total": 24852,
+        "observed_calls": 10,
+        "successful_calls": 10,
+        "complete": false
+      },
+      "output_tokens": {
+        "observed_total": 724,
+        "observed_calls": 10,
+        "successful_calls": 10,
+        "complete": false
+      },
+      "successful_model_calls": 10,
+      "tool_steps": 10,
+      "agent_verified_after_last_write": false,
+      "tool_issues": [
+        {
+          "trace_line": 6,
+          "name": "run_shell",
+          "code": "tool_failed",
+          "exit_code": 1
+        },
+        {
+          "trace_line": 42,
+          "name": "run_shell",
+          "code": "tool_failed",
+          "exit_code": 1
+        }
+      ],
+      "security_events": [],
+      "final_state_matches_agent_verification": false,
+      "completion_rejections": [],
+      "transport_attempts": 12,
+      "transport_failures": 2,
+      "failure_category": "model_or_runtime_error",
+      "elapsed_ms": 399750,
+      "finished_at": "2026-10-24T15:51:30.489805+00:00",
+      "independent_recheck": {
+        "successful": false,
+        "tests_run": 8,
+        "failures": 4,
+        "errors": 0,
+        "skipped": 0,
+        "expected_failures": 0,
+        "unexpected_successes": 0,
+        "output": "test_01 (test_acceptance.RepairTests) ... FAIL\ntest_02 (test_acceptance.RepairTests) ... FAIL\ntest_03 (test_acceptance.RepairTests) ... FAIL\ntest_04 (test_acceptance.RepairTests) ... ok\ntest_05 (test_acceptance.RepairTests) ... FAIL\ntest_06 (test_acceptance.RepairTests) ... ok\ntest_07 (test_acceptance.RepairTests) ... ok\ntest_08 (test_acceptance.RepairTests) ... ok\n\n======================================================================\nFAIL: test_01 (test_acceptance.RepairTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-regression-v2-release-audit-2026-10-25\\rechecks\\03-humanize_metric-r1\\test_acceptance.py\", line 6, in test_01\n    self.assertEqual(fmt(999.9,'V'),'1.00 kV')\nAssertionError: '1000 V' != '1.00 kV'\n- 1000 V\n+ 1.00 kV\n\n\n======================================================================\nFAIL: test_02 (test_acceptance.RepairTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-regression-v2-release-audit-2026-10-25\\rechecks\\03-humanize_metric-r1\\test_acceptance.py\", line 8, in test_02\n    self.assertEqual(fmt(999999,'V'),'1.00 MV')\nAssertionError: '1000 kV' != '1.00 MV'\n- 1000 kV\n+ 1.00 MV\n\n\n======================================================================\nFAIL: test_03 (test_acceptance.RepairTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-regression-v2-release-audit-2026-10-25\\rechecks\\03-humanize_metric-r1\\test_acceptance.py\", line 10, in test_03\n    self.assertEqual(fmt(.0009999,'V'),'1.00 mV')\nAssertionError: '1000 μV' != '1.00 mV'\n- 1000 μV\n+ 1.00 mV\n\n\n======================================================================\nFAIL: test_05 (test_acceptance.RepairTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-regression-v2-release-audit-2026-10-25\\rechecks\\03-humanize_metric-r1\\test_acceptance.py\", line 14, in test_05\n    self.assertEqual(fmt(-999.9,'V'),'-1.00 kV')\nAssertionError: '-1000 V' != '-1.00 kV'\n- -1000 V\n+ -1.00 kV\n\n\n----------------------------------------------------------------------\nRan 8 tests in 0.003s\n\nFAILED (failures=4)\n",
+        "elapsed_ms": 250,
+        "exit_code": 1,
+        "stderr": "",
+        "accepted": false
+      },
+      "completion_rejection_count": 0,
+      "raw_record": "artifacts/repair-regression-v2-2026-10-24/runs/03-humanize_metric-r1/result.json",
+      "raw_record_sha256": "70407587eeda812159809d84ef19d5e9ee3b369980482792a747c38b196b152e"
+    },
+    {
+      "task_id": "utc_storage_contract",
+      "repeat": 1,
+      "run_key": "04-utc_storage_contract-r1",
+      "category": "cross_file",
+      "origin_kind": "author_created",
+      "started_at": "2026-10-24T15:51:22.365379+00:00",
+      "initial_sha256": {
+        "README.md": "ce87b9286cb0ec3ba25e518cc5601a46e6ade95d64da448a17ce63d135da615c",
+        "store.py": "dc44b8ac834e4cad9a11e00574c4040b031782a78df21f5de815d54c58625818",
+        "test_acceptance.py": "5abe6186871ca892b261d8cdce0a7c6631f5780ccc31194730d7d9f71dc73033",
+        "timestamps.py": "0b4e49fcff3400918814d9f3087019ffd172293e241bbadbd3e5873ec4e77759"
+      },
+      "approvals": [
+        {
+          "name": "run_shell",
+          "allowed": true,
+          "args": {
+            "command": "python -B -m unittest discover -v",
+            "timeout": 60
+          },
+          "at": "2026-10-24T15:51:25.603980+00:00"
+        },
+        {
+          "name": "write_file",
+          "allowed": true,
+          "args": {
+            "path": "timestamps.py",
+            "content": "from datetime import timezone\n\ndef to_epoch(value):\n    # Naive datetimes are interpreted as UTC; aware datetimes use their own offset.\n    if value.tzinfo is None:\n        value = value.replace(tzinfo=timezone.utc)\n    return value.timestamp()\n"
+          },
+          "at": "2026-10-24T15:52:12.074582+00:00"
+        },
+        {
+          "name": "patch_file",
+          "allowed": true,
+          "args": {
+            "path": "store.py",
+            "old_text": "from timestamps import to_epoch\ndef save_event(event):\n    event['timestamp'] = int(to_epoch(event['at']) * 1000)\n    return event",
+            "new_text": "from timestamps import to_epoch\n\ndef save_event(event):\n    # Return a new record; never mutate the caller's event.\n    # timestamp is integer Unix seconds (not milliseconds).\n    return {'id': event['id'], 'timestamp': int(to_epoch(event['at']))}"
+          },
+          "at": "2026-10-24T15:52:28.159391+00:00"
+        },
+        {
+          "name": "run_shell",
+          "allowed": true,
+          "args": {
+            "command": "python -B -m unittest discover -v",
+            "timeout": 20
+          },
+          "at": "2026-10-24T15:52:31.581935+00:00"
+        }
+      ],
+      "functional_passed": true,
+      "workflow_passed": true,
+      "workspace": "artifacts/repair-regression-v2-2026-10-24/runs/04-utc_storage_contract-r1/workspace",
+      "session_id": "20261024-235122-44bcfe",
+      "answer": "修复完成，测试全部通过。\n\n**修改内容：**\n\n1. **timestamps.py** — `to_epoch` 修复：\n   - naive datetime（无时区）明确按 UTC 处理（仅当 `tzinfo is None` 时替换为 UTC），不再依赖本机时区；\n   - aware datetime 保留自身时区偏移，通过 `.timestamp()` 转为 UTC 秒数（浮点秒，如 0.5）。\n\n2. **store.py** — `save_event` 修复：\n   - 返回**新记录** `{'id': event['id'], 'timestamp': int(to_epoch(event['at']))}`，不再修改传入的 event（原实现直接改写并返回同一对象）；\n   - `timestamp` 为整数 Unix **秒**（原实现错误地乘以 1000 变成毫秒）。\n\n**测试验证：** 重新运行 `python -B -m unittest discover -v`，8 个测试全部 OK，exit code 0（test_01–test_08 均 ok）。",
+      "agent_elapsed_ms": 96672,
+      "final_sha256": {
+        "README.md": "ce87b9286cb0ec3ba25e518cc5601a46e6ade95d64da448a17ce63d135da615c",
+        "store.py": "a844e9983dd31c51045b4676ccb56c5cc3a9970272662e468e5505488d165551",
+        "test_acceptance.py": "5abe6186871ca892b261d8cdce0a7c6631f5780ccc31194730d7d9f71dc73033",
+        "timestamps.py": "41e6219cde51bad5e80622a505638688ee2cf2419fcc1d20e058e98572bbd1ca"
+      },
+      "changed_files": [
+        "store.py",
+        "timestamps.py"
+      ],
+      "scope_valid": true,
+      "protected_files_unchanged": true,
+      "external_verifier": {
+        "successful": true,
+        "tests_run": 8,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "expected_failures": 0,
+        "unexpected_successes": 0,
+        "output": "test_01 (test_acceptance.RepairTests) ... ok\ntest_02 (test_acceptance.RepairTests) ... ok\ntest_03 (test_acceptance.RepairTests) ... ok\ntest_04 (test_acceptance.RepairTests) ... ok\ntest_05 (test_acceptance.RepairTests) ... ok\ntest_06 (test_acceptance.RepairTests) ... ok\ntest_07 (test_acceptance.RepairTests) ... ok\ntest_08 (test_acceptance.RepairTests) ... ok\n\n----------------------------------------------------------------------\nRan 8 tests in 0.000s\n\nOK\n",
+        "elapsed_ms": 250,
+        "exit_code": 0,
+        "stderr": "",
+        "accepted": true
+      },
+      "run_id": "run_20261024-235122-4763a2",
+      "status": "completed",
+      "stop_reason": "final_answer_returned",
+      "attempts": 9,
+      "trace": "artifacts/repair-regression-v2-2026-10-24/runs/04-utc_storage_contract-r1/workspace/.pico/runs/run_20261024-235122-4763a2/trace.jsonl",
+      "trace_sha256": "46f0530823ceed79dc33bc9ee7d71de904fa82ab69de96b9a1604a4b4a59252e",
+      "completion_verification": {
+        "command": "python -B -m unittest discover -v",
+        "required": true,
+        "status": "passed",
+        "exit_code": 0
+      },
+      "input_tokens": {
+        "observed_total": 19486,
+        "observed_calls": 9,
+        "successful_calls": 9,
+        "complete": true
+      },
+      "output_tokens": {
+        "observed_total": 3987,
+        "observed_calls": 9,
+        "successful_calls": 9,
+        "complete": true
+      },
+      "successful_model_calls": 9,
+      "tool_steps": 8,
+      "agent_verified_after_last_write": true,
+      "tool_issues": [
+        {
+          "trace_line": 6,
+          "name": "run_shell",
+          "code": "tool_failed",
+          "exit_code": 1
+        }
+      ],
+      "security_events": [],
+      "final_state_matches_agent_verification": true,
+      "completion_rejections": [],
+      "transport_attempts": 9,
+      "transport_failures": 0,
+      "failure_category": "success",
+      "elapsed_ms": 96968,
+      "finished_at": "2026-10-24T15:52:59.345848+00:00",
+      "independent_recheck": {
+        "successful": true,
+        "tests_run": 8,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "expected_failures": 0,
+        "unexpected_successes": 0,
+        "output": "test_01 (test_acceptance.RepairTests) ... ok\ntest_02 (test_acceptance.RepairTests) ... ok\ntest_03 (test_acceptance.RepairTests) ... ok\ntest_04 (test_acceptance.RepairTests) ... ok\ntest_05 (test_acceptance.RepairTests) ... ok\ntest_06 (test_acceptance.RepairTests) ... ok\ntest_07 (test_acceptance.RepairTests) ... ok\ntest_08 (test_acceptance.RepairTests) ... ok\n\n----------------------------------------------------------------------\nRan 8 tests in 0.001s\n\nOK\n",
+        "elapsed_ms": 266,
+        "exit_code": 0,
+        "stderr": "",
+        "accepted": true
+      },
+      "completion_rejection_count": 0,
+      "raw_record": "artifacts/repair-regression-v2-2026-10-24/runs/04-utc_storage_contract-r1/result.json",
+      "raw_record_sha256": "0061e9c21055bb7e189d41c875f7bec0ee46fa5e64ec9346e83b90aa57af9d6f"
+    },
+    {
+      "task_id": "boltons_splitlines",
+      "repeat": 1,
+      "run_key": "05-boltons_splitlines-r1",
+      "category": "unknown_location",
+      "origin_kind": "upstream_minimal_reproduction",
+      "started_at": "2026-10-24T15:51:31.511898+00:00",
+      "initial_sha256": {
+        "config.py": "464bc6613aec3cb276a2996ecb81c1d9a60b81adc28004859524de5b34c139fc",
+        "public_api.py": "f8ad36406a5c438628d7a856c69903f144cc21cd863bbe488ff9a83a147f5155",
+        "README.md": "9b090a037ea61c421b94d6d608b0e516c238becb1f6eeed73e12a015079a9479",
+        "test_acceptance.py": "d57aa1bee4e032855a0244ec658e3226c0d5efd297c94b2664ebe708c1636c68",
+        "text_core.py": "fb809d41f4e6cd89e40ddf4438ff4bd78cb5ce6bb360e617dec13fad47544252",
+        "transport.py": "68fcc59086bdbbe897d8d0190bf99bd249d44c9f8bc6175e68aeb9cfcd2e8a39",
+        "UPSTREAM_LICENSE.txt": "617273daf4b7b4fbc0e3068bca7df3e3dbc29b4c5641e185917c775cf1795111",
+        "validation.py": "7ea34d2d7137c985f35d88b223150cd462055a6c0fed9684d404127c355bd6a9"
+      },
+      "approvals": [
+        {
+          "name": "run_shell",
+          "allowed": true,
+          "args": {
+            "command": "python -B -m unittest discover -v",
+            "timeout": 60
+          },
+          "at": "2026-10-24T15:51:34.183622+00:00"
+        },
+        {
+          "name": "patch_file",
+          "allowed": true,
+          "args": {
+            "path": "text_core.py",
+            "old_text": "|\\x2028|\\x2029)",
+            "new_text": "|\\u2028|\\u2029)"
+          },
+          "at": "2026-10-24T15:56:49.649876+00:00"
+        },
+        {
+          "name": "run_shell",
+          "allowed": true,
+          "args": {
+            "command": "python -B -m unittest discover -v",
+            "timeout": 60
+          },
+          "at": "2026-10-24T16:02:38.134823+00:00"
+        }
+      ],
+      "functional_passed": true,
+      "workflow_passed": true,
+      "workspace": "artifacts/repair-regression-v2-2026-10-24/runs/05-boltons_splitlines-r1/workspace",
+      "session_id": "20261024-235131-d53313",
+      "answer": "修复完成。\n\n根因：text_core.py 中的行结束符正则写成了 `\\x2028|\\x2029`。在正则里 `\\x20` 是空格字符，后面跟的是字面量 \"28\"/\"29\"，因此会意外把日期文本中的 \"2028/2029\" 当作行边界拆开，而真正的 Unicode 行分隔符 U+2028/U+2029 反而未被识别。\n\n修复：将 `_line_ending_re` 中的 `|\\x2028|\\x2029)` 改为 `|\\u2028|\\u2029)`，其余逻辑未动，CRLF、空行、尾换行行为及 public_api 的 render/indent_text（indent 接口）均保持不变。\n\n最终按要求重新运行 `python -B -m unittest discover -v`：exit code 0，Ran 8 tests，全部 OK（test_01–test_08 通过）。",
+      "agent_elapsed_ms": 681938,
+      "final_sha256": {
+        "config.py": "464bc6613aec3cb276a2996ecb81c1d9a60b81adc28004859524de5b34c139fc",
+        "public_api.py": "f8ad36406a5c438628d7a856c69903f144cc21cd863bbe488ff9a83a147f5155",
+        "README.md": "9b090a037ea61c421b94d6d608b0e516c238becb1f6eeed73e12a015079a9479",
+        "test_acceptance.py": "d57aa1bee4e032855a0244ec658e3226c0d5efd297c94b2664ebe708c1636c68",
+        "text_core.py": "80eff98ef737c34c2c7527bd59e3b4b5d2645070a287fc17fb6c2865de703d07",
+        "transport.py": "68fcc59086bdbbe897d8d0190bf99bd249d44c9f8bc6175e68aeb9cfcd2e8a39",
+        "UPSTREAM_LICENSE.txt": "617273daf4b7b4fbc0e3068bca7df3e3dbc29b4c5641e185917c775cf1795111",
+        "validation.py": "7ea34d2d7137c985f35d88b223150cd462055a6c0fed9684d404127c355bd6a9"
+      },
+      "changed_files": [
+        "text_core.py"
+      ],
+      "scope_valid": true,
+      "protected_files_unchanged": true,
+      "external_verifier": {
+        "successful": true,
+        "tests_run": 8,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "expected_failures": 0,
+        "unexpected_successes": 0,
+        "output": "test_01 (test_acceptance.RepairTests) ... ok\ntest_02 (test_acceptance.RepairTests) ... ok\ntest_03 (test_acceptance.RepairTests) ... ok\ntest_04 (test_acceptance.RepairTests) ... ok\ntest_05 (test_acceptance.RepairTests) ... ok\ntest_06 (test_acceptance.RepairTests) ... ok\ntest_07 (test_acceptance.RepairTests) ... ok\ntest_08 (test_acceptance.RepairTests) ... ok\n\n----------------------------------------------------------------------\nRan 8 tests in 0.000s\n\nOK\n",
+        "elapsed_ms": 203,
+        "exit_code": 0,
+        "stderr": "",
+        "accepted": true
+      },
+      "run_id": "run_20261024-235131-d50d73",
+      "status": "completed",
+      "stop_reason": "final_answer_returned",
+      "attempts": 11,
+      "trace": "artifacts/repair-regression-v2-2026-10-24/runs/05-boltons_splitlines-r1/workspace/.pico/runs/run_20261024-235131-d50d73/trace.jsonl",
+      "trace_sha256": "e34f237b364c121684de2f88d44c49005728b1ac5669ca191314efc00ea89d55",
+      "completion_verification": {
+        "command": "python -B -m unittest discover -v",
+        "required": true,
+        "status": "passed",
+        "exit_code": 0
+      },
+      "input_tokens": {
+        "observed_total": 24943,
+        "observed_calls": 11,
+        "successful_calls": 11,
+        "complete": false
+      },
+      "output_tokens": {
+        "observed_total": 17146,
+        "observed_calls": 11,
+        "successful_calls": 11,
+        "complete": false
+      },
+      "successful_model_calls": 11,
+      "tool_steps": 10,
+      "agent_verified_after_last_write": true,
+      "tool_issues": [
+        {
+          "trace_line": 6,
+          "name": "run_shell",
+          "code": "tool_failed",
+          "exit_code": 1
+        }
+      ],
+      "security_events": [],
+      "final_state_matches_agent_verification": true,
+      "completion_rejections": [],
+      "transport_attempts": 12,
+      "transport_failures": 1,
+      "failure_category": "success",
+      "elapsed_ms": 682219,
+      "finished_at": "2026-10-24T16:02:53.734923+00:00",
+      "independent_recheck": {
+        "successful": true,
+        "tests_run": 8,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "expected_failures": 0,
+        "unexpected_successes": 0,
+        "output": "test_01 (test_acceptance.RepairTests) ... ok\ntest_02 (test_acceptance.RepairTests) ... ok\ntest_03 (test_acceptance.RepairTests) ... ok\ntest_04 (test_acceptance.RepairTests) ... ok\ntest_05 (test_acceptance.RepairTests) ... ok\ntest_06 (test_acceptance.RepairTests) ... ok\ntest_07 (test_acceptance.RepairTests) ... ok\ntest_08 (test_acceptance.RepairTests) ... ok\n\n----------------------------------------------------------------------\nRan 8 tests in 0.000s\n\nOK\n",
+        "elapsed_ms": 219,
+        "exit_code": 0,
+        "stderr": "",
+        "accepted": true
+      },
+      "completion_rejection_count": 0,
+      "raw_record": "artifacts/repair-regression-v2-2026-10-24/runs/05-boltons_splitlines-r1/result.json",
+      "raw_record_sha256": "a03158486ef9153384ec194f3cfebdd7364ce418366d301e60447eada263c302"
+    },
+    {
+      "task_id": "boltons_splitlines",
+      "repeat": 2,
+      "run_key": "06-boltons_splitlines-r2",
+      "category": "unknown_location",
+      "origin_kind": "upstream_minimal_reproduction",
+      "started_at": "2026-10-24T15:51:41.963436+00:00",
+      "initial_sha256": {
+        "config.py": "464bc6613aec3cb276a2996ecb81c1d9a60b81adc28004859524de5b34c139fc",
+        "public_api.py": "f8ad36406a5c438628d7a856c69903f144cc21cd863bbe488ff9a83a147f5155",
+        "README.md": "9b090a037ea61c421b94d6d608b0e516c238becb1f6eeed73e12a015079a9479",
+        "test_acceptance.py": "d57aa1bee4e032855a0244ec658e3226c0d5efd297c94b2664ebe708c1636c68",
+        "text_core.py": "fb809d41f4e6cd89e40ddf4438ff4bd78cb5ce6bb360e617dec13fad47544252",
+        "transport.py": "68fcc59086bdbbe897d8d0190bf99bd249d44c9f8bc6175e68aeb9cfcd2e8a39",
+        "UPSTREAM_LICENSE.txt": "617273daf4b7b4fbc0e3068bca7df3e3dbc29b4c5641e185917c775cf1795111",
+        "validation.py": "7ea34d2d7137c985f35d88b223150cd462055a6c0fed9684d404127c355bd6a9"
+      },
+      "approvals": [
+        {
+          "name": "run_shell",
+          "allowed": true,
+          "args": {
+            "command": "python -B -m unittest discover -v",
+            "timeout": 60
+          },
+          "at": "2026-10-24T15:51:45.618493+00:00"
+        }
+      ],
+      "functional_passed": false,
+      "workflow_passed": false,
+      "workspace": "artifacts/repair-regression-v2-2026-10-24/runs/06-boltons_splitlines-r2/workspace",
+      "session_id": "20261024-235141-2a5164",
+      "error": "TimeoutError: OpenAI-compatible request timed out after 2 transport attempts; failed-request usage is unknown",
+      "agent_elapsed_ms": 400625,
+      "final_sha256": {
+        "config.py": "464bc6613aec3cb276a2996ecb81c1d9a60b81adc28004859524de5b34c139fc",
+        "public_api.py": "f8ad36406a5c438628d7a856c69903f144cc21cd863bbe488ff9a83a147f5155",
+        "README.md": "9b090a037ea61c421b94d6d608b0e516c238becb1f6eeed73e12a015079a9479",
+        "test_acceptance.py": "d57aa1bee4e032855a0244ec658e3226c0d5efd297c94b2664ebe708c1636c68",
+        "text_core.py": "fb809d41f4e6cd89e40ddf4438ff4bd78cb5ce6bb360e617dec13fad47544252",
+        "transport.py": "68fcc59086bdbbe897d8d0190bf99bd249d44c9f8bc6175e68aeb9cfcd2e8a39",
+        "UPSTREAM_LICENSE.txt": "617273daf4b7b4fbc0e3068bca7df3e3dbc29b4c5641e185917c775cf1795111",
+        "validation.py": "7ea34d2d7137c985f35d88b223150cd462055a6c0fed9684d404127c355bd6a9"
+      },
+      "changed_files": [],
+      "scope_valid": true,
+      "protected_files_unchanged": true,
+      "external_verifier": {
+        "successful": false,
+        "tests_run": 8,
+        "failures": 2,
+        "errors": 0,
+        "skipped": 0,
+        "expected_failures": 0,
+        "unexpected_successes": 0,
+        "output": "test_01 (test_acceptance.RepairTests) ... ok\ntest_02 (test_acceptance.RepairTests) ... ok\ntest_03 (test_acceptance.RepairTests) ... FAIL\ntest_04 (test_acceptance.RepairTests) ... FAIL\ntest_05 (test_acceptance.RepairTests) ... ok\ntest_06 (test_acceptance.RepairTests) ... ok\ntest_07 (test_acceptance.RepairTests) ... ok\ntest_08 (test_acceptance.RepairTests) ... ok\n\n======================================================================\nFAIL: test_03 (test_acceptance.RepairTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-regression-v2-2026-10-24\\runs\\06-boltons_splitlines-r2\\external_final\\test_acceptance.py\", line 10, in test_03\n    self.assertEqual(render('a\\u2028b'),['a','b'])\nAssertionError: Lists differ: ['a\\u2028b'] != ['a', 'b']\n\nFirst differing element 0:\n'a\\u2028b'\n'a'\n\nSecond list contains 1 additional elements.\nFirst extra element 1:\n'b'\n\n- ['a\\u2028b']\n+ ['a', 'b']\n\n======================================================================\nFAIL: test_04 (test_acceptance.RepairTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-regression-v2-2026-10-24\\runs\\06-boltons_splitlines-r2\\external_final\\test_acceptance.py\", line 12, in test_04\n    self.assertEqual(render('a\\u2029b'),['a','b'])\nAssertionError: Lists differ: ['a\\u2029b'] != ['a', 'b']\n\nFirst differing element 0:\n'a\\u2029b'\n'a'\n\nSecond list contains 1 additional elements.\nFirst extra element 1:\n'b'\n\n- ['a\\u2029b']\n+ ['a', 'b']\n\n----------------------------------------------------------------------\nRan 8 tests in 0.002s\n\nFAILED (failures=2)\n",
+        "elapsed_ms": 219,
+        "exit_code": 1,
+        "stderr": "",
+        "accepted": false
+      },
+      "run_id": "run_20261024-235141-89ade9",
+      "status": "failed",
+      "stop_reason": "model_error",
+      "attempts": 6,
+      "trace": "artifacts/repair-regression-v2-2026-10-24/runs/06-boltons_splitlines-r2/workspace/.pico/runs/run_20261024-235141-89ade9/trace.jsonl",
+      "trace_sha256": "6c3557b33a5a89921c8959cf3a092bb67497cdac713a4fa1909d1921051b6f96",
+      "completion_verification": {
+        "command": "python -B -m unittest discover -v",
+        "required": true,
+        "status": "failed",
+        "exit_code": 1
+      },
+      "input_tokens": {
+        "observed_total": 8782,
+        "observed_calls": 5,
+        "successful_calls": 5,
+        "complete": false
+      },
+      "output_tokens": {
+        "observed_total": 1240,
+        "observed_calls": 5,
+        "successful_calls": 5,
+        "complete": false
+      },
+      "successful_model_calls": 5,
+      "tool_steps": 5,
+      "agent_verified_after_last_write": false,
+      "tool_issues": [
+        {
+          "trace_line": 6,
+          "name": "run_shell",
+          "code": "tool_failed",
+          "exit_code": 1
+        }
+      ],
+      "security_events": [],
+      "final_state_matches_agent_verification": false,
+      "completion_rejections": [],
+      "transport_attempts": 7,
+      "transport_failures": 2,
+      "failure_category": "model_or_runtime_error",
+      "elapsed_ms": 400938,
+      "finished_at": "2026-10-24T15:58:22.902376+00:00",
+      "independent_recheck": {
+        "successful": false,
+        "tests_run": 8,
+        "failures": 2,
+        "errors": 0,
+        "skipped": 0,
+        "expected_failures": 0,
+        "unexpected_successes": 0,
+        "output": "test_01 (test_acceptance.RepairTests) ... ok\ntest_02 (test_acceptance.RepairTests) ... ok\ntest_03 (test_acceptance.RepairTests) ... FAIL\ntest_04 (test_acceptance.RepairTests) ... FAIL\ntest_05 (test_acceptance.RepairTests) ... ok\ntest_06 (test_acceptance.RepairTests) ... ok\ntest_07 (test_acceptance.RepairTests) ... ok\ntest_08 (test_acceptance.RepairTests) ... ok\n\n======================================================================\nFAIL: test_03 (test_acceptance.RepairTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-regression-v2-release-audit-2026-10-25\\rechecks\\06-boltons_splitlines-r2\\test_acceptance.py\", line 10, in test_03\n    self.assertEqual(render('a\\u2028b'),['a','b'])\nAssertionError: Lists differ: ['a\\u2028b'] != ['a', 'b']\n\nFirst differing element 0:\n'a\\u2028b'\n'a'\n\nSecond list contains 1 additional elements.\nFirst extra element 1:\n'b'\n\n- ['a\\u2028b']\n+ ['a', 'b']\n\n======================================================================\nFAIL: test_04 (test_acceptance.RepairTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-regression-v2-release-audit-2026-10-25\\rechecks\\06-boltons_splitlines-r2\\test_acceptance.py\", line 12, in test_04\n    self.assertEqual(render('a\\u2029b'),['a','b'])\nAssertionError: Lists differ: ['a\\u2029b'] != ['a', 'b']\n\nFirst differing element 0:\n'a\\u2029b'\n'a'\n\nSecond list contains 1 additional elements.\nFirst extra element 1:\n'b'\n\n- ['a\\u2029b']\n+ ['a', 'b']\n\n----------------------------------------------------------------------\nRan 8 tests in 0.002s\n\nFAILED (failures=2)\n",
+        "elapsed_ms": 203,
+        "exit_code": 1,
+        "stderr": "",
+        "accepted": false
+      },
+      "completion_rejection_count": 0,
+      "raw_record": "artifacts/repair-regression-v2-2026-10-24/runs/06-boltons_splitlines-r2/result.json",
+      "raw_record_sha256": "3ff28bdab06046d801f7bdc4faf59df79a6ce38c62fa6c910205baf2ea47069c"
+    },
+    {
+      "task_id": "inventory_reservation",
+      "repeat": 1,
+      "run_key": "07-inventory_reservation-r1",
+      "category": "cross_file",
+      "origin_kind": "author_created",
+      "started_at": "2026-10-24T15:53:00.271685+00:00",
+      "initial_sha256": {
+        "orders.py": "62d740b241d439a99a11df348814a571a5aad01e742c138e6081b334c55e996c",
+        "README.md": "4750c8dc831f0c7e897b4d94ffcffafb4327d6569c99a79be224fcf7fc7dba8f",
+        "stock.py": "492a726bc64026a4440d856192ebd9fbb9c84a1a5ddb9a93e7d434b1e2974baf",
+        "test_acceptance.py": "4a6d884bb50c653280c94baa35673f6abbe76604251932bce6cb15edb6d53cbe"
+      },
+      "approvals": [
+        {
+          "name": "run_shell",
+          "allowed": true,
+          "args": {
+            "command": "python -B -m unittest discover -v",
+            "timeout": 20
+          },
+          "at": "2026-10-24T15:53:03.621963+00:00"
+        },
+        {
+          "name": "write_file",
+          "allowed": true,
+          "args": {
+            "path": "stock.py",
+            "content": "# stock.py\ndef reserve(stock, sku, qty):\n    if isinstance(qty, bool) or not isinstance(qty, int) or qty < 1:\n        raise ValueError('invalid quantity')\n    if sku not in stock:\n        raise ValueError('unknown sku')\n    if qty > stock[sku]:\n        raise ValueError('insufficient stock')\n    stock[sku] -= qty\n    return stock[sku]\n"
+          },
+          "at": "2026-10-24T15:53:37.344927+00:00"
+        },
+        {
+          "name": "patch_file",
+          "allowed": true,
+          "args": {
+            "path": "orders.py",
+            "old_text": "def place_order(stock, sku, qty):\n    reserve(stock, sku, qty)\n    stock[sku] -= qty\n    return {'sku':sku, 'quantity':qty, 'remaining':stock[sku]}",
+            "new_text": "def place_order(stock, sku, qty):\n    remaining = reserve(stock, sku, qty)\n    return {'sku':sku, 'quantity':qty, 'remaining':remaining}"
+          },
+          "at": "2026-10-24T15:53:44.026457+00:00"
+        },
+        {
+          "name": "run_shell",
+          "allowed": true,
+          "args": {
+            "command": "python -B -m unittest discover -v",
+            "timeout": 20
+          },
+          "at": "2026-10-24T15:53:47.155634+00:00"
+        }
+      ],
+      "functional_passed": true,
+      "workflow_passed": true,
+      "workspace": "artifacts/repair-regression-v2-2026-10-24/runs/07-inventory_reservation-r1/workspace",
+      "session_id": "20261024-235300-fab3ba",
+      "answer": "修复完成，测试全部通过（python -B -m unittest discover -v，exit code 0，Ran 8 tests ... OK）。\n\n修改内容：\n1. stock.py — reserve(stock, sku, qty)：\n   - 校验 qty 为正的非 bool 整数（isinstance(qty, bool) 或非 int 或 qty < 1 时抛 ValueError('invalid quantity')）；\n   - 未知 sku 抛 ValueError('unknown sku')；\n   - 库存不足（qty > stock[sku]）抛 ValueError('insufficient stock')；\n   - 仅在校验全部通过后才扣减一次并返回剩余量，任何失败路径都不修改库存。\n2. orders.py — place_order：\n   - 直接使用 reserve 的返回值作为 remaining，删除了原先重复扣减的 stock[sku] -= qty；\n   - 返回 {'sku': sku, 'quantity': qty, 'remaining': remaining}。\n\n未修改测试或其他文件。",
+      "agent_elapsed_ms": 58391,
+      "final_sha256": {
+        "orders.py": "3d1aa29239bae8f5252a4916fe9d5c7aa055a196b0c0f29aafeb75b7d32b5284",
+        "README.md": "4750c8dc831f0c7e897b4d94ffcffafb4327d6569c99a79be224fcf7fc7dba8f",
+        "stock.py": "93db4c9a146c1f288c5501a15888490fa8c967f9b3bbf1602708ce9c5c94bb03",
+        "test_acceptance.py": "4a6d884bb50c653280c94baa35673f6abbe76604251932bce6cb15edb6d53cbe"
+      },
+      "changed_files": [
+        "orders.py",
+        "stock.py"
+      ],
+      "scope_valid": true,
+      "protected_files_unchanged": true,
+      "external_verifier": {
+        "successful": true,
+        "tests_run": 8,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "expected_failures": 0,
+        "unexpected_successes": 0,
+        "output": "test_01 (test_acceptance.RepairTests) ... ok\ntest_02 (test_acceptance.RepairTests) ... ok\ntest_03 (test_acceptance.RepairTests) ... ok\ntest_04 (test_acceptance.RepairTests) ... ok\ntest_05 (test_acceptance.RepairTests) ... ok\ntest_06 (test_acceptance.RepairTests) ... ok\ntest_07 (test_acceptance.RepairTests) ... ok\ntest_08 (test_acceptance.RepairTests) ... ok\n\n----------------------------------------------------------------------\nRan 8 tests in 0.000s\n\nOK\n",
+        "elapsed_ms": 204,
+        "exit_code": 0,
+        "stderr": "",
+        "accepted": true
+      },
+      "run_id": "run_20261024-235300-211829",
+      "status": "completed",
+      "stop_reason": "final_answer_returned",
+      "attempts": 9,
+      "trace": "artifacts/repair-regression-v2-2026-10-24/runs/07-inventory_reservation-r1/workspace/.pico/runs/run_20261024-235300-211829/trace.jsonl",
+      "trace_sha256": "2c536355b257f245ebea3b8da5dadbdc616c1e26b5a37558ac2639f686a8ad8a",
+      "completion_verification": {
+        "command": "python -B -m unittest discover -v",
+        "required": true,
+        "status": "passed",
+        "exit_code": 0
+      },
+      "input_tokens": {
+        "observed_total": 19030,
+        "observed_calls": 9,
+        "successful_calls": 9,
+        "complete": true
+      },
+      "output_tokens": {
+        "observed_total": 2159,
+        "observed_calls": 9,
+        "successful_calls": 9,
+        "complete": true
+      },
+      "successful_model_calls": 9,
+      "tool_steps": 8,
+      "agent_verified_after_last_write": true,
+      "tool_issues": [
+        {
+          "trace_line": 6,
+          "name": "run_shell",
+          "code": "tool_failed",
+          "exit_code": 1
+        }
+      ],
+      "security_events": [],
+      "final_state_matches_agent_verification": true,
+      "completion_rejections": [],
+      "transport_attempts": 9,
+      "transport_failures": 0,
+      "failure_category": "success",
+      "elapsed_ms": 58641,
+      "finished_at": "2026-10-24T15:53:58.919715+00:00",
+      "independent_recheck": {
+        "successful": true,
+        "tests_run": 8,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "expected_failures": 0,
+        "unexpected_successes": 0,
+        "output": "test_01 (test_acceptance.RepairTests) ... ok\ntest_02 (test_acceptance.RepairTests) ... ok\ntest_03 (test_acceptance.RepairTests) ... ok\ntest_04 (test_acceptance.RepairTests) ... ok\ntest_05 (test_acceptance.RepairTests) ... ok\ntest_06 (test_acceptance.RepairTests) ... ok\ntest_07 (test_acceptance.RepairTests) ... ok\ntest_08 (test_acceptance.RepairTests) ... ok\n\n----------------------------------------------------------------------\nRan 8 tests in 0.000s\n\nOK\n",
+        "elapsed_ms": 203,
+        "exit_code": 0,
+        "stderr": "",
+        "accepted": true
+      },
+      "completion_rejection_count": 0,
+      "raw_record": "artifacts/repair-regression-v2-2026-10-24/runs/07-inventory_reservation-r1/result.json",
+      "raw_record_sha256": "261a122f68cd4f731b18615ab9d57d2afecfa06ec0015e51f50a8f042df9ca77"
+    },
+    {
+      "task_id": "utc_storage_contract",
+      "repeat": 2,
+      "run_key": "08-utc_storage_contract-r2",
+      "category": "cross_file",
+      "origin_kind": "author_created",
+      "started_at": "2026-10-24T15:53:59.844894+00:00",
+      "initial_sha256": {
+        "README.md": "ce87b9286cb0ec3ba25e518cc5601a46e6ade95d64da448a17ce63d135da615c",
+        "store.py": "dc44b8ac834e4cad9a11e00574c4040b031782a78df21f5de815d54c58625818",
+        "test_acceptance.py": "5abe6186871ca892b261d8cdce0a7c6631f5780ccc31194730d7d9f71dc73033",
+        "timestamps.py": "0b4e49fcff3400918814d9f3087019ffd172293e241bbadbd3e5873ec4e77759"
+      },
+      "approvals": [
+        {
+          "name": "run_shell",
+          "allowed": true,
+          "args": {
+            "command": "python -B -m unittest discover -v",
+            "timeout": 60
+          },
+          "at": "2026-10-24T15:54:05.194619+00:00"
+        },
+        {
+          "name": "write_file",
+          "allowed": true,
+          "args": {
+            "path": "timestamps.py",
+            "content": "from datetime import datetime, timezone\n\n\ndef to_epoch(value):\n    \"\"\"Convert a datetime to Unix epoch seconds (float).\n\n    Aware datetimes are converted to UTC seconds.\n    Naive datetimes are interpreted as UTC, independent of the local timezone.\n    \"\"\"\n    if not isinstance(value, datetime):\n        raise TypeError(\"to_epoch expects a datetime instance\")\n    if value.tzinfo is None:\n        value = value.replace(tzinfo=timezone.utc)\n    return value.timestamp()\n"
+          },
+          "at": "2026-10-24T15:54:43.818138+00:00"
+        },
+        {
+          "name": "write_file",
+          "allowed": true,
+          "args": {
+            "path": "store.py",
+            "content": "from timestamps import to_epoch\n\n\ndef save_event(event):\n    \"\"\"Return a new record {id, timestamp} without mutating the input event.\n\n    timestamp is an integer Unix epoch in seconds (not milliseconds).\n    \"\"\"\n    return {\n        'id': event['id'],\n        'timestamp': int(to_epoch(event['at'])),\n    }\n"
+          },
+          "at": "2026-10-24T15:55:04.117425+00:00"
+        },
+        {
+          "name": "run_shell",
+          "allowed": true,
+          "args": {
+            "command": "python -B -m unittest discover -v",
+            "timeout": 20
+          },
+          "at": "2026-10-24T15:55:07.339377+00:00"
+        }
+      ],
+      "functional_passed": true,
+      "workflow_passed": true,
+      "workspace": "artifacts/repair-regression-v2-2026-10-24/runs/08-utc_storage_contract-r2/workspace",
+      "session_id": "20261024-235359-297f6e",
+      "answer": "修复完成。\n\n改动：\n- timestamps.py：`to_epoch` 现在对 aware datetime 直接调用 `.timestamp()`（自动转为 UTC 秒数），对 naive datetime 先 `replace(tzinfo=timezone.utc)` 再取秒，不再依赖本机时区；并增加类型检查。\n- store.py：`save_event` 不再修改传入 event，而是返回新记录 `{'id': ..., 'timestamp': int(to_epoch(event['at']))}`，timestamp 为整数 Unix 秒（去掉了原来的 *1000 毫秒逻辑）。\n\n测试验证：重新运行 `python -B -m unittest discover -v`，exit code 0，8 个测试全部通过（Ran 8 tests ... OK）。",
+      "agent_elapsed_ms": 76032,
+      "final_sha256": {
+        "README.md": "ce87b9286cb0ec3ba25e518cc5601a46e6ade95d64da448a17ce63d135da615c",
+        "store.py": "4fd83a1fd863b5b184b7cba064473d0f62f91bfa7b2d2f9bf405a7d46830ed68",
+        "test_acceptance.py": "5abe6186871ca892b261d8cdce0a7c6631f5780ccc31194730d7d9f71dc73033",
+        "timestamps.py": "7fdb130712b0d5bea55afe7f95d7ec8db50d2b26f5f87dbddb79cf814731c755"
+      },
+      "changed_files": [
+        "store.py",
+        "timestamps.py"
+      ],
+      "scope_valid": true,
+      "protected_files_unchanged": true,
+      "external_verifier": {
+        "successful": true,
+        "tests_run": 8,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "expected_failures": 0,
+        "unexpected_successes": 0,
+        "output": "test_01 (test_acceptance.RepairTests) ... ok\ntest_02 (test_acceptance.RepairTests) ... ok\ntest_03 (test_acceptance.RepairTests) ... ok\ntest_04 (test_acceptance.RepairTests) ... ok\ntest_05 (test_acceptance.RepairTests) ... ok\ntest_06 (test_acceptance.RepairTests) ... ok\ntest_07 (test_acceptance.RepairTests) ... ok\ntest_08 (test_acceptance.RepairTests) ... ok\n\n----------------------------------------------------------------------\nRan 8 tests in 0.000s\n\nOK\n",
+        "elapsed_ms": 187,
+        "exit_code": 0,
+        "stderr": "",
+        "accepted": true
+      },
+      "run_id": "run_20261024-235359-8857a1",
+      "status": "completed",
+      "stop_reason": "final_answer_returned",
+      "attempts": 9,
+      "trace": "artifacts/repair-regression-v2-2026-10-24/runs/08-utc_storage_contract-r2/workspace/.pico/runs/run_20261024-235359-8857a1/trace.jsonl",
+      "trace_sha256": "1d82bab99acc598c2ddc729f707fbfcccc5d9c5edb6c1f4648d2dd8dc726b275",
+      "completion_verification": {
+        "command": "python -B -m unittest discover -v",
+        "required": true,
+        "status": "passed",
+        "exit_code": 0
+      },
+      "input_tokens": {
+        "observed_total": 19857,
+        "observed_calls": 9,
+        "successful_calls": 9,
+        "complete": true
+      },
+      "output_tokens": {
+        "observed_total": 3010,
+        "observed_calls": 9,
+        "successful_calls": 9,
+        "complete": true
+      },
+      "successful_model_calls": 9,
+      "tool_steps": 8,
+      "agent_verified_after_last_write": true,
+      "tool_issues": [
+        {
+          "trace_line": 6,
+          "name": "run_shell",
+          "code": "tool_failed",
+          "exit_code": 1
+        }
+      ],
+      "security_events": [],
+      "final_state_matches_agent_verification": true,
+      "completion_rejections": [],
+      "transport_attempts": 9,
+      "transport_failures": 0,
+      "failure_category": "success",
+      "elapsed_ms": 76266,
+      "finished_at": "2026-10-24T15:55:16.108106+00:00",
+      "independent_recheck": {
+        "successful": true,
+        "tests_run": 8,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "expected_failures": 0,
+        "unexpected_successes": 0,
+        "output": "test_01 (test_acceptance.RepairTests) ... ok\ntest_02 (test_acceptance.RepairTests) ... ok\ntest_03 (test_acceptance.RepairTests) ... ok\ntest_04 (test_acceptance.RepairTests) ... ok\ntest_05 (test_acceptance.RepairTests) ... ok\ntest_06 (test_acceptance.RepairTests) ... ok\ntest_07 (test_acceptance.RepairTests) ... ok\ntest_08 (test_acceptance.RepairTests) ... ok\n\n----------------------------------------------------------------------\nRan 8 tests in 0.000s\n\nOK\n",
+        "elapsed_ms": 234,
+        "exit_code": 0,
+        "stderr": "",
+        "accepted": true
+      },
+      "completion_rejection_count": 0,
+      "raw_record": "artifacts/repair-regression-v2-2026-10-24/runs/08-utc_storage_contract-r2/result.json",
+      "raw_record_sha256": "0d9da65ba9626bef0545fe0e226adc43340a8b5576ff1e5a4ffc065a0f70ce69"
+    },
+    {
+      "task_id": "boltons_xfrange",
+      "repeat": 2,
+      "run_key": "09-boltons_xfrange-r2",
+      "category": "unknown_location",
+      "origin_kind": "upstream_minimal_reproduction",
+      "started_at": "2026-10-24T15:55:17.144914+00:00",
+      "initial_sha256": {
+        "config.py": "464bc6613aec3cb276a2996ecb81c1d9a60b81adc28004859524de5b34c139fc",
+        "public_api.py": "3f6faf803fd35c11dd58934f0316ae4500c8555d089a92b0fc98f6dea6e8cc63",
+        "README.md": "b302546f1198d551d70059d8e6911276b476858d12412d22bd4d8cf9db93ace2",
+        "sequence_core.py": "dc67d94be2ff2aa3c1bd58dc52dab1194c1d8977e9cb7124ef068e4d2aa99a07",
+        "test_acceptance.py": "696ae30190e6ffd573b5db2353eefa1efb3af0be2290277589d7931d8c659350",
+        "transport.py": "68fcc59086bdbbe897d8d0190bf99bd249d44c9f8bc6175e68aeb9cfcd2e8a39",
+        "UPSTREAM_LICENSE.txt": "617273daf4b7b4fbc0e3068bca7df3e3dbc29b4c5641e185917c775cf1795111",
+        "validation.py": "7ea34d2d7137c985f35d88b223150cd462055a6c0fed9684d404127c355bd6a9"
+      },
+      "approvals": [
+        {
+          "name": "run_shell",
+          "allowed": true,
+          "args": {
+            "command": "python -B -m unittest discover -v",
+            "timeout": 60
+          },
+          "at": "2026-10-24T15:55:20.602177+00:00"
+        }
+      ],
+      "functional_passed": false,
+      "workflow_passed": false,
+      "workspace": "artifacts/repair-regression-v2-2026-10-24/runs/09-boltons_xfrange-r2/workspace",
+      "session_id": "20261024-235517-71ea62",
+      "error": "TimeoutError: OpenAI-compatible request timed out after 2 transport attempts; failed-request usage is unknown",
+      "agent_elapsed_ms": 384234,
+      "final_sha256": {
+        "config.py": "464bc6613aec3cb276a2996ecb81c1d9a60b81adc28004859524de5b34c139fc",
+        "public_api.py": "3f6faf803fd35c11dd58934f0316ae4500c8555d089a92b0fc98f6dea6e8cc63",
+        "README.md": "b302546f1198d551d70059d8e6911276b476858d12412d22bd4d8cf9db93ace2",
+        "sequence_core.py": "dc67d94be2ff2aa3c1bd58dc52dab1194c1d8977e9cb7124ef068e4d2aa99a07",
+        "test_acceptance.py": "696ae30190e6ffd573b5db2353eefa1efb3af0be2290277589d7931d8c659350",
+        "transport.py": "68fcc59086bdbbe897d8d0190bf99bd249d44c9f8bc6175e68aeb9cfcd2e8a39",
+        "UPSTREAM_LICENSE.txt": "617273daf4b7b4fbc0e3068bca7df3e3dbc29b4c5641e185917c775cf1795111",
+        "validation.py": "7ea34d2d7137c985f35d88b223150cd462055a6c0fed9684d404127c355bd6a9"
+      },
+      "changed_files": [],
+      "scope_valid": true,
+      "protected_files_unchanged": true,
+      "external_verifier": {
+        "successful": false,
+        "tests_run": 8,
+        "failures": 4,
+        "errors": 0,
+        "skipped": 0,
+        "expected_failures": 0,
+        "unexpected_successes": 0,
+        "output": "test_01 (test_acceptance.RepairTests) ... FAIL\ntest_02 (test_acceptance.RepairTests) ... FAIL\ntest_03 (test_acceptance.RepairTests) ... ok\ntest_04 (test_acceptance.RepairTests) ... FAIL\ntest_05 (test_acceptance.RepairTests) ... FAIL\ntest_06 (test_acceptance.RepairTests) ... ok\ntest_07 (test_acceptance.RepairTests) ... ok\ntest_08 (test_acceptance.RepairTests) ... ok\n\n======================================================================\nFAIL: test_01 (test_acceptance.RepairTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-regression-v2-2026-10-24\\runs\\09-boltons_xfrange-r2\\external_final\\test_acceptance.py\", line 6, in test_01\n    self.assertEqual(render(5,0,step=-1.25),[5.0,3.75,2.5,1.25])\nAssertionError: Lists differ: [] != [5.0, 3.75, 2.5, 1.25]\n\nSecond list contains 4 additional elements.\nFirst extra element 0:\n5.0\n\n- []\n+ [5.0, 3.75, 2.5, 1.25]\n\n======================================================================\nFAIL: test_02 (test_acceptance.RepairTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-regression-v2-2026-10-24\\runs\\09-boltons_xfrange-r2\\external_final\\test_acceptance.py\", line 8, in test_02\n    self.assertEqual(render(1,5,step=-1),[])\nAssertionError: Lists differ: [1.0, 0.0, -1.0, -2.0, -3.0, -4.0, -5.0, -[7839 chars]98.0] != []\n\nFirst list contains 1000 additional elements.\nFirst extra element 0:\n1.0\n\nDiff is 10891 characters long. Set self.maxDiff to None to see it.\n\n======================================================================\nFAIL: test_04 (test_acceptance.RepairTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-regression-v2-2026-10-24\\runs\\09-boltons_xfrange-r2\\external_final\\test_acceptance.py\", line 12, in test_04\n    self.assertEqual(len(render(1.0,step=.1)),10)\nAssertionError: 11 != 10\n\n======================================================================\nFAIL: test_05 (test_acceptance.RepairTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-regression-v2-2026-10-24\\runs\\09-boltons_xfrange-r2\\external_final\\test_acceptance.py\", line 14, in test_05\n    self.assertEqual(render(1.0,step=.1),expected(1.0,step=.1))\nAssertionError: Lists differ: [0.0,[48 chars].7, 0.7999999999999999, 0.8999999999999999, 0.9999999999999999] != [0.0,[48 chars].7, 0.7999999999999999, 0.8999999999999999]\n\nFirst list contains 1 additional elements.\nFirst extra element 10:\n0.9999999999999999\n\n  [0.0,\n   0.1,\n   0.2,\n   0.30000000000000004,\n   0.4,\n   0.5,\n   0.6,\n   0.7,\n   0.7999999999999999,\n-  0.8999999999999999,\n?                    ^\n\n+  0.8999999999999999]\n?                    ^\n\n-  0.9999999999999999]\n\n----------------------------------------------------------------------\nRan 8 tests in 0.006s\n\nFAILED (failures=4)\n",
+        "elapsed_ms": 234,
+        "exit_code": 1,
+        "stderr": "",
+        "accepted": false
+      },
+      "run_id": "run_20261024-235517-e2dd68",
+      "status": "failed",
+      "stop_reason": "model_error",
+      "attempts": 6,
+      "trace": "artifacts/repair-regression-v2-2026-10-24/runs/09-boltons_xfrange-r2/workspace/.pico/runs/run_20261024-235517-e2dd68/trace.jsonl",
+      "trace_sha256": "4051d3e4f7b76589a6d95e060403ee8b33df88b68687c5e4262dd0e3ab4b06dd",
+      "completion_verification": {
+        "command": "python -B -m unittest discover -v",
+        "required": true,
+        "status": "failed",
+        "exit_code": 1
+      },
+      "input_tokens": {
+        "observed_total": 8667,
+        "observed_calls": 5,
+        "successful_calls": 5,
+        "complete": false
+      },
+      "output_tokens": {
+        "observed_total": 589,
+        "observed_calls": 5,
+        "successful_calls": 5,
+        "complete": false
+      },
+      "successful_model_calls": 5,
+      "tool_steps": 5,
+      "agent_verified_after_last_write": false,
+      "tool_issues": [
+        {
+          "trace_line": 6,
+          "name": "run_shell",
+          "code": "tool_failed",
+          "exit_code": 1
+        }
+      ],
+      "security_events": [],
+      "final_state_matches_agent_verification": false,
+      "completion_rejections": [],
+      "transport_attempts": 7,
+      "transport_failures": 2,
+      "failure_category": "model_or_runtime_error",
+      "elapsed_ms": 384578,
+      "finished_at": "2026-10-24T16:01:41.727029+00:00",
+      "independent_recheck": {
+        "successful": false,
+        "tests_run": 8,
+        "failures": 4,
+        "errors": 0,
+        "skipped": 0,
+        "expected_failures": 0,
+        "unexpected_successes": 0,
+        "output": "test_01 (test_acceptance.RepairTests) ... FAIL\ntest_02 (test_acceptance.RepairTests) ... FAIL\ntest_03 (test_acceptance.RepairTests) ... ok\ntest_04 (test_acceptance.RepairTests) ... FAIL\ntest_05 (test_acceptance.RepairTests) ... FAIL\ntest_06 (test_acceptance.RepairTests) ... ok\ntest_07 (test_acceptance.RepairTests) ... ok\ntest_08 (test_acceptance.RepairTests) ... ok\n\n======================================================================\nFAIL: test_01 (test_acceptance.RepairTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-regression-v2-release-audit-2026-10-25\\rechecks\\09-boltons_xfrange-r2\\test_acceptance.py\", line 6, in test_01\n    self.assertEqual(render(5,0,step=-1.25),[5.0,3.75,2.5,1.25])\nAssertionError: Lists differ: [] != [5.0, 3.75, 2.5, 1.25]\n\nSecond list contains 4 additional elements.\nFirst extra element 0:\n5.0\n\n- []\n+ [5.0, 3.75, 2.5, 1.25]\n\n======================================================================\nFAIL: test_02 (test_acceptance.RepairTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-regression-v2-release-audit-2026-10-25\\rechecks\\09-boltons_xfrange-r2\\test_acceptance.py\", line 8, in test_02\n    self.assertEqual(render(1,5,step=-1),[])\nAssertionError: Lists differ: [1.0, 0.0, -1.0, -2.0, -3.0, -4.0, -5.0, -[7839 chars]98.0] != []\n\nFirst list contains 1000 additional elements.\nFirst extra element 0:\n1.0\n\nDiff is 10891 characters long. Set self.maxDiff to None to see it.\n\n======================================================================\nFAIL: test_04 (test_acceptance.RepairTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-regression-v2-release-audit-2026-10-25\\rechecks\\09-boltons_xfrange-r2\\test_acceptance.py\", line 12, in test_04\n    self.assertEqual(len(render(1.0,step=.1)),10)\nAssertionError: 11 != 10\n\n======================================================================\nFAIL: test_05 (test_acceptance.RepairTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-regression-v2-release-audit-2026-10-25\\rechecks\\09-boltons_xfrange-r2\\test_acceptance.py\", line 14, in test_05\n    self.assertEqual(render(1.0,step=.1),expected(1.0,step=.1))\nAssertionError: Lists differ: [0.0,[48 chars].7, 0.7999999999999999, 0.8999999999999999, 0.9999999999999999] != [0.0,[48 chars].7, 0.7999999999999999, 0.8999999999999999]\n\nFirst list contains 1 additional elements.\nFirst extra element 10:\n0.9999999999999999\n\n  [0.0,\n   0.1,\n   0.2,\n   0.30000000000000004,\n   0.4,\n   0.5,\n   0.6,\n   0.7,\n   0.7999999999999999,\n-  0.8999999999999999,\n?                    ^\n\n+  0.8999999999999999]\n?                    ^\n\n-  0.9999999999999999]\n\n----------------------------------------------------------------------\nRan 8 tests in 0.005s\n\nFAILED (failures=4)\n",
+        "elapsed_ms": 219,
+        "exit_code": 1,
+        "stderr": "",
+        "accepted": false
+      },
+      "completion_rejection_count": 0,
+      "raw_record": "artifacts/repair-regression-v2-2026-10-24/runs/09-boltons_xfrange-r2/result.json",
+      "raw_record_sha256": "9f6869c4d8cc55fe2bdab5b69f067ded7c88e5553f255126547c3ce9715ee52d"
+    },
+    {
+      "task_id": "boltons_xfrange",
+      "repeat": 1,
+      "run_key": "10-boltons_xfrange-r1",
+      "category": "unknown_location",
+      "origin_kind": "upstream_minimal_reproduction",
+      "started_at": "2026-10-24T15:58:24.125839+00:00",
+      "initial_sha256": {
+        "config.py": "464bc6613aec3cb276a2996ecb81c1d9a60b81adc28004859524de5b34c139fc",
+        "public_api.py": "3f6faf803fd35c11dd58934f0316ae4500c8555d089a92b0fc98f6dea6e8cc63",
+        "README.md": "b302546f1198d551d70059d8e6911276b476858d12412d22bd4d8cf9db93ace2",
+        "sequence_core.py": "dc67d94be2ff2aa3c1bd58dc52dab1194c1d8977e9cb7124ef068e4d2aa99a07",
+        "test_acceptance.py": "696ae30190e6ffd573b5db2353eefa1efb3af0be2290277589d7931d8c659350",
+        "transport.py": "68fcc59086bdbbe897d8d0190bf99bd249d44c9f8bc6175e68aeb9cfcd2e8a39",
+        "UPSTREAM_LICENSE.txt": "617273daf4b7b4fbc0e3068bca7df3e3dbc29b4c5641e185917c775cf1795111",
+        "validation.py": "7ea34d2d7137c985f35d88b223150cd462055a6c0fed9684d404127c355bd6a9"
+      },
+      "approvals": [
+        {
+          "name": "run_shell",
+          "allowed": true,
+          "args": {
+            "command": "python -B -m unittest discover -v",
+            "timeout": 60
+          },
+          "at": "2026-10-24T15:58:27.207816+00:00"
+        }
+      ],
+      "functional_passed": false,
+      "workflow_passed": false,
+      "workspace": "artifacts/repair-regression-v2-2026-10-24/runs/10-boltons_xfrange-r1/workspace",
+      "session_id": "20261024-235824-e0a170",
+      "error": "TimeoutError: OpenAI-compatible request timed out after 2 transport attempts; failed-request usage is unknown",
+      "agent_elapsed_ms": 386718,
+      "final_sha256": {
+        "config.py": "464bc6613aec3cb276a2996ecb81c1d9a60b81adc28004859524de5b34c139fc",
+        "public_api.py": "3f6faf803fd35c11dd58934f0316ae4500c8555d089a92b0fc98f6dea6e8cc63",
+        "README.md": "b302546f1198d551d70059d8e6911276b476858d12412d22bd4d8cf9db93ace2",
+        "sequence_core.py": "dc67d94be2ff2aa3c1bd58dc52dab1194c1d8977e9cb7124ef068e4d2aa99a07",
+        "test_acceptance.py": "696ae30190e6ffd573b5db2353eefa1efb3af0be2290277589d7931d8c659350",
+        "transport.py": "68fcc59086bdbbe897d8d0190bf99bd249d44c9f8bc6175e68aeb9cfcd2e8a39",
+        "UPSTREAM_LICENSE.txt": "617273daf4b7b4fbc0e3068bca7df3e3dbc29b4c5641e185917c775cf1795111",
+        "validation.py": "7ea34d2d7137c985f35d88b223150cd462055a6c0fed9684d404127c355bd6a9"
+      },
+      "changed_files": [],
+      "scope_valid": true,
+      "protected_files_unchanged": true,
+      "external_verifier": {
+        "successful": false,
+        "tests_run": 8,
+        "failures": 4,
+        "errors": 0,
+        "skipped": 0,
+        "expected_failures": 0,
+        "unexpected_successes": 0,
+        "output": "test_01 (test_acceptance.RepairTests) ... FAIL\ntest_02 (test_acceptance.RepairTests) ... FAIL\ntest_03 (test_acceptance.RepairTests) ... ok\ntest_04 (test_acceptance.RepairTests) ... FAIL\ntest_05 (test_acceptance.RepairTests) ... FAIL\ntest_06 (test_acceptance.RepairTests) ... ok\ntest_07 (test_acceptance.RepairTests) ... ok\ntest_08 (test_acceptance.RepairTests) ... ok\n\n======================================================================\nFAIL: test_01 (test_acceptance.RepairTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-regression-v2-2026-10-24\\runs\\10-boltons_xfrange-r1\\external_final\\test_acceptance.py\", line 6, in test_01\n    self.assertEqual(render(5,0,step=-1.25),[5.0,3.75,2.5,1.25])\nAssertionError: Lists differ: [] != [5.0, 3.75, 2.5, 1.25]\n\nSecond list contains 4 additional elements.\nFirst extra element 0:\n5.0\n\n- []\n+ [5.0, 3.75, 2.5, 1.25]\n\n======================================================================\nFAIL: test_02 (test_acceptance.RepairTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-regression-v2-2026-10-24\\runs\\10-boltons_xfrange-r1\\external_final\\test_acceptance.py\", line 8, in test_02\n    self.assertEqual(render(1,5,step=-1),[])\nAssertionError: Lists differ: [1.0, 0.0, -1.0, -2.0, -3.0, -4.0, -5.0, -[7839 chars]98.0] != []\n\nFirst list contains 1000 additional elements.\nFirst extra element 0:\n1.0\n\nDiff is 10891 characters long. Set self.maxDiff to None to see it.\n\n======================================================================\nFAIL: test_04 (test_acceptance.RepairTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-regression-v2-2026-10-24\\runs\\10-boltons_xfrange-r1\\external_final\\test_acceptance.py\", line 12, in test_04\n    self.assertEqual(len(render(1.0,step=.1)),10)\nAssertionError: 11 != 10\n\n======================================================================\nFAIL: test_05 (test_acceptance.RepairTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-regression-v2-2026-10-24\\runs\\10-boltons_xfrange-r1\\external_final\\test_acceptance.py\", line 14, in test_05\n    self.assertEqual(render(1.0,step=.1),expected(1.0,step=.1))\nAssertionError: Lists differ: [0.0,[48 chars].7, 0.7999999999999999, 0.8999999999999999, 0.9999999999999999] != [0.0,[48 chars].7, 0.7999999999999999, 0.8999999999999999]\n\nFirst list contains 1 additional elements.\nFirst extra element 10:\n0.9999999999999999\n\n  [0.0,\n   0.1,\n   0.2,\n   0.30000000000000004,\n   0.4,\n   0.5,\n   0.6,\n   0.7,\n   0.7999999999999999,\n-  0.8999999999999999,\n?                    ^\n\n+  0.8999999999999999]\n?                    ^\n\n-  0.9999999999999999]\n\n----------------------------------------------------------------------\nRan 8 tests in 0.006s\n\nFAILED (failures=4)\n",
+        "elapsed_ms": 203,
+        "exit_code": 1,
+        "stderr": "",
+        "accepted": false
+      },
+      "run_id": "run_20261024-235824-6b9501",
+      "status": "failed",
+      "stop_reason": "model_error",
+      "attempts": 6,
+      "trace": "artifacts/repair-regression-v2-2026-10-24/runs/10-boltons_xfrange-r1/workspace/.pico/runs/run_20261024-235824-6b9501/trace.jsonl",
+      "trace_sha256": "1a031d9cc5ffbe06b69e480f052c6af88c3de1a6ab7b113e67cd9a0545a46c17",
+      "completion_verification": {
+        "command": "python -B -m unittest discover -v",
+        "required": true,
+        "status": "failed",
+        "exit_code": 1
+      },
+      "input_tokens": {
+        "observed_total": 8781,
+        "observed_calls": 5,
+        "successful_calls": 5,
+        "complete": false
+      },
+      "output_tokens": {
+        "observed_total": 765,
+        "observed_calls": 5,
+        "successful_calls": 5,
+        "complete": false
+      },
+      "successful_model_calls": 5,
+      "tool_steps": 5,
+      "agent_verified_after_last_write": false,
+      "tool_issues": [
+        {
+          "trace_line": 6,
+          "name": "run_shell",
+          "code": "tool_failed",
+          "exit_code": 1
+        }
+      ],
+      "security_events": [],
+      "final_state_matches_agent_verification": false,
+      "completion_rejections": [],
+      "transport_attempts": 7,
+      "transport_failures": 2,
+      "failure_category": "model_or_runtime_error",
+      "elapsed_ms": 387031,
+      "finished_at": "2026-10-24T16:04:51.158978+00:00",
+      "independent_recheck": {
+        "successful": false,
+        "tests_run": 8,
+        "failures": 4,
+        "errors": 0,
+        "skipped": 0,
+        "expected_failures": 0,
+        "unexpected_successes": 0,
+        "output": "test_01 (test_acceptance.RepairTests) ... FAIL\ntest_02 (test_acceptance.RepairTests) ... FAIL\ntest_03 (test_acceptance.RepairTests) ... ok\ntest_04 (test_acceptance.RepairTests) ... FAIL\ntest_05 (test_acceptance.RepairTests) ... FAIL\ntest_06 (test_acceptance.RepairTests) ... ok\ntest_07 (test_acceptance.RepairTests) ... ok\ntest_08 (test_acceptance.RepairTests) ... ok\n\n======================================================================\nFAIL: test_01 (test_acceptance.RepairTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-regression-v2-release-audit-2026-10-25\\rechecks\\10-boltons_xfrange-r1\\test_acceptance.py\", line 6, in test_01\n    self.assertEqual(render(5,0,step=-1.25),[5.0,3.75,2.5,1.25])\nAssertionError: Lists differ: [] != [5.0, 3.75, 2.5, 1.25]\n\nSecond list contains 4 additional elements.\nFirst extra element 0:\n5.0\n\n- []\n+ [5.0, 3.75, 2.5, 1.25]\n\n======================================================================\nFAIL: test_02 (test_acceptance.RepairTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-regression-v2-release-audit-2026-10-25\\rechecks\\10-boltons_xfrange-r1\\test_acceptance.py\", line 8, in test_02\n    self.assertEqual(render(1,5,step=-1),[])\nAssertionError: Lists differ: [1.0, 0.0, -1.0, -2.0, -3.0, -4.0, -5.0, -[7839 chars]98.0] != []\n\nFirst list contains 1000 additional elements.\nFirst extra element 0:\n1.0\n\nDiff is 10891 characters long. Set self.maxDiff to None to see it.\n\n======================================================================\nFAIL: test_04 (test_acceptance.RepairTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-regression-v2-release-audit-2026-10-25\\rechecks\\10-boltons_xfrange-r1\\test_acceptance.py\", line 12, in test_04\n    self.assertEqual(len(render(1.0,step=.1)),10)\nAssertionError: 11 != 10\n\n======================================================================\nFAIL: test_05 (test_acceptance.RepairTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-regression-v2-release-audit-2026-10-25\\rechecks\\10-boltons_xfrange-r1\\test_acceptance.py\", line 14, in test_05\n    self.assertEqual(render(1.0,step=.1),expected(1.0,step=.1))\nAssertionError: Lists differ: [0.0,[48 chars].7, 0.7999999999999999, 0.8999999999999999, 0.9999999999999999] != [0.0,[48 chars].7, 0.7999999999999999, 0.8999999999999999]\n\nFirst list contains 1 additional elements.\nFirst extra element 10:\n0.9999999999999999\n\n  [0.0,\n   0.1,\n   0.2,\n   0.30000000000000004,\n   0.4,\n   0.5,\n   0.6,\n   0.7,\n   0.7999999999999999,\n-  0.8999999999999999,\n?                    ^\n\n+  0.8999999999999999]\n?                    ^\n\n-  0.9999999999999999]\n\n----------------------------------------------------------------------\nRan 8 tests in 0.005s\n\nFAILED (failures=4)\n",
+        "elapsed_ms": 203,
+        "exit_code": 1,
+        "stderr": "",
+        "accepted": false
+      },
+      "completion_rejection_count": 0,
+      "raw_record": "artifacts/repair-regression-v2-2026-10-24/runs/10-boltons_xfrange-r1/result.json",
+      "raw_record_sha256": "e12e39302abba3113aeb4080ffa25967e5c1dd7452bdd1b3b8258abce04b875c"
+    },
+    {
+      "task_id": "humanize_size",
+      "repeat": 2,
+      "run_key": "11-humanize_size-r2",
+      "category": "regression_compatibility",
+      "origin_kind": "upstream_minimal_reproduction",
+      "started_at": "2026-10-24T16:01:42.743461+00:00",
+      "initial_sha256": {
+        "formatter.py": "1b456af3a429486e22d535e17aed023f1966e133a294c2fb7355f35569522120",
+        "README.md": "e2db7cd0a934e867084a5c95e2e5cfd8f1530dde74465d6c0082569c9304a89d",
+        "test_acceptance.py": "df2c9bf91ccb13b3a750d932adcd346f2105cc1c49e29f53f05feec4776bc84e",
+        "UPSTREAM_LICENSE.txt": "8ba6c18112a431400ad3c743f70670079b302545d98884fc2f28a91c383a0380"
+      },
+      "approvals": [
+        {
+          "name": "run_shell",
+          "allowed": true,
+          "args": {
+            "command": "python -B -m unittest discover -v",
+            "timeout": 60
+          },
+          "at": "2026-10-24T16:01:45.953546+00:00"
+        }
+      ],
+      "functional_passed": false,
+      "workflow_passed": false,
+      "workspace": "artifacts/repair-regression-v2-2026-10-24/runs/11-humanize_size-r2/workspace",
+      "session_id": "20261025-000142-e004f5",
+      "error": "TimeoutError: OpenAI-compatible request timed out after 2 transport attempts; failed-request usage is unknown",
+      "agent_elapsed_ms": 398125,
+      "final_sha256": {
+        "formatter.py": "1b456af3a429486e22d535e17aed023f1966e133a294c2fb7355f35569522120",
+        "README.md": "e2db7cd0a934e867084a5c95e2e5cfd8f1530dde74465d6c0082569c9304a89d",
+        "test_acceptance.py": "df2c9bf91ccb13b3a750d932adcd346f2105cc1c49e29f53f05feec4776bc84e",
+        "UPSTREAM_LICENSE.txt": "8ba6c18112a431400ad3c743f70670079b302545d98884fc2f28a91c383a0380"
+      },
+      "changed_files": [],
+      "scope_valid": true,
+      "protected_files_unchanged": true,
+      "external_verifier": {
+        "successful": false,
+        "tests_run": 8,
+        "failures": 5,
+        "errors": 0,
+        "skipped": 0,
+        "expected_failures": 0,
+        "unexpected_successes": 0,
+        "output": "test_01 (test_acceptance.RepairTests) ... FAIL\ntest_02 (test_acceptance.RepairTests) ... FAIL\ntest_03 (test_acceptance.RepairTests) ... FAIL\ntest_04 (test_acceptance.RepairTests) ... FAIL\ntest_05 (test_acceptance.RepairTests) ... FAIL\ntest_06 (test_acceptance.RepairTests) ... ok\ntest_07 (test_acceptance.RepairTests) ... ok\ntest_08 (test_acceptance.RepairTests) ... ok\n\n======================================================================\nFAIL: test_01 (test_acceptance.RepairTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-regression-v2-2026-10-24\\runs\\11-humanize_size-r2\\external_final\\test_acceptance.py\", line 6, in test_01\n    self.assertEqual(fmt(999999),'1.0 MB')\nAssertionError: '1000.0 kB' != '1.0 MB'\n- 1000.0 kB\n+ 1.0 MB\n\n\n======================================================================\nFAIL: test_02 (test_acceptance.RepairTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-regression-v2-2026-10-24\\runs\\11-humanize_size-r2\\external_final\\test_acceptance.py\", line 8, in test_02\n    self.assertEqual(fmt(999999999),'1.0 GB')\nAssertionError: '1000.0 MB' != '1.0 GB'\n- 1000.0 MB\n+ 1.0 GB\n\n\n======================================================================\nFAIL: test_03 (test_acceptance.RepairTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-regression-v2-2026-10-24\\runs\\11-humanize_size-r2\\external_final\\test_acceptance.py\", line 10, in test_03\n    self.assertEqual(fmt(1024**2-1,binary=True),'1.0 MiB')\nAssertionError: '1024.0 KiB' != '1.0 MiB'\n- 1024.0 KiB\n+ 1.0 MiB\n\n\n======================================================================\nFAIL: test_04 (test_acceptance.RepairTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-regression-v2-2026-10-24\\runs\\11-humanize_size-r2\\external_final\\test_acceptance.py\", line 12, in test_04\n    self.assertEqual(fmt(1024**2-1,gnu=True),'1.0M')\nAssertionError: '1024.0K' != '1.0M'\n- 1024.0K\n+ 1.0M\n\n\n======================================================================\nFAIL: test_05 (test_acceptance.RepairTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-regression-v2-2026-10-24\\runs\\11-humanize_size-r2\\external_final\\test_acceptance.py\", line 14, in test_05\n    self.assertEqual(fmt(-999999),'-1.0 MB')\nAssertionError: '-1000.0 kB' != '-1.0 MB'\n- -1000.0 kB\n+ -1.0 MB\n\n\n----------------------------------------------------------------------\nRan 8 tests in 0.002s\n\nFAILED (failures=5)\n",
+        "elapsed_ms": 203,
+        "exit_code": 1,
+        "stderr": "",
+        "accepted": false
+      },
+      "run_id": "run_20261025-000142-153fda",
+      "status": "failed",
+      "stop_reason": "model_error",
+      "attempts": 9,
+      "trace": "artifacts/repair-regression-v2-2026-10-24/runs/11-humanize_size-r2/workspace/.pico/runs/run_20261025-000142-153fda/trace.jsonl",
+      "trace_sha256": "e6df46c599f1a80cfe272d899f80ab7deef689345e229a54e285a2bef450a56e",
+      "completion_verification": {
+        "command": "python -B -m unittest discover -v",
+        "required": true,
+        "status": "failed",
+        "exit_code": 1
+      },
+      "input_tokens": {
+        "observed_total": 16965,
+        "observed_calls": 8,
+        "successful_calls": 8,
+        "complete": false
+      },
+      "output_tokens": {
+        "observed_total": 803,
+        "observed_calls": 8,
+        "successful_calls": 8,
+        "complete": false
+      },
+      "successful_model_calls": 8,
+      "tool_steps": 8,
+      "agent_verified_after_last_write": false,
+      "tool_issues": [
+        {
+          "trace_line": 6,
+          "name": "run_shell",
+          "code": "tool_failed",
+          "exit_code": 1
+        },
+        {
+          "trace_line": 30,
+          "name": "read_file",
+          "code": "repeated_identical_call",
+          "exit_code": null
+        }
+      ],
+      "security_events": [],
+      "final_state_matches_agent_verification": false,
+      "completion_rejections": [],
+      "transport_attempts": 10,
+      "transport_failures": 2,
+      "failure_category": "model_or_runtime_error",
+      "elapsed_ms": 398390,
+      "finished_at": "2026-10-24T16:08:21.129518+00:00",
+      "independent_recheck": {
+        "successful": false,
+        "tests_run": 8,
+        "failures": 5,
+        "errors": 0,
+        "skipped": 0,
+        "expected_failures": 0,
+        "unexpected_successes": 0,
+        "output": "test_01 (test_acceptance.RepairTests) ... FAIL\ntest_02 (test_acceptance.RepairTests) ... FAIL\ntest_03 (test_acceptance.RepairTests) ... FAIL\ntest_04 (test_acceptance.RepairTests) ... FAIL\ntest_05 (test_acceptance.RepairTests) ... FAIL\ntest_06 (test_acceptance.RepairTests) ... ok\ntest_07 (test_acceptance.RepairTests) ... ok\ntest_08 (test_acceptance.RepairTests) ... ok\n\n======================================================================\nFAIL: test_01 (test_acceptance.RepairTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-regression-v2-release-audit-2026-10-25\\rechecks\\11-humanize_size-r2\\test_acceptance.py\", line 6, in test_01\n    self.assertEqual(fmt(999999),'1.0 MB')\nAssertionError: '1000.0 kB' != '1.0 MB'\n- 1000.0 kB\n+ 1.0 MB\n\n\n======================================================================\nFAIL: test_02 (test_acceptance.RepairTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-regression-v2-release-audit-2026-10-25\\rechecks\\11-humanize_size-r2\\test_acceptance.py\", line 8, in test_02\n    self.assertEqual(fmt(999999999),'1.0 GB')\nAssertionError: '1000.0 MB' != '1.0 GB'\n- 1000.0 MB\n+ 1.0 GB\n\n\n======================================================================\nFAIL: test_03 (test_acceptance.RepairTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-regression-v2-release-audit-2026-10-25\\rechecks\\11-humanize_size-r2\\test_acceptance.py\", line 10, in test_03\n    self.assertEqual(fmt(1024**2-1,binary=True),'1.0 MiB')\nAssertionError: '1024.0 KiB' != '1.0 MiB'\n- 1024.0 KiB\n+ 1.0 MiB\n\n\n======================================================================\nFAIL: test_04 (test_acceptance.RepairTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-regression-v2-release-audit-2026-10-25\\rechecks\\11-humanize_size-r2\\test_acceptance.py\", line 12, in test_04\n    self.assertEqual(fmt(1024**2-1,gnu=True),'1.0M')\nAssertionError: '1024.0K' != '1.0M'\n- 1024.0K\n+ 1.0M\n\n\n======================================================================\nFAIL: test_05 (test_acceptance.RepairTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-regression-v2-release-audit-2026-10-25\\rechecks\\11-humanize_size-r2\\test_acceptance.py\", line 14, in test_05\n    self.assertEqual(fmt(-999999),'-1.0 MB')\nAssertionError: '-1000.0 kB' != '-1.0 MB'\n- -1000.0 kB\n+ -1.0 MB\n\n\n----------------------------------------------------------------------\nRan 8 tests in 0.003s\n\nFAILED (failures=5)\n",
+        "elapsed_ms": 188,
+        "exit_code": 1,
+        "stderr": "",
+        "accepted": false
+      },
+      "completion_rejection_count": 0,
+      "raw_record": "artifacts/repair-regression-v2-2026-10-24/runs/11-humanize_size-r2/result.json",
+      "raw_record_sha256": "63fd6dfa1806c4a02b85de3cd0272d029a56e465e3e5e7fdff9fdfad659c73ac"
+    },
+    {
+      "task_id": "inventory_reservation",
+      "repeat": 2,
+      "run_key": "12-inventory_reservation-r2",
+      "category": "cross_file",
+      "origin_kind": "author_created",
+      "started_at": "2026-10-24T16:02:54.837397+00:00",
+      "initial_sha256": {
+        "orders.py": "62d740b241d439a99a11df348814a571a5aad01e742c138e6081b334c55e996c",
+        "README.md": "4750c8dc831f0c7e897b4d94ffcffafb4327d6569c99a79be224fcf7fc7dba8f",
+        "stock.py": "492a726bc64026a4440d856192ebd9fbb9c84a1a5ddb9a93e7d434b1e2974baf",
+        "test_acceptance.py": "4a6d884bb50c653280c94baa35673f6abbe76604251932bce6cb15edb6d53cbe"
+      },
+      "approvals": [
+        {
+          "name": "run_shell",
+          "allowed": true,
+          "args": {
+            "command": "python -B -m unittest discover -v",
+            "timeout": 60
+          },
+          "at": "2026-10-24T16:02:58.473349+00:00"
+        },
+        {
+          "name": "patch_file",
+          "allowed": true,
+          "args": {
+            "path": "stock.py",
+            "old_text": "def reserve(stock, sku, qty):\n    if not isinstance(qty, int) or qty < 1:\n        raise ValueError('invalid quantity')\n    stock[sku] -= qty\n    if stock[sku] < 0:\n        raise ValueError('insufficient stock')\n    return stock[sku]",
+            "new_text": "def reserve(stock, sku, qty):\n    if isinstance(qty, bool) or not isinstance(qty, int) or qty < 1:\n        raise ValueError('invalid quantity')\n    if sku not in stock:\n        raise ValueError('unknown sku')\n    if stock[sku] < qty:\n        raise ValueError('insufficient stock')\n    stock[sku] -= qty\n    return stock[sku]"
+          },
+          "at": "2026-10-24T16:03:53.206449+00:00"
+        },
+        {
+          "name": "patch_file",
+          "allowed": true,
+          "args": {
+            "path": "orders.py",
+            "old_text": "def place_order(stock, sku, qty):\n    reserve(stock, sku, qty)\n    stock[sku] -= qty\n    return {'sku':sku, 'quantity':qty, 'remaining':stock[sku]}",
+            "new_text": "def place_order(stock, sku, qty):\n    remaining = reserve(stock, sku, qty)\n    return {'sku': sku, 'quantity': qty, 'remaining': remaining}"
+          },
+          "at": "2026-10-24T16:04:04.076457+00:00"
+        },
+        {
+          "name": "run_shell",
+          "allowed": true,
+          "args": {
+            "command": "python -B -m unittest discover -v",
+            "timeout": 30
+          },
+          "at": "2026-10-24T16:04:08.243668+00:00"
+        }
+      ],
+      "functional_passed": true,
+      "workflow_passed": true,
+      "workspace": "artifacts/repair-regression-v2-2026-10-24/runs/12-inventory_reservation-r2/workspace",
+      "session_id": "20261025-000254-80d5ee",
+      "answer": "修复完成，测试全部通过。\n\n修改内容：\n1. **stock.py - `reserve`**：\n   - 校验 `qty` 必须是正的非 bool 整数（`isinstance(qty, bool)` 或非 `int` 或 `qty < 1` 时抛 `ValueError`），修复了 `True` 被当作 1 通过校验的问题。\n   - 先检查未知 sku 和库存不足再扣减，缺货/未知 sku 抛 `ValueError` 且不修改库存（原实现先扣减后检查，失败时污染了库存）。\n   - 成功时扣减一次并返回剩余量。\n\n2. **orders.py - `place_order`**：\n   - 使用 `reserve` 的返回值作为 `remaining`，删除了重复的 `stock[sku] -= qty`（原实现导致双重扣减，test_01 中剩余量错误）。\n   - 返回 `{'sku': sku, 'quantity': qty, 'remaining': remaining}`。\n\n测试验证：重新运行 `python -B -m unittest discover -v`，exit code 0，8 个测试（test_01 ~ test_08）全部 OK，包括 bool 拒绝、缺货不变更库存、未知 sku、非整数 qty 等契约用例。未修改测试或其他文件。",
+      "agent_elapsed_ms": 84188,
+      "final_sha256": {
+        "orders.py": "0c53c1a5bc15ec8fab62bfb23d2d2ca83c1dde4ede41b63a452f9d2328d05e50",
+        "README.md": "4750c8dc831f0c7e897b4d94ffcffafb4327d6569c99a79be224fcf7fc7dba8f",
+        "stock.py": "1147efd7d5464ebe25193a84ae4bd69e1a13d5b26dddfc04a6414a6f628f00d8",
+        "test_acceptance.py": "4a6d884bb50c653280c94baa35673f6abbe76604251932bce6cb15edb6d53cbe"
+      },
+      "changed_files": [
+        "orders.py",
+        "stock.py"
+      ],
+      "scope_valid": true,
+      "protected_files_unchanged": true,
+      "external_verifier": {
+        "successful": true,
+        "tests_run": 8,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "expected_failures": 0,
+        "unexpected_successes": 0,
+        "output": "test_01 (test_acceptance.RepairTests) ... ok\ntest_02 (test_acceptance.RepairTests) ... ok\ntest_03 (test_acceptance.RepairTests) ... ok\ntest_04 (test_acceptance.RepairTests) ... ok\ntest_05 (test_acceptance.RepairTests) ... ok\ntest_06 (test_acceptance.RepairTests) ... ok\ntest_07 (test_acceptance.RepairTests) ... ok\ntest_08 (test_acceptance.RepairTests) ... ok\n\n----------------------------------------------------------------------\nRan 8 tests in 0.000s\n\nOK\n",
+        "elapsed_ms": 187,
+        "exit_code": 0,
+        "stderr": "",
+        "accepted": true
+      },
+      "run_id": "run_20261025-000254-f7dafd",
+      "status": "completed",
+      "stop_reason": "final_answer_returned",
+      "attempts": 10,
+      "trace": "artifacts/repair-regression-v2-2026-10-24/runs/12-inventory_reservation-r2/workspace/.pico/runs/run_20261025-000254-f7dafd/trace.jsonl",
+      "trace_sha256": "c3c9f13f963c84ec6efe0aa9dc1b090f7b0169e17f27b89b75d4009f67458872",
+      "completion_verification": {
+        "command": "python -B -m unittest discover -v",
+        "required": true,
+        "status": "passed",
+        "exit_code": 0
+      },
+      "input_tokens": {
+        "observed_total": 21712,
+        "observed_calls": 10,
+        "successful_calls": 10,
+        "complete": true
+      },
+      "output_tokens": {
+        "observed_total": 3617,
+        "observed_calls": 10,
+        "successful_calls": 10,
+        "complete": true
+      },
+      "successful_model_calls": 10,
+      "tool_steps": 9,
+      "agent_verified_after_last_write": true,
+      "tool_issues": [
+        {
+          "trace_line": 6,
+          "name": "run_shell",
+          "code": "tool_failed",
+          "exit_code": 1
+        },
+        {
+          "trace_line": 42,
+          "name": "patch_file",
+          "code": "invalid_arguments",
+          "exit_code": null
+        }
+      ],
+      "security_events": [],
+      "final_state_matches_agent_verification": true,
+      "completion_rejections": [],
+      "transport_attempts": 10,
+      "transport_failures": 0,
+      "failure_category": "success",
+      "elapsed_ms": 84422,
+      "finished_at": "2026-10-24T16:04:19.266736+00:00",
+      "independent_recheck": {
+        "successful": true,
+        "tests_run": 8,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "expected_failures": 0,
+        "unexpected_successes": 0,
+        "output": "test_01 (test_acceptance.RepairTests) ... ok\ntest_02 (test_acceptance.RepairTests) ... ok\ntest_03 (test_acceptance.RepairTests) ... ok\ntest_04 (test_acceptance.RepairTests) ... ok\ntest_05 (test_acceptance.RepairTests) ... ok\ntest_06 (test_acceptance.RepairTests) ... ok\ntest_07 (test_acceptance.RepairTests) ... ok\ntest_08 (test_acceptance.RepairTests) ... ok\n\n----------------------------------------------------------------------\nRan 8 tests in 0.000s\n\nOK\n",
+        "elapsed_ms": 188,
+        "exit_code": 0,
+        "stderr": "",
+        "accepted": true
+      },
+      "completion_rejection_count": 0,
+      "raw_record": "artifacts/repair-regression-v2-2026-10-24/runs/12-inventory_reservation-r2/result.json",
+      "raw_record_sha256": "dc8e85819f3dd1e8017a80c860f09ad4ae71e12a4ec875f732e94cb69a73ff23"
+    }
+  ],
+  "evidence_sha256": {
+    "artifacts/repair-regression-v2-2026-10-24/runs/01-humanize_size-r1/approvals.jsonl": "1ac67035e11124b6d6ac31a810d2a08228daaf2bbce1ade014cd4b31258172b6",
+    "artifacts/repair-regression-v2-2026-10-24/runs/01-humanize_size-r1/changes.diff": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "artifacts/repair-regression-v2-2026-10-24/runs/01-humanize_size-r1/model_io.jsonl": "a1626e7e5be74085ffbd3afad6a5d1725f0620465b03be3b97e1290d74d86c49",
+    "artifacts/repair-regression-v2-2026-10-24/runs/01-humanize_size-r1/result.json": "3bcd3260e1766126c5fcda5bd2cca332d0ebcc04b0e14668d9dc9f3141c09219",
+    "artifacts/repair-regression-v2-2026-10-24/runs/01-humanize_size-r1/started.json": "c74fe240446a036557f2b678f58f98c86cc1778f880c2b8c0ca0edec965b41ff",
+    "artifacts/repair-regression-v2-2026-10-24/runs/01-humanize_size-r1/tool_io.jsonl": "af4579f81d7cdfb4aec989eeecf9b97d73f31713e550c5b2657a235a528f0e2e",
+    "artifacts/repair-regression-v2-2026-10-24/runs/01-humanize_size-r1/transport.jsonl": "c40bac689fec341dbc3b3c84bc2f3ebc3891ceadb3ab2efadf5bcca7a19831b1",
+    "artifacts/repair-regression-v2-2026-10-24/runs/01-humanize_size-r1/external_final/formatter.py": "1b456af3a429486e22d535e17aed023f1966e133a294c2fb7355f35569522120",
+    "artifacts/repair-regression-v2-2026-10-24/runs/01-humanize_size-r1/external_final/README.md": "e2db7cd0a934e867084a5c95e2e5cfd8f1530dde74465d6c0082569c9304a89d",
+    "artifacts/repair-regression-v2-2026-10-24/runs/01-humanize_size-r1/external_final/test_acceptance.py": "df2c9bf91ccb13b3a750d932adcd346f2105cc1c49e29f53f05feec4776bc84e",
+    "artifacts/repair-regression-v2-2026-10-24/runs/01-humanize_size-r1/external_final/UPSTREAM_LICENSE.txt": "8ba6c18112a431400ad3c743f70670079b302545d98884fc2f28a91c383a0380",
+    "artifacts/repair-regression-v2-2026-10-24/runs/01-humanize_size-r1/workspace/formatter.py": "1b456af3a429486e22d535e17aed023f1966e133a294c2fb7355f35569522120",
+    "artifacts/repair-regression-v2-2026-10-24/runs/01-humanize_size-r1/workspace/README.md": "e2db7cd0a934e867084a5c95e2e5cfd8f1530dde74465d6c0082569c9304a89d",
+    "artifacts/repair-regression-v2-2026-10-24/runs/01-humanize_size-r1/workspace/test_acceptance.py": "df2c9bf91ccb13b3a750d932adcd346f2105cc1c49e29f53f05feec4776bc84e",
+    "artifacts/repair-regression-v2-2026-10-24/runs/01-humanize_size-r1/workspace/UPSTREAM_LICENSE.txt": "8ba6c18112a431400ad3c743f70670079b302545d98884fc2f28a91c383a0380",
+    "artifacts/repair-regression-v2-2026-10-24/runs/01-humanize_size-r1/workspace/.pico/runs/run_20261024-234450-83e3cd/report.json": "996e9e0f98c9d05edc321d735fe8c0fe0c1701d8c3dde33fb702120a70a34f9d",
+    "artifacts/repair-regression-v2-2026-10-24/runs/01-humanize_size-r1/workspace/.pico/runs/run_20261024-234450-83e3cd/task_state.json": "de5f2465a3027ad6bd2bbd4ad92bee618c07deb8718f69a8251ddfe09f656284",
+    "artifacts/repair-regression-v2-2026-10-24/runs/01-humanize_size-r1/workspace/.pico/runs/run_20261024-234450-83e3cd/trace.jsonl": "8e33eb2eb080334718fb3eecce07ff929d50c8fa4c732721190840559ab4265b",
+    "artifacts/repair-regression-v2-2026-10-24/runs/01-humanize_size-r1/workspace/.pico/sessions/20261024-234450-17afb2.json": "1a80e4841b2de0258bf449069838268582e8b520f05002a6280217b3ca9f2883",
+    "artifacts/repair-regression-v2-2026-10-24/runs/02-humanize_metric-r2/approvals.jsonl": "a9a6f8389a84b379340c3085433e1438040696c93360ba575f768803a11a0adf",
+    "artifacts/repair-regression-v2-2026-10-24/runs/02-humanize_metric-r2/changes.diff": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "artifacts/repair-regression-v2-2026-10-24/runs/02-humanize_metric-r2/model_io.jsonl": "895c7ef5b731a8d12fcb461bc6a3eeae2fd5792135a64f65a741ad80b717aea9",
+    "artifacts/repair-regression-v2-2026-10-24/runs/02-humanize_metric-r2/result.json": "0c940ba81f2cab3b9fc6e820d1c62a83f56a971ac669a477e3b698cf0bde4df6",
+    "artifacts/repair-regression-v2-2026-10-24/runs/02-humanize_metric-r2/started.json": "6b6655c814ae15f0490117c6bddd9eaeb141ff1e9a99330e012febd62d258f30",
+    "artifacts/repair-regression-v2-2026-10-24/runs/02-humanize_metric-r2/tool_io.jsonl": "079fe40b322b5fac463d4ddd50c3435e30720da9be17ee50c780cfe443e27a83",
+    "artifacts/repair-regression-v2-2026-10-24/runs/02-humanize_metric-r2/transport.jsonl": "1c4845c88ce369845aef2c9fc745c73bc47c963c28c1f52cd1f47279f779d182",
+    "artifacts/repair-regression-v2-2026-10-24/runs/02-humanize_metric-r2/external_final/formatter.py": "fe08cf68c4d8de14c7fa44c485fd84c740cd2027bccadc0aaab8405302aac7a1",
+    "artifacts/repair-regression-v2-2026-10-24/runs/02-humanize_metric-r2/external_final/README.md": "4f0746b87c2dcb107fe2adf3cbf08eb51950588b11d7ec3703f9ba2fc786a245",
+    "artifacts/repair-regression-v2-2026-10-24/runs/02-humanize_metric-r2/external_final/test_acceptance.py": "464111112f9cd1a97bab6ea8ef2f271ec74b63473b3d8efe3bdd626a248dc2fd",
+    "artifacts/repair-regression-v2-2026-10-24/runs/02-humanize_metric-r2/external_final/UPSTREAM_LICENSE.txt": "8ba6c18112a431400ad3c743f70670079b302545d98884fc2f28a91c383a0380",
+    "artifacts/repair-regression-v2-2026-10-24/runs/02-humanize_metric-r2/workspace/formatter.py": "fe08cf68c4d8de14c7fa44c485fd84c740cd2027bccadc0aaab8405302aac7a1",
+    "artifacts/repair-regression-v2-2026-10-24/runs/02-humanize_metric-r2/workspace/README.md": "4f0746b87c2dcb107fe2adf3cbf08eb51950588b11d7ec3703f9ba2fc786a245",
+    "artifacts/repair-regression-v2-2026-10-24/runs/02-humanize_metric-r2/workspace/test_acceptance.py": "464111112f9cd1a97bab6ea8ef2f271ec74b63473b3d8efe3bdd626a248dc2fd",
+    "artifacts/repair-regression-v2-2026-10-24/runs/02-humanize_metric-r2/workspace/UPSTREAM_LICENSE.txt": "8ba6c18112a431400ad3c743f70670079b302545d98884fc2f28a91c383a0380",
+    "artifacts/repair-regression-v2-2026-10-24/runs/02-humanize_metric-r2/workspace/.pico/runs/run_20261024-234450-3768df/report.json": "31bc4a26a3e4b4cba87d5e52c2c5a6167ae206abbdaba1cfbe81376c9491fdd6",
+    "artifacts/repair-regression-v2-2026-10-24/runs/02-humanize_metric-r2/workspace/.pico/runs/run_20261024-234450-3768df/task_state.json": "66c9c536cec2065e7be759cfe4dbf1a3a7e69fe91ddffe8e62b9312f98e2de38",
+    "artifacts/repair-regression-v2-2026-10-24/runs/02-humanize_metric-r2/workspace/.pico/runs/run_20261024-234450-3768df/trace.jsonl": "70a13d3908982fe254f7cbb2c0a6acc2614846edb8b6d8bc94fe87ed516ecc54",
+    "artifacts/repair-regression-v2-2026-10-24/runs/02-humanize_metric-r2/workspace/.pico/sessions/20261024-234450-4553c5.json": "a58e20f01e21d7f988633abf274dd0803a0502a2325739443fcb93367e37ff56",
+    "artifacts/repair-regression-v2-2026-10-24/runs/03-humanize_metric-r1/approvals.jsonl": "f83fcefbd740f9aaf8978de4cc6dc297611dc4fab5018b9c10424922b577b409",
+    "artifacts/repair-regression-v2-2026-10-24/runs/03-humanize_metric-r1/changes.diff": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "artifacts/repair-regression-v2-2026-10-24/runs/03-humanize_metric-r1/model_io.jsonl": "31edb6859f778f9dbf48f5ae3b7dfe4768bd147c65d3044932ceb16fd429164f",
+    "artifacts/repair-regression-v2-2026-10-24/runs/03-humanize_metric-r1/result.json": "70407587eeda812159809d84ef19d5e9ee3b369980482792a747c38b196b152e",
+    "artifacts/repair-regression-v2-2026-10-24/runs/03-humanize_metric-r1/started.json": "c1a355c90b63ae50e915c2071a7370d2927f632ce86ea84c33c055655d9c9b33",
+    "artifacts/repair-regression-v2-2026-10-24/runs/03-humanize_metric-r1/tool_io.jsonl": "3a7df5b4146955f3fe923a398c50df67aaf26b26399c740df4fdc8621315625b",
+    "artifacts/repair-regression-v2-2026-10-24/runs/03-humanize_metric-r1/transport.jsonl": "83f0af4e37462606e865114107a335002ed9006ea98bcc7279e7ffd9afe5a4f6",
+    "artifacts/repair-regression-v2-2026-10-24/runs/03-humanize_metric-r1/external_final/formatter.py": "fe08cf68c4d8de14c7fa44c485fd84c740cd2027bccadc0aaab8405302aac7a1",
+    "artifacts/repair-regression-v2-2026-10-24/runs/03-humanize_metric-r1/external_final/README.md": "4f0746b87c2dcb107fe2adf3cbf08eb51950588b11d7ec3703f9ba2fc786a245",
+    "artifacts/repair-regression-v2-2026-10-24/runs/03-humanize_metric-r1/external_final/test_acceptance.py": "464111112f9cd1a97bab6ea8ef2f271ec74b63473b3d8efe3bdd626a248dc2fd",
+    "artifacts/repair-regression-v2-2026-10-24/runs/03-humanize_metric-r1/external_final/UPSTREAM_LICENSE.txt": "8ba6c18112a431400ad3c743f70670079b302545d98884fc2f28a91c383a0380",
+    "artifacts/repair-regression-v2-2026-10-24/runs/03-humanize_metric-r1/workspace/formatter.py": "fe08cf68c4d8de14c7fa44c485fd84c740cd2027bccadc0aaab8405302aac7a1",
+    "artifacts/repair-regression-v2-2026-10-24/runs/03-humanize_metric-r1/workspace/README.md": "4f0746b87c2dcb107fe2adf3cbf08eb51950588b11d7ec3703f9ba2fc786a245",
+    "artifacts/repair-regression-v2-2026-10-24/runs/03-humanize_metric-r1/workspace/test_acceptance.py": "464111112f9cd1a97bab6ea8ef2f271ec74b63473b3d8efe3bdd626a248dc2fd",
+    "artifacts/repair-regression-v2-2026-10-24/runs/03-humanize_metric-r1/workspace/UPSTREAM_LICENSE.txt": "8ba6c18112a431400ad3c743f70670079b302545d98884fc2f28a91c383a0380",
+    "artifacts/repair-regression-v2-2026-10-24/runs/03-humanize_metric-r1/workspace/.pico/runs/run_20261024-234450-3c0b57/report.json": "175c5f7adbb82779e16d03999a7cf97f558df794d1923de255c2418831505b8b",
+    "artifacts/repair-regression-v2-2026-10-24/runs/03-humanize_metric-r1/workspace/.pico/runs/run_20261024-234450-3c0b57/task_state.json": "88bec75397cb11129aebad6420e392632603163eea8e6a2ed871ddbcbffb26b7",
+    "artifacts/repair-regression-v2-2026-10-24/runs/03-humanize_metric-r1/workspace/.pico/runs/run_20261024-234450-3c0b57/trace.jsonl": "ab11bc5da8d2e02c75896a935df9c74266dd1c2d6f5a072f982b0e8bb1892933",
+    "artifacts/repair-regression-v2-2026-10-24/runs/03-humanize_metric-r1/workspace/.pico/sessions/20261024-234450-3bea81.json": "c1038c6bd25bdc002cebbc1cea31444027264bf17c305755d288e5b935282468",
+    "artifacts/repair-regression-v2-2026-10-24/runs/04-utc_storage_contract-r1/approvals.jsonl": "6179ed51b8e57069ca1fe53929ea5bbe18ee2772f259c190fc318b3d88e44fe8",
+    "artifacts/repair-regression-v2-2026-10-24/runs/04-utc_storage_contract-r1/changes.diff": "3dd76ddcc9e8a387ffd8857c60c6384d5799377c7f184ce5807580b114ad3e2f",
+    "artifacts/repair-regression-v2-2026-10-24/runs/04-utc_storage_contract-r1/model_io.jsonl": "dd7c19c13149a5809083dafe04f6c8b37a6c243ac02e9d3eeea3a51f3a8bfc71",
+    "artifacts/repair-regression-v2-2026-10-24/runs/04-utc_storage_contract-r1/result.json": "0061e9c21055bb7e189d41c875f7bec0ee46fa5e64ec9346e83b90aa57af9d6f",
+    "artifacts/repair-regression-v2-2026-10-24/runs/04-utc_storage_contract-r1/started.json": "a80510fcc2c5d64930f79abcbd10d9f4d64f976e34e0519d869911500e6f7d22",
+    "artifacts/repair-regression-v2-2026-10-24/runs/04-utc_storage_contract-r1/tool_io.jsonl": "49b664db5acb9ae61d8b1642906b58daad128204336e09eb934b5f57c33aa738",
+    "artifacts/repair-regression-v2-2026-10-24/runs/04-utc_storage_contract-r1/transport.jsonl": "6ae69b16a5b7f63757f7f2189c11079090d87d69ad4c6fc763105479059ee592",
+    "artifacts/repair-regression-v2-2026-10-24/runs/04-utc_storage_contract-r1/external_final/README.md": "ce87b9286cb0ec3ba25e518cc5601a46e6ade95d64da448a17ce63d135da615c",
+    "artifacts/repair-regression-v2-2026-10-24/runs/04-utc_storage_contract-r1/external_final/store.py": "a844e9983dd31c51045b4676ccb56c5cc3a9970272662e468e5505488d165551",
+    "artifacts/repair-regression-v2-2026-10-24/runs/04-utc_storage_contract-r1/external_final/test_acceptance.py": "5abe6186871ca892b261d8cdce0a7c6631f5780ccc31194730d7d9f71dc73033",
+    "artifacts/repair-regression-v2-2026-10-24/runs/04-utc_storage_contract-r1/external_final/timestamps.py": "41e6219cde51bad5e80622a505638688ee2cf2419fcc1d20e058e98572bbd1ca",
+    "artifacts/repair-regression-v2-2026-10-24/runs/04-utc_storage_contract-r1/workspace/README.md": "ce87b9286cb0ec3ba25e518cc5601a46e6ade95d64da448a17ce63d135da615c",
+    "artifacts/repair-regression-v2-2026-10-24/runs/04-utc_storage_contract-r1/workspace/store.py": "a844e9983dd31c51045b4676ccb56c5cc3a9970272662e468e5505488d165551",
+    "artifacts/repair-regression-v2-2026-10-24/runs/04-utc_storage_contract-r1/workspace/test_acceptance.py": "5abe6186871ca892b261d8cdce0a7c6631f5780ccc31194730d7d9f71dc73033",
+    "artifacts/repair-regression-v2-2026-10-24/runs/04-utc_storage_contract-r1/workspace/timestamps.py": "41e6219cde51bad5e80622a505638688ee2cf2419fcc1d20e058e98572bbd1ca",
+    "artifacts/repair-regression-v2-2026-10-24/runs/04-utc_storage_contract-r1/workspace/.pico/runs/run_20261024-235122-4763a2/report.json": "ff5c9826f7443eeaec8d9a3031ca32f316319b079b3c71eeff674c7a6bb631b2",
+    "artifacts/repair-regression-v2-2026-10-24/runs/04-utc_storage_contract-r1/workspace/.pico/runs/run_20261024-235122-4763a2/task_state.json": "0cb283c548c118d5b8ff5c22a94dce63bb392a9707d965480fbadc7e3026e66b",
+    "artifacts/repair-regression-v2-2026-10-24/runs/04-utc_storage_contract-r1/workspace/.pico/runs/run_20261024-235122-4763a2/trace.jsonl": "46f0530823ceed79dc33bc9ee7d71de904fa82ab69de96b9a1604a4b4a59252e",
+    "artifacts/repair-regression-v2-2026-10-24/runs/04-utc_storage_contract-r1/workspace/.pico/sessions/20261024-235122-44bcfe.json": "f1205a890c869110d205852096cbed075ba6e3e28fec98888f0cf45eb89bc30a",
+    "artifacts/repair-regression-v2-2026-10-24/runs/05-boltons_splitlines-r1/approvals.jsonl": "803ba19d3c3cf1a13fc11a4dfd7f0a9b0912e8ddb8e6f39de2459757bfc55609",
+    "artifacts/repair-regression-v2-2026-10-24/runs/05-boltons_splitlines-r1/changes.diff": "65d5921856ad6d731bcd4e9e55c5924e8592d39c48c0287c8e51fdaca9ac7ad0",
+    "artifacts/repair-regression-v2-2026-10-24/runs/05-boltons_splitlines-r1/model_io.jsonl": "bf3381e563d64da4c530389dc3b3ec3b8d81b342d9a96c23bacf7a9b1176a253",
+    "artifacts/repair-regression-v2-2026-10-24/runs/05-boltons_splitlines-r1/result.json": "a03158486ef9153384ec194f3cfebdd7364ce418366d301e60447eada263c302",
+    "artifacts/repair-regression-v2-2026-10-24/runs/05-boltons_splitlines-r1/started.json": "6eb6158be9d4eecbe020f893c8ba977a67ef7ea41d9a6c5972f599c8822d5f74",
+    "artifacts/repair-regression-v2-2026-10-24/runs/05-boltons_splitlines-r1/tool_io.jsonl": "35283646da0bb9ba6309388c343feb39d077f8a02f8a968e7b400565f0af50b2",
+    "artifacts/repair-regression-v2-2026-10-24/runs/05-boltons_splitlines-r1/transport.jsonl": "7b1b4ec6e1eddfa752cddb2466682cae74788b91536ff45104d216cfb384583e",
+    "artifacts/repair-regression-v2-2026-10-24/runs/05-boltons_splitlines-r1/external_final/config.py": "464bc6613aec3cb276a2996ecb81c1d9a60b81adc28004859524de5b34c139fc",
+    "artifacts/repair-regression-v2-2026-10-24/runs/05-boltons_splitlines-r1/external_final/public_api.py": "f8ad36406a5c438628d7a856c69903f144cc21cd863bbe488ff9a83a147f5155",
+    "artifacts/repair-regression-v2-2026-10-24/runs/05-boltons_splitlines-r1/external_final/README.md": "9b090a037ea61c421b94d6d608b0e516c238becb1f6eeed73e12a015079a9479",
+    "artifacts/repair-regression-v2-2026-10-24/runs/05-boltons_splitlines-r1/external_final/test_acceptance.py": "d57aa1bee4e032855a0244ec658e3226c0d5efd297c94b2664ebe708c1636c68",
+    "artifacts/repair-regression-v2-2026-10-24/runs/05-boltons_splitlines-r1/external_final/text_core.py": "80eff98ef737c34c2c7527bd59e3b4b5d2645070a287fc17fb6c2865de703d07",
+    "artifacts/repair-regression-v2-2026-10-24/runs/05-boltons_splitlines-r1/external_final/transport.py": "68fcc59086bdbbe897d8d0190bf99bd249d44c9f8bc6175e68aeb9cfcd2e8a39",
+    "artifacts/repair-regression-v2-2026-10-24/runs/05-boltons_splitlines-r1/external_final/UPSTREAM_LICENSE.txt": "617273daf4b7b4fbc0e3068bca7df3e3dbc29b4c5641e185917c775cf1795111",
+    "artifacts/repair-regression-v2-2026-10-24/runs/05-boltons_splitlines-r1/external_final/validation.py": "7ea34d2d7137c985f35d88b223150cd462055a6c0fed9684d404127c355bd6a9",
+    "artifacts/repair-regression-v2-2026-10-24/runs/05-boltons_splitlines-r1/workspace/config.py": "464bc6613aec3cb276a2996ecb81c1d9a60b81adc28004859524de5b34c139fc",
+    "artifacts/repair-regression-v2-2026-10-24/runs/05-boltons_splitlines-r1/workspace/public_api.py": "f8ad36406a5c438628d7a856c69903f144cc21cd863bbe488ff9a83a147f5155",
+    "artifacts/repair-regression-v2-2026-10-24/runs/05-boltons_splitlines-r1/workspace/README.md": "9b090a037ea61c421b94d6d608b0e516c238becb1f6eeed73e12a015079a9479",
+    "artifacts/repair-regression-v2-2026-10-24/runs/05-boltons_splitlines-r1/workspace/test_acceptance.py": "d57aa1bee4e032855a0244ec658e3226c0d5efd297c94b2664ebe708c1636c68",
+    "artifacts/repair-regression-v2-2026-10-24/runs/05-boltons_splitlines-r1/workspace/text_core.py": "80eff98ef737c34c2c7527bd59e3b4b5d2645070a287fc17fb6c2865de703d07",
+    "artifacts/repair-regression-v2-2026-10-24/runs/05-boltons_splitlines-r1/workspace/transport.py": "68fcc59086bdbbe897d8d0190bf99bd249d44c9f8bc6175e68aeb9cfcd2e8a39",
+    "artifacts/repair-regression-v2-2026-10-24/runs/05-boltons_splitlines-r1/workspace/UPSTREAM_LICENSE.txt": "617273daf4b7b4fbc0e3068bca7df3e3dbc29b4c5641e185917c775cf1795111",
+    "artifacts/repair-regression-v2-2026-10-24/runs/05-boltons_splitlines-r1/workspace/validation.py": "7ea34d2d7137c985f35d88b223150cd462055a6c0fed9684d404127c355bd6a9",
+    "artifacts/repair-regression-v2-2026-10-24/runs/05-boltons_splitlines-r1/workspace/.pico/runs/run_20261024-235131-d50d73/report.json": "85aef1a1a57b96d529a66313a12d29894f116040007edab25aa0ec0e52b2db6b",
+    "artifacts/repair-regression-v2-2026-10-24/runs/05-boltons_splitlines-r1/workspace/.pico/runs/run_20261024-235131-d50d73/task_state.json": "64ce71e48a2b27440ebd4dc314ec99eaadbbea0b8ddf145f9856508e060bd659",
+    "artifacts/repair-regression-v2-2026-10-24/runs/05-boltons_splitlines-r1/workspace/.pico/runs/run_20261024-235131-d50d73/trace.jsonl": "e34f237b364c121684de2f88d44c49005728b1ac5669ca191314efc00ea89d55",
+    "artifacts/repair-regression-v2-2026-10-24/runs/05-boltons_splitlines-r1/workspace/.pico/sessions/20261024-235131-d53313.json": "d9d72fd61dcc92a73790e59394c177d328b30519be46c71063b9420661e32ae4",
+    "artifacts/repair-regression-v2-2026-10-24/runs/06-boltons_splitlines-r2/approvals.jsonl": "a8ed2348f9064161b559d78ebc2975e5c4b2aa3fddb46efbe09c9adb26e858b5",
+    "artifacts/repair-regression-v2-2026-10-24/runs/06-boltons_splitlines-r2/changes.diff": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "artifacts/repair-regression-v2-2026-10-24/runs/06-boltons_splitlines-r2/model_io.jsonl": "2f095109a8ddd60d80e32d00650dbc0a91c06eb0d94b41637f031bbc918eaff7",
+    "artifacts/repair-regression-v2-2026-10-24/runs/06-boltons_splitlines-r2/result.json": "3ff28bdab06046d801f7bdc4faf59df79a6ce38c62fa6c910205baf2ea47069c",
+    "artifacts/repair-regression-v2-2026-10-24/runs/06-boltons_splitlines-r2/started.json": "89101ce9a8cf781b54d9deff8cdc384b91ac67da4292ede12cbe16f3b56f0814",
+    "artifacts/repair-regression-v2-2026-10-24/runs/06-boltons_splitlines-r2/tool_io.jsonl": "10eb0a3dcd5eb53602dfbf70148bd4fc4b3eaccf9c12eace0ad66a4058e27d3a",
+    "artifacts/repair-regression-v2-2026-10-24/runs/06-boltons_splitlines-r2/transport.jsonl": "a42bc9af52121235dc5bb2b4dfcb44488874eeced852b9977285e8d7ebda3c9c",
+    "artifacts/repair-regression-v2-2026-10-24/runs/06-boltons_splitlines-r2/external_final/config.py": "464bc6613aec3cb276a2996ecb81c1d9a60b81adc28004859524de5b34c139fc",
+    "artifacts/repair-regression-v2-2026-10-24/runs/06-boltons_splitlines-r2/external_final/public_api.py": "f8ad36406a5c438628d7a856c69903f144cc21cd863bbe488ff9a83a147f5155",
+    "artifacts/repair-regression-v2-2026-10-24/runs/06-boltons_splitlines-r2/external_final/README.md": "9b090a037ea61c421b94d6d608b0e516c238becb1f6eeed73e12a015079a9479",
+    "artifacts/repair-regression-v2-2026-10-24/runs/06-boltons_splitlines-r2/external_final/test_acceptance.py": "d57aa1bee4e032855a0244ec658e3226c0d5efd297c94b2664ebe708c1636c68",
+    "artifacts/repair-regression-v2-2026-10-24/runs/06-boltons_splitlines-r2/external_final/text_core.py": "fb809d41f4e6cd89e40ddf4438ff4bd78cb5ce6bb360e617dec13fad47544252",
+    "artifacts/repair-regression-v2-2026-10-24/runs/06-boltons_splitlines-r2/external_final/transport.py": "68fcc59086bdbbe897d8d0190bf99bd249d44c9f8bc6175e68aeb9cfcd2e8a39",
+    "artifacts/repair-regression-v2-2026-10-24/runs/06-boltons_splitlines-r2/external_final/UPSTREAM_LICENSE.txt": "617273daf4b7b4fbc0e3068bca7df3e3dbc29b4c5641e185917c775cf1795111",
+    "artifacts/repair-regression-v2-2026-10-24/runs/06-boltons_splitlines-r2/external_final/validation.py": "7ea34d2d7137c985f35d88b223150cd462055a6c0fed9684d404127c355bd6a9",
+    "artifacts/repair-regression-v2-2026-10-24/runs/06-boltons_splitlines-r2/workspace/config.py": "464bc6613aec3cb276a2996ecb81c1d9a60b81adc28004859524de5b34c139fc",
+    "artifacts/repair-regression-v2-2026-10-24/runs/06-boltons_splitlines-r2/workspace/public_api.py": "f8ad36406a5c438628d7a856c69903f144cc21cd863bbe488ff9a83a147f5155",
+    "artifacts/repair-regression-v2-2026-10-24/runs/06-boltons_splitlines-r2/workspace/README.md": "9b090a037ea61c421b94d6d608b0e516c238becb1f6eeed73e12a015079a9479",
+    "artifacts/repair-regression-v2-2026-10-24/runs/06-boltons_splitlines-r2/workspace/test_acceptance.py": "d57aa1bee4e032855a0244ec658e3226c0d5efd297c94b2664ebe708c1636c68",
+    "artifacts/repair-regression-v2-2026-10-24/runs/06-boltons_splitlines-r2/workspace/text_core.py": "fb809d41f4e6cd89e40ddf4438ff4bd78cb5ce6bb360e617dec13fad47544252",
+    "artifacts/repair-regression-v2-2026-10-24/runs/06-boltons_splitlines-r2/workspace/transport.py": "68fcc59086bdbbe897d8d0190bf99bd249d44c9f8bc6175e68aeb9cfcd2e8a39",
+    "artifacts/repair-regression-v2-2026-10-24/runs/06-boltons_splitlines-r2/workspace/UPSTREAM_LICENSE.txt": "617273daf4b7b4fbc0e3068bca7df3e3dbc29b4c5641e185917c775cf1795111",
+    "artifacts/repair-regression-v2-2026-10-24/runs/06-boltons_splitlines-r2/workspace/validation.py": "7ea34d2d7137c985f35d88b223150cd462055a6c0fed9684d404127c355bd6a9",
+    "artifacts/repair-regression-v2-2026-10-24/runs/06-boltons_splitlines-r2/workspace/.pico/runs/run_20261024-235141-89ade9/report.json": "e1c26b52c282687e06052bbf04b477e54963398a9bcfca21b07edc2121bfb0fa",
+    "artifacts/repair-regression-v2-2026-10-24/runs/06-boltons_splitlines-r2/workspace/.pico/runs/run_20261024-235141-89ade9/task_state.json": "06b506989d26af4a713426c06d36030b48e6e7c21ba9ee7ed3363c9b59afbe02",
+    "artifacts/repair-regression-v2-2026-10-24/runs/06-boltons_splitlines-r2/workspace/.pico/runs/run_20261024-235141-89ade9/trace.jsonl": "6c3557b33a5a89921c8959cf3a092bb67497cdac713a4fa1909d1921051b6f96",
+    "artifacts/repair-regression-v2-2026-10-24/runs/06-boltons_splitlines-r2/workspace/.pico/sessions/20261024-235141-2a5164.json": "0ba437280bd4a8f0a24013935d8771d549c54bd455dc8af6694f5be05f1857c8",
+    "artifacts/repair-regression-v2-2026-10-24/runs/07-inventory_reservation-r1/approvals.jsonl": "220323ef68383e76e471676eb754797182e9d8c0f77f0621291ac3e68015a6cb",
+    "artifacts/repair-regression-v2-2026-10-24/runs/07-inventory_reservation-r1/changes.diff": "9b5e91326b25a247ba9cd7b3e699af02161666e941e6c43b7b8ef7692e06e8df",
+    "artifacts/repair-regression-v2-2026-10-24/runs/07-inventory_reservation-r1/model_io.jsonl": "515124ba2ce096c715c356ea857eac9ef19abf790b004e0b04ffbb2386939511",
+    "artifacts/repair-regression-v2-2026-10-24/runs/07-inventory_reservation-r1/result.json": "261a122f68cd4f731b18615ab9d57d2afecfa06ec0015e51f50a8f042df9ca77",
+    "artifacts/repair-regression-v2-2026-10-24/runs/07-inventory_reservation-r1/started.json": "35b2900d3b11e444e1e3f9cf55bd50f45b9d45b2e9e2737b467995fb1b54dc87",
+    "artifacts/repair-regression-v2-2026-10-24/runs/07-inventory_reservation-r1/tool_io.jsonl": "bfb78e1b81a6a773b2cd234136e9c36b2c821c45dc46f82ba0f8f14d5e6b1d0e",
+    "artifacts/repair-regression-v2-2026-10-24/runs/07-inventory_reservation-r1/transport.jsonl": "f1e121bcb3fccae2cbf45cab3e01c00d1792db54873a622589e83ada597e5eaf",
+    "artifacts/repair-regression-v2-2026-10-24/runs/07-inventory_reservation-r1/external_final/orders.py": "3d1aa29239bae8f5252a4916fe9d5c7aa055a196b0c0f29aafeb75b7d32b5284",
+    "artifacts/repair-regression-v2-2026-10-24/runs/07-inventory_reservation-r1/external_final/README.md": "4750c8dc831f0c7e897b4d94ffcffafb4327d6569c99a79be224fcf7fc7dba8f",
+    "artifacts/repair-regression-v2-2026-10-24/runs/07-inventory_reservation-r1/external_final/stock.py": "93db4c9a146c1f288c5501a15888490fa8c967f9b3bbf1602708ce9c5c94bb03",
+    "artifacts/repair-regression-v2-2026-10-24/runs/07-inventory_reservation-r1/external_final/test_acceptance.py": "4a6d884bb50c653280c94baa35673f6abbe76604251932bce6cb15edb6d53cbe",
+    "artifacts/repair-regression-v2-2026-10-24/runs/07-inventory_reservation-r1/workspace/orders.py": "3d1aa29239bae8f5252a4916fe9d5c7aa055a196b0c0f29aafeb75b7d32b5284",
+    "artifacts/repair-regression-v2-2026-10-24/runs/07-inventory_reservation-r1/workspace/README.md": "4750c8dc831f0c7e897b4d94ffcffafb4327d6569c99a79be224fcf7fc7dba8f",
+    "artifacts/repair-regression-v2-2026-10-24/runs/07-inventory_reservation-r1/workspace/stock.py": "93db4c9a146c1f288c5501a15888490fa8c967f9b3bbf1602708ce9c5c94bb03",
+    "artifacts/repair-regression-v2-2026-10-24/runs/07-inventory_reservation-r1/workspace/test_acceptance.py": "4a6d884bb50c653280c94baa35673f6abbe76604251932bce6cb15edb6d53cbe",
+    "artifacts/repair-regression-v2-2026-10-24/runs/07-inventory_reservation-r1/workspace/.pico/runs/run_20261024-235300-211829/report.json": "834b6a060925dc8877d8baa65fb1943b03ef8c4e35c3ea0d5dc9e5925f4792a8",
+    "artifacts/repair-regression-v2-2026-10-24/runs/07-inventory_reservation-r1/workspace/.pico/runs/run_20261024-235300-211829/task_state.json": "ed57b06f1bcaa7aa48315ef422ff036a3fdcd161e14e2995471b192b0ee506b9",
+    "artifacts/repair-regression-v2-2026-10-24/runs/07-inventory_reservation-r1/workspace/.pico/runs/run_20261024-235300-211829/trace.jsonl": "2c536355b257f245ebea3b8da5dadbdc616c1e26b5a37558ac2639f686a8ad8a",
+    "artifacts/repair-regression-v2-2026-10-24/runs/07-inventory_reservation-r1/workspace/.pico/sessions/20261024-235300-fab3ba.json": "50eedd4f21c8e0b45d8f02803a32adfe843b8a60e47dac222c415e06e1fb549a",
+    "artifacts/repair-regression-v2-2026-10-24/runs/08-utc_storage_contract-r2/approvals.jsonl": "aab0a4e1d0d8d37d8152d2b484448f4006530393ed37561819a4772be45a0b2d",
+    "artifacts/repair-regression-v2-2026-10-24/runs/08-utc_storage_contract-r2/changes.diff": "e0e03ca4dfa7c0f0347b9512fcc7d94a869b73e8d2f0ce78395c099a377d6e8d",
+    "artifacts/repair-regression-v2-2026-10-24/runs/08-utc_storage_contract-r2/model_io.jsonl": "289ddb360eba7ea74d0d4693e74155a1bf86e1de00c3e21cb77ee635c8c1dcce",
+    "artifacts/repair-regression-v2-2026-10-24/runs/08-utc_storage_contract-r2/result.json": "0d9da65ba9626bef0545fe0e226adc43340a8b5576ff1e5a4ffc065a0f70ce69",
+    "artifacts/repair-regression-v2-2026-10-24/runs/08-utc_storage_contract-r2/started.json": "9677bffcb0d66c87c7280fe9461c4184d93779c903dd86f5688e5a029a886061",
+    "artifacts/repair-regression-v2-2026-10-24/runs/08-utc_storage_contract-r2/tool_io.jsonl": "125cf42dbe8968d5dc0764861fa6d42fee60998e25a321848a22b7e9cf729667",
+    "artifacts/repair-regression-v2-2026-10-24/runs/08-utc_storage_contract-r2/transport.jsonl": "701e9eeac9740d87c35557fcf7067b87cdc130a8475f613975e08e63a267388e",
+    "artifacts/repair-regression-v2-2026-10-24/runs/08-utc_storage_contract-r2/external_final/README.md": "ce87b9286cb0ec3ba25e518cc5601a46e6ade95d64da448a17ce63d135da615c",
+    "artifacts/repair-regression-v2-2026-10-24/runs/08-utc_storage_contract-r2/external_final/store.py": "4fd83a1fd863b5b184b7cba064473d0f62f91bfa7b2d2f9bf405a7d46830ed68",
+    "artifacts/repair-regression-v2-2026-10-24/runs/08-utc_storage_contract-r2/external_final/test_acceptance.py": "5abe6186871ca892b261d8cdce0a7c6631f5780ccc31194730d7d9f71dc73033",
+    "artifacts/repair-regression-v2-2026-10-24/runs/08-utc_storage_contract-r2/external_final/timestamps.py": "7fdb130712b0d5bea55afe7f95d7ec8db50d2b26f5f87dbddb79cf814731c755",
+    "artifacts/repair-regression-v2-2026-10-24/runs/08-utc_storage_contract-r2/workspace/README.md": "ce87b9286cb0ec3ba25e518cc5601a46e6ade95d64da448a17ce63d135da615c",
+    "artifacts/repair-regression-v2-2026-10-24/runs/08-utc_storage_contract-r2/workspace/store.py": "4fd83a1fd863b5b184b7cba064473d0f62f91bfa7b2d2f9bf405a7d46830ed68",
+    "artifacts/repair-regression-v2-2026-10-24/runs/08-utc_storage_contract-r2/workspace/test_acceptance.py": "5abe6186871ca892b261d8cdce0a7c6631f5780ccc31194730d7d9f71dc73033",
+    "artifacts/repair-regression-v2-2026-10-24/runs/08-utc_storage_contract-r2/workspace/timestamps.py": "7fdb130712b0d5bea55afe7f95d7ec8db50d2b26f5f87dbddb79cf814731c755",
+    "artifacts/repair-regression-v2-2026-10-24/runs/08-utc_storage_contract-r2/workspace/.pico/runs/run_20261024-235359-8857a1/report.json": "c0c05c2e0955665a0e7a9fa92e5ed40bb70bc33e83d405a4671ec2d1258e129c",
+    "artifacts/repair-regression-v2-2026-10-24/runs/08-utc_storage_contract-r2/workspace/.pico/runs/run_20261024-235359-8857a1/task_state.json": "57a7ea562a7d9ace84f5a173f63980a7b44e7a4da21713b53076eb72de6650a1",
+    "artifacts/repair-regression-v2-2026-10-24/runs/08-utc_storage_contract-r2/workspace/.pico/runs/run_20261024-235359-8857a1/trace.jsonl": "1d82bab99acc598c2ddc729f707fbfcccc5d9c5edb6c1f4648d2dd8dc726b275",
+    "artifacts/repair-regression-v2-2026-10-24/runs/08-utc_storage_contract-r2/workspace/.pico/sessions/20261024-235359-297f6e.json": "2140cddd320b8848c21431fd0f0dd82d77c47816e936013639ed8a942eec5c97",
+    "artifacts/repair-regression-v2-2026-10-24/runs/09-boltons_xfrange-r2/approvals.jsonl": "f67626160da80f5cffe7bceef03a189a49dd61db7b6c34bc2fca4553773542d7",
+    "artifacts/repair-regression-v2-2026-10-24/runs/09-boltons_xfrange-r2/changes.diff": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "artifacts/repair-regression-v2-2026-10-24/runs/09-boltons_xfrange-r2/model_io.jsonl": "52fcc2c68ab485648e19e8fd7d39e88fa3ec2bf2e31704f107a7c4df6d04493e",
+    "artifacts/repair-regression-v2-2026-10-24/runs/09-boltons_xfrange-r2/result.json": "9f6869c4d8cc55fe2bdab5b69f067ded7c88e5553f255126547c3ce9715ee52d",
+    "artifacts/repair-regression-v2-2026-10-24/runs/09-boltons_xfrange-r2/started.json": "2e58e95ce55fd6c38d4905d450ead570876165b25fef455f1fe36f970036094b",
+    "artifacts/repair-regression-v2-2026-10-24/runs/09-boltons_xfrange-r2/tool_io.jsonl": "54affe5b0396ab5cc7b7d9f71615f6c39d64638c864d9613fa9b5f60209332f1",
+    "artifacts/repair-regression-v2-2026-10-24/runs/09-boltons_xfrange-r2/transport.jsonl": "3e923e8d6634126524a28eb2713aab83de73f5c77acc8d5be09d8e5fcebecac6",
+    "artifacts/repair-regression-v2-2026-10-24/runs/09-boltons_xfrange-r2/external_final/config.py": "464bc6613aec3cb276a2996ecb81c1d9a60b81adc28004859524de5b34c139fc",
+    "artifacts/repair-regression-v2-2026-10-24/runs/09-boltons_xfrange-r2/external_final/public_api.py": "3f6faf803fd35c11dd58934f0316ae4500c8555d089a92b0fc98f6dea6e8cc63",
+    "artifacts/repair-regression-v2-2026-10-24/runs/09-boltons_xfrange-r2/external_final/README.md": "b302546f1198d551d70059d8e6911276b476858d12412d22bd4d8cf9db93ace2",
+    "artifacts/repair-regression-v2-2026-10-24/runs/09-boltons_xfrange-r2/external_final/sequence_core.py": "dc67d94be2ff2aa3c1bd58dc52dab1194c1d8977e9cb7124ef068e4d2aa99a07",
+    "artifacts/repair-regression-v2-2026-10-24/runs/09-boltons_xfrange-r2/external_final/test_acceptance.py": "696ae30190e6ffd573b5db2353eefa1efb3af0be2290277589d7931d8c659350",
+    "artifacts/repair-regression-v2-2026-10-24/runs/09-boltons_xfrange-r2/external_final/transport.py": "68fcc59086bdbbe897d8d0190bf99bd249d44c9f8bc6175e68aeb9cfcd2e8a39",
+    "artifacts/repair-regression-v2-2026-10-24/runs/09-boltons_xfrange-r2/external_final/UPSTREAM_LICENSE.txt": "617273daf4b7b4fbc0e3068bca7df3e3dbc29b4c5641e185917c775cf1795111",
+    "artifacts/repair-regression-v2-2026-10-24/runs/09-boltons_xfrange-r2/external_final/validation.py": "7ea34d2d7137c985f35d88b223150cd462055a6c0fed9684d404127c355bd6a9",
+    "artifacts/repair-regression-v2-2026-10-24/runs/09-boltons_xfrange-r2/workspace/config.py": "464bc6613aec3cb276a2996ecb81c1d9a60b81adc28004859524de5b34c139fc",
+    "artifacts/repair-regression-v2-2026-10-24/runs/09-boltons_xfrange-r2/workspace/public_api.py": "3f6faf803fd35c11dd58934f0316ae4500c8555d089a92b0fc98f6dea6e8cc63",
+    "artifacts/repair-regression-v2-2026-10-24/runs/09-boltons_xfrange-r2/workspace/README.md": "b302546f1198d551d70059d8e6911276b476858d12412d22bd4d8cf9db93ace2",
+    "artifacts/repair-regression-v2-2026-10-24/runs/09-boltons_xfrange-r2/workspace/sequence_core.py": "dc67d94be2ff2aa3c1bd58dc52dab1194c1d8977e9cb7124ef068e4d2aa99a07",
+    "artifacts/repair-regression-v2-2026-10-24/runs/09-boltons_xfrange-r2/workspace/test_acceptance.py": "696ae30190e6ffd573b5db2353eefa1efb3af0be2290277589d7931d8c659350",
+    "artifacts/repair-regression-v2-2026-10-24/runs/09-boltons_xfrange-r2/workspace/transport.py": "68fcc59086bdbbe897d8d0190bf99bd249d44c9f8bc6175e68aeb9cfcd2e8a39",
+    "artifacts/repair-regression-v2-2026-10-24/runs/09-boltons_xfrange-r2/workspace/UPSTREAM_LICENSE.txt": "617273daf4b7b4fbc0e3068bca7df3e3dbc29b4c5641e185917c775cf1795111",
+    "artifacts/repair-regression-v2-2026-10-24/runs/09-boltons_xfrange-r2/workspace/validation.py": "7ea34d2d7137c985f35d88b223150cd462055a6c0fed9684d404127c355bd6a9",
+    "artifacts/repair-regression-v2-2026-10-24/runs/09-boltons_xfrange-r2/workspace/.pico/runs/run_20261024-235517-e2dd68/report.json": "03b820fb2d381cf394b23da732af85c61ac8a9eb334668ede4e23fb98b8fefe1",
+    "artifacts/repair-regression-v2-2026-10-24/runs/09-boltons_xfrange-r2/workspace/.pico/runs/run_20261024-235517-e2dd68/task_state.json": "bc7dc808898c47992b9207f77117bdd355914c5c5d3f0292f961069d7ee26ada",
+    "artifacts/repair-regression-v2-2026-10-24/runs/09-boltons_xfrange-r2/workspace/.pico/runs/run_20261024-235517-e2dd68/trace.jsonl": "4051d3e4f7b76589a6d95e060403ee8b33df88b68687c5e4262dd0e3ab4b06dd",
+    "artifacts/repair-regression-v2-2026-10-24/runs/09-boltons_xfrange-r2/workspace/.pico/sessions/20261024-235517-71ea62.json": "1365b626b78702b4d585bb4bbe85a504fe235684a2df67c3878301b16b631329",
+    "artifacts/repair-regression-v2-2026-10-24/runs/10-boltons_xfrange-r1/approvals.jsonl": "cec8de355f31a2b749a96cb0291f186d0d4c5f43af11f5ff1a8f9e358ca74288",
+    "artifacts/repair-regression-v2-2026-10-24/runs/10-boltons_xfrange-r1/changes.diff": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "artifacts/repair-regression-v2-2026-10-24/runs/10-boltons_xfrange-r1/model_io.jsonl": "51bfbd715a31ec331d2b86b264e0986baed334c82a0185c2d4334693a4995f9e",
+    "artifacts/repair-regression-v2-2026-10-24/runs/10-boltons_xfrange-r1/result.json": "e12e39302abba3113aeb4080ffa25967e5c1dd7452bdd1b3b8258abce04b875c",
+    "artifacts/repair-regression-v2-2026-10-24/runs/10-boltons_xfrange-r1/started.json": "51642dad2cdca963ebc48e9a8b2e8c62aa75455ab90a3fd455e88a475207d23c",
+    "artifacts/repair-regression-v2-2026-10-24/runs/10-boltons_xfrange-r1/tool_io.jsonl": "3bb1f88da7de47f954bed96d989e3bce6836d0207268dd8f6ebde947acdaa41e",
+    "artifacts/repair-regression-v2-2026-10-24/runs/10-boltons_xfrange-r1/transport.jsonl": "12c04f1704dfcda2f5dc648c9d9bdfc08431d63559bcc2cb915b30cedb830e45",
+    "artifacts/repair-regression-v2-2026-10-24/runs/10-boltons_xfrange-r1/external_final/config.py": "464bc6613aec3cb276a2996ecb81c1d9a60b81adc28004859524de5b34c139fc",
+    "artifacts/repair-regression-v2-2026-10-24/runs/10-boltons_xfrange-r1/external_final/public_api.py": "3f6faf803fd35c11dd58934f0316ae4500c8555d089a92b0fc98f6dea6e8cc63",
+    "artifacts/repair-regression-v2-2026-10-24/runs/10-boltons_xfrange-r1/external_final/README.md": "b302546f1198d551d70059d8e6911276b476858d12412d22bd4d8cf9db93ace2",
+    "artifacts/repair-regression-v2-2026-10-24/runs/10-boltons_xfrange-r1/external_final/sequence_core.py": "dc67d94be2ff2aa3c1bd58dc52dab1194c1d8977e9cb7124ef068e4d2aa99a07",
+    "artifacts/repair-regression-v2-2026-10-24/runs/10-boltons_xfrange-r1/external_final/test_acceptance.py": "696ae30190e6ffd573b5db2353eefa1efb3af0be2290277589d7931d8c659350",
+    "artifacts/repair-regression-v2-2026-10-24/runs/10-boltons_xfrange-r1/external_final/transport.py": "68fcc59086bdbbe897d8d0190bf99bd249d44c9f8bc6175e68aeb9cfcd2e8a39",
+    "artifacts/repair-regression-v2-2026-10-24/runs/10-boltons_xfrange-r1/external_final/UPSTREAM_LICENSE.txt": "617273daf4b7b4fbc0e3068bca7df3e3dbc29b4c5641e185917c775cf1795111",
+    "artifacts/repair-regression-v2-2026-10-24/runs/10-boltons_xfrange-r1/external_final/validation.py": "7ea34d2d7137c985f35d88b223150cd462055a6c0fed9684d404127c355bd6a9",
+    "artifacts/repair-regression-v2-2026-10-24/runs/10-boltons_xfrange-r1/workspace/config.py": "464bc6613aec3cb276a2996ecb81c1d9a60b81adc28004859524de5b34c139fc",
+    "artifacts/repair-regression-v2-2026-10-24/runs/10-boltons_xfrange-r1/workspace/public_api.py": "3f6faf803fd35c11dd58934f0316ae4500c8555d089a92b0fc98f6dea6e8cc63",
+    "artifacts/repair-regression-v2-2026-10-24/runs/10-boltons_xfrange-r1/workspace/README.md": "b302546f1198d551d70059d8e6911276b476858d12412d22bd4d8cf9db93ace2",
+    "artifacts/repair-regression-v2-2026-10-24/runs/10-boltons_xfrange-r1/workspace/sequence_core.py": "dc67d94be2ff2aa3c1bd58dc52dab1194c1d8977e9cb7124ef068e4d2aa99a07",
+    "artifacts/repair-regression-v2-2026-10-24/runs/10-boltons_xfrange-r1/workspace/test_acceptance.py": "696ae30190e6ffd573b5db2353eefa1efb3af0be2290277589d7931d8c659350",
+    "artifacts/repair-regression-v2-2026-10-24/runs/10-boltons_xfrange-r1/workspace/transport.py": "68fcc59086bdbbe897d8d0190bf99bd249d44c9f8bc6175e68aeb9cfcd2e8a39",
+    "artifacts/repair-regression-v2-2026-10-24/runs/10-boltons_xfrange-r1/workspace/UPSTREAM_LICENSE.txt": "617273daf4b7b4fbc0e3068bca7df3e3dbc29b4c5641e185917c775cf1795111",
+    "artifacts/repair-regression-v2-2026-10-24/runs/10-boltons_xfrange-r1/workspace/validation.py": "7ea34d2d7137c985f35d88b223150cd462055a6c0fed9684d404127c355bd6a9",
+    "artifacts/repair-regression-v2-2026-10-24/runs/10-boltons_xfrange-r1/workspace/.pico/runs/run_20261024-235824-6b9501/report.json": "a5b2de654651e739fcdc652e9df2e0ba8a3ec69441be0e705564ccb5729824b1",
+    "artifacts/repair-regression-v2-2026-10-24/runs/10-boltons_xfrange-r1/workspace/.pico/runs/run_20261024-235824-6b9501/task_state.json": "b1dde1967d951e05766be272dc2c6473625f2f746ab6d7e49851f7b959a64c25",
+    "artifacts/repair-regression-v2-2026-10-24/runs/10-boltons_xfrange-r1/workspace/.pico/runs/run_20261024-235824-6b9501/trace.jsonl": "1a031d9cc5ffbe06b69e480f052c6af88c3de1a6ab7b113e67cd9a0545a46c17",
+    "artifacts/repair-regression-v2-2026-10-24/runs/10-boltons_xfrange-r1/workspace/.pico/sessions/20261024-235824-e0a170.json": "50df93e082e3e620386c50e9666daaa383473d56eecf050e79d9a1186b4b5be8",
+    "artifacts/repair-regression-v2-2026-10-24/runs/11-humanize_size-r2/approvals.jsonl": "511ad2e23d678270240416fd9cabbf47f4b9c9915ade6233b64c974deb74d878",
+    "artifacts/repair-regression-v2-2026-10-24/runs/11-humanize_size-r2/changes.diff": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "artifacts/repair-regression-v2-2026-10-24/runs/11-humanize_size-r2/model_io.jsonl": "8d8eb2d93a358101a47954f72d15b73b4843fda29fc6a644ec0dbcae986bfb80",
+    "artifacts/repair-regression-v2-2026-10-24/runs/11-humanize_size-r2/result.json": "63fd6dfa1806c4a02b85de3cd0272d029a56e465e3e5e7fdff9fdfad659c73ac",
+    "artifacts/repair-regression-v2-2026-10-24/runs/11-humanize_size-r2/started.json": "b2c050f7e5d60dc34632a2c528ed6025d6d7f108cdba89ab6f0262986d253e35",
+    "artifacts/repair-regression-v2-2026-10-24/runs/11-humanize_size-r2/tool_io.jsonl": "983d50f43fde1d288cea6d72a845cd1f91ebf99055f04b4a0d613d21cc386d27",
+    "artifacts/repair-regression-v2-2026-10-24/runs/11-humanize_size-r2/transport.jsonl": "93354138aa7fcb63aab02f0ca6cedeeb504b2ffe7f73a7ac45419ce060d151df",
+    "artifacts/repair-regression-v2-2026-10-24/runs/11-humanize_size-r2/external_final/formatter.py": "1b456af3a429486e22d535e17aed023f1966e133a294c2fb7355f35569522120",
+    "artifacts/repair-regression-v2-2026-10-24/runs/11-humanize_size-r2/external_final/README.md": "e2db7cd0a934e867084a5c95e2e5cfd8f1530dde74465d6c0082569c9304a89d",
+    "artifacts/repair-regression-v2-2026-10-24/runs/11-humanize_size-r2/external_final/test_acceptance.py": "df2c9bf91ccb13b3a750d932adcd346f2105cc1c49e29f53f05feec4776bc84e",
+    "artifacts/repair-regression-v2-2026-10-24/runs/11-humanize_size-r2/external_final/UPSTREAM_LICENSE.txt": "8ba6c18112a431400ad3c743f70670079b302545d98884fc2f28a91c383a0380",
+    "artifacts/repair-regression-v2-2026-10-24/runs/11-humanize_size-r2/workspace/formatter.py": "1b456af3a429486e22d535e17aed023f1966e133a294c2fb7355f35569522120",
+    "artifacts/repair-regression-v2-2026-10-24/runs/11-humanize_size-r2/workspace/README.md": "e2db7cd0a934e867084a5c95e2e5cfd8f1530dde74465d6c0082569c9304a89d",
+    "artifacts/repair-regression-v2-2026-10-24/runs/11-humanize_size-r2/workspace/test_acceptance.py": "df2c9bf91ccb13b3a750d932adcd346f2105cc1c49e29f53f05feec4776bc84e",
+    "artifacts/repair-regression-v2-2026-10-24/runs/11-humanize_size-r2/workspace/UPSTREAM_LICENSE.txt": "8ba6c18112a431400ad3c743f70670079b302545d98884fc2f28a91c383a0380",
+    "artifacts/repair-regression-v2-2026-10-24/runs/11-humanize_size-r2/workspace/.pico/runs/run_20261025-000142-153fda/report.json": "14bcef382aa3fbd3e4935b8922bec156ad27f541bbe3bde70f93de143ce7a045",
+    "artifacts/repair-regression-v2-2026-10-24/runs/11-humanize_size-r2/workspace/.pico/runs/run_20261025-000142-153fda/task_state.json": "f7c11f9b2553fb782a4a0bef5dc3b52e6f4910270af9277aba06bddc7bd291e1",
+    "artifacts/repair-regression-v2-2026-10-24/runs/11-humanize_size-r2/workspace/.pico/runs/run_20261025-000142-153fda/trace.jsonl": "e6df46c599f1a80cfe272d899f80ab7deef689345e229a54e285a2bef450a56e",
+    "artifacts/repair-regression-v2-2026-10-24/runs/11-humanize_size-r2/workspace/.pico/sessions/20261025-000142-e004f5.json": "81a780bce9f00d0d1083d1399db6b0fdd29c2ff52b74d105e4cc81ed7de913d2",
+    "artifacts/repair-regression-v2-2026-10-24/runs/12-inventory_reservation-r2/approvals.jsonl": "36faf1123b10372105fabb90acebfbac0b61bb2905a4e957b560839eb1b5ad97",
+    "artifacts/repair-regression-v2-2026-10-24/runs/12-inventory_reservation-r2/changes.diff": "71bbd8b89d7b0abc901ec6050d6fda3fce87e0ff042407edcc431db8c0daf70e",
+    "artifacts/repair-regression-v2-2026-10-24/runs/12-inventory_reservation-r2/model_io.jsonl": "a1b3206a75cfe908fa3812680f46bdda47c3d31ab92d7e446676323229455c14",
+    "artifacts/repair-regression-v2-2026-10-24/runs/12-inventory_reservation-r2/result.json": "dc8e85819f3dd1e8017a80c860f09ad4ae71e12a4ec875f732e94cb69a73ff23",
+    "artifacts/repair-regression-v2-2026-10-24/runs/12-inventory_reservation-r2/started.json": "6b6de69f570e7e9ea067b160a7d402927ad8ebb09e988921622f14b2ff371ab0",
+    "artifacts/repair-regression-v2-2026-10-24/runs/12-inventory_reservation-r2/tool_io.jsonl": "f2dd727469c652b870ad672fbe3e66a77c9a7706c7f4aedf81c189eb4166f6d1",
+    "artifacts/repair-regression-v2-2026-10-24/runs/12-inventory_reservation-r2/transport.jsonl": "fc11e2909523e0cfd5f9f0c6f9366f07e960a03cb828a416f84229ed20e1bd1d",
+    "artifacts/repair-regression-v2-2026-10-24/runs/12-inventory_reservation-r2/external_final/orders.py": "0c53c1a5bc15ec8fab62bfb23d2d2ca83c1dde4ede41b63a452f9d2328d05e50",
+    "artifacts/repair-regression-v2-2026-10-24/runs/12-inventory_reservation-r2/external_final/README.md": "4750c8dc831f0c7e897b4d94ffcffafb4327d6569c99a79be224fcf7fc7dba8f",
+    "artifacts/repair-regression-v2-2026-10-24/runs/12-inventory_reservation-r2/external_final/stock.py": "1147efd7d5464ebe25193a84ae4bd69e1a13d5b26dddfc04a6414a6f628f00d8",
+    "artifacts/repair-regression-v2-2026-10-24/runs/12-inventory_reservation-r2/external_final/test_acceptance.py": "4a6d884bb50c653280c94baa35673f6abbe76604251932bce6cb15edb6d53cbe",
+    "artifacts/repair-regression-v2-2026-10-24/runs/12-inventory_reservation-r2/workspace/orders.py": "0c53c1a5bc15ec8fab62bfb23d2d2ca83c1dde4ede41b63a452f9d2328d05e50",
+    "artifacts/repair-regression-v2-2026-10-24/runs/12-inventory_reservation-r2/workspace/README.md": "4750c8dc831f0c7e897b4d94ffcffafb4327d6569c99a79be224fcf7fc7dba8f",
+    "artifacts/repair-regression-v2-2026-10-24/runs/12-inventory_reservation-r2/workspace/stock.py": "1147efd7d5464ebe25193a84ae4bd69e1a13d5b26dddfc04a6414a6f628f00d8",
+    "artifacts/repair-regression-v2-2026-10-24/runs/12-inventory_reservation-r2/workspace/test_acceptance.py": "4a6d884bb50c653280c94baa35673f6abbe76604251932bce6cb15edb6d53cbe",
+    "artifacts/repair-regression-v2-2026-10-24/runs/12-inventory_reservation-r2/workspace/.pico/runs/run_20261025-000254-f7dafd/report.json": "ac2c96dd56ebab5cbbb84fd1aeb1c96650000be11720f13c6d684c8c9df226c0",
+    "artifacts/repair-regression-v2-2026-10-24/runs/12-inventory_reservation-r2/workspace/.pico/runs/run_20261025-000254-f7dafd/task_state.json": "a21ea57a1ca58dd35e611a370c212fa1db37bbf141abbd23c90bc3ef44573d23",
+    "artifacts/repair-regression-v2-2026-10-24/runs/12-inventory_reservation-r2/workspace/.pico/runs/run_20261025-000254-f7dafd/trace.jsonl": "c3c9f13f963c84ec6efe0aa9dc1b090f7b0169e17f27b89b75d4009f67458872",
+    "artifacts/repair-regression-v2-2026-10-24/runs/12-inventory_reservation-r2/workspace/.pico/sessions/20261025-000254-80d5ee.json": "d0129c36f1ac29f4615ec73458945b90c73d002f488fdb35b26027b2042da32c"
+  },
+  "boundary": "Six previously observed problem tasks, two new runs each, combined runtime+timeout change. Not independent holdout, not a rerun of all20 tasks; do not replace the original60 or infer a causal effect from rates."
+}

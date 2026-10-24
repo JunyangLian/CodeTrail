@@ -34,13 +34,16 @@ def tool_signature(tools):
     return hashlib.sha256(json.dumps(payload, sort_keys=True).encode("utf-8")).hexdigest()
 
 
-def build_prompt_prefix(workspace, tools, built_at=None):
+def build_prompt_prefix(workspace, tools, built_at=None, verification_command=None):
     tool_lines = []
     for name, tool in tools.items():
         fields = ", ".join(f"{key}: {value}" for key, value in tool["schema"].items())
         risk = "approval required" if tool["risky"] else "safe"
         tool_lines.append(f"- {name}({fields}) [{risk}] {tool['description']}")
     tool_text = "\n".join(tool_lines)
+    completion_rule = (f'Completion requirement: run {verification_command!r} through run_shell and obtain exit code 0 after the latest edit. '
+                       'Inspect real test failures (including type contracts) and continue fixing before finalizing. Normal approval still applies.'
+                       if verification_command else '')
     examples = "\n".join(
         [
             '<tool>{"name":"list_files","args":{"path":"."}}</tool>',
@@ -66,6 +69,7 @@ def build_prompt_prefix(workspace, tools, built_at=None):
           <tool name="write_file" path="file.py"><content>...</content></tool>
         - Final answers must look like:
           <final>your answer</final>
+        - Plain progress text is not a final answer; do not stop by announcing what you will do next.
         - Never invent tool results.
         - Keep answers concise and concrete.
         - If the user asks you to create or update a specific file and the path is clear, use write_file or patch_file instead of repeatedly listing files.
@@ -82,6 +86,7 @@ def build_prompt_prefix(workspace, tools, built_at=None):
         {examples}
 
         {workspace.text()}
+        {completion_rule}
         """
     ).strip()
     signature = tool_signature(tools)

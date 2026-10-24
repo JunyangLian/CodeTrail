@@ -5,7 +5,8 @@ import sys
 
 ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT))
-from pico.evaluation.repair_suite import SUITE,check_freeze,digest,install,load_json,verify_pristine,write_json
+from pico.evaluation.repair_suite import SUITE,digest,install,load_json,verify_pristine,write_json
+from pico.evaluation.baseline_assets import verify_baseline_assets
 
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
@@ -15,7 +16,7 @@ def main():
     source=(ROOT/args.run).resolve();destination=(ROOT/args.destination).resolve()
     if ROOT not in source.parents or ROOT not in destination.parents:
         parser.error('paths must be inside project')
-    check_freeze()
+    verify_baseline_assets()
     result=load_json(source/'result.json')
     task=next(task for task in load_json(SUITE/'tasks.json')['tasks'] if task['id']==result['task_id'])
     assert result['functional_passed'],'Choose a saved functional repair for before/after replay'

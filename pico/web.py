@@ -126,13 +126,15 @@ class Task:
 
 
 class Workbench:
-    def __init__(self, workspace, factory=None, verification_command=None, model_timeout=60):
+    def __init__(self, workspace, factory=None, verification_command=None, model_timeout=180):
         if type(model_timeout) is not int or not 1 <= model_timeout <= 300:
             raise ValueError("模型超时应在 1–300 秒之间。")
         self.root = Path(workspace).resolve()
         self.verification_command = verification_command
         if verification_command is None and self.root == (Path(__file__).resolve().parent.parent / "examples/interview-demo"):
             self.verification_command = "python -m unittest discover -v"
+        if verification_command is None and self.root == (Path(__file__).resolve().parent.parent / 'examples/repair-suite-demo'):
+            self.verification_command = 'python -B -m unittest discover -v'
         if not self.root.is_dir():
             raise ValueError("工作目录不存在。")
         load_project_env(self.root)
@@ -167,6 +169,7 @@ class Workbench:
             model_client=model, workspace=workspace, session_store=store,
             approval_policy=policy, read_only=policy == "never", max_steps=max_steps,
             max_new_tokens=1024, secret_env_names=_configured_secret_names(self.args),
+            verification_command=self.verification_command,
         )
         if session_id:
             return Pico.from_session(session_id=session_id, **options)
@@ -442,7 +445,7 @@ def main(argv=None):
     parser.add_argument("--port", type=int, default=8765)
     parser.add_argument("--open", action="store_true", help="Open the local page in your browser")
     parser.add_argument("--verify-command", help="Exact shell command used as verification evidence; never runs automatically")
-    parser.add_argument("--model-timeout", type=int, default=60, help="Model request timeout in seconds (1-300)")
+    parser.add_argument("--model-timeout", type=int, default=180, help="Model request timeout per transport attempt in seconds (1-300); retries are bounded")
     args = parser.parse_args(argv)
     if not 1 <= args.model_timeout <= 300:
         parser.error("--model-timeout must be between 1 and 300 seconds")
