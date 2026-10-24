@@ -1,0 +1,669 @@
+{
+  "schema_version": 2,
+  "suite_id": "repair-suite-v1",
+  "scope": "20 independent tasks: 12 authored (2 previously seen), 8 upstream minimal reproductions from 2 projects; 3 fresh repeats each. Not a held-out public repository benchmark.",
+  "categories": {
+    "single_file": 5,
+    "cross_file": 7,
+    "unknown_location": 4,
+    "regression_compatibility": 4
+  },
+  "tasks": [
+    {
+      "id": "pagination_boundaries",
+      "files": {
+        "pagination.py": "def paginate(items, page=1, page_size=3):\n    if type(page) is not int or page < 1:\n        raise ValueError('page must be a positive integer')\n    if type(page_size) is not int or page_size < 1:\n        raise ValueError('page_size must be a positive integer')\n    total = len(items)\n    start = page * page_size\n    return {\n        'items': items[start:start + page_size],\n        'total_pages': total // page_size,\n        'has_next': page * page_size <= total,\n    }\n",
+        "test_pagination.py": "import unittest\nfrom pagination import paginate\n\nclass PaginationTests(unittest.TestCase):\n    def test_first_page(self):\n        self.assertEqual(paginate([1,2,3,4,5]), {'items':[1,2,3], 'total_pages':2, 'has_next':True})\n    def test_second_page(self):\n        self.assertEqual(paginate(list(range(7)), 2, 3)['items'], [3,4,5])\n    def test_last_partial_page(self):\n        self.assertEqual(paginate(list(range(7)), 3, 3), {'items':[6], 'total_pages':3, 'has_next':False})\n    def test_exact_boundary_no_next(self):\n        self.assertEqual(paginate([1,2,3], 1, 3), {'items':[1,2,3], 'total_pages':1, 'has_next':False})\n    def test_page_beyond_end(self):\n        self.assertEqual(paginate([1,2,3,4], 4, 2), {'items':[], 'total_pages':2, 'has_next':False})\n    def test_empty(self):\n        self.assertEqual(paginate([]), {'items':[], 'total_pages':0, 'has_next':False})\n    def test_invalid_page(self):\n        for value in (0,-1,True,1.5):\n            with self.subTest(value=value), self.assertRaises(ValueError): paginate([1],value,2)\n    def test_invalid_size(self):\n        for value in (0,-1,True,1.5):\n            with self.subTest(value=value), self.assertRaises(ValueError): paginate([1],1,value)\n\nif __name__ == '__main__': unittest.main()\n",
+        "README.md": "# Repair task\n\n先运行 python -B -m unittest discover -v 查看失败，再读取 pagination.py 和 test_pagination.py。只修复 pagination.py，不改测试或其他文件。规则：page从1开始；page_size是正整数；返回当前页items、总页数total_pages和是否还有下一页has_next；总页数向上取整，空列表总页数0；超出末页返回空items和has_next=False；bool不算合法整数。最后重新运行同一测试命令并汇报真实结果。\n允许修改：pagination.py。不能修改测试或其他文件。\n先运行 python -B -m unittest discover -v 查看失败，再读取代码定位修复；结束前必须重新运行同一测试命令并如实报告。\n"
+      },
+      "prompt": "先运行 python -B -m unittest discover -v 查看失败，再读取 pagination.py 和 test_pagination.py。只修复 pagination.py，不改测试或其他文件。规则：page从1开始；page_size是正整数；返回当前页items、总页数total_pages和是否还有下一页has_next；总页数向上取整，空列表总页数0；超出末页返回空items和has_next=False；bool不算合法整数。最后重新运行同一测试命令并汇报真实结果。\n允许修改：pagination.py。不能修改测试或其他文件。\n先运行 python -B -m unittest discover -v 查看失败，再读取代码定位修复；结束前必须重新运行同一测试命令并如实报告。",
+      "editable_files": [
+        "pagination.py"
+      ],
+      "expected_tests": 8,
+      "category": "single_file",
+      "origin": {
+        "kind": "author_created",
+        "legacy_task_preserved": true,
+        "legacy_manifest_sha256": "a1a63c654f0a7f6c607399bb230827136cfc4838ed92acbb450939837dbcc358"
+      },
+      "sha256": {
+        "pagination.py": "5daa22c5d854045a370d18b98e4d76364450482e84ca334d97c8af77f712165f",
+        "test_pagination.py": "e827b6cd3661aa162d6b1cfeea8aee41769a41b65e1d7442d280ea1b69d711bd",
+        "README.md": "79c0b7ed1cfeb0a51f4848e3286403abc972566710dfaa7e6235d1dad0e1e3d9"
+      }
+    },
+    {
+      "id": "user_lookup_contract",
+      "files": {
+        "id_normalization.py": "def normalize_user_id(value):\n    if value is None:\n        raise ValueError('user id cannot be None')\n    return str(value).strip().casefold()\n",
+        "repository.py": "from id_normalization import normalize_user_id\n\ndef get_user(users, user_id):\n    return users.get(user_id)\n",
+        "service.py": "from repository import get_user\n\ndef display_name(users, user_id):\n    user = get_user(user_id, users)\n    return user['name'] if user is not None else None\n",
+        "test_user_lookup.py": "import copy\nimport unittest\nfrom repository import get_user\nfrom service import display_name\n\nclass LookupTests(unittest.TestCase):\n    def setUp(self):\n        self.users = {'user-a':{'name':'Ada'}, 'user-b':{'name':'Lin'}}\n    def test_direct_repository_normalizes(self):\n        self.assertEqual(get_user(self.users, ' USER-A '), {'name':'Ada'})\n    def test_service_uses_correct_argument_order(self):\n        self.assertEqual(display_name(self.users, 'user-b'), 'Lin')\n    def test_service_normalizes(self):\n        self.assertEqual(display_name(self.users, ' User-A '), 'Ada')\n    def test_unknown_returns_none(self):\n        self.assertIsNone(display_name(self.users, 'missing'))\n    def test_empty_mapping(self):\n        self.assertIsNone(display_name({}, 'user-a'))\n    def test_none_id_is_rejected(self):\n        with self.assertRaises(ValueError): display_name(self.users, None)\n    def test_input_mapping_is_unchanged(self):\n        before = copy.deepcopy(self.users)\n        display_name(self.users, ' USER-A ')\n        self.assertEqual(self.users, before)\n    def test_empty_id_is_unknown(self):\n        self.assertIsNone(display_name(self.users, '   '))\n\nif __name__ == '__main__': unittest.main()\n",
+        "README.md": "# Repair task\n\n先运行 python -B -m unittest discover -v，再读取 service.py、repository.py、id_normalization.py 和 test_user_lookup.py。只修改 service.py 和 repository.py，不改测试、id_normalization.py 或其他文件。修复跨文件调用契约：get_user(users,user_id)应使用既有normalize_user_id查找规范化键；display_name(users,user_id)调用仓储后返回用户name，找不到返回None；None ID仍由规范化函数抛ValueError；不修改输入字典。最后运行同一测试命令，汇报实际结果。\n允许修改：repository.py, service.py。不能修改测试或其他文件。\n先运行 python -B -m unittest discover -v 查看失败，再读取代码定位修复；结束前必须重新运行同一测试命令并如实报告。\n"
+      },
+      "prompt": "先运行 python -B -m unittest discover -v，再读取 service.py、repository.py、id_normalization.py 和 test_user_lookup.py。只修改 service.py 和 repository.py，不改测试、id_normalization.py 或其他文件。修复跨文件调用契约：get_user(users,user_id)应使用既有normalize_user_id查找规范化键；display_name(users,user_id)调用仓储后返回用户name，找不到返回None；None ID仍由规范化函数抛ValueError；不修改输入字典。最后运行同一测试命令，汇报实际结果。\n允许修改：repository.py, service.py。不能修改测试或其他文件。\n先运行 python -B -m unittest discover -v 查看失败，再读取代码定位修复；结束前必须重新运行同一测试命令并如实报告。",
+      "editable_files": [
+        "repository.py",
+        "service.py"
+      ],
+      "expected_tests": 8,
+      "category": "cross_file",
+      "origin": {
+        "kind": "author_created",
+        "legacy_task_preserved": true,
+        "legacy_manifest_sha256": "a1a63c654f0a7f6c607399bb230827136cfc4838ed92acbb450939837dbcc358"
+      },
+      "sha256": {
+        "id_normalization.py": "a1391ba295b189c68c2d4706f41eca1bf375e5b6c5d20ef2e9af11d9cb4e031f",
+        "repository.py": "e8301b785625793cabffafa142b394d4381df4e0083634f89bffd8da6f1b0363",
+        "service.py": "3fdd838c9ae694c7848bea33e99bf72ef2647af9c2824afbf65b149a5d116c40",
+        "test_user_lookup.py": "8697b8819fa0185d64a4b0e1451f7250ab951da96a78f62d2bb084241149c5ae",
+        "README.md": "44b976f54b9226a8c2ca36a444177f0c72c93b21afc0824649f8f28702bf198f"
+      }
+    },
+    {
+      "id": "interval_union",
+      "category": "single_file",
+      "prompt": "修复 intervals.py 的 merge_intervals：合并重叠和端点相接的闭区间，按起点排序，空输入返回空列表，不改变输入；反向区间抛 ValueError。\n允许修改：intervals.py。不能修改测试或其他文件。\n先运行 python -B -m unittest discover -v 查看失败，再读取代码定位修复；结束前必须重新运行同一测试命令并如实报告。",
+      "files": {
+        "intervals.py": "def merge_intervals(intervals):\n    ordered = sorted(intervals)\n    result = []\n    for start, end in ordered:\n        if start > end:\n            raise ValueError('reversed interval')\n        if result and start < result[-1][1]:\n            result[-1][1] = end\n        else:\n            result.append([start, end])\n    return result\n",
+        "test_acceptance.py": "import unittest\nfrom intervals import merge_intervals as merge\n\nclass RepairTests(unittest.TestCase):\n    def test_01(self):\n        self.assertEqual(merge([]), [])\n    def test_02(self):\n        self.assertEqual(merge([(1,3),(3,5)]), [[1,5]])\n    def test_03(self):\n        self.assertEqual(merge([(1,10),(2,3)]), [[1,10]])\n    def test_04(self):\n        self.assertEqual(merge([(5,6),(1,2)]), [[1,2],[5,6]])\n    def test_05(self):\n        self.assertEqual(merge([(1,2),(2,4),(4,9)]), [[1,9]])\n    def test_06(self):\n        self.assertEqual(merge([(1,1)]), [[1,1]])\n    def test_07(self):\n        x=[[3,5],[1,2]]\n        merge(x)\n        self.assertEqual(x, [[3,5],[1,2]])\n    def test_08(self):\n        with self.assertRaises(ValueError): merge([(5,1)])\n",
+        "README.md": "# Repair task\n\n修复 intervals.py 的 merge_intervals：合并重叠和端点相接的闭区间，按起点排序，空输入返回空列表，不改变输入；反向区间抛 ValueError。\n允许修改：intervals.py。不能修改测试或其他文件。\n先运行 python -B -m unittest discover -v 查看失败，再读取代码定位修复；结束前必须重新运行同一测试命令并如实报告。\n"
+      },
+      "editable_files": [
+        "intervals.py"
+      ],
+      "expected_tests": 8,
+      "origin": {
+        "kind": "author_created",
+        "independent_task": true
+      },
+      "sha256": {
+        "intervals.py": "404f2b4af3af60770337dac50fb4b2bc58e209791d86a33ee50168a41eb75c7c",
+        "test_acceptance.py": "0ae5eab1e6d0444c7c0746cd883200319bab8f8ba59bf11eb7b294f3e316ef3b",
+        "README.md": "2bb7e7f3da4f926fd884182c30deb9024f53c32ebc94ee10638b3c4f31157104"
+      }
+    },
+    {
+      "id": "ttl_expiry",
+      "category": "single_file",
+      "prompt": "修复 cache.py 的 TTLCache：写入 ttl 是相对注入时钟的秒数，读取不会延长 TTL；now >= expiry 即过期，缺失/过期返回 default；ttl<=0 不缓存，更新同一键替换过期时间。\n允许修改：cache.py。不能修改测试或其他文件。\n先运行 python -B -m unittest discover -v 查看失败，再读取代码定位修复；结束前必须重新运行同一测试命令并如实报告。",
+      "files": {
+        "cache.py": "class TTLCache:\n    def __init__(self, clock):\n        self.clock = clock\n        self.entries = {}\n    def put(self, key, value, ttl):\n        self.entries[key] = (value, ttl)\n    def get(self, key, default=None):\n        if key not in self.entries:\n            return default\n        value, expiry = self.entries[key]\n        if self.clock() > expiry:\n            del self.entries[key]\n            return default\n        return value\n",
+        "test_acceptance.py": "import unittest\nfrom cache import TTLCache\n\n\nclass RepairTests(unittest.TestCase):\n    def test_01(self):\n        c=TTLCache(lambda:100)\n        c.put('a',1,10)\n        self.assertEqual(c.get('a'),1)\n    def test_02(self):\n        t=[100]; c=TTLCache(lambda:t[0]); c.put('a',1,10); t[0]=110\n        self.assertIsNone(c.get('a'))\n    def test_03(self):\n        c=TTLCache(lambda:100); c.put('a',1,0)\n        self.assertEqual(c.get('a','miss'),'miss')\n    def test_04(self):\n        c=TTLCache(lambda:100); c.put('a',1,-2)\n        self.assertIsNone(c.get('a'))\n    def test_05(self):\n        c=TTLCache(lambda:100)\n        self.assertEqual(c.get('x',3),3)\n    def test_06(self):\n        t=[100]; c=TTLCache(lambda:t[0]); c.put('a',1,10); t[0]=105; c.get('a'); t[0]=111\n        self.assertIsNone(c.get('a'))\n    def test_07(self):\n        t=[100]; c=TTLCache(lambda:t[0]); c.put('a',1,5); t[0]=103; c.put('a',2,10); t[0]=110\n        self.assertEqual(c.get('a'),2)\n    def test_08(self):\n        c=TTLCache(lambda:100); c.put('a',None,5)\n        self.assertIsNone(c.get('a','fallback'))\n",
+        "README.md": "# Repair task\n\n修复 cache.py 的 TTLCache：写入 ttl 是相对注入时钟的秒数，读取不会延长 TTL；now >= expiry 即过期，缺失/过期返回 default；ttl<=0 不缓存，更新同一键替换过期时间。\n允许修改：cache.py。不能修改测试或其他文件。\n先运行 python -B -m unittest discover -v 查看失败，再读取代码定位修复；结束前必须重新运行同一测试命令并如实报告。\n"
+      },
+      "editable_files": [
+        "cache.py"
+      ],
+      "expected_tests": 8,
+      "origin": {
+        "kind": "author_created",
+        "independent_task": true
+      },
+      "sha256": {
+        "cache.py": "e51ef8f3623371b473ff6b6af21f258856c5b98b9273febb6790d7bc99326d49",
+        "test_acceptance.py": "62d799ba3b22b96f51b8d0f7932ec73eaa35eaabebc59155d4a87fc21dfde681",
+        "README.md": "75683b683d62e7c3b6b284f2da6b17e6330969738d17f8f7479a64061afbb4e4"
+      }
+    },
+    {
+      "id": "retry_schedule",
+      "category": "single_file",
+      "prompt": "修复 retry.py 的 retry_delays：attempts 是总尝试次数，因此等待次数是 attempts-1；指数增长 base*factor**i，并封顶 cap，允许 cap=0；attempts须为正的非bool整数，base/cap非负，factor>=1，无真实 sleep。\n允许修改：retry.py。不能修改测试或其他文件。\n先运行 python -B -m unittest discover -v 查看失败，再读取代码定位修复；结束前必须重新运行同一测试命令并如实报告。",
+      "files": {
+        "retry.py": "def retry_delays(attempts, base=1, factor=2, cap=60):\n    if not isinstance(attempts, int) or attempts < 0:\n        raise ValueError('invalid attempts')\n    if base < 0 or factor < 1 or cap < 0:\n        raise ValueError('invalid delay')\n    return [max(cap, base * factor**i) for i in range(attempts)]\n",
+        "test_acceptance.py": "import unittest\nfrom retry import retry_delays as delays\n\nclass RepairTests(unittest.TestCase):\n    def test_01(self):\n        self.assertEqual(delays(1), [])\n    def test_02(self):\n        self.assertEqual(delays(4), [1,2,4])\n    def test_03(self):\n        self.assertEqual(delays(5,3,2,7), [3,6,7,7])\n    def test_04(self):\n        self.assertEqual(delays(3,cap=0), [0,0])\n    def test_05(self):\n        with self.assertRaises(ValueError): delays(True)\n    def test_06(self):\n        with self.assertRaises(ValueError): delays(0)\n    def test_07(self):\n        with self.assertRaises(ValueError): delays(2,base=-1)\n    def test_08(self):\n        self.assertEqual(delays(3,0,1,5), [0,0])\n",
+        "README.md": "# Repair task\n\n修复 retry.py 的 retry_delays：attempts 是总尝试次数，因此等待次数是 attempts-1；指数增长 base*factor**i，并封顶 cap，允许 cap=0；attempts须为正的非bool整数，base/cap非负，factor>=1，无真实 sleep。\n允许修改：retry.py。不能修改测试或其他文件。\n先运行 python -B -m unittest discover -v 查看失败，再读取代码定位修复；结束前必须重新运行同一测试命令并如实报告。\n"
+      },
+      "editable_files": [
+        "retry.py"
+      ],
+      "expected_tests": 8,
+      "origin": {
+        "kind": "author_created",
+        "independent_task": true
+      },
+      "sha256": {
+        "retry.py": "3d5066f0869710b50083a9747125943d7b7d91cf77588452b2984d6b9390dab8",
+        "test_acceptance.py": "3537c5251b268bebc1e16699f11dd0018a5e11d1395a6c32ee5aae89f8d2895d",
+        "README.md": "d5b94e39144d354fa4a66a608ffd2c47dcf0a4ab54e3f59162ac8bf4b446f372"
+      }
+    },
+    {
+      "id": "dependency_order",
+      "category": "single_file",
+      "prompt": "修复 graph.py 的 dependency_order：输入节点到依赖节点列表，输出每个依赖先于依赖者的拓扑序；包含仅作为依赖出现的节点，不重复节点；任何自环或多节点环抛 ValueError，空图返回空列表，不能修改输入。\n允许修改：graph.py。不能修改测试或其他文件。\n先运行 python -B -m unittest discover -v 查看失败，再读取代码定位修复；结束前必须重新运行同一测试命令并如实报告。",
+      "files": {
+        "graph.py": "def dependency_order(graph):\n    done = set()\n    result = []\n    def visit(node):\n        if node in done:\n            return\n        done.add(node)\n        result.append(node)\n        for child in graph.get(node, []):\n            visit(child)\n    for node in graph:\n        visit(node)\n    return result\n",
+        "test_acceptance.py": "import unittest\nfrom graph import dependency_order as order\n\nclass RepairTests(unittest.TestCase):\n    def test_01(self):\n        self.assertEqual(order({}), [])\n    def test_02(self):\n        self.assertEqual(order({'a':['b']}), ['b','a'])\n    def test_03(self):\n        self.assertEqual(order({'a':['b'],'b':['c']}), ['c','b','a'])\n    def test_04(self):\n        self.assertEqual(order({'a':[],'b':['a']}), ['a','b'])\n    def test_05(self):\n        with self.assertRaises(ValueError): order({'a':['a']})\n    def test_06(self):\n        with self.assertRaises(ValueError): order({'a':['b'],'b':['a']})\n    def test_07(self):\n        x=order({'a':['c'],'b':['c']})\n        self.assertEqual(len(x),3)\n        self.assertLess(x.index('c'),x.index('a'))\n        self.assertLess(x.index('c'),x.index('b'))\n    def test_08(self):\n        g={'a':['b']}; order(g)\n        self.assertEqual(g,{'a':['b']})\n",
+        "README.md": "# Repair task\n\n修复 graph.py 的 dependency_order：输入节点到依赖节点列表，输出每个依赖先于依赖者的拓扑序；包含仅作为依赖出现的节点，不重复节点；任何自环或多节点环抛 ValueError，空图返回空列表，不能修改输入。\n允许修改：graph.py。不能修改测试或其他文件。\n先运行 python -B -m unittest discover -v 查看失败，再读取代码定位修复；结束前必须重新运行同一测试命令并如实报告。\n"
+      },
+      "editable_files": [
+        "graph.py"
+      ],
+      "expected_tests": 8,
+      "origin": {
+        "kind": "author_created",
+        "independent_task": true
+      },
+      "sha256": {
+        "graph.py": "f4eb3de9fe1ef587d34a48b304c8a6533bf89a9ea37cdc174e019f01a59a7217",
+        "test_acceptance.py": "7261b62cf0fdcdb525476fe3e2bb7f69da8b622880fd9c4c73f891e6367458f7",
+        "README.md": "ec2f1f4fffba15813537374bbdbb8eb9be796161e382d263b1818d34f631aa42"
+      }
+    },
+    {
+      "id": "money_minor_units",
+      "category": "cross_file",
+      "prompt": "修复金额服务跨模块契约：money.to_minor 接收十进制字符串/Decimal/数字，使用 Decimal(str(value)) 和 ROUND_HALF_UP 转整数分（负数也按该规则）；billing.invoice_total 必须逐项转换为分再求和并返回 int。不要改变 public API 或测试。\n允许修改：money.py, billing.py。不能修改测试或其他文件。\n先运行 python -B -m unittest discover -v 查看失败，再读取代码定位修复；结束前必须重新运行同一测试命令并如实报告。",
+      "files": {
+        "money.py": "from decimal import Decimal, ROUND_HALF_UP\ndef to_minor(value):\n    return int(float(value) * 100)\n",
+        "billing.py": "from money import to_minor\ndef invoice_total(values):\n    return to_minor(sum(float(value) for value in values))\n",
+        "test_acceptance.py": "import unittest\nfrom money import to_minor\nfrom billing import invoice_total\n\nclass RepairTests(unittest.TestCase):\n    def test_01(self):\n        self.assertEqual(to_minor('1.005'),101)\n    def test_02(self):\n        self.assertEqual(to_minor('-1.005'),-101)\n    def test_03(self):\n        self.assertEqual(to_minor('0.29'),29)\n    def test_04(self):\n        self.assertEqual(invoice_total(['0.005','0.005']),2)\n    def test_05(self):\n        self.assertEqual(invoice_total([]),0)\n    def test_06(self):\n        self.assertIs(type(invoice_total(['2'])),int)\n    def test_07(self):\n        self.assertEqual(to_minor('123.40'),12340)\n    def test_08(self):\n        self.assertEqual(invoice_total(['1.10','2.20']),330)\n",
+        "README.md": "# Repair task\n\n修复金额服务跨模块契约：money.to_minor 接收十进制字符串/Decimal/数字，使用 Decimal(str(value)) 和 ROUND_HALF_UP 转整数分（负数也按该规则）；billing.invoice_total 必须逐项转换为分再求和并返回 int。不要改变 public API 或测试。\n允许修改：money.py, billing.py。不能修改测试或其他文件。\n先运行 python -B -m unittest discover -v 查看失败，再读取代码定位修复；结束前必须重新运行同一测试命令并如实报告。\n"
+      },
+      "editable_files": [
+        "money.py",
+        "billing.py"
+      ],
+      "expected_tests": 8,
+      "origin": {
+        "kind": "author_created",
+        "independent_task": true
+      },
+      "sha256": {
+        "money.py": "822c9adf68f30e6972b7b2d6156e49b6c77610fdfc792d4298792b8e10beb94e",
+        "billing.py": "dc438ac6455678d9902d190773cae27d5e57e88d99cc54f669d22bd319d506bb",
+        "test_acceptance.py": "3569dd1e06893c7804685724a834c5a655d275ba8feb9b182891a32d3c4c3b41",
+        "README.md": "f7eb1194ecbbbe922af3ccfb3a05bdb5a1685aea59c0c45a3da90e8c8cff017d"
+      }
+    },
+    {
+      "id": "config_precedence",
+      "category": "cross_file",
+      "prompt": "修复配置解析和加载契约：flags.parse_bool 支持 bool、大小写及首尾空格的 true/false,1/0,yes/no,on/off，其他值抛 ValueError；settings.load_settings(defaults,env) 中有键的 env 覆盖 defaults（包括 False/空串），未提供则回退；返回新字典，只包含 debug bool 和 port int。\n允许修改：flags.py, settings.py。不能修改测试或其他文件。\n先运行 python -B -m unittest discover -v 查看失败，再读取代码定位修复；结束前必须重新运行同一测试命令并如实报告。",
+      "files": {
+        "flags.py": "def parse_bool(value):\n    return bool(value)\n",
+        "settings.py": "from flags import parse_bool\ndef load_settings(defaults, env):\n    debug = env.get('debug') or defaults.get('debug', False)\n    port = env.get('port') or defaults.get('port', 8000)\n    return {'debug': parse_bool(debug), 'port': int(port)}\n",
+        "test_acceptance.py": "import unittest\nfrom flags import parse_bool\nfrom settings import load_settings as load\n\nclass RepairTests(unittest.TestCase):\n    def test_01(self):\n        self.assertFalse(parse_bool('false'))\n    def test_02(self):\n        self.assertTrue(parse_bool(' YES '))\n    def test_03(self):\n        self.assertFalse(parse_bool(False))\n    def test_04(self):\n        with self.assertRaises(ValueError): parse_bool('unknown')\n    def test_05(self):\n        self.assertFalse(load({'debug':True},{'debug':False})['debug'])\n    def test_06(self):\n        self.assertEqual(load({'port':9000},{'port':0})['port'],0)\n    def test_07(self):\n        self.assertEqual(load({},{}),{'debug':False,'port':8000})\n    def test_08(self):\n        with self.assertRaises(ValueError): load({'debug':True},{'debug':''})\n",
+        "README.md": "# Repair task\n\n修复配置解析和加载契约：flags.parse_bool 支持 bool、大小写及首尾空格的 true/false,1/0,yes/no,on/off，其他值抛 ValueError；settings.load_settings(defaults,env) 中有键的 env 覆盖 defaults（包括 False/空串），未提供则回退；返回新字典，只包含 debug bool 和 port int。\n允许修改：flags.py, settings.py。不能修改测试或其他文件。\n先运行 python -B -m unittest discover -v 查看失败，再读取代码定位修复；结束前必须重新运行同一测试命令并如实报告。\n"
+      },
+      "editable_files": [
+        "flags.py",
+        "settings.py"
+      ],
+      "expected_tests": 8,
+      "origin": {
+        "kind": "author_created",
+        "independent_task": true
+      },
+      "sha256": {
+        "flags.py": "15cdc066ed5c564f6af5af45e6b1ff514f44907fc78d434393a54b3d2206ea39",
+        "settings.py": "fa3ac06eb1582a8125840041b02a38a8445fb42abf89e8e8c999027fd863f4a8",
+        "test_acceptance.py": "f64d60b2f7aba803b2e341108386b9d754628b5c3a7401b01c3caa4c1c43f9ee",
+        "README.md": "815574aa4399ca58025232544a55c02c010c9439b4e8e5b0e1a149ff1e30df3e"
+      }
+    },
+    {
+      "id": "cursor_roundtrip",
+      "category": "cross_file",
+      "prompt": "修复 cursor_codec.py 与 pagination.py 的游标契约：编码 offset 为 URL-safe Base64 的 ASCII 十进制文本；decode 是逆操作，负数/bool/无效编码抛 ValueError。page 返回 (slice,next_cursor)，起点来自 cursor（None 为0），next_cursor 是绝对下一偏移，仅还有数据时返回；不改变 items，size为正整数且不接受bool。\n允许修改：cursor_codec.py, pagination.py。不能修改测试或其他文件。\n先运行 python -B -m unittest discover -v 查看失败，再读取代码定位修复；结束前必须重新运行同一测试命令并如实报告。",
+      "files": {
+        "cursor_codec.py": "import base64\ndef encode(offset):\n    if type(offset) is not int or offset < 0:\n        raise ValueError('invalid offset')\n    return base64.urlsafe_b64encode(str(offset).encode()).decode()\ndef decode(token):\n    return int(token)\n",
+        "pagination.py": "from cursor_codec import encode, decode\ndef page(items, size, cursor=None):\n    if type(size) is not int or size < 1:\n        raise ValueError('invalid size')\n    start = 0 if cursor is None else decode(cursor)\n    end = start + size\n    return items[start:end], encode(size) if end < len(items) else None\n",
+        "test_acceptance.py": "import unittest\nfrom cursor_codec import encode, decode\nfrom pagination import page\n\nclass RepairTests(unittest.TestCase):\n    def test_01(self):\n        self.assertEqual(decode(encode(12)),12)\n    def test_02(self):\n        self.assertEqual(page(list(range(8)),3,encode(3)),([3,4,5],encode(6)))\n    def test_03(self):\n        self.assertEqual(page(list(range(8)),3,encode(6)),([6,7],None))\n    def test_04(self):\n        self.assertEqual(page([],2),([],None))\n    def test_05(self):\n        with self.assertRaises(ValueError): decode('not base64!')\n    def test_06(self):\n        with self.assertRaises(ValueError): decode('LTE=')\n    def test_07(self):\n        with self.assertRaises(ValueError): encode(True)\n    def test_08(self):\n        with self.assertRaises(ValueError): page([1],True)\n",
+        "README.md": "# Repair task\n\n修复 cursor_codec.py 与 pagination.py 的游标契约：编码 offset 为 URL-safe Base64 的 ASCII 十进制文本；decode 是逆操作，负数/bool/无效编码抛 ValueError。page 返回 (slice,next_cursor)，起点来自 cursor（None 为0），next_cursor 是绝对下一偏移，仅还有数据时返回；不改变 items，size为正整数且不接受bool。\n允许修改：cursor_codec.py, pagination.py。不能修改测试或其他文件。\n先运行 python -B -m unittest discover -v 查看失败，再读取代码定位修复；结束前必须重新运行同一测试命令并如实报告。\n"
+      },
+      "editable_files": [
+        "cursor_codec.py",
+        "pagination.py"
+      ],
+      "expected_tests": 8,
+      "origin": {
+        "kind": "author_created",
+        "independent_task": true
+      },
+      "sha256": {
+        "cursor_codec.py": "d71a5c01c22822c49dcb0c4475fb997e5382ff8c23fc0b3a02967a25a6c4e2a2",
+        "pagination.py": "cc3ddcb622803fdc3fbd879f8a1d49e19110d620df293e99783da86646e524ac",
+        "test_acceptance.py": "dff3aa35e05526d44c91ab58c8716af49bd1bbd30f602a1282b66c53a11c71d8",
+        "README.md": "bd8a7d09f47eb2dd630086ed0e7b05be94abe0818676c9af9bd0de8b4087f30e"
+      }
+    },
+    {
+      "id": "error_response_contract",
+      "category": "cross_file",
+      "prompt": "修复异常到 HTTP 响应契约：ValidationError携带 message 和 field，MissingError携带 message；api.handle(callable) 捕获 ValidationError -> (400,{error:message,field:field})，MissingError -> (404,{error:message})，成功 -> (200,result)，未知异常继续抛出。使用既有类，不改变它们名字。\n允许修改：errors.py, api.py。不能修改测试或其他文件。\n先运行 python -B -m unittest discover -v 查看失败，再读取代码定位修复；结束前必须重新运行同一测试命令并如实报告。",
+      "files": {
+        "errors.py": "class ValidationError(Exception):\n    def __init__(self, message, field):\n        super().__init__(message)\n        self.field = message\nclass MissingError(Exception):\n    pass\n",
+        "api.py": "from errors import ValidationError, MissingError\ndef handle(action):\n    try:\n        return 200, action()\n    except Exception as exc:\n        return 500, {'error':str(exc)}\n",
+        "test_acceptance.py": "import unittest\nfrom api import handle\nfrom errors import ValidationError, MissingError\ndef fail(exc):\n    raise exc\n\nclass RepairTests(unittest.TestCase):\n    def test_01(self):\n        self.assertEqual(handle(lambda:42),(200,42))\n    def test_02(self):\n        self.assertEqual(handle(lambda:None),(200,None))\n    def test_03(self):\n        self.assertEqual(ValidationError('bad','email').field,'email')\n    def test_04(self):\n        self.assertEqual(handle(lambda:fail(ValidationError('bad','email'))),(400,{'error':'bad','field':'email'}))\n    def test_05(self):\n        self.assertEqual(handle(lambda:fail(MissingError('gone'))),(404,{'error':'gone'}))\n    def test_06(self):\n        with self.assertRaises(RuntimeError): handle(lambda:fail(RuntimeError('internal')))\n    def test_07(self):\n        self.assertEqual(str(ValidationError('bad','x')),'bad')\n    def test_08(self):\n        self.assertEqual(handle(lambda:{'ok':True}),(200,{'ok':True}))\n",
+        "README.md": "# Repair task\n\n修复异常到 HTTP 响应契约：ValidationError携带 message 和 field，MissingError携带 message；api.handle(callable) 捕获 ValidationError -> (400,{error:message,field:field})，MissingError -> (404,{error:message})，成功 -> (200,result)，未知异常继续抛出。使用既有类，不改变它们名字。\n允许修改：errors.py, api.py。不能修改测试或其他文件。\n先运行 python -B -m unittest discover -v 查看失败，再读取代码定位修复；结束前必须重新运行同一测试命令并如实报告。\n"
+      },
+      "editable_files": [
+        "errors.py",
+        "api.py"
+      ],
+      "expected_tests": 8,
+      "origin": {
+        "kind": "author_created",
+        "independent_task": true
+      },
+      "sha256": {
+        "errors.py": "e1950a365dd87b0d11e042eeae96c9c49b9eac66f78f116ce19a9854d7eb5c90",
+        "api.py": "4651a7310e58f5638d911b626b3a88bad1f525776fa6dad5a17107d077a90ed6",
+        "test_acceptance.py": "66abc254aa192c6481c1b6ce00f39cebd8397b08403eb5751ecdb007f04bca05",
+        "README.md": "66ac0fbd2e86de306c6d223ac611e3dcc26a945ed7e7033268e4c3bf7fa2ad03"
+      }
+    },
+    {
+      "id": "utc_storage_contract",
+      "category": "cross_file",
+      "prompt": "修复时间与存储契约：timestamps.to_epoch 将带时区 datetime 转为 UTC 秒数；naive datetime 明确按 UTC 处理，不依赖本机时区。store.save_event 返回新记录 {id,timestamp}，timestamp为整数Unix秒，不能用毫秒，不能修改传入 event。\n允许修改：timestamps.py, store.py。不能修改测试或其他文件。\n先运行 python -B -m unittest discover -v 查看失败，再读取代码定位修复；结束前必须重新运行同一测试命令并如实报告。",
+      "files": {
+        "timestamps.py": "from datetime import timezone\ndef to_epoch(value):\n    return value.replace(tzinfo=timezone.utc).timestamp()\n",
+        "store.py": "from timestamps import to_epoch\ndef save_event(event):\n    event['timestamp'] = int(to_epoch(event['at']) * 1000)\n    return event\n",
+        "test_acceptance.py": "import unittest\nfrom datetime import datetime, timezone, timedelta\nfrom timestamps import to_epoch\nfrom store import save_event\n\nclass RepairTests(unittest.TestCase):\n    def test_01(self):\n        self.assertEqual(to_epoch(datetime(1970,1,1)),0)\n    def test_02(self):\n        self.assertEqual(to_epoch(datetime(1970,1,1,tzinfo=timezone.utc)),0)\n    def test_03(self):\n        self.assertEqual(to_epoch(datetime(1970,1,1,8,tzinfo=timezone(timedelta(hours=8)))),0)\n    def test_04(self):\n        self.assertEqual(to_epoch(datetime(1969,12,31,19,tzinfo=timezone(timedelta(hours=-5)))),0)\n    def test_05(self):\n        self.assertEqual(save_event({'id':'a','at':datetime(1970,1,1,0,0,2)}),{'id':'a','timestamp':2})\n    def test_06(self):\n        e={'id':'a','at':datetime(1970,1,1)}; r=save_event(e)\n        self.assertNotIn('timestamp',e)\n        self.assertIsNot(e,r)\n    def test_07(self):\n        self.assertIs(type(save_event({'id':'a','at':datetime(1970,1,1)})['timestamp']),int)\n    def test_08(self):\n        self.assertEqual(to_epoch(datetime(1970,1,1,0,0,0,500000)),0.5)\n",
+        "README.md": "# Repair task\n\n修复时间与存储契约：timestamps.to_epoch 将带时区 datetime 转为 UTC 秒数；naive datetime 明确按 UTC 处理，不依赖本机时区。store.save_event 返回新记录 {id,timestamp}，timestamp为整数Unix秒，不能用毫秒，不能修改传入 event。\n允许修改：timestamps.py, store.py。不能修改测试或其他文件。\n先运行 python -B -m unittest discover -v 查看失败，再读取代码定位修复；结束前必须重新运行同一测试命令并如实报告。\n"
+      },
+      "editable_files": [
+        "timestamps.py",
+        "store.py"
+      ],
+      "expected_tests": 8,
+      "origin": {
+        "kind": "author_created",
+        "independent_task": true
+      },
+      "sha256": {
+        "timestamps.py": "0b4e49fcff3400918814d9f3087019ffd172293e241bbadbd3e5873ec4e77759",
+        "store.py": "dc44b8ac834e4cad9a11e00574c4040b031782a78df21f5de815d54c58625818",
+        "test_acceptance.py": "5abe6186871ca892b261d8cdce0a7c6631f5780ccc31194730d7d9f71dc73033",
+        "README.md": "ce87b9286cb0ec3ba25e518cc5601a46e6ade95d64da448a17ce63d135da615c"
+      }
+    },
+    {
+      "id": "inventory_reservation",
+      "category": "cross_file",
+      "prompt": "修复订单与库存契约：stock.reserve(stock,sku,qty) 校验qty为正的非bool整数，缺货/未知sku抛 ValueError；成功扣减一次并返回剩余量，失败不修改库存。orders.place_order 返回 {sku,quantity,remaining}，使用reserve返回值，不重复扣减。\n允许修改：stock.py, orders.py。不能修改测试或其他文件。\n先运行 python -B -m unittest discover -v 查看失败，再读取代码定位修复；结束前必须重新运行同一测试命令并如实报告。",
+      "files": {
+        "stock.py": "def reserve(stock, sku, qty):\n    if not isinstance(qty, int) or qty < 1:\n        raise ValueError('invalid quantity')\n    stock[sku] -= qty\n    if stock[sku] < 0:\n        raise ValueError('insufficient stock')\n    return stock[sku]\n",
+        "orders.py": "from stock import reserve\ndef place_order(stock, sku, qty):\n    reserve(stock, sku, qty)\n    stock[sku] -= qty\n    return {'sku':sku, 'quantity':qty, 'remaining':stock[sku]}\n",
+        "test_acceptance.py": "import unittest\nfrom stock import reserve\nfrom orders import place_order\n\nclass RepairTests(unittest.TestCase):\n    def test_01(self):\n        s={'a':5}\n        self.assertEqual(place_order(s,'a',2),{'sku':'a','quantity':2,'remaining':3})\n        self.assertEqual(s,{'a':3})\n    def test_02(self):\n        s={'a':2}\n        self.assertEqual(reserve(s,'a',2),0)\n    def test_03(self):\n        s={'a':2}\n        with self.assertRaises(ValueError): reserve(s,'a',3)\n        self.assertEqual(s,{'a':2})\n    def test_04(self):\n        with self.assertRaises(ValueError): reserve({},'x',1)\n    def test_05(self):\n        with self.assertRaises(ValueError): reserve({'a':2},'a',True)\n    def test_06(self):\n        with self.assertRaises(ValueError): reserve({'a':2},'a',0)\n    def test_07(self):\n        with self.assertRaises(ValueError): reserve({'a':2},'a',1.5)\n    def test_08(self):\n        s={'a':4,'b':8}; place_order(s,'a',1)\n        self.assertEqual(s['b'],8)\n",
+        "README.md": "# Repair task\n\n修复订单与库存契约：stock.reserve(stock,sku,qty) 校验qty为正的非bool整数，缺货/未知sku抛 ValueError；成功扣减一次并返回剩余量，失败不修改库存。orders.place_order 返回 {sku,quantity,remaining}，使用reserve返回值，不重复扣减。\n允许修改：stock.py, orders.py。不能修改测试或其他文件。\n先运行 python -B -m unittest discover -v 查看失败，再读取代码定位修复；结束前必须重新运行同一测试命令并如实报告。\n"
+      },
+      "editable_files": [
+        "stock.py",
+        "orders.py"
+      ],
+      "expected_tests": 8,
+      "origin": {
+        "kind": "author_created",
+        "independent_task": true
+      },
+      "sha256": {
+        "stock.py": "492a726bc64026a4440d856192ebd9fbb9c84a1a5ddb9a93e7d434b1e2974baf",
+        "orders.py": "62d740b241d439a99a11df348814a571a5aad01e742c138e6081b334c55e996c",
+        "test_acceptance.py": "4a6d884bb50c653280c94baa35673f6abbe76604251932bce6cb15edb6d53cbe",
+        "README.md": "4750c8dc831f0c7e897b4d94ffcffafb4327d6569c99a79be224fcf7fc7dba8f"
+      }
+    },
+    {
+      "id": "boltons_isoparse",
+      "category": "unknown_location",
+      "prompt": "时间显示服务的毫秒/微秒小数解析错误；找出缺陷所在位置并修复。保留无小数行为，1到6位小数正确缩放，超过6位截断。\n修复位置未提供；可修改任意实现 .py 文件，不能改测试或辅助说明。\n先运行 python -B -m unittest discover -v 查看失败，再读取代码定位修复；结束前必须重新运行同一测试命令并如实报告。",
+      "files": {
+        "time_core.py": "import re\nfrom datetime import datetime\n\n_NONDIGIT_RE = re.compile(r'\\D')\n\ndef isoparse(iso_str):\n    \"\"\"Parses the limited subset of `ISO8601-formatted time`_ strings as\n    returned by :meth:`datetime.datetime.isoformat`.\n\n    >>> epoch_dt = datetime.fromtimestamp(0, timezone.utc).replace(tzinfo=None)\n    >>> iso_str = epoch_dt.isoformat()\n    >>> print(iso_str)\n    1970-01-01T00:00:00\n    >>> isoparse(iso_str)\n    datetime.datetime(1970, 1, 1, 0, 0)\n\n    >>> utcnow = datetime.now(timezone.utc).replace(tzinfo=None)\n    >>> utcnow == isoparse(utcnow.isoformat())\n    True\n\n    For further datetime parsing, see the `iso8601`_ package for strict\n    ISO parsing and `dateutil`_ package for loose parsing and more.\n\n    .. _ISO8601-formatted time: https://en.wikipedia.org/wiki/ISO_8601\n    .. _iso8601: https://pypi.python.org/pypi/iso8601\n    .. _dateutil: https://pypi.python.org/pypi/python-dateutil\n\n    \"\"\"\n    dt_args = [int(p) for p in _NONDIGIT_RE.split(iso_str)]\n    return datetime(*dt_args)\n",
+        "test_acceptance.py": "import unittest\nfrom public_api import render\n\nclass RepairTests(unittest.TestCase):\n    def test_01(self):\n        self.assertEqual(render('2020-01-02T03:04:05.851').microsecond,851000)\n    def test_02(self):\n        self.assertEqual(render('2020-01-02T03:04:05.051').microsecond,51000)\n    def test_03(self):\n        self.assertEqual(render('2020-01-02T03:04:05.1').microsecond,100000)\n    def test_04(self):\n        self.assertEqual(render('2020-01-02T03:04:05.000001').microsecond,1)\n    def test_05(self):\n        self.assertEqual(render('2020-01-02T03:04:05.123456789').microsecond,123456)\n    def test_06(self):\n        self.assertEqual(render('2020-01-02T03:04:05').second,5)\n    def test_07(self):\n        self.assertEqual(render('2020-01-02T03:04:05.000000').microsecond,0)\n    def test_08(self):\n        with self.assertRaises(ValueError): render('invalid')\n",
+        "public_api.py": "from time_core import isoparse\ndef render(value):\n    return isoparse(value)\n",
+        "validation.py": "def is_text(value):\n    return isinstance(value,str)\n",
+        "transport.py": "def status():\n    return {\"healthy\":True}\n",
+        "config.py": "DEFAULT_TIMEOUT = 20\n",
+        "UPSTREAM_LICENSE.txt": "Copyright (c) 2013, Mahmoud Hashemi\n\nRedistribution and use in source and binary forms, with or without\nmodification, are permitted provided that the following conditions are\nmet:\n\n    * Redistributions of source code must retain the above copyright\n      notice, this list of conditions and the following disclaimer.\n\n    * Redistributions in binary form must reproduce the above\n      copyright notice, this list of conditions and the following\n      disclaimer in the documentation and/or other materials provided\n      with the distribution.\n\n    * The names of the contributors may not be used to endorse or\n      promote products derived from this software without specific\n      prior written permission.\n\nTHIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS\n\"AS IS\" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT\nLIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR\nA PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT\nOWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,\nSPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT\nLIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,\nDATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY\nTHEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT\n(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE\nOF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.\n",
+        "README.md": "# Repair task\n\n时间显示服务的毫秒/微秒小数解析错误；找出缺陷所在位置并修复。保留无小数行为，1到6位小数正确缩放，超过6位截断。\n修复位置未提供；可修改任意实现 .py 文件，不能改测试或辅助说明。\n先运行 python -B -m unittest discover -v 查看失败，再读取代码定位修复；结束前必须重新运行同一测试命令并如实报告。\n"
+      },
+      "editable_files": [
+        "time_core.py",
+        "public_api.py",
+        "validation.py",
+        "transport.py",
+        "config.py"
+      ],
+      "expected_tests": 8,
+      "origin": {
+        "id": "boltons_isoparse",
+        "repository": "https://github.com/mahmoud/boltons",
+        "fix_commit": "1f37cce42f8d3146342ccbd45492d3b3d9c52698",
+        "buggy_commit": "eb659013fbe4f355561fbead2116868366ba6e26",
+        "module": "boltons/timeutils.py",
+        "commit_url": "https://github.com/mahmoud/boltons/commit/1f37cce42f8d3146342ccbd45492d3b3d9c52698",
+        "title": "timeutils: scale isoparse fractional seconds to microseconds",
+        "kind": "upstream_minimal_reproduction",
+        "buggy_module_sha256": "fdefe22ae394666b95195e5b290c9969cdb5ce979cc9c37805cefcc02abe2df5",
+        "fixed_module_sha256": "ee967a2611f4110744b3e2cba5817522eee3a284451dfdc04261514b78fcbd44",
+        "extraction_symbols": [
+          "_NONDIGIT_RE",
+          "isoparse"
+        ],
+        "adaptation": "Exact AST source segments with explicit imports; English-only identity gettext shim for humanize; small public API/distractors added. Full repository not evaluated."
+      },
+      "sha256": {
+        "time_core.py": "df07d543ab40a886ec91cd846a106e3d70f199e79c549954a945fdf3e2c9cff3",
+        "test_acceptance.py": "681cfcfcec749602503e5fcbeef4f3e35b50a655625339ced88255d9d074615a",
+        "public_api.py": "94a04fd17d1e54d24d4ad52106523f4b55431342382ea99b9b39565baa5d2985",
+        "validation.py": "7ea34d2d7137c985f35d88b223150cd462055a6c0fed9684d404127c355bd6a9",
+        "transport.py": "68fcc59086bdbbe897d8d0190bf99bd249d44c9f8bc6175e68aeb9cfcd2e8a39",
+        "config.py": "464bc6613aec3cb276a2996ecb81c1d9a60b81adc28004859524de5b34c139fc",
+        "UPSTREAM_LICENSE.txt": "617273daf4b7b4fbc0e3068bca7df3e3dbc29b4c5641e185917c775cf1795111",
+        "README.md": "9749690de08a5f4b64b548f1ac1ae6fafc119ca923e0af5d43c39221655d6314"
+      }
+    },
+    {
+      "id": "boltons_xfrange",
+      "category": "unknown_location",
+      "prompt": "数值序列公开接口下降序列为空，浮点边界有多余元素。定位并修复，使generator与list接口计数/浮点值一致，错误方向为空，step=0抛ValueError。注意既有API参数顺序和递增行为。\n修复位置未提供；可修改任意实现 .py 文件，不能改测试或辅助说明。\n先运行 python -B -m unittest discover -v 查看失败，再读取代码定位修复；结束前必须重新运行同一测试命令并如实报告。",
+      "files": {
+        "sequence_core.py": "import math\n\ndef xfrange(stop, start=None, step=1.0):\n    \"\"\"Same as :func:`frange`, but generator-based instead of returning a\n    list.\n\n    >>> tuple(xfrange(1, 3, step=0.75))\n    (1.0, 1.75, 2.5)\n\n    See :func:`frange` for more details.\n    \"\"\"\n    if not step:\n        raise ValueError('step must be non-zero')\n    if start is None:\n        start, stop = 0.0, stop * 1.0\n    else:\n        # swap when all args are used\n        stop, start = start * 1.0, stop * 1.0\n    cur = start\n    while cur < stop:\n        yield cur\n        cur += step\n\ndef frange(stop, start=None, step=1.0):\n    \"\"\"A :func:`range` clone for float-based ranges.\n\n    >>> frange(5)\n    [0.0, 1.0, 2.0, 3.0, 4.0]\n    >>> frange(6, step=1.25)\n    [0.0, 1.25, 2.5, 3.75, 5.0]\n    >>> frange(100.5, 101.5, 0.25)\n    [100.5, 100.75, 101.0, 101.25]\n    >>> frange(5, 0)\n    []\n    >>> frange(5, 0, step=-1.25)\n    [5.0, 3.75, 2.5, 1.25]\n    \"\"\"\n    if not step:\n        raise ValueError('step must be non-zero')\n    if start is None:\n        start, stop = 0.0, stop * 1.0\n    else:\n        # swap when all args are used\n        stop, start = start * 1.0, stop * 1.0\n    count = int(math.ceil((stop - start) / step))\n    ret = [None] * count\n    if not ret:\n        return ret\n    ret[0] = start\n    for i in range(1, count):\n        ret[i] = ret[i - 1] + step\n    return ret\n",
+        "test_acceptance.py": "import unittest\nfrom public_api import render, expected\n\nclass RepairTests(unittest.TestCase):\n    def test_01(self):\n        self.assertEqual(render(5,0,step=-1.25),[5.0,3.75,2.5,1.25])\n    def test_02(self):\n        self.assertEqual(render(1,5,step=-1),[])\n    def test_03(self):\n        self.assertEqual(render(5,0),[])\n    def test_04(self):\n        self.assertEqual(len(render(1.0,step=.1)),10)\n    def test_05(self):\n        self.assertEqual(render(1.0,step=.1),expected(1.0,step=.1))\n    def test_06(self):\n        self.assertEqual(render(1,3,step=.75),[1,1.75,2.5])\n    def test_07(self):\n        with self.assertRaises(ValueError): render(10,step=0)\n    def test_08(self):\n        self.assertEqual(render(0),[])\n",
+        "public_api.py": "from itertools import islice\nfrom sequence_core import xfrange, frange\ndef render(*a,**k):\n    return list(islice(xfrange(*a,**k),1000))\ndef expected(*a,**k):\n    return frange(*a,**k)\n",
+        "validation.py": "def is_text(value):\n    return isinstance(value,str)\n",
+        "transport.py": "def status():\n    return {\"healthy\":True}\n",
+        "config.py": "DEFAULT_TIMEOUT = 20\n",
+        "UPSTREAM_LICENSE.txt": "Copyright (c) 2013, Mahmoud Hashemi\n\nRedistribution and use in source and binary forms, with or without\nmodification, are permitted provided that the following conditions are\nmet:\n\n    * Redistributions of source code must retain the above copyright\n      notice, this list of conditions and the following disclaimer.\n\n    * Redistributions in binary form must reproduce the above\n      copyright notice, this list of conditions and the following\n      disclaimer in the documentation and/or other materials provided\n      with the distribution.\n\n    * The names of the contributors may not be used to endorse or\n      promote products derived from this software without specific\n      prior written permission.\n\nTHIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS\n\"AS IS\" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT\nLIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR\nA PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT\nOWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,\nSPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT\nLIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,\nDATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY\nTHEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT\n(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE\nOF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.\n",
+        "README.md": "# Repair task\n\n数值序列公开接口下降序列为空，浮点边界有多余元素。定位并修复，使generator与list接口计数/浮点值一致，错误方向为空，step=0抛ValueError。注意既有API参数顺序和递增行为。\n修复位置未提供；可修改任意实现 .py 文件，不能改测试或辅助说明。\n先运行 python -B -m unittest discover -v 查看失败，再读取代码定位修复；结束前必须重新运行同一测试命令并如实报告。\n"
+      },
+      "editable_files": [
+        "sequence_core.py",
+        "public_api.py",
+        "validation.py",
+        "transport.py",
+        "config.py"
+      ],
+      "expected_tests": 8,
+      "origin": {
+        "id": "boltons_xfrange",
+        "repository": "https://github.com/mahmoud/boltons",
+        "fix_commit": "3e9983db7b59578add73c01cd31fa7ecd8da2e04",
+        "buggy_commit": "f1034b07ddf71f4d9285134a47a4ade16fe40789",
+        "module": "boltons/iterutils.py",
+        "commit_url": "https://github.com/mahmoud/boltons/commit/3e9983db7b59578add73c01cd31fa7ecd8da2e04",
+        "title": "iterutils: unify xfrange with frange's count-based semantics",
+        "kind": "upstream_minimal_reproduction",
+        "buggy_module_sha256": "77ec0e8d53b060f236d06f7c3c8ed107d34818dd8cf1b2a6b986bdea1167effe",
+        "fixed_module_sha256": "9e196584a6ec6cba8cf175b8a2d99567802d75ba23bac1234255d57beebbe35b",
+        "extraction_symbols": [
+          "xfrange",
+          "frange"
+        ],
+        "adaptation": "Exact AST source segments with explicit imports; English-only identity gettext shim for humanize; small public API/distractors added. Full repository not evaluated."
+      },
+      "sha256": {
+        "sequence_core.py": "dc67d94be2ff2aa3c1bd58dc52dab1194c1d8977e9cb7124ef068e4d2aa99a07",
+        "test_acceptance.py": "696ae30190e6ffd573b5db2353eefa1efb3af0be2290277589d7931d8c659350",
+        "public_api.py": "3f6faf803fd35c11dd58934f0316ae4500c8555d089a92b0fc98f6dea6e8cc63",
+        "validation.py": "7ea34d2d7137c985f35d88b223150cd462055a6c0fed9684d404127c355bd6a9",
+        "transport.py": "68fcc59086bdbbe897d8d0190bf99bd249d44c9f8bc6175e68aeb9cfcd2e8a39",
+        "config.py": "464bc6613aec3cb276a2996ecb81c1d9a60b81adc28004859524de5b34c139fc",
+        "UPSTREAM_LICENSE.txt": "617273daf4b7b4fbc0e3068bca7df3e3dbc29b4c5641e185917c775cf1795111",
+        "README.md": "b302546f1198d551d70059d8e6911276b476858d12412d22bd4d8cf9db93ace2"
+      }
+    },
+    {
+      "id": "boltons_multireplace",
+      "category": "unknown_location",
+      "prompt": "批量替换公开接口在空替换表时崩溃。定位问题并使空映射/空列表/空生成器为no-op，同时保留非空映射、字面量转义、正则模式和单次替换的行为。\n修复位置未提供；可修改任意实现 .py 文件，不能改测试或辅助说明。\n先运行 python -B -m unittest discover -v 查看失败，再读取代码定位修复；结束前必须重新运行同一测试命令并如实报告。",
+      "files": {
+        "replacement_core.py": "import re\nfrom collections.abc import Mapping\n\nclass MultiReplace:\n    \"\"\"\n    MultiReplace is a tool for doing multiple find/replace actions in one pass.\n\n    Given a mapping of values to be replaced it allows for all of the matching\n    values to be replaced in a single pass which can save a lot of performance\n    on very large strings. In addition to simple replace, it also allows for\n    replacing based on regular expressions.\n\n    Keyword Arguments:\n\n    :type regex: bool\n    :param regex: Treat search keys as regular expressions [Default: False]\n    :type flags: int\n    :param flags: flags to pass to the regex engine during compile\n\n    Dictionary Usage::\n\n        from boltons import strutils\n        s = strutils.MultiReplace({\n            'foo': 'zoo',\n            'cat': 'hat',\n            'bat': 'kraken'\n        })\n        new = s.sub('The foo bar cat ate a bat')\n        new == 'The zoo bar hat ate a kraken'\n\n    Iterable Usage::\n\n        from boltons import strutils\n        s = strutils.MultiReplace([\n            ('foo', 'zoo'),\n            ('cat', 'hat'),\n            ('bat', 'kraken')\n        ])\n        new = s.sub('The foo bar cat ate a bat')\n        new == 'The zoo bar hat ate a kraken'\n\n\n    The constructor can be passed a dictionary or other mapping as well as\n    an iterable of tuples. If given an iterable, the substitution will be run\n    in the order the replacement values are specified in the iterable. This is\n    also true if it is given an OrderedDict. If given a dictionary then the\n    order will be non-deterministic::\n\n        >>> 'foo bar baz'.replace('foo', 'baz').replace('baz', 'bar')\n        'bar bar bar'\n        >>> m = MultiReplace({'foo': 'baz', 'baz': 'bar'})\n        >>> m.sub('foo bar baz')\n        'baz bar bar'\n\n    This is because the order of replacement can matter if you're inserting\n    something that might be replaced by a later substitution. Pay attention and\n    if you need to rely on order then consider using a list of tuples instead\n    of a dictionary.\n    \"\"\"\n\n    def __init__(self, sub_map, **kwargs):\n        \"\"\"Compile any regular expressions that have been passed.\"\"\"\n        options = {\n            'regex': False,\n            'flags': 0,\n        }\n        options.update(kwargs)\n        self.group_map = {}\n        regex_values = []\n\n        if isinstance(sub_map, Mapping):\n            sub_map = sub_map.items()\n\n        for idx, vals in enumerate(sub_map):\n            group_name = f'group{idx}'\n            if isinstance(vals[0], str):\n                # If we're not treating input strings like a regex, escape it\n                if not options['regex']:\n                    exp = re.escape(vals[0])\n                else:\n                    exp = vals[0]\n            else:\n                exp = vals[0].pattern\n\n            regex_values.append(f'(?P<{group_name}>{exp})')\n            self.group_map[group_name] = vals[1]\n\n        self.combined_pattern = re.compile(\n            '|'.join(regex_values),\n            flags=options['flags']\n        )\n\n    def _get_value(self, match):\n        \"\"\"Given a match object find replacement value.\"\"\"\n        return self.group_map[match.lastgroup]\n\n    def sub(self, text):\n        \"\"\"\n        Run substitutions on the input text.\n\n        Given an input string, run all substitutions given in the\n        constructor.\n        \"\"\"\n        return self.combined_pattern.sub(self._get_value, text)\n",
+        "test_acceptance.py": "import unittest\nfrom public_api import render\n\nclass RepairTests(unittest.TestCase):\n    def test_01(self):\n        self.assertEqual(render('foo bar',{}),'foo bar')\n    def test_02(self):\n        self.assertEqual(render('foo',[]),'foo')\n    def test_03(self):\n        self.assertEqual(render('',{}),'')\n    def test_04(self):\n        self.assertEqual(render('abc',iter([])),'abc')\n    def test_05(self):\n        self.assertEqual(render('foo cat',{'foo':'bar','cat':'dog'}),'bar dog')\n    def test_06(self):\n        self.assertEqual(render('a.b', {'.':'!'}),'a!b')\n    def test_07(self):\n        self.assertEqual(render('aaa',[('a','b')]),'bbb')\n    def test_08(self):\n        self.assertEqual(render('a12',[(r'\\d+','X')],regex=True),'aX')\n",
+        "public_api.py": "from replacement_core import MultiReplace\ndef render(text,mapping,**kwargs):\n    return MultiReplace(mapping,**kwargs).sub(text)\n",
+        "validation.py": "def is_text(value):\n    return isinstance(value,str)\n",
+        "transport.py": "def status():\n    return {\"healthy\":True}\n",
+        "config.py": "DEFAULT_TIMEOUT = 20\n",
+        "UPSTREAM_LICENSE.txt": "Copyright (c) 2013, Mahmoud Hashemi\n\nRedistribution and use in source and binary forms, with or without\nmodification, are permitted provided that the following conditions are\nmet:\n\n    * Redistributions of source code must retain the above copyright\n      notice, this list of conditions and the following disclaimer.\n\n    * Redistributions in binary form must reproduce the above\n      copyright notice, this list of conditions and the following\n      disclaimer in the documentation and/or other materials provided\n      with the distribution.\n\n    * The names of the contributors may not be used to endorse or\n      promote products derived from this software without specific\n      prior written permission.\n\nTHIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS\n\"AS IS\" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT\nLIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR\nA PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT\nOWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,\nSPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT\nLIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,\nDATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY\nTHEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT\n(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE\nOF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.\n",
+        "README.md": "# Repair task\n\n批量替换公开接口在空替换表时崩溃。定位问题并使空映射/空列表/空生成器为no-op，同时保留非空映射、字面量转义、正则模式和单次替换的行为。\n修复位置未提供；可修改任意实现 .py 文件，不能改测试或辅助说明。\n先运行 python -B -m unittest discover -v 查看失败，再读取代码定位修复；结束前必须重新运行同一测试命令并如实报告。\n"
+      },
+      "editable_files": [
+        "replacement_core.py",
+        "public_api.py",
+        "validation.py",
+        "transport.py",
+        "config.py"
+      ],
+      "expected_tests": 8,
+      "origin": {
+        "id": "boltons_multireplace",
+        "repository": "https://github.com/mahmoud/boltons",
+        "fix_commit": "435774ef8b10c1355bf77483a837945034011754",
+        "buggy_commit": "0a3084e3058fd814684b1fc98343ec2e76d13ddc",
+        "module": "boltons/strutils.py",
+        "commit_url": "https://github.com/mahmoud/boltons/commit/435774ef8b10c1355bf77483a837945034011754",
+        "title": "strutils: make empty MultiReplace mapping a no-op",
+        "kind": "upstream_minimal_reproduction",
+        "buggy_module_sha256": "81e6696057db543d3cc7e099c33840d1f598bd6f39b98b165d21251d62a1737b",
+        "fixed_module_sha256": "fdd710629c8757dd94bb8481ac91ab1f59b70690d40e5e4edb3d10dc46fa5912",
+        "extraction_symbols": [
+          "MultiReplace"
+        ],
+        "adaptation": "Exact AST source segments with explicit imports; English-only identity gettext shim for humanize; small public API/distractors added. Full repository not evaluated."
+      },
+      "sha256": {
+        "replacement_core.py": "fcd9b76737acc081020179827d291ea5f38e59666c0f505d833bb78fa0d64854",
+        "test_acceptance.py": "3ebef95a4413acd2a11788db96ed8b89c340b8b1af0390ef193a6decc663d6c6",
+        "public_api.py": "040c38f35bc5afdcf52b2b0804d397a6f2bea8757131149ec0bea535d6822cb8",
+        "validation.py": "7ea34d2d7137c985f35d88b223150cd462055a6c0fed9684d404127c355bd6a9",
+        "transport.py": "68fcc59086bdbbe897d8d0190bf99bd249d44c9f8bc6175e68aeb9cfcd2e8a39",
+        "config.py": "464bc6613aec3cb276a2996ecb81c1d9a60b81adc28004859524de5b34c139fc",
+        "UPSTREAM_LICENSE.txt": "617273daf4b7b4fbc0e3068bca7df3e3dbc29b4c5641e185917c775cf1795111",
+        "README.md": "79b9f4f115270de78abddd9da0a202cacc5985853de2776fbcb2b82ed9814044"
+      }
+    },
+    {
+      "id": "boltons_splitlines",
+      "category": "unknown_location",
+      "prompt": "文本展示服务会意外拆开日期中的 2028/2029，且未识别Unicode行分隔符。定位并修复，保留CRLF、空行、尾换行和缩进接口的行为。\n修复位置未提供；可修改任意实现 .py 文件，不能改测试或辅助说明。\n先运行 python -B -m unittest discover -v 查看失败，再读取代码定位修复；结束前必须重新运行同一测试命令并如实报告。",
+      "files": {
+        "text_core.py": "import re\n\n_line_ending_re = re.compile(r'(\\r\\n|\\n|\\x0b|\\f|\\r|\\x85|\\x2028|\\x2029)',\n                             re.UNICODE)\n\ndef iter_splitlines(text):\n    r\"\"\"Like :meth:`str.splitlines`, but returns an iterator of lines\n    instead of a list. Also similar to :meth:`file.next`, as that also\n    lazily reads and yields lines from a file.\n\n    This function works with a variety of line endings, but as always,\n    be careful when mixing line endings within a file.\n\n    >>> list(iter_splitlines('\\nhi\\nbye\\n'))\n    ['', 'hi', 'bye', '']\n    >>> list(iter_splitlines('\\r\\nhi\\rbye\\r\\n'))\n    ['', 'hi', 'bye', '']\n    >>> list(iter_splitlines(''))\n    []\n    \"\"\"\n    prev_end, len_text = 0, len(text)\n    # print('last: %r' % last_idx)\n    # start, end = None, None\n    for match in _line_ending_re.finditer(text):\n        start, end = match.start(1), match.end(1)\n        # print(start, end)\n        if prev_end <= start:\n            yield text[prev_end:start]\n        if end == len_text:\n            yield ''\n        prev_end = end\n    tail = text[prev_end:]\n    if tail:\n        yield tail\n    return\n\ndef indent(text, margin, newline='\\n', key=bool):\n    \"\"\"The missing counterpart to the built-in :func:`textwrap.dedent`.\n\n    Args:\n        text (str): The text to indent.\n        margin (str): The string to prepend to each line.\n        newline (str): The newline used to rejoin the lines (default: ``\\\\n``)\n        key (callable): Called on each line to determine whether to\n          indent it. Default: :class:`bool`, to ensure that empty lines do\n          not get whitespace added.\n    \"\"\"\n    indented_lines = [(margin + line if key(line) else line)\n                      for line in iter_splitlines(text)]\n    return newline.join(indented_lines)\n",
+        "test_acceptance.py": "import unittest\nfrom public_api import render, indent_text\n\nclass RepairTests(unittest.TestCase):\n    def test_01(self):\n        self.assertEqual(render('May 2028 release'),['May 2028 release'])\n    def test_02(self):\n        self.assertEqual(render('May 2029 release'),['May 2029 release'])\n    def test_03(self):\n        self.assertEqual(render('a\\u2028b'),['a','b'])\n    def test_04(self):\n        self.assertEqual(render('a\\u2029b'),['a','b'])\n    def test_05(self):\n        self.assertEqual(render('a\\r\\nb'),['a','b'])\n    def test_06(self):\n        self.assertEqual(render('a\\n'),['a',''])\n    def test_07(self):\n        self.assertEqual(render(''),[])\n    def test_08(self):\n        self.assertEqual(indent_text('a\\nb','> '),'> a\\n> b')\n",
+        "public_api.py": "from text_core import iter_splitlines, indent\ndef render(text):\n    return list(iter_splitlines(text))\ndef indent_text(text,margin):\n    return indent(text,margin)\n",
+        "validation.py": "def is_text(value):\n    return isinstance(value,str)\n",
+        "transport.py": "def status():\n    return {\"healthy\":True}\n",
+        "config.py": "DEFAULT_TIMEOUT = 20\n",
+        "UPSTREAM_LICENSE.txt": "Copyright (c) 2013, Mahmoud Hashemi\n\nRedistribution and use in source and binary forms, with or without\nmodification, are permitted provided that the following conditions are\nmet:\n\n    * Redistributions of source code must retain the above copyright\n      notice, this list of conditions and the following disclaimer.\n\n    * Redistributions in binary form must reproduce the above\n      copyright notice, this list of conditions and the following\n      disclaimer in the documentation and/or other materials provided\n      with the distribution.\n\n    * The names of the contributors may not be used to endorse or\n      promote products derived from this software without specific\n      prior written permission.\n\nTHIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS\n\"AS IS\" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT\nLIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR\nA PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT\nOWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,\nSPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT\nLIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,\nDATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY\nTHEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT\n(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE\nOF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.\n",
+        "README.md": "# Repair task\n\n文本展示服务会意外拆开日期中的 2028/2029，且未识别Unicode行分隔符。定位并修复，保留CRLF、空行、尾换行和缩进接口的行为。\n修复位置未提供；可修改任意实现 .py 文件，不能改测试或辅助说明。\n先运行 python -B -m unittest discover -v 查看失败，再读取代码定位修复；结束前必须重新运行同一测试命令并如实报告。\n"
+      },
+      "editable_files": [
+        "text_core.py",
+        "public_api.py",
+        "validation.py",
+        "transport.py",
+        "config.py"
+      ],
+      "expected_tests": 8,
+      "origin": {
+        "id": "boltons_splitlines",
+        "repository": "https://github.com/mahmoud/boltons",
+        "fix_commit": "d12d86a4706aa4a367a91679b0ff9b6a572e5298",
+        "buggy_commit": "967864f89791509f9eb36b22b4579d36b72a6df2",
+        "module": "boltons/strutils.py",
+        "commit_url": "https://github.com/mahmoud/boltons/commit/d12d86a4706aa4a367a91679b0ff9b6a572e5298",
+        "title": "Fix Unicode line separators in iter_splitlines",
+        "kind": "upstream_minimal_reproduction",
+        "buggy_module_sha256": "942cf2e33492fa6eb48508d74cd96cf2545dec50c26a2ab361bbf81507317943",
+        "fixed_module_sha256": "fcf4c6487b8947e256303c5c984c7a0283129b442269ab4328257257e486541f",
+        "extraction_symbols": [
+          "_line_ending_re",
+          "iter_splitlines",
+          "indent"
+        ],
+        "adaptation": "Exact AST source segments with explicit imports; English-only identity gettext shim for humanize; small public API/distractors added. Full repository not evaluated."
+      },
+      "sha256": {
+        "text_core.py": "fb809d41f4e6cd89e40ddf4438ff4bd78cb5ce6bb360e617dec13fad47544252",
+        "test_acceptance.py": "d57aa1bee4e032855a0244ec658e3226c0d5efd297c94b2664ebe708c1636c68",
+        "public_api.py": "f8ad36406a5c438628d7a856c69903f144cc21cd863bbe488ff9a83a147f5155",
+        "validation.py": "7ea34d2d7137c985f35d88b223150cd462055a6c0fed9684d404127c355bd6a9",
+        "transport.py": "68fcc59086bdbbe897d8d0190bf99bd249d44c9f8bc6175e68aeb9cfcd2e8a39",
+        "config.py": "464bc6613aec3cb276a2996ecb81c1d9a60b81adc28004859524de5b34c139fc",
+        "UPSTREAM_LICENSE.txt": "617273daf4b7b4fbc0e3068bca7df3e3dbc29b4c5641e185917c775cf1795111",
+        "README.md": "9b090a037ea61c421b94d6d608b0e516c238becb1f6eeed73e12a015079a9479"
+      }
+    },
+    {
+      "id": "humanize_list",
+      "category": "regression_compatibility",
+      "prompt": "修复 formatter.py 的 natural_list 空列表崩溃回归，空列表返回空字符串；保留单项、两项、多项、数字元素和输入不变性。\n允许修改：formatter.py。不能修改测试或其他文件。\n先运行 python -B -m unittest discover -v 查看失败，再读取代码定位修复；结束前必须重新运行同一测试命令并如实报告。",
+      "files": {
+        "formatter.py": "from __future__ import annotations\n_ = lambda text: text\n\ndef natural_list(items: list[Any]) -> str:\n    \"\"\"Natural list.\n\n    Convert a list of items into a human-readable string with commas and 'and'.\n\n    Examples:\n        >>> natural_list([\"one\", \"two\", \"three\"])\n        'one, two and three'\n        >>> natural_list([\"one\", \"two\"])\n        'one and two'\n        >>> natural_list([\"one\"])\n        'one'\n\n    Args:\n        items (list): An iterable of items.\n\n    Returns:\n        str: A string with commas and 'and' in the right places.\n    \"\"\"\n    if len(items) == 1:\n        return str(items[0])\n    elif len(items) == 2:\n        return f\"{str(items[0])} and {str(items[1])}\"\n    else:\n        return \", \".join([str(item) for item in items[:-1]]) + f\" and {str(items[-1])}\"\n",
+        "test_acceptance.py": "import unittest\nfrom formatter import natural_list as fmt\n\nclass RepairTests(unittest.TestCase):\n    def test_01(self):\n        self.assertEqual(fmt([]),'')\n    def test_02(self):\n        self.assertEqual(fmt(['one']),'one')\n    def test_03(self):\n        self.assertEqual(fmt(['one','two']),'one and two')\n    def test_04(self):\n        self.assertEqual(fmt(['one','two','three']),'one, two and three')\n    def test_05(self):\n        self.assertEqual(fmt([1,2]),'1 and 2')\n    def test_06(self):\n        self.assertEqual(fmt(['']),'')\n    def test_07(self):\n        x=['a','b']; fmt(x)\n        self.assertEqual(x,['a','b'])\n    def test_08(self):\n        self.assertEqual(fmt([1,'two',3]),'1, two and 3')\n",
+        "UPSTREAM_LICENSE.txt": "Copyright (c) 2010-2020 Jason Moiron and Contributors\n\nPermission is hereby granted, free of charge, to any person obtaining\na copy of this software and associated documentation files (the\n\"Software\"), to deal in the Software without restriction, including\nwithout limitation the rights to use, copy, modify, merge, publish,\ndistribute, sublicense, and/or sell copies of the Software, and to\npermit persons to whom the Software is furnished to do so, subject to\nthe following conditions:\n\nThe above copyright notice and this permission notice shall be\nincluded in all copies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND,\nEXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF\nMERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND\nNONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE\nLIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION\nOF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION\nWITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.\n",
+        "README.md": "# Repair task\n\n修复 formatter.py 的 natural_list 空列表崩溃回归，空列表返回空字符串；保留单项、两项、多项、数字元素和输入不变性。\n允许修改：formatter.py。不能修改测试或其他文件。\n先运行 python -B -m unittest discover -v 查看失败，再读取代码定位修复；结束前必须重新运行同一测试命令并如实报告。\n"
+      },
+      "editable_files": [
+        "formatter.py"
+      ],
+      "expected_tests": 8,
+      "origin": {
+        "id": "humanize_list",
+        "repository": "https://github.com/python-humanize/humanize",
+        "fix_commit": "0a06a3d4a12113cd5f3d0df0cfbb3e27d92499eb",
+        "buggy_commit": "013969a1f7eef437f3c5e13dbd76b5466008fab8",
+        "module": "src/humanize/lists.py",
+        "commit_url": "https://github.com/python-humanize/humanize/commit/0a06a3d4a12113cd5f3d0df0cfbb3e27d92499eb",
+        "title": "Return an empty string from `natural_list` for an empty list (#318)",
+        "kind": "upstream_minimal_reproduction",
+        "buggy_module_sha256": "91f93ca41fd8e7c29290164ed45ca5d71dab1fd1c8aba31989bed9e20449c9e5",
+        "fixed_module_sha256": "def0609522ce9aec413e0a46608a7eaf8d8b08aad682469dea4aff5dd4601754",
+        "extraction_symbols": [
+          "natural_list"
+        ],
+        "adaptation": "Exact AST source segments with explicit imports; English-only identity gettext shim for humanize; small public API/distractors added. Full repository not evaluated."
+      },
+      "sha256": {
+        "formatter.py": "1886cd6b0a0880cca758343fef670d7b126ed6e949b55016b054874f0d4cc163",
+        "test_acceptance.py": "273cab465850191a6848ad3ef7f9425325821d700f38308db9563aa589523685",
+        "UPSTREAM_LICENSE.txt": "8ba6c18112a431400ad3c743f70670079b302545d98884fc2f28a91c383a0380",
+        "README.md": "f2c87ec58c5326069ebc372a913ec50f10ddffc29aa49aff8ee1d790009d1a3a"
+      }
+    },
+    {
+      "id": "humanize_fractional",
+      "category": "regression_compatibility",
+      "prompt": "修复 formatter.py 的 fractional 负带分数出现两次负号的问题；保留正分数、负真分数、整数和非法输入/NaN/Inf格式。\n允许修改：formatter.py。不能修改测试或其他文件。\n先运行 python -B -m unittest discover -v 查看失败，再读取代码定位修复；结束前必须重新运行同一测试命令并如实报告。",
+      "files": {
+        "formatter.py": "from __future__ import annotations\n\ndef _format_not_finite(value: float) -> str:\n    \"\"\"Utility function to handle infinite and nan cases.\"\"\"\n    import math\n\n    if math.isnan(value):\n        return \"NaN\"\n    if math.isinf(value) and value < 0:\n        return \"-Inf\"\n    if math.isinf(value) and value > 0:\n        return \"+Inf\"\n    return \"\"\n\ndef fractional(value: NumberOrString) -> str:\n    \"\"\"Convert to fractional number.\n\n    There will be some cases where one might not want to show ugly decimal places for\n    floats and decimals.\n\n    This function returns a human-readable fractional number in form of fractions and\n    mixed fractions.\n\n    Pass in a string, or a number or a float, and this function returns:\n\n    * a string representation of a fraction\n    * or a whole number\n    * or a mixed fraction\n    * or the str output of the value, if it could not be converted\n\n    Examples:\n        ```pycon\n        >>> fractional(0.3)\n        '3/10'\n        >>> fractional(1.3)\n        '1 3/10'\n        >>> fractional(float(1/3))\n        '1/3'\n        >>> fractional(1)\n        '1'\n        >>> fractional(\"ten\")\n        'ten'\n        >>> fractional(None)\n        'None'\n\n        ```\n\n    Args:\n        value (int, float, str): Integer to convert.\n\n    Returns:\n        str: Fractional number as a string.\n    \"\"\"\n    import math\n\n    try:\n        number = float(value)\n        if not math.isfinite(number):\n            return _format_not_finite(number)\n    except (TypeError, ValueError):\n        return str(value)\n    from fractions import Fraction\n\n    whole_number = int(number)\n    frac = Fraction(number - whole_number).limit_denominator(1000)\n    numerator = frac.numerator\n    denominator = frac.denominator\n    if whole_number and not numerator and denominator == 1:\n        # this means that an integer was passed in\n        # (or variants of that integer like 1.0000)\n        return f\"{whole_number:.0f}\"\n\n    if not whole_number:\n        return f\"{numerator:.0f}/{denominator:.0f}\"\n\n    return f\"{whole_number:.0f} {numerator:.0f}/{denominator:.0f}\"\n",
+        "test_acceptance.py": "import unittest\nfrom formatter import fractional as fmt\n\nclass RepairTests(unittest.TestCase):\n    def test_01(self):\n        self.assertEqual(fmt(-1.3),'-1 3/10')\n    def test_02(self):\n        self.assertEqual(fmt(-2.5),'-2 1/2')\n    def test_03(self):\n        self.assertEqual(fmt(-.5),'-1/2')\n    def test_04(self):\n        self.assertEqual(fmt(1.3),'1 3/10')\n    def test_05(self):\n        self.assertEqual(fmt(2),'2')\n    def test_06(self):\n        self.assertEqual(fmt('ten'),'ten')\n    def test_07(self):\n        self.assertEqual(fmt(float('nan')),'NaN')\n    def test_08(self):\n        self.assertEqual(fmt(float('-inf')),'-Inf')\n",
+        "UPSTREAM_LICENSE.txt": "Copyright (c) 2010-2020 Jason Moiron and Contributors\n\nPermission is hereby granted, free of charge, to any person obtaining\na copy of this software and associated documentation files (the\n\"Software\"), to deal in the Software without restriction, including\nwithout limitation the rights to use, copy, modify, merge, publish,\ndistribute, sublicense, and/or sell copies of the Software, and to\npermit persons to whom the Software is furnished to do so, subject to\nthe following conditions:\n\nThe above copyright notice and this permission notice shall be\nincluded in all copies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND,\nEXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF\nMERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND\nNONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE\nLIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION\nOF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION\nWITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.\n",
+        "README.md": "# Repair task\n\n修复 formatter.py 的 fractional 负带分数出现两次负号的问题；保留正分数、负真分数、整数和非法输入/NaN/Inf格式。\n允许修改：formatter.py。不能修改测试或其他文件。\n先运行 python -B -m unittest discover -v 查看失败，再读取代码定位修复；结束前必须重新运行同一测试命令并如实报告。\n"
+      },
+      "editable_files": [
+        "formatter.py"
+      ],
+      "expected_tests": 8,
+      "origin": {
+        "id": "humanize_fractional",
+        "repository": "https://github.com/python-humanize/humanize",
+        "fix_commit": "c2c410c1521a3b1eb3efef52f3b06c2e42f7b92b",
+        "buggy_commit": "976484a655df046aa6849f440a4f0cd44fc4918c",
+        "module": "src/humanize/number.py",
+        "commit_url": "https://github.com/python-humanize/humanize/commit/c2c410c1521a3b1eb3efef52f3b06c2e42f7b92b",
+        "title": "Stop printing two minus signs in fractional for a negative mixed number (#320)",
+        "kind": "upstream_minimal_reproduction",
+        "buggy_module_sha256": "46e444a54d7764cef8e9fb8b07b79adcfb2895c9b679402888db669b21c7ada2",
+        "fixed_module_sha256": "cabd55fe8961bb32ff5d99fa54682ddc874ccf75e7512a327525db5cc5dd9083",
+        "extraction_symbols": [
+          "fractional",
+          "_format_not_finite"
+        ],
+        "adaptation": "Exact AST source segments with explicit imports; English-only identity gettext shim for humanize; small public API/distractors added. Full repository not evaluated."
+      },
+      "sha256": {
+        "formatter.py": "f4c93f7f16005e8d5dff34ecbcaaa4d7cdb5908568b064edff1d21a164865359",
+        "test_acceptance.py": "becfc133cfc15719eb9bc9a8bb4379f24bba23c167fd8cb842b65796f541dd42",
+        "UPSTREAM_LICENSE.txt": "8ba6c18112a431400ad3c743f70670079b302545d98884fc2f28a91c383a0380",
+        "README.md": "c4b9c1f22f387dc0cfe49f9bba633a2d04fdeafce2123cc3b872acc411e54599"
+      }
+    },
+    {
+      "id": "humanize_metric",
+      "category": "regression_compatibility",
+      "prompt": "修复 formatter.py 的 metric 在舍入达到1000时没有进位到下一个SI前缀的问题；保留有效数字精度、负数、小单位、非有限值和极大数scientific回退。\n允许修改：formatter.py。不能修改测试或其他文件。\n先运行 python -B -m unittest discover -v 查看失败，再读取代码定位修复；结束前必须重新运行同一测试命令并如实报告。",
+      "files": {
+        "formatter.py": "from __future__ import annotations\n\n_SUPERSCRIPT_MAP = {\n    \"0\": \"⁰\",\n    \"1\": \"¹\",\n    \"2\": \"²\",\n    \"3\": \"³\",\n    \"4\": \"⁴\",\n    \"5\": \"⁵\",\n    \"6\": \"⁶\",\n    \"7\": \"⁷\",\n    \"8\": \"⁸\",\n    \"9\": \"⁹\",\n    \"-\": \"⁻\",\n}\n\n_SUPERSCRIPT_TRANS = str.maketrans(_SUPERSCRIPT_MAP)\n\ndef _format_not_finite(value: float) -> str:\n    \"\"\"Utility function to handle infinite and nan cases.\"\"\"\n    import math\n\n    if math.isnan(value):\n        return \"NaN\"\n    if math.isinf(value) and value < 0:\n        return \"-Inf\"\n    if math.isinf(value) and value > 0:\n        return \"+Inf\"\n    return \"\"\n\ndef scientific(value: NumberOrString, precision: int = 2) -> str:\n    \"\"\"Return number in string scientific notation z.wq x 10ⁿ.\n\n    Examples:\n        ```pycon\n        >>> scientific(float(0.3))\n        '3.00 x 10⁻¹'\n        >>> scientific(int(500))\n        '5.00 x 10²'\n        >>> scientific(-1000)\n        '-1.00 x 10³'\n        >>> scientific(1000, 1)\n        '1.0 x 10³'\n        >>> scientific(1000, 3)\n        '1.000 x 10³'\n        >>> scientific(\"99\")\n        '9.90 x 10¹'\n        >>> scientific(\"foo\")\n        'foo'\n        >>> scientific(None)\n        'None'\n\n        ```\n\n    Args:\n        value (int, float, str): Input number.\n        precision (int): Number of decimal for first part of the number.\n\n    Returns:\n        str: Number in scientific notation z.wq x 10ⁿ.\n    \"\"\"\n    import math\n\n    try:\n        value = float(value)\n        if not math.isfinite(value):\n            return _format_not_finite(value)\n    except (ValueError, TypeError):\n        return str(value)\n    fmt = f\"{{:.{int(precision)}e}}\"\n    n = fmt.format(value)\n    part1, part2 = n.split(\"e\")\n    # Normalise exponent: int() strips the \"+\" sign and leading zeros,\n    # while preserving \"-\" and a single \"0\" for 10⁰.\n    return part1 + \" x 10\" + str(int(part2)).translate(_SUPERSCRIPT_TRANS)\n\ndef metric(value: float, unit: str = \"\", precision: int = 3) -> str:\n    \"\"\"Return a value with a metric SI unit-prefix appended.\n\n    Examples:\n        ```pycon\n        >>> metric(1500, \"V\")\n        '1.50 kV'\n        >>> metric(2e8, \"W\")\n        '200 MW'\n        >>> metric(220e-6, \"F\")\n        '220 μF'\n        >>> metric(1e-14, precision=4)\n        '10.00 f'\n\n        ```\n\n    The unit prefix is always chosen so that non-significant zero digits are required.\n    i.e. `123,000` will become `123k` instead of `0.123M` and `1,230,000` will become\n    `1.23M` instead of `1230K`. For numbers that are either too huge or too tiny to\n    represent without resorting to either leading or trailing zeroes, it falls back to\n    `scientific()`.\n    ```pycon\n    >>> metric(1e40)\n    '1.00 x 10⁴⁰'\n\n    ```\n\n    Args:\n        value (int, float): Input number.\n        unit (str): Optional base unit.\n        precision (int): The number of digits the output should contain.\n\n    Returns:\n        str:\n    \"\"\"\n    import math\n\n    if not math.isfinite(value):\n        return _format_not_finite(value)\n    exponent = int(math.floor(math.log10(abs(value)))) if value != 0 else 0\n\n    if exponent >= 33 or exponent < -30:\n        return scientific(value, precision - 1) + unit\n\n    value /= 10 ** (exponent // 3 * 3)\n    if exponent >= 3:\n        ordinal_ = \"kMGTPEZYRQ\"[exponent // 3 - 1]\n    elif exponent < 0:\n        ordinal_ = \"mμnpfazyrq\"[(-exponent - 1) // 3]\n    else:\n        ordinal_ = \"\"\n    value_ = format(value, f\".{int(max(0, precision - exponent % 3 - 1))}f\")\n    if not (unit or ordinal_) or unit in (\"°\", \"′\", \"″\"):\n        space = \"\"\n    else:\n        space = \" \"\n\n    return f\"{value_}{space}{ordinal_}{unit}\"\n",
+        "test_acceptance.py": "import unittest\nfrom formatter import metric as fmt\n\nclass RepairTests(unittest.TestCase):\n    def test_01(self):\n        self.assertEqual(fmt(999.9,'V'),'1.00 kV')\n    def test_02(self):\n        self.assertEqual(fmt(999999,'V'),'1.00 MV')\n    def test_03(self):\n        self.assertEqual(fmt(.0009999,'V'),'1.00 mV')\n    def test_04(self):\n        self.assertEqual(fmt(1500,'V'),'1.50 kV')\n    def test_05(self):\n        self.assertEqual(fmt(-999.9,'V'),'-1.00 kV')\n    def test_06(self):\n        self.assertEqual(fmt(0),'0.00')\n    def test_07(self):\n        self.assertEqual(fmt(float('inf')),'+Inf')\n    def test_08(self):\n        self.assertEqual(fmt(1e40),'1.00 x 10⁴⁰')\n",
+        "UPSTREAM_LICENSE.txt": "Copyright (c) 2010-2020 Jason Moiron and Contributors\n\nPermission is hereby granted, free of charge, to any person obtaining\na copy of this software and associated documentation files (the\n\"Software\"), to deal in the Software without restriction, including\nwithout limitation the rights to use, copy, modify, merge, publish,\ndistribute, sublicense, and/or sell copies of the Software, and to\npermit persons to whom the Software is furnished to do so, subject to\nthe following conditions:\n\nThe above copyright notice and this permission notice shall be\nincluded in all copies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND,\nEXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF\nMERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND\nNONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE\nLIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION\nOF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION\nWITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.\n",
+        "README.md": "# Repair task\n\n修复 formatter.py 的 metric 在舍入达到1000时没有进位到下一个SI前缀的问题；保留有效数字精度、负数、小单位、非有限值和极大数scientific回退。\n允许修改：formatter.py。不能修改测试或其他文件。\n先运行 python -B -m unittest discover -v 查看失败，再读取代码定位修复；结束前必须重新运行同一测试命令并如实报告。\n"
+      },
+      "editable_files": [
+        "formatter.py"
+      ],
+      "expected_tests": 8,
+      "origin": {
+        "id": "humanize_metric",
+        "repository": "https://github.com/python-humanize/humanize",
+        "fix_commit": "7574e0cc377d80db0d2756fc2c5e0b8799a6f8b4",
+        "buggy_commit": "c2c410c1521a3b1eb3efef52f3b06c2e42f7b92b",
+        "module": "src/humanize/number.py",
+        "commit_url": "https://github.com/python-humanize/humanize/commit/7574e0cc377d80db0d2756fc2c5e0b8799a6f8b4",
+        "title": "Carry `metric()` to the next SI prefix when rounding reaches 1000 (#328)",
+        "kind": "upstream_minimal_reproduction",
+        "buggy_module_sha256": "cabd55fe8961bb32ff5d99fa54682ddc874ccf75e7512a327525db5cc5dd9083",
+        "fixed_module_sha256": "623ec8546451068b4b9357561dcc7758f7109313781638984296fdca21533e35",
+        "extraction_symbols": [
+          "metric",
+          "scientific",
+          "_format_not_finite",
+          "_SUPERSCRIPT_MAP",
+          "_SUPERSCRIPT_TRANS"
+        ],
+        "adaptation": "Exact AST source segments with explicit imports; English-only identity gettext shim for humanize; small public API/distractors added. Full repository not evaluated."
+      },
+      "sha256": {
+        "formatter.py": "fe08cf68c4d8de14c7fa44c485fd84c740cd2027bccadc0aaab8405302aac7a1",
+        "test_acceptance.py": "464111112f9cd1a97bab6ea8ef2f271ec74b63473b3d8efe3bdd626a248dc2fd",
+        "UPSTREAM_LICENSE.txt": "8ba6c18112a431400ad3c743f70670079b302545d98884fc2f28a91c383a0380",
+        "README.md": "4f0746b87c2dcb107fe2adf3cbf08eb51950588b11d7ec3703f9ba2fc786a245"
+      }
+    },
+    {
+      "id": "humanize_size",
+      "category": "regression_compatibility",
+      "prompt": "修复 formatter.py 的 naturalsize 单位边界舍入回归：不能出现1000.0 kB或1024.0 KiB，应进位到更大单位。兼容binary/GNU、负数、自定义format、小字节和已有输出。\n允许修改：formatter.py。不能修改测试或其他文件。\n先运行 python -B -m unittest discover -v 查看失败，再读取代码定位修复；结束前必须重新运行同一测试命令并如实报告。",
+      "files": {
+        "formatter.py": "from __future__ import annotations\nfrom math import log\n_ = lambda text: text\n\nsuffixes = {\n    \"decimal\": (\n        \"kB\",\n        \"MB\",\n        \"GB\",\n        \"TB\",\n        \"PB\",\n        \"EB\",\n        \"ZB\",\n        \"YB\",\n        \"RB\",\n        \"QB\",\n    ),\n    \"binary\": (\n        \"KiB\",\n        \"MiB\",\n        \"GiB\",\n        \"TiB\",\n        \"PiB\",\n        \"EiB\",\n        \"ZiB\",\n        \"YiB\",\n        \"RiB\",\n        \"QiB\",\n    ),\n    \"gnu\": \"KMGTPEZYRQ\",\n}\n\ndef naturalsize(\n    value: float | str,\n    binary: bool = False,\n    gnu: bool = False,\n    format: str = \"%.1f\",\n) -> str:\n    \"\"\"Format a number of bytes like a human-readable filesize (e.g. 10 kB).\n\n    By default, decimal suffixes (kB, MB) are used.\n\n    Non-GNU modes are compatible with jinja2's `filesizeformat` filter.\n\n    Examples:\n        ```pycon\n        >>> naturalsize(3000000)\n        '3.0 MB'\n        >>> naturalsize(300, False, True)\n        '300B'\n        >>> naturalsize(3000, False, True)\n        '2.9K'\n        >>> naturalsize(3000, False, True, \"%.3f\")\n        '2.930K'\n        >>> naturalsize(3000, True)\n        '2.9 KiB'\n        >>> naturalsize(10**28)\n        '10.0 RB'\n        >>> naturalsize(10**34 * 3)\n        '30000.0 QB'\n        >>> naturalsize(-4096, True)\n        '-4.0 KiB'\n\n        ```\n\n    Args:\n        value (int, float, str): Integer to convert.\n        binary (bool): If `True`, uses binary suffixes (KiB, MiB) with base\n            2<sup>10</sup> instead of 10<sup>3</sup>.\n        gnu (bool): If `True`, the binary argument is ignored and GNU-style\n            (`ls -sh` style) prefixes are used (K, M) with the 2**10 definition.\n        format (str): Custom formatter.\n\n    Returns:\n        str: Human readable representation of a filesize.\n    \"\"\"\n    if gnu:\n        suffix = suffixes[\"gnu\"]\n    elif binary:\n        suffix = suffixes[\"binary\"]\n    else:\n        suffix = suffixes[\"decimal\"]\n\n    base = 1024 if (gnu or binary) else 1000\n    bytes_ = float(value)\n    abs_bytes = abs(bytes_)\n\n    if abs_bytes == 1 and not gnu:\n        return _(\"%d Byte\") % int(bytes_)\n\n    if abs_bytes < base:\n        return f\"{int(bytes_)}B\" if gnu else _(\"%d Bytes\") % int(bytes_)\n\n    exp = int(min(log(abs_bytes, base), len(suffix)))\n    space = \"\" if gnu else \" \"\n    ret: str = format % (bytes_ / (base**exp)) + space + _(suffix[exp - 1])\n    return ret\n\ndef _format_not_finite(value: float) -> str:\n    \"\"\"Utility function to handle infinite and nan cases.\"\"\"\n    import math\n\n    if math.isnan(value):\n        return \"NaN\"\n    if math.isinf(value) and value < 0:\n        return \"-Inf\"\n    if math.isinf(value) and value > 0:\n        return \"+Inf\"\n    return \"\"\n",
+        "test_acceptance.py": "import unittest\nfrom formatter import naturalsize as fmt\n\nclass RepairTests(unittest.TestCase):\n    def test_01(self):\n        self.assertEqual(fmt(999999),'1.0 MB')\n    def test_02(self):\n        self.assertEqual(fmt(999999999),'1.0 GB')\n    def test_03(self):\n        self.assertEqual(fmt(1024**2-1,binary=True),'1.0 MiB')\n    def test_04(self):\n        self.assertEqual(fmt(1024**2-1,gnu=True),'1.0M')\n    def test_05(self):\n        self.assertEqual(fmt(-999999),'-1.0 MB')\n    def test_06(self):\n        self.assertEqual(fmt(1000),'1.0 kB')\n    def test_07(self):\n        self.assertEqual(fmt(1),'1 Byte')\n    def test_08(self):\n        self.assertEqual(fmt(999999,format='%.3f'),'999.999 kB')\n",
+        "UPSTREAM_LICENSE.txt": "Copyright (c) 2010-2020 Jason Moiron and Contributors\n\nPermission is hereby granted, free of charge, to any person obtaining\na copy of this software and associated documentation files (the\n\"Software\"), to deal in the Software without restriction, including\nwithout limitation the rights to use, copy, modify, merge, publish,\ndistribute, sublicense, and/or sell copies of the Software, and to\npermit persons to whom the Software is furnished to do so, subject to\nthe following conditions:\n\nThe above copyright notice and this permission notice shall be\nincluded in all copies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND,\nEXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF\nMERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND\nNONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE\nLIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION\nOF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION\nWITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.\n",
+        "README.md": "# Repair task\n\n修复 formatter.py 的 naturalsize 单位边界舍入回归：不能出现1000.0 kB或1024.0 KiB，应进位到更大单位。兼容binary/GNU、负数、自定义format、小字节和已有输出。\n允许修改：formatter.py。不能修改测试或其他文件。\n先运行 python -B -m unittest discover -v 查看失败，再读取代码定位修复；结束前必须重新运行同一测试命令并如实报告。\n"
+      },
+      "editable_files": [
+        "formatter.py"
+      ],
+      "expected_tests": 8,
+      "origin": {
+        "id": "humanize_size",
+        "repository": "https://github.com/python-humanize/humanize",
+        "fix_commit": "823ad6096e1e5ba82ea876ce761fc2efebd76157",
+        "buggy_commit": "7574e0cc377d80db0d2756fc2c5e0b8799a6f8b4",
+        "module": "src/humanize/filesize.py",
+        "commit_url": "https://github.com/python-humanize/humanize/commit/823ad6096e1e5ba82ea876ce761fc2efebd76157",
+        "title": "Fix `naturalsize()` rounding rollover at unit boundaries (#329)",
+        "kind": "upstream_minimal_reproduction",
+        "buggy_module_sha256": "1895d6dad77e0e87089417d1a76a5d40abc0cb6bfc23be5d1ae46c865e50bd20",
+        "fixed_module_sha256": "cb231d8ec30d11a5c30c39da8ee016b9028f07ed8babad3963a0d33b6b9f14af",
+        "extraction_symbols": [
+          "naturalsize",
+          "suffixes",
+          "_format_not_finite"
+        ],
+        "adaptation": "Exact AST source segments with explicit imports; English-only identity gettext shim for humanize; small public API/distractors added. Full repository not evaluated."
+      },
+      "sha256": {
+        "formatter.py": "1b456af3a429486e22d535e17aed023f1966e133a294c2fb7355f35569522120",
+        "test_acceptance.py": "df2c9bf91ccb13b3a750d932adcd346f2105cc1c49e29f53f05feec4776bc84e",
+        "UPSTREAM_LICENSE.txt": "8ba6c18112a431400ad3c743f70670079b302545d98884fc2f28a91c383a0380",
+        "README.md": "e2db7cd0a934e867084a5c95e2e5cfd8f1530dde74465d6c0082569c9304a89d"
+      }
+    }
+  ]
+}

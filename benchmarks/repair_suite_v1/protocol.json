@@ -1,0 +1,28 @@
+{
+  "model": "zai-org/GLM-5.3-Flash",
+  "provider": "openai",
+  "base_url": "https://api.siliconflow.cn/v1",
+  "api_format": "chat_completions",
+  "temperature": 0.2,
+  "request_timeout_seconds": 120,
+  "provider_transport_attempts": 3,
+  "max_steps": 20,
+  "max_new_tokens": 3072,
+  "run_deadline_seconds": 900,
+  "external_verifier_timeout_seconds": 25,
+  "repetitions": 3,
+  "concurrency": 3,
+  "schedule_seed": 20261024,
+  "verify_command": "python -B -m unittest discover -v",
+  "tools": [
+    "list_files",
+    "read_file",
+    "search",
+    "patch_file",
+    "write_file",
+    "run_shell"
+  ],
+  "memory": "fresh default state per run",
+  "acceptance_tests": "visible, pristine external rerun",
+  "retries": "No task reruns or replacements; provider transport retries are within a run."
+}

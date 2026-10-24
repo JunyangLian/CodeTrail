@@ -1,0 +1,625 @@
+{
+  "kind": "verifier sanity check, no model calls",
+  "rows": [
+    {
+      "task_id": "pagination_boundaries",
+      "buggy": {
+        "successful": false,
+        "tests_run": 8,
+        "failures": 4,
+        "errors": 0,
+        "skipped": 0,
+        "expected_failures": 0,
+        "unexpected_successes": 0,
+        "output": "test_empty (test_pagination.PaginationTests) ... ok\ntest_exact_boundary_no_next (test_pagination.PaginationTests) ... FAIL\ntest_first_page (test_pagination.PaginationTests) ... FAIL\ntest_invalid_page (test_pagination.PaginationTests) ... ok\ntest_invalid_size (test_pagination.PaginationTests) ... ok\ntest_last_partial_page (test_pagination.PaginationTests) ... FAIL\ntest_page_beyond_end (test_pagination.PaginationTests) ... ok\ntest_second_page (test_pagination.PaginationTests) ... FAIL\n\n======================================================================\nFAIL: test_exact_boundary_no_next (test_pagination.PaginationTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-suite-v1-preflight-20261024-125551\\pagination_boundaries-buggy\\test_pagination.py\", line 12, in test_exact_boundary_no_next\n    self.assertEqual(paginate([1,2,3], 1, 3), {'items':[1,2,3], 'total_pages':1, 'has_next':False})\nAssertionError: {'items': [], 'total_pages': 1, 'has_next': True} != {'items': [1, 2, 3], 'total_pages': 1, 'has_next': False}\n- {'has_next': True, 'items': [], 'total_pages': 1}\n?              ^^^\n\n+ {'has_next': False, 'items': [1, 2, 3], 'total_pages': 1}\n?              ^^^^             +++++++\n\n\n======================================================================\nFAIL: test_first_page (test_pagination.PaginationTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-suite-v1-preflight-20261024-125551\\pagination_boundaries-buggy\\test_pagination.py\", line 6, in test_first_page\n    self.assertEqual(paginate([1,2,3,4,5]), {'items':[1,2,3], 'total_pages':2, 'has_next':True})\nAssertionError: {'items': [4, 5], 'total_pages': 1, 'has_next': True} != {'items': [1, 2, 3], 'total_pages': 2, 'has_next': True}\n- {'has_next': True, 'items': [4, 5], 'total_pages': 1}\n?                              ^  ^                  ^\n\n+ {'has_next': True, 'items': [1, 2, 3], 'total_pages': 2}\n?                              ^  ^^^^                  ^\n\n\n======================================================================\nFAIL: test_last_partial_page (test_pagination.PaginationTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-suite-v1-preflight-20261024-125551\\pagination_boundaries-buggy\\test_pagination.py\", line 10, in test_last_partial_page\n    self.assertEqual(paginate(list(range(7)), 3, 3), {'items':[6], 'total_pages':3, 'has_next':False})\nAssertionError: {'items': [], 'total_pages': 2, 'has_next': False} != {'items': [6], 'total_pages': 3, 'has_next': False}\n- {'has_next': False, 'items': [], 'total_pages': 2}\n?                                                 ^\n\n+ {'has_next': False, 'items': [6], 'total_pages': 3}\n?                               +                  ^\n\n\n======================================================================\nFAIL: test_second_page (test_pagination.PaginationTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-suite-v1-preflight-20261024-125551\\pagination_boundaries-buggy\\test_pagination.py\", line 8, in test_second_page\n    self.assertEqual(paginate(list(range(7)), 2, 3)['items'], [3,4,5])\nAssertionError: Lists differ: [6] != [3, 4, 5]\n\nFirst differing element 0:\n6\n3\n\nSecond list contains 2 additional elements.\nFirst extra element 1:\n4\n\n- [6]\n+ [3, 4, 5]\n\n----------------------------------------------------------------------\nRan 8 tests in 0.003s\n\nFAILED (failures=4)\n",
+        "elapsed_ms": 218,
+        "exit_code": 1,
+        "stderr": "",
+        "accepted": false
+      },
+      "reference": {
+        "successful": true,
+        "tests_run": 8,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "expected_failures": 0,
+        "unexpected_successes": 0,
+        "output": "test_empty (test_pagination.PaginationTests) ... ok\ntest_exact_boundary_no_next (test_pagination.PaginationTests) ... ok\ntest_first_page (test_pagination.PaginationTests) ... ok\ntest_invalid_page (test_pagination.PaginationTests) ... ok\ntest_invalid_size (test_pagination.PaginationTests) ... ok\ntest_last_partial_page (test_pagination.PaginationTests) ... ok\ntest_page_beyond_end (test_pagination.PaginationTests) ... ok\ntest_second_page (test_pagination.PaginationTests) ... ok\n\n----------------------------------------------------------------------\nRan 8 tests in 0.000s\n\nOK\n",
+        "elapsed_ms": 203,
+        "exit_code": 0,
+        "stderr": "",
+        "accepted": true
+      }
+    },
+    {
+      "task_id": "user_lookup_contract",
+      "buggy": {
+        "successful": false,
+        "tests_run": 8,
+        "failures": 1,
+        "errors": 7,
+        "skipped": 0,
+        "expected_failures": 0,
+        "unexpected_successes": 0,
+        "output": "test_direct_repository_normalizes (test_user_lookup.LookupTests) ... FAIL\ntest_empty_id_is_unknown (test_user_lookup.LookupTests) ... ERROR\ntest_empty_mapping (test_user_lookup.LookupTests) ... ERROR\ntest_input_mapping_is_unchanged (test_user_lookup.LookupTests) ... ERROR\ntest_none_id_is_rejected (test_user_lookup.LookupTests) ... ERROR\ntest_service_normalizes (test_user_lookup.LookupTests) ... ERROR\ntest_service_uses_correct_argument_order (test_user_lookup.LookupTests) ... ERROR\ntest_unknown_returns_none (test_user_lookup.LookupTests) ... ERROR\n\n======================================================================\nERROR: test_empty_id_is_unknown (test_user_lookup.LookupTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-suite-v1-preflight-20261024-125551\\user_lookup_contract-buggy\\test_user_lookup.py\", line 26, in test_empty_id_is_unknown\n    self.assertIsNone(display_name(self.users, '   '))\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-suite-v1-preflight-20261024-125551\\user_lookup_contract-buggy\\service.py\", line 4, in display_name\n    user = get_user(user_id, users)\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-suite-v1-preflight-20261024-125551\\user_lookup_contract-buggy\\repository.py\", line 4, in get_user\n    return users.get(user_id)\nAttributeError: 'str' object has no attribute 'get'\n\n======================================================================\nERROR: test_empty_mapping (test_user_lookup.LookupTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-suite-v1-preflight-20261024-125551\\user_lookup_contract-buggy\\test_user_lookup.py\", line 18, in test_empty_mapping\n    self.assertIsNone(display_name({}, 'user-a'))\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-suite-v1-preflight-20261024-125551\\user_lookup_contract-buggy\\service.py\", line 4, in display_name\n    user = get_user(user_id, users)\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-suite-v1-preflight-20261024-125551\\user_lookup_contract-buggy\\repository.py\", line 4, in get_user\n    return users.get(user_id)\nAttributeError: 'str' object has no attribute 'get'\n\n======================================================================\nERROR: test_input_mapping_is_unchanged (test_user_lookup.LookupTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-suite-v1-preflight-20261024-125551\\user_lookup_contract-buggy\\test_user_lookup.py\", line 23, in test_input_mapping_is_unchanged\n    display_name(self.users, ' USER-A ')\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-suite-v1-preflight-20261024-125551\\user_lookup_contract-buggy\\service.py\", line 4, in display_name\n    user = get_user(user_id, users)\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-suite-v1-preflight-20261024-125551\\user_lookup_contract-buggy\\repository.py\", line 4, in get_user\n    return users.get(user_id)\nAttributeError: 'str' object has no attribute 'get'\n\n======================================================================\nERROR: test_none_id_is_rejected (test_user_lookup.LookupTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-suite-v1-preflight-20261024-125551\\user_lookup_contract-buggy\\test_user_lookup.py\", line 20, in test_none_id_is_rejected\n    with self.assertRaises(ValueError): display_name(self.users, None)\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-suite-v1-preflight-20261024-125551\\user_lookup_contract-buggy\\service.py\", line 4, in display_name\n    user = get_user(user_id, users)\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-suite-v1-preflight-20261024-125551\\user_lookup_contract-buggy\\repository.py\", line 4, in get_user\n    return users.get(user_id)\nAttributeError: 'NoneType' object has no attribute 'get'\n\n======================================================================\nERROR: test_service_normalizes (test_user_lookup.LookupTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-suite-v1-preflight-20261024-125551\\user_lookup_contract-buggy\\test_user_lookup.py\", line 14, in test_service_normalizes\n    self.assertEqual(display_name(self.users, ' User-A '), 'Ada')\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-suite-v1-preflight-20261024-125551\\user_lookup_contract-buggy\\service.py\", line 4, in display_name\n    user = get_user(user_id, users)\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-suite-v1-preflight-20261024-125551\\user_lookup_contract-buggy\\repository.py\", line 4, in get_user\n    return users.get(user_id)\nAttributeError: 'str' object has no attribute 'get'\n\n======================================================================\nERROR: test_service_uses_correct_argument_order (test_user_lookup.LookupTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-suite-v1-preflight-20261024-125551\\user_lookup_contract-buggy\\test_user_lookup.py\", line 12, in test_service_uses_correct_argument_order\n    self.assertEqual(display_name(self.users, 'user-b'), 'Lin')\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-suite-v1-preflight-20261024-125551\\user_lookup_contract-buggy\\service.py\", line 4, in display_name\n    user = get_user(user_id, users)\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-suite-v1-preflight-20261024-125551\\user_lookup_contract-buggy\\repository.py\", line 4, in get_user\n    return users.get(user_id)\nAttributeError: 'str' object has no attribute 'get'\n\n======================================================================\nERROR: test_unknown_returns_none (test_user_lookup.LookupTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-suite-v1-preflight-20261024-125551\\user_lookup_contract-buggy\\test_user_lookup.py\", line 16, in test_unknown_returns_none\n    self.assertIsNone(display_name(self.users, 'missing'))\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-suite-v1-preflight-20261024-125551\\user_lookup_contract-buggy\\service.py\", line 4, in display_name\n    user = get_user(user_id, users)\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-suite-v1-preflight-20261024-125551\\user_lookup_contract-buggy\\repository.py\", line 4, in get_user\n    return users.get(user_id)\nAttributeError: 'str' object has no attribute 'get'\n\n======================================================================\nFAIL: test_direct_repository_normalizes (test_user_lookup.LookupTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-suite-v1-preflight-20261024-125551\\user_lookup_contract-buggy\\test_user_lookup.py\", line 10, in test_direct_repository_normalizes\n    self.assertEqual(get_user(self.users, ' USER-A '), {'name':'Ada'})\nAssertionError: None != {'name': 'Ada'}\n\n----------------------------------------------------------------------\nRan 8 tests in 0.009s\n\nFAILED (failures=1, errors=7)\n",
+        "elapsed_ms": 204,
+        "exit_code": 1,
+        "stderr": "",
+        "accepted": false
+      },
+      "reference": {
+        "successful": true,
+        "tests_run": 8,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "expected_failures": 0,
+        "unexpected_successes": 0,
+        "output": "test_direct_repository_normalizes (test_user_lookup.LookupTests) ... ok\ntest_empty_id_is_unknown (test_user_lookup.LookupTests) ... ok\ntest_empty_mapping (test_user_lookup.LookupTests) ... ok\ntest_input_mapping_is_unchanged (test_user_lookup.LookupTests) ... ok\ntest_none_id_is_rejected (test_user_lookup.LookupTests) ... ok\ntest_service_normalizes (test_user_lookup.LookupTests) ... ok\ntest_service_uses_correct_argument_order (test_user_lookup.LookupTests) ... ok\ntest_unknown_returns_none (test_user_lookup.LookupTests) ... ok\n\n----------------------------------------------------------------------\nRan 8 tests in 0.000s\n\nOK\n",
+        "elapsed_ms": 204,
+        "exit_code": 0,
+        "stderr": "",
+        "accepted": true
+      }
+    },
+    {
+      "task_id": "interval_union",
+      "buggy": {
+        "successful": false,
+        "tests_run": 8,
+        "failures": 3,
+        "errors": 0,
+        "skipped": 0,
+        "expected_failures": 0,
+        "unexpected_successes": 0,
+        "output": "test_01 (test_acceptance.RepairTests) ... ok\ntest_02 (test_acceptance.RepairTests) ... FAIL\ntest_03 (test_acceptance.RepairTests) ... FAIL\ntest_04 (test_acceptance.RepairTests) ... ok\ntest_05 (test_acceptance.RepairTests) ... FAIL\ntest_06 (test_acceptance.RepairTests) ... ok\ntest_07 (test_acceptance.RepairTests) ... ok\ntest_08 (test_acceptance.RepairTests) ... ok\n\n======================================================================\nFAIL: test_02 (test_acceptance.RepairTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-suite-v1-preflight-20261024-125551\\interval_union-buggy\\test_acceptance.py\", line 8, in test_02\n    self.assertEqual(merge([(1,3),(3,5)]), [[1,5]])\nAssertionError: Lists differ: [[1, 3], [3, 5]] != [[1, 5]]\n\nFirst differing element 0:\n[1, 3]\n[1, 5]\n\nFirst list contains 1 additional elements.\nFirst extra element 1:\n[3, 5]\n\n- [[1, 3], [3, 5]]\n+ [[1, 5]]\n\n======================================================================\nFAIL: test_03 (test_acceptance.RepairTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-suite-v1-preflight-20261024-125551\\interval_union-buggy\\test_acceptance.py\", line 10, in test_03\n    self.assertEqual(merge([(1,10),(2,3)]), [[1,10]])\nAssertionError: Lists differ: [[1, 3]] != [[1, 10]]\n\nFirst differing element 0:\n[1, 3]\n[1, 10]\n\n- [[1, 3]]\n?      ^\n\n+ [[1, 10]]\n?      ^^\n\n\n======================================================================\nFAIL: test_05 (test_acceptance.RepairTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-suite-v1-preflight-20261024-125551\\interval_union-buggy\\test_acceptance.py\", line 14, in test_05\n    self.assertEqual(merge([(1,2),(2,4),(4,9)]), [[1,9]])\nAssertionError: Lists differ: [[1, 2], [2, 4], [4, 9]] != [[1, 9]]\n\nFirst differing element 0:\n[1, 2]\n[1, 9]\n\nFirst list contains 2 additional elements.\nFirst extra element 1:\n[2, 4]\n\n- [[1, 2], [2, 4], [4, 9]]\n+ [[1, 9]]\n\n----------------------------------------------------------------------\nRan 8 tests in 0.002s\n\nFAILED (failures=3)\n",
+        "elapsed_ms": 203,
+        "exit_code": 1,
+        "stderr": "",
+        "accepted": false
+      },
+      "reference": {
+        "successful": true,
+        "tests_run": 8,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "expected_failures": 0,
+        "unexpected_successes": 0,
+        "output": "test_01 (test_acceptance.RepairTests) ... ok\ntest_02 (test_acceptance.RepairTests) ... ok\ntest_03 (test_acceptance.RepairTests) ... ok\ntest_04 (test_acceptance.RepairTests) ... ok\ntest_05 (test_acceptance.RepairTests) ... ok\ntest_06 (test_acceptance.RepairTests) ... ok\ntest_07 (test_acceptance.RepairTests) ... ok\ntest_08 (test_acceptance.RepairTests) ... ok\n\n----------------------------------------------------------------------\nRan 8 tests in 0.000s\n\nOK\n",
+        "elapsed_ms": 172,
+        "exit_code": 0,
+        "stderr": "",
+        "accepted": true
+      }
+    },
+    {
+      "task_id": "ttl_expiry",
+      "buggy": {
+        "successful": false,
+        "tests_run": 8,
+        "failures": 3,
+        "errors": 0,
+        "skipped": 0,
+        "expected_failures": 0,
+        "unexpected_successes": 0,
+        "output": "test_01 (test_acceptance.RepairTests) ... FAIL\ntest_02 (test_acceptance.RepairTests) ... ok\ntest_03 (test_acceptance.RepairTests) ... ok\ntest_04 (test_acceptance.RepairTests) ... ok\ntest_05 (test_acceptance.RepairTests) ... ok\ntest_06 (test_acceptance.RepairTests) ... ok\ntest_07 (test_acceptance.RepairTests) ... FAIL\ntest_08 (test_acceptance.RepairTests) ... FAIL\n\n======================================================================\nFAIL: test_01 (test_acceptance.RepairTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-suite-v1-preflight-20261024-125551\\ttl_expiry-buggy\\test_acceptance.py\", line 9, in test_01\n    self.assertEqual(c.get('a'),1)\nAssertionError: None != 1\n\n======================================================================\nFAIL: test_07 (test_acceptance.RepairTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-suite-v1-preflight-20261024-125551\\ttl_expiry-buggy\\test_acceptance.py\", line 27, in test_07\n    self.assertEqual(c.get('a'),2)\nAssertionError: None != 2\n\n======================================================================\nFAIL: test_08 (test_acceptance.RepairTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-suite-v1-preflight-20261024-125551\\ttl_expiry-buggy\\test_acceptance.py\", line 30, in test_08\n    self.assertIsNone(c.get('a','fallback'))\nAssertionError: 'fallback' is not None\n\n----------------------------------------------------------------------\nRan 8 tests in 0.002s\n\nFAILED (failures=3)\n",
+        "elapsed_ms": 188,
+        "exit_code": 1,
+        "stderr": "",
+        "accepted": false
+      },
+      "reference": {
+        "successful": true,
+        "tests_run": 8,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "expected_failures": 0,
+        "unexpected_successes": 0,
+        "output": "test_01 (test_acceptance.RepairTests) ... ok\ntest_02 (test_acceptance.RepairTests) ... ok\ntest_03 (test_acceptance.RepairTests) ... ok\ntest_04 (test_acceptance.RepairTests) ... ok\ntest_05 (test_acceptance.RepairTests) ... ok\ntest_06 (test_acceptance.RepairTests) ... ok\ntest_07 (test_acceptance.RepairTests) ... ok\ntest_08 (test_acceptance.RepairTests) ... ok\n\n----------------------------------------------------------------------\nRan 8 tests in 0.000s\n\nOK\n",
+        "elapsed_ms": 171,
+        "exit_code": 0,
+        "stderr": "",
+        "accepted": true
+      }
+    },
+    {
+      "task_id": "retry_schedule",
+      "buggy": {
+        "successful": false,
+        "tests_run": 8,
+        "failures": 7,
+        "errors": 0,
+        "skipped": 0,
+        "expected_failures": 0,
+        "unexpected_successes": 0,
+        "output": "test_01 (test_acceptance.RepairTests) ... FAIL\ntest_02 (test_acceptance.RepairTests) ... FAIL\ntest_03 (test_acceptance.RepairTests) ... FAIL\ntest_04 (test_acceptance.RepairTests) ... FAIL\ntest_05 (test_acceptance.RepairTests) ... FAIL\ntest_06 (test_acceptance.RepairTests) ... FAIL\ntest_07 (test_acceptance.RepairTests) ... ok\ntest_08 (test_acceptance.RepairTests) ... FAIL\n\n======================================================================\nFAIL: test_01 (test_acceptance.RepairTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-suite-v1-preflight-20261024-125551\\retry_schedule-buggy\\test_acceptance.py\", line 6, in test_01\n    self.assertEqual(delays(1), [])\nAssertionError: Lists differ: [60] != []\n\nFirst list contains 1 additional elements.\nFirst extra element 0:\n60\n\n- [60]\n+ []\n\n======================================================================\nFAIL: test_02 (test_acceptance.RepairTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-suite-v1-preflight-20261024-125551\\retry_schedule-buggy\\test_acceptance.py\", line 8, in test_02\n    self.assertEqual(delays(4), [1,2,4])\nAssertionError: Lists differ: [60, 60, 60, 60] != [1, 2, 4]\n\nFirst differing element 0:\n60\n1\n\nFirst list contains 1 additional elements.\nFirst extra element 3:\n60\n\n- [60, 60, 60, 60]\n+ [1, 2, 4]\n\n======================================================================\nFAIL: test_03 (test_acceptance.RepairTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-suite-v1-preflight-20261024-125551\\retry_schedule-buggy\\test_acceptance.py\", line 10, in test_03\n    self.assertEqual(delays(5,3,2,7), [3,6,7,7])\nAssertionError: Lists differ: [7, 7, 12, 24, 48] != [3, 6, 7, 7]\n\nFirst differing element 0:\n7\n3\n\nFirst list contains 1 additional elements.\nFirst extra element 4:\n48\n\n- [7, 7, 12, 24, 48]\n+ [3, 6, 7, 7]\n\n======================================================================\nFAIL: test_04 (test_acceptance.RepairTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-suite-v1-preflight-20261024-125551\\retry_schedule-buggy\\test_acceptance.py\", line 12, in test_04\n    self.assertEqual(delays(3,cap=0), [0,0])\nAssertionError: Lists differ: [1, 2, 4] != [0, 0]\n\nFirst differing element 0:\n1\n0\n\nFirst list contains 1 additional elements.\nFirst extra element 2:\n4\n\n- [1, 2, 4]\n+ [0, 0]\n\n======================================================================\nFAIL: test_05 (test_acceptance.RepairTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-suite-v1-preflight-20261024-125551\\retry_schedule-buggy\\test_acceptance.py\", line 14, in test_05\n    with self.assertRaises(ValueError): delays(True)\nAssertionError: ValueError not raised\n\n======================================================================\nFAIL: test_06 (test_acceptance.RepairTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-suite-v1-preflight-20261024-125551\\retry_schedule-buggy\\test_acceptance.py\", line 16, in test_06\n    with self.assertRaises(ValueError): delays(0)\nAssertionError: ValueError not raised\n\n======================================================================\nFAIL: test_08 (test_acceptance.RepairTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-suite-v1-preflight-20261024-125551\\retry_schedule-buggy\\test_acceptance.py\", line 20, in test_08\n    self.assertEqual(delays(3,0,1,5), [0,0])\nAssertionError: Lists differ: [5, 5, 5] != [0, 0]\n\nFirst differing element 0:\n5\n0\n\nFirst list contains 1 additional elements.\nFirst extra element 2:\n5\n\n- [5, 5, 5]\n+ [0, 0]\n\n----------------------------------------------------------------------\nRan 8 tests in 0.003s\n\nFAILED (failures=7)\n",
+        "elapsed_ms": 172,
+        "exit_code": 1,
+        "stderr": "",
+        "accepted": false
+      },
+      "reference": {
+        "successful": true,
+        "tests_run": 8,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "expected_failures": 0,
+        "unexpected_successes": 0,
+        "output": "test_01 (test_acceptance.RepairTests) ... ok\ntest_02 (test_acceptance.RepairTests) ... ok\ntest_03 (test_acceptance.RepairTests) ... ok\ntest_04 (test_acceptance.RepairTests) ... ok\ntest_05 (test_acceptance.RepairTests) ... ok\ntest_06 (test_acceptance.RepairTests) ... ok\ntest_07 (test_acceptance.RepairTests) ... ok\ntest_08 (test_acceptance.RepairTests) ... ok\n\n----------------------------------------------------------------------\nRan 8 tests in 0.000s\n\nOK\n",
+        "elapsed_ms": 188,
+        "exit_code": 0,
+        "stderr": "",
+        "accepted": true
+      }
+    },
+    {
+      "task_id": "dependency_order",
+      "buggy": {
+        "successful": false,
+        "tests_run": 8,
+        "failures": 5,
+        "errors": 0,
+        "skipped": 0,
+        "expected_failures": 0,
+        "unexpected_successes": 0,
+        "output": "test_01 (test_acceptance.RepairTests) ... ok\ntest_02 (test_acceptance.RepairTests) ... FAIL\ntest_03 (test_acceptance.RepairTests) ... FAIL\ntest_04 (test_acceptance.RepairTests) ... ok\ntest_05 (test_acceptance.RepairTests) ... FAIL\ntest_06 (test_acceptance.RepairTests) ... FAIL\ntest_07 (test_acceptance.RepairTests) ... FAIL\ntest_08 (test_acceptance.RepairTests) ... ok\n\n======================================================================\nFAIL: test_02 (test_acceptance.RepairTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-suite-v1-preflight-20261024-125551\\dependency_order-buggy\\test_acceptance.py\", line 8, in test_02\n    self.assertEqual(order({'a':['b']}), ['b','a'])\nAssertionError: Lists differ: ['a', 'b'] != ['b', 'a']\n\nFirst differing element 0:\n'a'\n'b'\n\n- ['a', 'b']\n+ ['b', 'a']\n\n======================================================================\nFAIL: test_03 (test_acceptance.RepairTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-suite-v1-preflight-20261024-125551\\dependency_order-buggy\\test_acceptance.py\", line 10, in test_03\n    self.assertEqual(order({'a':['b'],'b':['c']}), ['c','b','a'])\nAssertionError: Lists differ: ['a', 'b', 'c'] != ['c', 'b', 'a']\n\nFirst differing element 0:\n'a'\n'c'\n\n- ['a', 'b', 'c']\n?   ^         ^\n\n+ ['c', 'b', 'a']\n?   ^         ^\n\n\n======================================================================\nFAIL: test_05 (test_acceptance.RepairTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-suite-v1-preflight-20261024-125551\\dependency_order-buggy\\test_acceptance.py\", line 14, in test_05\n    with self.assertRaises(ValueError): order({'a':['a']})\nAssertionError: ValueError not raised\n\n======================================================================\nFAIL: test_06 (test_acceptance.RepairTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-suite-v1-preflight-20261024-125551\\dependency_order-buggy\\test_acceptance.py\", line 16, in test_06\n    with self.assertRaises(ValueError): order({'a':['b'],'b':['a']})\nAssertionError: ValueError not raised\n\n======================================================================\nFAIL: test_07 (test_acceptance.RepairTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-suite-v1-preflight-20261024-125551\\dependency_order-buggy\\test_acceptance.py\", line 20, in test_07\n    self.assertLess(x.index('c'),x.index('a'))\nAssertionError: 1 not less than 0\n\n----------------------------------------------------------------------\nRan 8 tests in 0.002s\n\nFAILED (failures=5)\n",
+        "elapsed_ms": 172,
+        "exit_code": 1,
+        "stderr": "",
+        "accepted": false
+      },
+      "reference": {
+        "successful": true,
+        "tests_run": 8,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "expected_failures": 0,
+        "unexpected_successes": 0,
+        "output": "test_01 (test_acceptance.RepairTests) ... ok\ntest_02 (test_acceptance.RepairTests) ... ok\ntest_03 (test_acceptance.RepairTests) ... ok\ntest_04 (test_acceptance.RepairTests) ... ok\ntest_05 (test_acceptance.RepairTests) ... ok\ntest_06 (test_acceptance.RepairTests) ... ok\ntest_07 (test_acceptance.RepairTests) ... ok\ntest_08 (test_acceptance.RepairTests) ... ok\n\n----------------------------------------------------------------------\nRan 8 tests in 0.000s\n\nOK\n",
+        "elapsed_ms": 172,
+        "exit_code": 0,
+        "stderr": "",
+        "accepted": true
+      }
+    },
+    {
+      "task_id": "money_minor_units",
+      "buggy": {
+        "successful": false,
+        "tests_run": 8,
+        "failures": 4,
+        "errors": 0,
+        "skipped": 0,
+        "expected_failures": 0,
+        "unexpected_successes": 0,
+        "output": "test_01 (test_acceptance.RepairTests) ... FAIL\ntest_02 (test_acceptance.RepairTests) ... FAIL\ntest_03 (test_acceptance.RepairTests) ... FAIL\ntest_04 (test_acceptance.RepairTests) ... FAIL\ntest_05 (test_acceptance.RepairTests) ... ok\ntest_06 (test_acceptance.RepairTests) ... ok\ntest_07 (test_acceptance.RepairTests) ... ok\ntest_08 (test_acceptance.RepairTests) ... ok\n\n======================================================================\nFAIL: test_01 (test_acceptance.RepairTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-suite-v1-preflight-20261024-125551\\money_minor_units-buggy\\test_acceptance.py\", line 7, in test_01\n    self.assertEqual(to_minor('1.005'),101)\nAssertionError: 100 != 101\n\n======================================================================\nFAIL: test_02 (test_acceptance.RepairTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-suite-v1-preflight-20261024-125551\\money_minor_units-buggy\\test_acceptance.py\", line 9, in test_02\n    self.assertEqual(to_minor('-1.005'),-101)\nAssertionError: -100 != -101\n\n======================================================================\nFAIL: test_03 (test_acceptance.RepairTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-suite-v1-preflight-20261024-125551\\money_minor_units-buggy\\test_acceptance.py\", line 11, in test_03\n    self.assertEqual(to_minor('0.29'),29)\nAssertionError: 28 != 29\n\n======================================================================\nFAIL: test_04 (test_acceptance.RepairTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-suite-v1-preflight-20261024-125551\\money_minor_units-buggy\\test_acceptance.py\", line 13, in test_04\n    self.assertEqual(invoice_total(['0.005','0.005']),2)\nAssertionError: 1 != 2\n\n----------------------------------------------------------------------\nRan 8 tests in 0.002s\n\nFAILED (failures=4)\n",
+        "elapsed_ms": 187,
+        "exit_code": 1,
+        "stderr": "",
+        "accepted": false
+      },
+      "reference": {
+        "successful": true,
+        "tests_run": 8,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "expected_failures": 0,
+        "unexpected_successes": 0,
+        "output": "test_01 (test_acceptance.RepairTests) ... ok\ntest_02 (test_acceptance.RepairTests) ... ok\ntest_03 (test_acceptance.RepairTests) ... ok\ntest_04 (test_acceptance.RepairTests) ... ok\ntest_05 (test_acceptance.RepairTests) ... ok\ntest_06 (test_acceptance.RepairTests) ... ok\ntest_07 (test_acceptance.RepairTests) ... ok\ntest_08 (test_acceptance.RepairTests) ... ok\n\n----------------------------------------------------------------------\nRan 8 tests in 0.000s\n\nOK\n",
+        "elapsed_ms": 187,
+        "exit_code": 0,
+        "stderr": "",
+        "accepted": true
+      }
+    },
+    {
+      "task_id": "config_precedence",
+      "buggy": {
+        "successful": false,
+        "tests_run": 8,
+        "failures": 5,
+        "errors": 0,
+        "skipped": 0,
+        "expected_failures": 0,
+        "unexpected_successes": 0,
+        "output": "test_01 (test_acceptance.RepairTests) ... FAIL\ntest_02 (test_acceptance.RepairTests) ... ok\ntest_03 (test_acceptance.RepairTests) ... ok\ntest_04 (test_acceptance.RepairTests) ... FAIL\ntest_05 (test_acceptance.RepairTests) ... FAIL\ntest_06 (test_acceptance.RepairTests) ... FAIL\ntest_07 (test_acceptance.RepairTests) ... ok\ntest_08 (test_acceptance.RepairTests) ... FAIL\n\n======================================================================\nFAIL: test_01 (test_acceptance.RepairTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-suite-v1-preflight-20261024-125551\\config_precedence-buggy\\test_acceptance.py\", line 7, in test_01\n    self.assertFalse(parse_bool('false'))\nAssertionError: True is not false\n\n======================================================================\nFAIL: test_04 (test_acceptance.RepairTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-suite-v1-preflight-20261024-125551\\config_precedence-buggy\\test_acceptance.py\", line 13, in test_04\n    with self.assertRaises(ValueError): parse_bool('unknown')\nAssertionError: ValueError not raised\n\n======================================================================\nFAIL: test_05 (test_acceptance.RepairTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-suite-v1-preflight-20261024-125551\\config_precedence-buggy\\test_acceptance.py\", line 15, in test_05\n    self.assertFalse(load({'debug':True},{'debug':False})['debug'])\nAssertionError: True is not false\n\n======================================================================\nFAIL: test_06 (test_acceptance.RepairTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-suite-v1-preflight-20261024-125551\\config_precedence-buggy\\test_acceptance.py\", line 17, in test_06\n    self.assertEqual(load({'port':9000},{'port':0})['port'],0)\nAssertionError: 9000 != 0\n\n======================================================================\nFAIL: test_08 (test_acceptance.RepairTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-suite-v1-preflight-20261024-125551\\config_precedence-buggy\\test_acceptance.py\", line 21, in test_08\n    with self.assertRaises(ValueError): load({'debug':True},{'debug':''})\nAssertionError: ValueError not raised\n\n----------------------------------------------------------------------\nRan 8 tests in 0.002s\n\nFAILED (failures=5)\n",
+        "elapsed_ms": 172,
+        "exit_code": 1,
+        "stderr": "",
+        "accepted": false
+      },
+      "reference": {
+        "successful": true,
+        "tests_run": 8,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "expected_failures": 0,
+        "unexpected_successes": 0,
+        "output": "test_01 (test_acceptance.RepairTests) ... ok\ntest_02 (test_acceptance.RepairTests) ... ok\ntest_03 (test_acceptance.RepairTests) ... ok\ntest_04 (test_acceptance.RepairTests) ... ok\ntest_05 (test_acceptance.RepairTests) ... ok\ntest_06 (test_acceptance.RepairTests) ... ok\ntest_07 (test_acceptance.RepairTests) ... ok\ntest_08 (test_acceptance.RepairTests) ... ok\n\n----------------------------------------------------------------------\nRan 8 tests in 0.000s\n\nOK\n",
+        "elapsed_ms": 171,
+        "exit_code": 0,
+        "stderr": "",
+        "accepted": true
+      }
+    },
+    {
+      "task_id": "cursor_roundtrip",
+      "buggy": {
+        "successful": false,
+        "tests_run": 8,
+        "failures": 0,
+        "errors": 3,
+        "skipped": 0,
+        "expected_failures": 0,
+        "unexpected_successes": 0,
+        "output": "test_01 (test_acceptance.RepairTests) ... ERROR\ntest_02 (test_acceptance.RepairTests) ... ERROR\ntest_03 (test_acceptance.RepairTests) ... ERROR\ntest_04 (test_acceptance.RepairTests) ... ok\ntest_05 (test_acceptance.RepairTests) ... ok\ntest_06 (test_acceptance.RepairTests) ... ok\ntest_07 (test_acceptance.RepairTests) ... ok\ntest_08 (test_acceptance.RepairTests) ... ok\n\n======================================================================\nERROR: test_01 (test_acceptance.RepairTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-suite-v1-preflight-20261024-125551\\cursor_roundtrip-buggy\\test_acceptance.py\", line 7, in test_01\n    self.assertEqual(decode(encode(12)),12)\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-suite-v1-preflight-20261024-125551\\cursor_roundtrip-buggy\\cursor_codec.py\", line 7, in decode\n    return int(token)\nValueError: invalid literal for int() with base 10: 'MTI='\n\n======================================================================\nERROR: test_02 (test_acceptance.RepairTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-suite-v1-preflight-20261024-125551\\cursor_roundtrip-buggy\\test_acceptance.py\", line 9, in test_02\n    self.assertEqual(page(list(range(8)),3,encode(3)),([3,4,5],encode(6)))\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-suite-v1-preflight-20261024-125551\\cursor_roundtrip-buggy\\pagination.py\", line 5, in page\n    start = 0 if cursor is None else decode(cursor)\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-suite-v1-preflight-20261024-125551\\cursor_roundtrip-buggy\\cursor_codec.py\", line 7, in decode\n    return int(token)\nValueError: invalid literal for int() with base 10: 'Mw=='\n\n======================================================================\nERROR: test_03 (test_acceptance.RepairTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-suite-v1-preflight-20261024-125551\\cursor_roundtrip-buggy\\test_acceptance.py\", line 11, in test_03\n    self.assertEqual(page(list(range(8)),3,encode(6)),([6,7],None))\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-suite-v1-preflight-20261024-125551\\cursor_roundtrip-buggy\\pagination.py\", line 5, in page\n    start = 0 if cursor is None else decode(cursor)\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-suite-v1-preflight-20261024-125551\\cursor_roundtrip-buggy\\cursor_codec.py\", line 7, in decode\n    return int(token)\nValueError: invalid literal for int() with base 10: 'Ng=='\n\n----------------------------------------------------------------------\nRan 8 tests in 0.004s\n\nFAILED (errors=3)\n",
+        "elapsed_ms": 172,
+        "exit_code": 1,
+        "stderr": "",
+        "accepted": false
+      },
+      "reference": {
+        "successful": true,
+        "tests_run": 8,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "expected_failures": 0,
+        "unexpected_successes": 0,
+        "output": "test_01 (test_acceptance.RepairTests) ... ok\ntest_02 (test_acceptance.RepairTests) ... ok\ntest_03 (test_acceptance.RepairTests) ... ok\ntest_04 (test_acceptance.RepairTests) ... ok\ntest_05 (test_acceptance.RepairTests) ... ok\ntest_06 (test_acceptance.RepairTests) ... ok\ntest_07 (test_acceptance.RepairTests) ... ok\ntest_08 (test_acceptance.RepairTests) ... ok\n\n----------------------------------------------------------------------\nRan 8 tests in 0.000s\n\nOK\n",
+        "elapsed_ms": 187,
+        "exit_code": 0,
+        "stderr": "",
+        "accepted": true
+      }
+    },
+    {
+      "task_id": "error_response_contract",
+      "buggy": {
+        "successful": false,
+        "tests_run": 8,
+        "failures": 4,
+        "errors": 0,
+        "skipped": 0,
+        "expected_failures": 0,
+        "unexpected_successes": 0,
+        "output": "test_01 (test_acceptance.RepairTests) ... ok\ntest_02 (test_acceptance.RepairTests) ... ok\ntest_03 (test_acceptance.RepairTests) ... FAIL\ntest_04 (test_acceptance.RepairTests) ... FAIL\ntest_05 (test_acceptance.RepairTests) ... FAIL\ntest_06 (test_acceptance.RepairTests) ... FAIL\ntest_07 (test_acceptance.RepairTests) ... ok\ntest_08 (test_acceptance.RepairTests) ... ok\n\n======================================================================\nFAIL: test_03 (test_acceptance.RepairTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-suite-v1-preflight-20261024-125551\\error_response_contract-buggy\\test_acceptance.py\", line 13, in test_03\n    self.assertEqual(ValidationError('bad','email').field,'email')\nAssertionError: 'bad' != 'email'\n- bad\n+ email\n\n\n======================================================================\nFAIL: test_04 (test_acceptance.RepairTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-suite-v1-preflight-20261024-125551\\error_response_contract-buggy\\test_acceptance.py\", line 15, in test_04\n    self.assertEqual(handle(lambda:fail(ValidationError('bad','email'))),(400,{'error':'bad','field':'email'}))\nAssertionError: Tuples differ: (500, {'error': 'bad'}) != (400, {'error': 'bad', 'field': 'email'})\n\nFirst differing element 0:\n500\n400\n\n- (500, {'error': 'bad'})\n+ (400, {'error': 'bad', 'field': 'email'})\n\n======================================================================\nFAIL: test_05 (test_acceptance.RepairTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-suite-v1-preflight-20261024-125551\\error_response_contract-buggy\\test_acceptance.py\", line 17, in test_05\n    self.assertEqual(handle(lambda:fail(MissingError('gone'))),(404,{'error':'gone'}))\nAssertionError: Tuples differ: (500, {'error': 'gone'}) != (404, {'error': 'gone'})\n\nFirst differing element 0:\n500\n404\n\n- (500, {'error': 'gone'})\n?  ^ ^\n\n+ (404, {'error': 'gone'})\n?  ^ ^\n\n\n======================================================================\nFAIL: test_06 (test_acceptance.RepairTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-suite-v1-preflight-20261024-125551\\error_response_contract-buggy\\test_acceptance.py\", line 19, in test_06\n    with self.assertRaises(RuntimeError): handle(lambda:fail(RuntimeError('internal')))\nAssertionError: RuntimeError not raised\n\n----------------------------------------------------------------------\nRan 8 tests in 0.002s\n\nFAILED (failures=4)\n",
+        "elapsed_ms": 187,
+        "exit_code": 1,
+        "stderr": "",
+        "accepted": false
+      },
+      "reference": {
+        "successful": true,
+        "tests_run": 8,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "expected_failures": 0,
+        "unexpected_successes": 0,
+        "output": "test_01 (test_acceptance.RepairTests) ... ok\ntest_02 (test_acceptance.RepairTests) ... ok\ntest_03 (test_acceptance.RepairTests) ... ok\ntest_04 (test_acceptance.RepairTests) ... ok\ntest_05 (test_acceptance.RepairTests) ... ok\ntest_06 (test_acceptance.RepairTests) ... ok\ntest_07 (test_acceptance.RepairTests) ... ok\ntest_08 (test_acceptance.RepairTests) ... ok\n\n----------------------------------------------------------------------\nRan 8 tests in 0.000s\n\nOK\n",
+        "elapsed_ms": 172,
+        "exit_code": 0,
+        "stderr": "",
+        "accepted": true
+      }
+    },
+    {
+      "task_id": "utc_storage_contract",
+      "buggy": {
+        "successful": false,
+        "tests_run": 8,
+        "failures": 4,
+        "errors": 0,
+        "skipped": 0,
+        "expected_failures": 0,
+        "unexpected_successes": 0,
+        "output": "test_01 (test_acceptance.RepairTests) ... ok\ntest_02 (test_acceptance.RepairTests) ... ok\ntest_03 (test_acceptance.RepairTests) ... FAIL\ntest_04 (test_acceptance.RepairTests) ... FAIL\ntest_05 (test_acceptance.RepairTests) ... FAIL\ntest_06 (test_acceptance.RepairTests) ... FAIL\ntest_07 (test_acceptance.RepairTests) ... ok\ntest_08 (test_acceptance.RepairTests) ... ok\n\n======================================================================\nFAIL: test_03 (test_acceptance.RepairTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-suite-v1-preflight-20261024-125551\\utc_storage_contract-buggy\\test_acceptance.py\", line 12, in test_03\n    self.assertEqual(to_epoch(datetime(1970,1,1,8,tzinfo=timezone(timedelta(hours=8)))),0)\nAssertionError: 28800.0 != 0\n\n======================================================================\nFAIL: test_04 (test_acceptance.RepairTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-suite-v1-preflight-20261024-125551\\utc_storage_contract-buggy\\test_acceptance.py\", line 14, in test_04\n    self.assertEqual(to_epoch(datetime(1969,12,31,19,tzinfo=timezone(timedelta(hours=-5)))),0)\nAssertionError: -18000.0 != 0\n\n======================================================================\nFAIL: test_05 (test_acceptance.RepairTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-suite-v1-preflight-20261024-125551\\utc_storage_contract-buggy\\test_acceptance.py\", line 16, in test_05\n    self.assertEqual(save_event({'id':'a','at':datetime(1970,1,1,0,0,2)}),{'id':'a','timestamp':2})\nAssertionError: {'id': 'a', 'at': datetime.datetime(1970, 1, 1, 0, 0, 2), 'timestamp': 2000} != {'id': 'a', 'timestamp': 2}\n- {'at': datetime.datetime(1970, 1, 1, 0, 0, 2), 'id': 'a', 'timestamp': 2000}\n+ {'id': 'a', 'timestamp': 2}\n\n======================================================================\nFAIL: test_06 (test_acceptance.RepairTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-suite-v1-preflight-20261024-125551\\utc_storage_contract-buggy\\test_acceptance.py\", line 19, in test_06\n    self.assertNotIn('timestamp',e)\nAssertionError: 'timestamp' unexpectedly found in {'id': 'a', 'at': datetime.datetime(1970, 1, 1, 0, 0), 'timestamp': 0}\n\n----------------------------------------------------------------------\nRan 8 tests in 0.002s\n\nFAILED (failures=4)\n",
+        "elapsed_ms": 172,
+        "exit_code": 1,
+        "stderr": "",
+        "accepted": false
+      },
+      "reference": {
+        "successful": true,
+        "tests_run": 8,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "expected_failures": 0,
+        "unexpected_successes": 0,
+        "output": "test_01 (test_acceptance.RepairTests) ... ok\ntest_02 (test_acceptance.RepairTests) ... ok\ntest_03 (test_acceptance.RepairTests) ... ok\ntest_04 (test_acceptance.RepairTests) ... ok\ntest_05 (test_acceptance.RepairTests) ... ok\ntest_06 (test_acceptance.RepairTests) ... ok\ntest_07 (test_acceptance.RepairTests) ... ok\ntest_08 (test_acceptance.RepairTests) ... ok\n\n----------------------------------------------------------------------\nRan 8 tests in 0.000s\n\nOK\n",
+        "elapsed_ms": 172,
+        "exit_code": 0,
+        "stderr": "",
+        "accepted": true
+      }
+    },
+    {
+      "task_id": "inventory_reservation",
+      "buggy": {
+        "successful": false,
+        "tests_run": 8,
+        "failures": 3,
+        "errors": 1,
+        "skipped": 0,
+        "expected_failures": 0,
+        "unexpected_successes": 0,
+        "output": "test_01 (test_acceptance.RepairTests) ... FAIL\ntest_02 (test_acceptance.RepairTests) ... ok\ntest_03 (test_acceptance.RepairTests) ... FAIL\ntest_04 (test_acceptance.RepairTests) ... ERROR\ntest_05 (test_acceptance.RepairTests) ... FAIL\ntest_06 (test_acceptance.RepairTests) ... ok\ntest_07 (test_acceptance.RepairTests) ... ok\ntest_08 (test_acceptance.RepairTests) ... ok\n\n======================================================================\nERROR: test_04 (test_acceptance.RepairTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-suite-v1-preflight-20261024-125551\\inventory_reservation-buggy\\test_acceptance.py\", line 18, in test_04\n    with self.assertRaises(ValueError): reserve({},'x',1)\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-suite-v1-preflight-20261024-125551\\inventory_reservation-buggy\\stock.py\", line 4, in reserve\n    stock[sku] -= qty\nKeyError: 'x'\n\n======================================================================\nFAIL: test_01 (test_acceptance.RepairTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-suite-v1-preflight-20261024-125551\\inventory_reservation-buggy\\test_acceptance.py\", line 8, in test_01\n    self.assertEqual(place_order(s,'a',2),{'sku':'a','quantity':2,'remaining':3})\nAssertionError: {'sku': 'a', 'quantity': 2, 'remaining': 1} != {'sku': 'a', 'quantity': 2, 'remaining': 3}\n- {'quantity': 2, 'remaining': 1, 'sku': 'a'}\n?                              ^\n\n+ {'quantity': 2, 'remaining': 3, 'sku': 'a'}\n?                              ^\n\n\n======================================================================\nFAIL: test_03 (test_acceptance.RepairTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-suite-v1-preflight-20261024-125551\\inventory_reservation-buggy\\test_acceptance.py\", line 16, in test_03\n    self.assertEqual(s,{'a':2})\nAssertionError: {'a': -1} != {'a': 2}\n- {'a': -1}\n?       ^^\n\n+ {'a': 2}\n?       ^\n\n\n======================================================================\nFAIL: test_05 (test_acceptance.RepairTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-suite-v1-preflight-20261024-125551\\inventory_reservation-buggy\\test_acceptance.py\", line 20, in test_05\n    with self.assertRaises(ValueError): reserve({'a':2},'a',True)\nAssertionError: ValueError not raised\n\n----------------------------------------------------------------------\nRan 8 tests in 0.003s\n\nFAILED (failures=3, errors=1)\n",
+        "elapsed_ms": 172,
+        "exit_code": 1,
+        "stderr": "",
+        "accepted": false
+      },
+      "reference": {
+        "successful": true,
+        "tests_run": 8,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "expected_failures": 0,
+        "unexpected_successes": 0,
+        "output": "test_01 (test_acceptance.RepairTests) ... ok\ntest_02 (test_acceptance.RepairTests) ... ok\ntest_03 (test_acceptance.RepairTests) ... ok\ntest_04 (test_acceptance.RepairTests) ... ok\ntest_05 (test_acceptance.RepairTests) ... ok\ntest_06 (test_acceptance.RepairTests) ... ok\ntest_07 (test_acceptance.RepairTests) ... ok\ntest_08 (test_acceptance.RepairTests) ... ok\n\n----------------------------------------------------------------------\nRan 8 tests in 0.000s\n\nOK\n",
+        "elapsed_ms": 172,
+        "exit_code": 0,
+        "stderr": "",
+        "accepted": true
+      }
+    },
+    {
+      "task_id": "boltons_isoparse",
+      "buggy": {
+        "successful": false,
+        "tests_run": 8,
+        "failures": 3,
+        "errors": 1,
+        "skipped": 0,
+        "expected_failures": 0,
+        "unexpected_successes": 0,
+        "output": "test_01 (test_acceptance.RepairTests) ... FAIL\ntest_02 (test_acceptance.RepairTests) ... FAIL\ntest_03 (test_acceptance.RepairTests) ... FAIL\ntest_04 (test_acceptance.RepairTests) ... ok\ntest_05 (test_acceptance.RepairTests) ... ERROR\ntest_06 (test_acceptance.RepairTests) ... ok\ntest_07 (test_acceptance.RepairTests) ... ok\ntest_08 (test_acceptance.RepairTests) ... ok\n\n======================================================================\nERROR: test_05 (test_acceptance.RepairTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-suite-v1-preflight-20261024-125551\\boltons_isoparse-buggy\\test_acceptance.py\", line 14, in test_05\n    self.assertEqual(render('2020-01-02T03:04:05.123456789').microsecond,123456)\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-suite-v1-preflight-20261024-125551\\boltons_isoparse-buggy\\public_api.py\", line 3, in render\n    return isoparse(value)\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-suite-v1-preflight-20261024-125551\\boltons_isoparse-buggy\\time_core.py\", line 30, in isoparse\n    return datetime(*dt_args)\nValueError: microsecond must be in 0..999999\n\n======================================================================\nFAIL: test_01 (test_acceptance.RepairTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-suite-v1-preflight-20261024-125551\\boltons_isoparse-buggy\\test_acceptance.py\", line 6, in test_01\n    self.assertEqual(render('2020-01-02T03:04:05.851').microsecond,851000)\nAssertionError: 851 != 851000\n\n======================================================================\nFAIL: test_02 (test_acceptance.RepairTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-suite-v1-preflight-20261024-125551\\boltons_isoparse-buggy\\test_acceptance.py\", line 8, in test_02\n    self.assertEqual(render('2020-01-02T03:04:05.051').microsecond,51000)\nAssertionError: 51 != 51000\n\n======================================================================\nFAIL: test_03 (test_acceptance.RepairTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-suite-v1-preflight-20261024-125551\\boltons_isoparse-buggy\\test_acceptance.py\", line 10, in test_03\n    self.assertEqual(render('2020-01-02T03:04:05.1').microsecond,100000)\nAssertionError: 1 != 100000\n\n----------------------------------------------------------------------\nRan 8 tests in 0.004s\n\nFAILED (failures=3, errors=1)\n",
+        "elapsed_ms": 187,
+        "exit_code": 1,
+        "stderr": "",
+        "accepted": false
+      },
+      "reference": {
+        "successful": true,
+        "tests_run": 8,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "expected_failures": 0,
+        "unexpected_successes": 0,
+        "output": "test_01 (test_acceptance.RepairTests) ... ok\ntest_02 (test_acceptance.RepairTests) ... ok\ntest_03 (test_acceptance.RepairTests) ... ok\ntest_04 (test_acceptance.RepairTests) ... ok\ntest_05 (test_acceptance.RepairTests) ... ok\ntest_06 (test_acceptance.RepairTests) ... ok\ntest_07 (test_acceptance.RepairTests) ... ok\ntest_08 (test_acceptance.RepairTests) ... ok\n\n----------------------------------------------------------------------\nRan 8 tests in 0.000s\n\nOK\n",
+        "elapsed_ms": 172,
+        "exit_code": 0,
+        "stderr": "",
+        "accepted": true
+      }
+    },
+    {
+      "task_id": "boltons_xfrange",
+      "buggy": {
+        "successful": false,
+        "tests_run": 8,
+        "failures": 4,
+        "errors": 0,
+        "skipped": 0,
+        "expected_failures": 0,
+        "unexpected_successes": 0,
+        "output": "test_01 (test_acceptance.RepairTests) ... FAIL\ntest_02 (test_acceptance.RepairTests) ... FAIL\ntest_03 (test_acceptance.RepairTests) ... ok\ntest_04 (test_acceptance.RepairTests) ... FAIL\ntest_05 (test_acceptance.RepairTests) ... FAIL\ntest_06 (test_acceptance.RepairTests) ... ok\ntest_07 (test_acceptance.RepairTests) ... ok\ntest_08 (test_acceptance.RepairTests) ... ok\n\n======================================================================\nFAIL: test_01 (test_acceptance.RepairTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-suite-v1-preflight-20261024-125551\\boltons_xfrange-buggy\\test_acceptance.py\", line 6, in test_01\n    self.assertEqual(render(5,0,step=-1.25),[5.0,3.75,2.5,1.25])\nAssertionError: Lists differ: [] != [5.0, 3.75, 2.5, 1.25]\n\nSecond list contains 4 additional elements.\nFirst extra element 0:\n5.0\n\n- []\n+ [5.0, 3.75, 2.5, 1.25]\n\n======================================================================\nFAIL: test_02 (test_acceptance.RepairTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-suite-v1-preflight-20261024-125551\\boltons_xfrange-buggy\\test_acceptance.py\", line 8, in test_02\n    self.assertEqual(render(1,5,step=-1),[])\nAssertionError: Lists differ: [1.0, 0.0, -1.0, -2.0, -3.0, -4.0, -5.0, -[7839 chars]98.0] != []\n\nFirst list contains 1000 additional elements.\nFirst extra element 0:\n1.0\n\nDiff is 10891 characters long. Set self.maxDiff to None to see it.\n\n======================================================================\nFAIL: test_04 (test_acceptance.RepairTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-suite-v1-preflight-20261024-125551\\boltons_xfrange-buggy\\test_acceptance.py\", line 12, in test_04\n    self.assertEqual(len(render(1.0,step=.1)),10)\nAssertionError: 11 != 10\n\n======================================================================\nFAIL: test_05 (test_acceptance.RepairTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-suite-v1-preflight-20261024-125551\\boltons_xfrange-buggy\\test_acceptance.py\", line 14, in test_05\n    self.assertEqual(render(1.0,step=.1),expected(1.0,step=.1))\nAssertionError: Lists differ: [0.0,[48 chars].7, 0.7999999999999999, 0.8999999999999999, 0.9999999999999999] != [0.0,[48 chars].7, 0.7999999999999999, 0.8999999999999999]\n\nFirst list contains 1 additional elements.\nFirst extra element 10:\n0.9999999999999999\n\n  [0.0,\n   0.1,\n   0.2,\n   0.30000000000000004,\n   0.4,\n   0.5,\n   0.6,\n   0.7,\n   0.7999999999999999,\n-  0.8999999999999999,\n?                    ^\n\n+  0.8999999999999999]\n?                    ^\n\n-  0.9999999999999999]\n\n----------------------------------------------------------------------\nRan 8 tests in 0.005s\n\nFAILED (failures=4)\n",
+        "elapsed_ms": 188,
+        "exit_code": 1,
+        "stderr": "",
+        "accepted": false
+      },
+      "reference": {
+        "successful": true,
+        "tests_run": 8,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "expected_failures": 0,
+        "unexpected_successes": 0,
+        "output": "test_01 (test_acceptance.RepairTests) ... ok\ntest_02 (test_acceptance.RepairTests) ... ok\ntest_03 (test_acceptance.RepairTests) ... ok\ntest_04 (test_acceptance.RepairTests) ... ok\ntest_05 (test_acceptance.RepairTests) ... ok\ntest_06 (test_acceptance.RepairTests) ... ok\ntest_07 (test_acceptance.RepairTests) ... ok\ntest_08 (test_acceptance.RepairTests) ... ok\n\n----------------------------------------------------------------------\nRan 8 tests in 0.000s\n\nOK\n",
+        "elapsed_ms": 188,
+        "exit_code": 0,
+        "stderr": "",
+        "accepted": true
+      }
+    },
+    {
+      "task_id": "boltons_multireplace",
+      "buggy": {
+        "successful": false,
+        "tests_run": 8,
+        "failures": 0,
+        "errors": 4,
+        "skipped": 0,
+        "expected_failures": 0,
+        "unexpected_successes": 0,
+        "output": "test_01 (test_acceptance.RepairTests) ... ERROR\ntest_02 (test_acceptance.RepairTests) ... ERROR\ntest_03 (test_acceptance.RepairTests) ... ERROR\ntest_04 (test_acceptance.RepairTests) ... ERROR\ntest_05 (test_acceptance.RepairTests) ... ok\ntest_06 (test_acceptance.RepairTests) ... ok\ntest_07 (test_acceptance.RepairTests) ... ok\ntest_08 (test_acceptance.RepairTests) ... ok\n\n======================================================================\nERROR: test_01 (test_acceptance.RepairTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-suite-v1-preflight-20261024-125551\\boltons_multireplace-buggy\\test_acceptance.py\", line 6, in test_01\n    self.assertEqual(render('foo bar',{}),'foo bar')\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-suite-v1-preflight-20261024-125551\\boltons_multireplace-buggy\\public_api.py\", line 3, in render\n    return MultiReplace(mapping,**kwargs).sub(text)\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-suite-v1-preflight-20261024-125551\\boltons_multireplace-buggy\\replacement_core.py\", line 104, in sub\n    return self.combined_pattern.sub(self._get_value, text)\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-suite-v1-preflight-20261024-125551\\boltons_multireplace-buggy\\replacement_core.py\", line 95, in _get_value\n    return self.group_map[match.lastgroup]\nKeyError: None\n\n======================================================================\nERROR: test_02 (test_acceptance.RepairTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-suite-v1-preflight-20261024-125551\\boltons_multireplace-buggy\\test_acceptance.py\", line 8, in test_02\n    self.assertEqual(render('foo',[]),'foo')\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-suite-v1-preflight-20261024-125551\\boltons_multireplace-buggy\\public_api.py\", line 3, in render\n    return MultiReplace(mapping,**kwargs).sub(text)\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-suite-v1-preflight-20261024-125551\\boltons_multireplace-buggy\\replacement_core.py\", line 104, in sub\n    return self.combined_pattern.sub(self._get_value, text)\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-suite-v1-preflight-20261024-125551\\boltons_multireplace-buggy\\replacement_core.py\", line 95, in _get_value\n    return self.group_map[match.lastgroup]\nKeyError: None\n\n======================================================================\nERROR: test_03 (test_acceptance.RepairTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-suite-v1-preflight-20261024-125551\\boltons_multireplace-buggy\\test_acceptance.py\", line 10, in test_03\n    self.assertEqual(render('',{}),'')\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-suite-v1-preflight-20261024-125551\\boltons_multireplace-buggy\\public_api.py\", line 3, in render\n    return MultiReplace(mapping,**kwargs).sub(text)\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-suite-v1-preflight-20261024-125551\\boltons_multireplace-buggy\\replacement_core.py\", line 104, in sub\n    return self.combined_pattern.sub(self._get_value, text)\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-suite-v1-preflight-20261024-125551\\boltons_multireplace-buggy\\replacement_core.py\", line 95, in _get_value\n    return self.group_map[match.lastgroup]\nKeyError: None\n\n======================================================================\nERROR: test_04 (test_acceptance.RepairTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-suite-v1-preflight-20261024-125551\\boltons_multireplace-buggy\\test_acceptance.py\", line 12, in test_04\n    self.assertEqual(render('abc',iter([])),'abc')\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-suite-v1-preflight-20261024-125551\\boltons_multireplace-buggy\\public_api.py\", line 3, in render\n    return MultiReplace(mapping,**kwargs).sub(text)\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-suite-v1-preflight-20261024-125551\\boltons_multireplace-buggy\\replacement_core.py\", line 104, in sub\n    return self.combined_pattern.sub(self._get_value, text)\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-suite-v1-preflight-20261024-125551\\boltons_multireplace-buggy\\replacement_core.py\", line 95, in _get_value\n    return self.group_map[match.lastgroup]\nKeyError: None\n\n----------------------------------------------------------------------\nRan 8 tests in 0.005s\n\nFAILED (errors=4)\n",
+        "elapsed_ms": 203,
+        "exit_code": 1,
+        "stderr": "",
+        "accepted": false
+      },
+      "reference": {
+        "successful": true,
+        "tests_run": 8,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "expected_failures": 0,
+        "unexpected_successes": 0,
+        "output": "test_01 (test_acceptance.RepairTests) ... ok\ntest_02 (test_acceptance.RepairTests) ... ok\ntest_03 (test_acceptance.RepairTests) ... ok\ntest_04 (test_acceptance.RepairTests) ... ok\ntest_05 (test_acceptance.RepairTests) ... ok\ntest_06 (test_acceptance.RepairTests) ... ok\ntest_07 (test_acceptance.RepairTests) ... ok\ntest_08 (test_acceptance.RepairTests) ... ok\n\n----------------------------------------------------------------------\nRan 8 tests in 0.001s\n\nOK\n",
+        "elapsed_ms": 188,
+        "exit_code": 0,
+        "stderr": "",
+        "accepted": true
+      }
+    },
+    {
+      "task_id": "boltons_splitlines",
+      "buggy": {
+        "successful": false,
+        "tests_run": 8,
+        "failures": 2,
+        "errors": 0,
+        "skipped": 0,
+        "expected_failures": 0,
+        "unexpected_successes": 0,
+        "output": "test_01 (test_acceptance.RepairTests) ... ok\ntest_02 (test_acceptance.RepairTests) ... ok\ntest_03 (test_acceptance.RepairTests) ... FAIL\ntest_04 (test_acceptance.RepairTests) ... FAIL\ntest_05 (test_acceptance.RepairTests) ... ok\ntest_06 (test_acceptance.RepairTests) ... ok\ntest_07 (test_acceptance.RepairTests) ... ok\ntest_08 (test_acceptance.RepairTests) ... ok\n\n======================================================================\nFAIL: test_03 (test_acceptance.RepairTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-suite-v1-preflight-20261024-125551\\boltons_splitlines-buggy\\test_acceptance.py\", line 10, in test_03\n    self.assertEqual(render('a\\u2028b'),['a','b'])\nAssertionError: Lists differ: ['a\\u2028b'] != ['a', 'b']\n\nFirst differing element 0:\n'a\\u2028b'\n'a'\n\nSecond list contains 1 additional elements.\nFirst extra element 1:\n'b'\n\n- ['a\\u2028b']\n+ ['a', 'b']\n\n======================================================================\nFAIL: test_04 (test_acceptance.RepairTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-suite-v1-preflight-20261024-125551\\boltons_splitlines-buggy\\test_acceptance.py\", line 12, in test_04\n    self.assertEqual(render('a\\u2029b'),['a','b'])\nAssertionError: Lists differ: ['a\\u2029b'] != ['a', 'b']\n\nFirst differing element 0:\n'a\\u2029b'\n'a'\n\nSecond list contains 1 additional elements.\nFirst extra element 1:\n'b'\n\n- ['a\\u2029b']\n+ ['a', 'b']\n\n----------------------------------------------------------------------\nRan 8 tests in 0.002s\n\nFAILED (failures=2)\n",
+        "elapsed_ms": 187,
+        "exit_code": 1,
+        "stderr": "",
+        "accepted": false
+      },
+      "reference": {
+        "successful": true,
+        "tests_run": 8,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "expected_failures": 0,
+        "unexpected_successes": 0,
+        "output": "test_01 (test_acceptance.RepairTests) ... ok\ntest_02 (test_acceptance.RepairTests) ... ok\ntest_03 (test_acceptance.RepairTests) ... ok\ntest_04 (test_acceptance.RepairTests) ... ok\ntest_05 (test_acceptance.RepairTests) ... ok\ntest_06 (test_acceptance.RepairTests) ... ok\ntest_07 (test_acceptance.RepairTests) ... ok\ntest_08 (test_acceptance.RepairTests) ... ok\n\n----------------------------------------------------------------------\nRan 8 tests in 0.000s\n\nOK\n",
+        "elapsed_ms": 172,
+        "exit_code": 0,
+        "stderr": "",
+        "accepted": true
+      }
+    },
+    {
+      "task_id": "humanize_list",
+      "buggy": {
+        "successful": false,
+        "tests_run": 8,
+        "failures": 0,
+        "errors": 1,
+        "skipped": 0,
+        "expected_failures": 0,
+        "unexpected_successes": 0,
+        "output": "test_01 (test_acceptance.RepairTests) ... ERROR\ntest_02 (test_acceptance.RepairTests) ... ok\ntest_03 (test_acceptance.RepairTests) ... ok\ntest_04 (test_acceptance.RepairTests) ... ok\ntest_05 (test_acceptance.RepairTests) ... ok\ntest_06 (test_acceptance.RepairTests) ... ok\ntest_07 (test_acceptance.RepairTests) ... ok\ntest_08 (test_acceptance.RepairTests) ... ok\n\n======================================================================\nERROR: test_01 (test_acceptance.RepairTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-suite-v1-preflight-20261024-125551\\humanize_list-buggy\\test_acceptance.py\", line 6, in test_01\n    self.assertEqual(fmt([]),'')\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-suite-v1-preflight-20261024-125551\\humanize_list-buggy\\formatter.py\", line 28, in natural_list\n    return \", \".join([str(item) for item in items[:-1]]) + f\" and {str(items[-1])}\"\nIndexError: list index out of range\n\n----------------------------------------------------------------------\nRan 8 tests in 0.001s\n\nFAILED (errors=1)\n",
+        "elapsed_ms": 172,
+        "exit_code": 1,
+        "stderr": "",
+        "accepted": false
+      },
+      "reference": {
+        "successful": true,
+        "tests_run": 8,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "expected_failures": 0,
+        "unexpected_successes": 0,
+        "output": "test_01 (test_acceptance.RepairTests) ... ok\ntest_02 (test_acceptance.RepairTests) ... ok\ntest_03 (test_acceptance.RepairTests) ... ok\ntest_04 (test_acceptance.RepairTests) ... ok\ntest_05 (test_acceptance.RepairTests) ... ok\ntest_06 (test_acceptance.RepairTests) ... ok\ntest_07 (test_acceptance.RepairTests) ... ok\ntest_08 (test_acceptance.RepairTests) ... ok\n\n----------------------------------------------------------------------\nRan 8 tests in 0.000s\n\nOK\n",
+        "elapsed_ms": 171,
+        "exit_code": 0,
+        "stderr": "",
+        "accepted": true
+      }
+    },
+    {
+      "task_id": "humanize_fractional",
+      "buggy": {
+        "successful": false,
+        "tests_run": 8,
+        "failures": 2,
+        "errors": 0,
+        "skipped": 0,
+        "expected_failures": 0,
+        "unexpected_successes": 0,
+        "output": "test_01 (test_acceptance.RepairTests) ... FAIL\ntest_02 (test_acceptance.RepairTests) ... FAIL\ntest_03 (test_acceptance.RepairTests) ... ok\ntest_04 (test_acceptance.RepairTests) ... ok\ntest_05 (test_acceptance.RepairTests) ... ok\ntest_06 (test_acceptance.RepairTests) ... ok\ntest_07 (test_acceptance.RepairTests) ... ok\ntest_08 (test_acceptance.RepairTests) ... ok\n\n======================================================================\nFAIL: test_01 (test_acceptance.RepairTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-suite-v1-preflight-20261024-125551\\humanize_fractional-buggy\\test_acceptance.py\", line 6, in test_01\n    self.assertEqual(fmt(-1.3),'-1 3/10')\nAssertionError: '-1 -3/10' != '-1 3/10'\n- -1 -3/10\n?    -\n+ -1 3/10\n\n\n======================================================================\nFAIL: test_02 (test_acceptance.RepairTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-suite-v1-preflight-20261024-125551\\humanize_fractional-buggy\\test_acceptance.py\", line 8, in test_02\n    self.assertEqual(fmt(-2.5),'-2 1/2')\nAssertionError: '-2 -1/2' != '-2 1/2'\n- -2 -1/2\n?    -\n+ -2 1/2\n\n\n----------------------------------------------------------------------\nRan 8 tests in 0.012s\n\nFAILED (failures=2)\n",
+        "elapsed_ms": 187,
+        "exit_code": 1,
+        "stderr": "",
+        "accepted": false
+      },
+      "reference": {
+        "successful": true,
+        "tests_run": 8,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "expected_failures": 0,
+        "unexpected_successes": 0,
+        "output": "test_01 (test_acceptance.RepairTests) ... ok\ntest_02 (test_acceptance.RepairTests) ... ok\ntest_03 (test_acceptance.RepairTests) ... ok\ntest_04 (test_acceptance.RepairTests) ... ok\ntest_05 (test_acceptance.RepairTests) ... ok\ntest_06 (test_acceptance.RepairTests) ... ok\ntest_07 (test_acceptance.RepairTests) ... ok\ntest_08 (test_acceptance.RepairTests) ... ok\n\n----------------------------------------------------------------------\nRan 8 tests in 0.010s\n\nOK\n",
+        "elapsed_ms": 204,
+        "exit_code": 0,
+        "stderr": "",
+        "accepted": true
+      }
+    },
+    {
+      "task_id": "humanize_metric",
+      "buggy": {
+        "successful": false,
+        "tests_run": 8,
+        "failures": 4,
+        "errors": 0,
+        "skipped": 0,
+        "expected_failures": 0,
+        "unexpected_successes": 0,
+        "output": "test_01 (test_acceptance.RepairTests) ... FAIL\ntest_02 (test_acceptance.RepairTests) ... FAIL\ntest_03 (test_acceptance.RepairTests) ... FAIL\ntest_04 (test_acceptance.RepairTests) ... ok\ntest_05 (test_acceptance.RepairTests) ... FAIL\ntest_06 (test_acceptance.RepairTests) ... ok\ntest_07 (test_acceptance.RepairTests) ... ok\ntest_08 (test_acceptance.RepairTests) ... ok\n\n======================================================================\nFAIL: test_01 (test_acceptance.RepairTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-suite-v1-preflight-20261024-125551\\humanize_metric-buggy\\test_acceptance.py\", line 6, in test_01\n    self.assertEqual(fmt(999.9,'V'),'1.00 kV')\nAssertionError: '1000 V' != '1.00 kV'\n- 1000 V\n+ 1.00 kV\n\n\n======================================================================\nFAIL: test_02 (test_acceptance.RepairTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-suite-v1-preflight-20261024-125551\\humanize_metric-buggy\\test_acceptance.py\", line 8, in test_02\n    self.assertEqual(fmt(999999,'V'),'1.00 MV')\nAssertionError: '1000 kV' != '1.00 MV'\n- 1000 kV\n+ 1.00 MV\n\n\n======================================================================\nFAIL: test_03 (test_acceptance.RepairTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-suite-v1-preflight-20261024-125551\\humanize_metric-buggy\\test_acceptance.py\", line 10, in test_03\n    self.assertEqual(fmt(.0009999,'V'),'1.00 mV')\nAssertionError: '1000 μV' != '1.00 mV'\n- 1000 μV\n+ 1.00 mV\n\n\n======================================================================\nFAIL: test_05 (test_acceptance.RepairTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-suite-v1-preflight-20261024-125551\\humanize_metric-buggy\\test_acceptance.py\", line 14, in test_05\n    self.assertEqual(fmt(-999.9,'V'),'-1.00 kV')\nAssertionError: '-1000 V' != '-1.00 kV'\n- -1000 V\n+ -1.00 kV\n\n\n----------------------------------------------------------------------\nRan 8 tests in 0.003s\n\nFAILED (failures=4)\n",
+        "elapsed_ms": 203,
+        "exit_code": 1,
+        "stderr": "",
+        "accepted": false
+      },
+      "reference": {
+        "successful": true,
+        "tests_run": 8,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "expected_failures": 0,
+        "unexpected_successes": 0,
+        "output": "test_01 (test_acceptance.RepairTests) ... ok\ntest_02 (test_acceptance.RepairTests) ... ok\ntest_03 (test_acceptance.RepairTests) ... ok\ntest_04 (test_acceptance.RepairTests) ... ok\ntest_05 (test_acceptance.RepairTests) ... ok\ntest_06 (test_acceptance.RepairTests) ... ok\ntest_07 (test_acceptance.RepairTests) ... ok\ntest_08 (test_acceptance.RepairTests) ... ok\n\n----------------------------------------------------------------------\nRan 8 tests in 0.000s\n\nOK\n",
+        "elapsed_ms": 187,
+        "exit_code": 0,
+        "stderr": "",
+        "accepted": true
+      }
+    },
+    {
+      "task_id": "humanize_size",
+      "buggy": {
+        "successful": false,
+        "tests_run": 8,
+        "failures": 5,
+        "errors": 0,
+        "skipped": 0,
+        "expected_failures": 0,
+        "unexpected_successes": 0,
+        "output": "test_01 (test_acceptance.RepairTests) ... FAIL\ntest_02 (test_acceptance.RepairTests) ... FAIL\ntest_03 (test_acceptance.RepairTests) ... FAIL\ntest_04 (test_acceptance.RepairTests) ... FAIL\ntest_05 (test_acceptance.RepairTests) ... FAIL\ntest_06 (test_acceptance.RepairTests) ... ok\ntest_07 (test_acceptance.RepairTests) ... ok\ntest_08 (test_acceptance.RepairTests) ... ok\n\n======================================================================\nFAIL: test_01 (test_acceptance.RepairTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-suite-v1-preflight-20261024-125551\\humanize_size-buggy\\test_acceptance.py\", line 6, in test_01\n    self.assertEqual(fmt(999999),'1.0 MB')\nAssertionError: '1000.0 kB' != '1.0 MB'\n- 1000.0 kB\n+ 1.0 MB\n\n\n======================================================================\nFAIL: test_02 (test_acceptance.RepairTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-suite-v1-preflight-20261024-125551\\humanize_size-buggy\\test_acceptance.py\", line 8, in test_02\n    self.assertEqual(fmt(999999999),'1.0 GB')\nAssertionError: '1000.0 MB' != '1.0 GB'\n- 1000.0 MB\n+ 1.0 GB\n\n\n======================================================================\nFAIL: test_03 (test_acceptance.RepairTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-suite-v1-preflight-20261024-125551\\humanize_size-buggy\\test_acceptance.py\", line 10, in test_03\n    self.assertEqual(fmt(1024**2-1,binary=True),'1.0 MiB')\nAssertionError: '1024.0 KiB' != '1.0 MiB'\n- 1024.0 KiB\n+ 1.0 MiB\n\n\n======================================================================\nFAIL: test_04 (test_acceptance.RepairTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-suite-v1-preflight-20261024-125551\\humanize_size-buggy\\test_acceptance.py\", line 12, in test_04\n    self.assertEqual(fmt(1024**2-1,gnu=True),'1.0M')\nAssertionError: '1024.0K' != '1.0M'\n- 1024.0K\n+ 1.0M\n\n\n======================================================================\nFAIL: test_05 (test_acceptance.RepairTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\repair-suite-v1-preflight-20261024-125551\\humanize_size-buggy\\test_acceptance.py\", line 14, in test_05\n    self.assertEqual(fmt(-999999),'-1.0 MB')\nAssertionError: '-1000.0 kB' != '-1.0 MB'\n- -1000.0 kB\n+ -1.0 MB\n\n\n----------------------------------------------------------------------\nRan 8 tests in 0.003s\n\nFAILED (failures=5)\n",
+        "elapsed_ms": 188,
+        "exit_code": 1,
+        "stderr": "",
+        "accepted": false
+      },
+      "reference": {
+        "successful": true,
+        "tests_run": 8,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "expected_failures": 0,
+        "unexpected_successes": 0,
+        "output": "test_01 (test_acceptance.RepairTests) ... ok\ntest_02 (test_acceptance.RepairTests) ... ok\ntest_03 (test_acceptance.RepairTests) ... ok\ntest_04 (test_acceptance.RepairTests) ... ok\ntest_05 (test_acceptance.RepairTests) ... ok\ntest_06 (test_acceptance.RepairTests) ... ok\ntest_07 (test_acceptance.RepairTests) ... ok\ntest_08 (test_acceptance.RepairTests) ... ok\n\n----------------------------------------------------------------------\nRan 8 tests in 0.000s\n\nOK\n",
+        "elapsed_ms": 203,
+        "exit_code": 0,
+        "stderr": "",
+        "accepted": true
+      }
+    }
+  ]
+}
