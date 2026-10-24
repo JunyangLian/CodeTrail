@@ -1,0 +1,32 @@
+{
+  "browser": "Tabbit",
+  "captured_at": "2026-10-24T10:20:05.153Z",
+  "cases": [
+    "页面加载、脚本初始化与隔离环境标识",
+    "提交任务与写操作审批",
+    "刷新后恢复待审批任务",
+    "允许写入、允许验证、结束后释放界面",
+    "切换代码差异和真实命令结果",
+    "打开历史运行并还原验证结果",
+    "选择历史会话并继续",
+    "拒绝写入审批与执行记录",
+    "超时提示、错误详情及按钮恢复",
+    "只读模式无写入审批",
+    "步数耗尽停止轮询并恢复提交按钮",
+    "详情标签键盘切换",
+    "空任务输入校验",
+    "步数输入校验",
+    "1440px 桌面布局无横向溢出",
+    "390px 窄屏布局无横向溢出，提交与新建按钮可见",
+    "真实本地服务加载与模型配置展示"
+  ],
+  "final_url": "http://127.0.0.1:8765/",
+  "interaction_url": "http://127.0.0.1:8766/",
+  "kind": "actual_browser_interaction_with_scripted_isolated_backend_plus_real_service_page_load",
+  "notes": "Interactions used a visibly identified scripted backend in an isolated temporary workspace. Actual model repair evidence is recorded separately. Desktop 1440x1000 and mobile 390x844 screenshots inspected.",
+  "passed": 17,
+  "screenshots": {
+    "desktop": "assets/screenshots/codetrail-qa-desktop-20261024.png",
+    "mobile": "assets/screenshots/codetrail-qa-mobile-20261024.png"
+  }
+}

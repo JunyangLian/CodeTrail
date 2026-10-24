@@ -1,0 +1,381 @@
+{
+  "schema_version": 1,
+  "audited_at": "2026-10-24T09:50:34.269116+00:00",
+  "method": "Read-only reconciliation; archived experiments not rerun.",
+  "metrics": {
+    "harness": {
+      "kind": "scripted_deterministic_regression",
+      "task_count": 12,
+      "model": "FakeModelClient",
+      "summary": {
+        "failed": 0,
+        "failure_category_counts": {},
+        "pass_rate": 1.0,
+        "passed": 12,
+        "total_tasks": 12,
+        "verifier_pass_rate": 1.0,
+        "verifier_passes": 12,
+        "within_budget": 12,
+        "within_budget_rate": 1.0
+      },
+      "claim_boundary": "Verifies Harness contracts; not real-model task success."
+    },
+    "context": {
+      "kind": "constructed_context_matrix",
+      "config_count": 12,
+      "summary": {
+        "avg_full_prompt_chars": 5575.666666666667,
+        "avg_prompt_compression_ratio": 0.16357988916345992,
+        "avg_raw_prompt_chars": 6994.333333333333,
+        "current_request_preserved_rate": 1.0,
+        "max_prompt_compression_ratio": 0.3359276398822045,
+        "min_prompt_compression_ratio": 0.0
+      },
+      "unit": "characters, not tokens",
+      "claim_boundary": "Historical snapshot; not rerun on current source; no task-success inference."
+    },
+    "memory": {
+      "kind": "scripted_controlled_followup",
+      "task_count": 12,
+      "runs_per_variant": 60,
+      "variants": {
+        "memory_irrelevant": {
+          "avg_attempts": 2.0,
+          "avg_tool_steps": 1.0,
+          "correct_rate": 1.0,
+          "memory_hit_rate": 0.0,
+          "repeated_reads": 60
+        },
+        "memory_off": {
+          "avg_attempts": 2.0,
+          "avg_tool_steps": 1.0,
+          "correct_rate": 1.0,
+          "memory_hit_rate": 0.0,
+          "repeated_reads": 60
+        },
+        "memory_on": {
+          "avg_attempts": 1.0,
+          "avg_tool_steps": 0.0,
+          "correct_rate": 1.0,
+          "memory_hit_rate": 1.0,
+          "repeated_reads": 0
+        }
+      },
+      "metric_scope": "Second ask() only; bootstrap read excluded; repeated_reads counts all read_file calls in follow-up.",
+      "claim_boundary": "Scripted client; 5 deterministic repetitions are not 5 independent model samples."
+    },
+    "real_order_demo": {
+      "kind": "real_model_development_walkthrough",
+      "summary": {
+        "date": "2026-10-23",
+        "model": "zai-org/GLM-5.3-Flash",
+        "provider": "SiliconFlow Chat Completions",
+        "workspace": "examples/interview-demo",
+        "session_id": "20261023-163220-12219a",
+        "run_id": "run_20261023-163220-b90219",
+        "initial_tests": {
+          "total": 15,
+          "failed": 5,
+          "passed": 10
+        },
+        "final_tests": {
+          "total": 15,
+          "passed": 15,
+          "exit_code": 0,
+          "independently_retested": true
+        },
+        "status": "completed",
+        "stop_reason": "final_answer_returned",
+        "tool_steps": 11,
+        "verification_command": "python -m unittest discover -v",
+        "changed_files": [
+          "order_pricing.py"
+        ],
+        "protected_files_unchanged": true,
+        "test_sha256": {
+          "test_order_pricing.py": "502e5692b675898099a4711d59b07fbaeb53dcb8f0513ed4b6aefeb0a6ce0161",
+          "test_calculator.py": "4cb4369515df75b0799a5e0650a7125dab97e7ae956e158209f39743badb9a0e"
+        },
+        "tool_issues": [
+          {
+            "tool": "run_shell",
+            "error_code": "tool_failed",
+            "args": {
+              "command": "python -m unittest discover -v",
+              "timeout": 30
+            }
+          },
+          {
+            "tool": "run_shell",
+            "error_code": "invalid_arguments",
+            "args": {}
+          }
+        ],
+        "earlier_timeout_runs": [
+          "run_20261023-162324-f08c1d",
+          "run_20261023-162742-f72b59"
+        ],
+        "browser_click_qa": "unavailable: browser automation routing exit 69",
+        "related_regression_tests": 66
+      },
+      "claim_boundary": "One development task with retries; 15 tests are assertions, not 15 independent agent tasks."
+    }
+  },
+  "archived_source_sha256": {
+    "context-ablation-v2.json": "26a337ff732148a7ceed77bdd39a03679505537cc77de33b7cbcdd50edb3c9d4",
+    "harness-regression-v2.json": "f396031076acc96c5ef0c2a2bd5f85c312e95a558a44294c0af970d79dab3d83",
+    "memory-ablation-v2.json": "21051da3b156514ff24b050407ecc4276d9148a8d5dd15414175355d23c831e7",
+    "recovery-ablation-v2.json": "94ced02e4dfe04f4590094ff33c01d8326851300d5c11526cf34778bc442d11e"
+  },
+  "current_source_sha256": {
+    "pico/features/memory.py": "5e83e69e4fddcfbb3d6b7e562d505b6db64f000e032e2ef011de855d5fd93e3a",
+    "pico/evaluation/metrics.py": "4d39cb3c7892bd48fd8598f24d85620ec7c0c0071e9d17736388f7c5b0785cfb",
+    "pico/agent_loop.py": "0974d719804eee6000ae877ff601066110c5ba452bccfb9352fa07f4c04ef00a",
+    "pico/web_status.py": "58cf5f5019ee03943c6578ab08d36fc82d30e608a649711b4a59d76e23a8f4e1"
+  },
+  "unverified_resume_claims": [
+    "6964 -> 5418 / 18.01%",
+    "8 -> 3 / 0.67 -> 0.25 / 66.7% -> 100%",
+    "GPT 5/6 / 83.33%",
+    "86 automated tests as current total"
+  ],
+  "unverified_claim_action": "Do not use as current personally reproduced results; historical origin must be recovered before reuse.",
+  "real_runs": [
+    {
+      "run_id": "run_20261023-162324-f08c1d",
+      "available": true,
+      "status": "failed",
+      "stop_reason": "model_error",
+      "attempts": 5,
+      "tool_steps": 4,
+      "duration_ms": 103203,
+      "observed_input_tokens": 7337,
+      "observed_output_tokens": 1692,
+      "usage_scope": "Successful parsed responses only; failed requests may have unreported provider usage. No monetary cost estimate.",
+      "trace_sha256": "8358c824e92ae326cec3512393e8b05a3710ad766acd71a16a3bf1e5023f0554",
+      "report_sha256": "30926ae810b4735eb916a19f6bfcfba9283e6a80d817b024a6c259fdeb04cf29",
+      "issues": [
+        {
+          "trace_line": 7,
+          "category": "initial_fixture_test_failure",
+          "event": "tool_executed",
+          "tool": "run_shell",
+          "args": {
+            "command": "python -m unittest discover -v",
+            "timeout": 60
+          },
+          "error_code": "tool_failed",
+          "error": "",
+          "exit_code": 1,
+          "evidence_excerpt": "exit_code: 1\n        stdout:\n        (empty)\n        stderr:\n        test_negative_numbers (test_calculator.CalculatorTests) ... ok\r\ntest_positive_numbers (test_calculator.CalculatorTests) ... ok\r\ntest_zero (test_calculator.CalculatorTests) ... ok\r\ntest_discount_rounds_half_up (test_order_pricing.OrderPricingTests) ... ok\r\ntest_empty_order_has_no_s"
+        },
+        {
+          "trace_line": 26,
+          "category": "model_timeout",
+          "event": "model_failed",
+          "tool": null,
+          "args": null,
+          "error_code": "model_error",
+          "error": "The read operation timed out",
+          "exit_code": null,
+          "evidence_excerpt": ""
+        }
+      ]
+    },
+    {
+      "run_id": "run_20261023-162742-f72b59",
+      "available": true,
+      "status": "failed",
+      "stop_reason": "model_error",
+      "attempts": 1,
+      "tool_steps": 0,
+      "duration_ms": 121672,
+      "observed_input_tokens": 0,
+      "observed_output_tokens": 0,
+      "usage_scope": "Successful parsed responses only; failed requests may have unreported provider usage. No monetary cost estimate.",
+      "trace_sha256": "a9307aac7eb5a6b83b188e9f03650e432d7c1dd85ac0c7e752c7203c874a98a9",
+      "report_sha256": "505a94c16084d4f0e0f362e62d8ee6fea9bee03d98ae157ef05545f5a08848d7",
+      "issues": [
+        {
+          "trace_line": 4,
+          "category": "model_timeout",
+          "event": "model_failed",
+          "tool": null,
+          "args": null,
+          "error_code": "model_error",
+          "error": "The read operation timed out",
+          "exit_code": null,
+          "evidence_excerpt": ""
+        }
+      ]
+    },
+    {
+      "run_id": "run_20261023-163220-b90219",
+      "available": true,
+      "status": "completed",
+      "stop_reason": "final_answer_returned",
+      "attempts": 12,
+      "tool_steps": 11,
+      "duration_ms": 341172,
+      "observed_input_tokens": 28227,
+      "observed_output_tokens": 14742,
+      "usage_scope": "Successful parsed responses only; failed requests may have unreported provider usage. No monetary cost estimate.",
+      "trace_sha256": "be14b0ba23762272f5bf277a1229be1d66a256d662278d7d9cc291786429eb70",
+      "report_sha256": "de86f6d62e7980b3b33dc0cca85a0b5135e91077431b472d535f2c1f18c898d6",
+      "issues": [
+        {
+          "trace_line": 7,
+          "category": "initial_fixture_test_failure",
+          "event": "tool_executed",
+          "tool": "run_shell",
+          "args": {
+            "command": "python -m unittest discover -v",
+            "timeout": 30
+          },
+          "error_code": "tool_failed",
+          "error": "",
+          "exit_code": 1,
+          "evidence_excerpt": "exit_code: 1\n        stdout:\n        (empty)\n        stderr:\n        test_negative_numbers (test_calculator.CalculatorTests) ... ok\r\ntest_positive_numbers (test_calculator.CalculatorTests) ... ok\r\ntest_zero (test_calculator.CalculatorTests) ... ok\r\ntest_discount_rounds_half_up (test_order_pricing.OrderPricingTests) ... ok\r\ntest_empty_order_has_no_s"
+        },
+        {
+          "trace_line": 58,
+          "category": "invalid_tool_arguments",
+          "event": "tool_executed",
+          "tool": "run_shell",
+          "args": {},
+          "error_code": "invalid_arguments",
+          "error": "",
+          "exit_code": null,
+          "evidence_excerpt": "error: invalid arguments for run_shell: command must not be empty\nexample: <tool>{\"name\":\"run_shell\",\"args\":{\"command\":\"uv run --with pytest python -m pytest -q\",\"timeout\":20}}</tool>"
+        }
+      ]
+    }
+  ],
+  "issue_category_counts": {
+    "initial_fixture_test_failure": 2,
+    "model_timeout": 2,
+    "invalid_tool_arguments": 1
+  },
+  "repeated_smoke": {
+    "available": true,
+    "source": "artifacts/repository-smoke-2026-10-24/results.json",
+    "source_sha256": "c7681b74ef43b2efcda95246a6c3092ba9100dfbb5b94008f95fe7bd29ae94e2",
+    "manifest_sha256": "c9a12912fdbc4fc46e6db71c4314f92bae4f47da3247dd043068b4064beb2e92",
+    "configuration": {
+      "temperature": 0.2,
+      "timeout_seconds": 60,
+      "max_steps": 2,
+      "max_new_tokens": 256,
+      "allowed_tools": [
+        "read_file"
+      ],
+      "approval": "never",
+      "read_only": true,
+      "model": "zai-org/GLM-5.3-Flash"
+    },
+    "unique_tasks": 3,
+    "runs": 6,
+    "passed": 6,
+    "verification": "Freshly checked answers, trace reads, tool allowlist, final status and fixture hashes; no model calls during audit.",
+    "scope": "Author-created reading-only smoke test, fresh workspace/session per run; no prompt edits or reruns after seeing results; no repair/generalization/model ranking claim.",
+    "rows": [
+      {
+        "task_id": "retry_policy",
+        "repeat": 1,
+        "passed": true,
+        "read_observed": true,
+        "allowed_tools_only": true,
+        "fixture_unchanged": true,
+        "elapsed_ms": 8750,
+        "attempts": 2,
+        "tool_steps": 1,
+        "trace_sha256": "d7f1a2fa4e9d56bbb9fd42aad9b3fcff7be061c6cbcd549b1ac21526e5c93ee5",
+        "run_id": "run_20261024-174448-2fed52",
+        "failure_category": "",
+        "observed_input_tokens": 1740,
+        "observed_output_tokens": 227
+      },
+      {
+        "task_id": "retry_policy",
+        "repeat": 2,
+        "passed": true,
+        "read_observed": true,
+        "allowed_tools_only": true,
+        "fixture_unchanged": true,
+        "elapsed_ms": 9125,
+        "attempts": 2,
+        "tool_steps": 1,
+        "trace_sha256": "877192097c1448808de34f564b42f240f9f93a5e710599b32f54ed5e11228946",
+        "run_id": "run_20261024-174457-5552ad",
+        "failure_category": "",
+        "observed_input_tokens": 1740,
+        "observed_output_tokens": 307
+      },
+      {
+        "task_id": "invoice_totals",
+        "repeat": 1,
+        "passed": true,
+        "read_observed": true,
+        "allowed_tools_only": true,
+        "fixture_unchanged": true,
+        "elapsed_ms": 7407,
+        "attempts": 2,
+        "tool_steps": 1,
+        "trace_sha256": "eeafedbf569a3a262927f9f2bab82a8e70ac6bb7ecc981748a988254cb3fa3ff",
+        "run_id": "run_20261024-174506-257742",
+        "failure_category": "",
+        "observed_input_tokens": 1762,
+        "observed_output_tokens": 176
+      },
+      {
+        "task_id": "invoice_totals",
+        "repeat": 2,
+        "passed": true,
+        "read_observed": true,
+        "allowed_tools_only": true,
+        "fixture_unchanged": true,
+        "elapsed_ms": 10875,
+        "attempts": 2,
+        "tool_steps": 1,
+        "trace_sha256": "779e8d021e6e7f37685ae8e5204e5700522303eb372410a3b0fd8ab7e54c2894",
+        "run_id": "run_20261024-174514-4ac5c2",
+        "failure_category": "",
+        "observed_input_tokens": 1762,
+        "observed_output_tokens": 176
+      },
+      {
+        "task_id": "route_precedence",
+        "repeat": 1,
+        "passed": true,
+        "read_observed": true,
+        "allowed_tools_only": true,
+        "fixture_unchanged": true,
+        "elapsed_ms": 9453,
+        "attempts": 2,
+        "tool_steps": 1,
+        "trace_sha256": "fe6e35ec37a65db7353295da12d565fe7dfa7568fb8b7255aa32721bf6640e02",
+        "run_id": "run_20261024-174524-8e63f4",
+        "failure_category": "",
+        "observed_input_tokens": 1831,
+        "observed_output_tokens": 308
+      },
+      {
+        "task_id": "route_precedence",
+        "repeat": 2,
+        "passed": true,
+        "read_observed": true,
+        "allowed_tools_only": true,
+        "fixture_unchanged": true,
+        "elapsed_ms": 7735,
+        "attempts": 2,
+        "tool_steps": 1,
+        "trace_sha256": "b1cfb7778fdae170c4d667fe64637e428b8367dd95e3a48fead3417336318f52",
+        "run_id": "run_20261024-174534-f70f9a",
+        "failure_category": "",
+        "observed_input_tokens": 1831,
+        "observed_output_tokens": 219
+      }
+    ]
+  },
+  "causal_limit": "Timeout cause unconfirmed; prompt, session and timeout changed together. Later success is not a controlled causal comparison."
+}

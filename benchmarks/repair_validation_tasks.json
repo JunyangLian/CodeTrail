@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "scope": "Two author-created code repair tasks, two fresh runs each; small engineering validation, not a public benchmark or generalization estimate.",
+  "tasks": [
+    {
+      "id": "pagination_boundaries",
+      "category": "boundary_conditions",
+      "editable_files": ["pagination.py"],
+      "expected_tests": 8,
+      "prompt": "先运行 python -B -m unittest discover -v 查看失败，再读取 pagination.py 和 test_pagination.py。只修复 pagination.py，不改测试或其他文件。规则：page从1开始；page_size是正整数；返回当前页items、总页数total_pages和是否还有下一页has_next；总页数向上取整，空列表总页数0；超出末页返回空items和has_next=False；bool不算合法整数。最后重新运行同一测试命令并汇报真实结果。",
+      "files": {
+        "pagination.py": "def paginate(items, page=1, page_size=3):\n    if type(page) is not int or page < 1:\n        raise ValueError('page must be a positive integer')\n    if type(page_size) is not int or page_size < 1:\n        raise ValueError('page_size must be a positive integer')\n    total = len(items)\n    start = page * page_size\n    return {\n        'items': items[start:start + page_size],\n        'total_pages': total // page_size,\n        'has_next': page * page_size <= total,\n    }\n",
+        "test_pagination.py": "import unittest\nfrom pagination import paginate\n\nclass PaginationTests(unittest.TestCase):\n    def test_first_page(self):\n        self.assertEqual(paginate([1,2,3,4,5]), {'items':[1,2,3], 'total_pages':2, 'has_next':True})\n    def test_second_page(self):\n        self.assertEqual(paginate(list(range(7)), 2, 3)['items'], [3,4,5])\n    def test_last_partial_page(self):\n        self.assertEqual(paginate(list(range(7)), 3, 3), {'items':[6], 'total_pages':3, 'has_next':False})\n    def test_exact_boundary_no_next(self):\n        self.assertEqual(paginate([1,2,3], 1, 3), {'items':[1,2,3], 'total_pages':1, 'has_next':False})\n    def test_page_beyond_end(self):\n        self.assertEqual(paginate([1,2,3,4], 4, 2), {'items':[], 'total_pages':2, 'has_next':False})\n    def test_empty(self):\n        self.assertEqual(paginate([]), {'items':[], 'total_pages':0, 'has_next':False})\n    def test_invalid_page(self):\n        for value in (0,-1,True,1.5):\n            with self.subTest(value=value), self.assertRaises(ValueError): paginate([1],value,2)\n    def test_invalid_size(self):\n        for value in (0,-1,True,1.5):\n            with self.subTest(value=value), self.assertRaises(ValueError): paginate([1],1,value)\n\nif __name__ == '__main__': unittest.main()\n"
+      },
+      "reference_edits": [
+        {"path":"pagination.py", "old":"start = page * page_size", "new":"start = (page - 1) * page_size"},
+        {"path":"pagination.py", "old":"total // page_size", "new":"(total + page_size - 1) // page_size"},
+        {"path":"pagination.py", "old":"page * page_size <= total", "new":"page * page_size < total"}
+      ]
+    },
+    {
+      "id": "user_lookup_contract",
+      "category": "cross_file_contract",
+      "editable_files": ["repository.py", "service.py"],
+      "expected_tests": 8,
+      "prompt": "先运行 python -B -m unittest discover -v，再读取 service.py、repository.py、id_normalization.py 和 test_user_lookup.py。只修改 service.py 和 repository.py，不改测试、id_normalization.py 或其他文件。修复跨文件调用契约：get_user(users,user_id)应使用既有normalize_user_id查找规范化键；display_name(users,user_id)调用仓储后返回用户name，找不到返回None；None ID仍由规范化函数抛ValueError；不修改输入字典。最后运行同一测试命令，汇报实际结果。",
+      "files": {
+        "id_normalization.py": "def normalize_user_id(value):\n    if value is None:\n        raise ValueError('user id cannot be None')\n    return str(value).strip().casefold()\n",
+        "repository.py": "from id_normalization import normalize_user_id\n\ndef get_user(users, user_id):\n    return users.get(user_id)\n",
+        "service.py": "from repository import get_user\n\ndef display_name(users, user_id):\n    user = get_user(user_id, users)\n    return user['name'] if user is not None else None\n",
+        "test_user_lookup.py": "import copy\nimport unittest\nfrom repository import get_user\nfrom service import display_name\n\nclass LookupTests(unittest.TestCase):\n    def setUp(self):\n        self.users = {'user-a':{'name':'Ada'}, 'user-b':{'name':'Lin'}}\n    def test_direct_repository_normalizes(self):\n        self.assertEqual(get_user(self.users, ' USER-A '), {'name':'Ada'})\n    def test_service_uses_correct_argument_order(self):\n        self.assertEqual(display_name(self.users, 'user-b'), 'Lin')\n    def test_service_normalizes(self):\n        self.assertEqual(display_name(self.users, ' User-A '), 'Ada')\n    def test_unknown_returns_none(self):\n        self.assertIsNone(display_name(self.users, 'missing'))\n    def test_empty_mapping(self):\n        self.assertIsNone(display_name({}, 'user-a'))\n    def test_none_id_is_rejected(self):\n        with self.assertRaises(ValueError): display_name(self.users, None)\n    def test_input_mapping_is_unchanged(self):\n        before = copy.deepcopy(self.users)\n        display_name(self.users, ' USER-A ')\n        self.assertEqual(self.users, before)\n    def test_empty_id_is_unknown(self):\n        self.assertIsNone(display_name(self.users, '   '))\n\nif __name__ == '__main__': unittest.main()\n"
+      },
+      "reference_edits": [
+        {"path":"repository.py", "old":"return users.get(user_id)", "new":"return users.get(normalize_user_id(user_id))"},
+        {"path":"service.py", "old":"get_user(user_id, users)", "new":"get_user(users, user_id)"}
+      ]
+    }
+  ]
+}

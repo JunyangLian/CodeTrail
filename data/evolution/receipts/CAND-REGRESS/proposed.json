@@ -1,9 +1,0 @@
-{
-  "at": "2026-10-18T04:37:21+00:00",
-  "candidate_id": "CAND-REGRESS",
-  "config_delta": {
-    "max_tokens": 4096
-  },
-  "simulation": "offline_simulation",
-  "transition": "proposed"
-}

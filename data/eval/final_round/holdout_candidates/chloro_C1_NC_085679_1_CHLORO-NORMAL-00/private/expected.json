@@ -1,1 +1,0 @@
-{"acceptable_decisions":[{"root_cause":"none","verdict":"pass"}],"contract_version":"chloro_qc_v1","defect_files":[],"defect_tokens":[],"notes":"A delivery without declared defects must be accepted; blocking it is a false positive.","oracle_check":null,"root_cause":"none","source_accession_version":"NC_085679.1","task_type":"normal","template_id":"CHLORO-NORMAL-00"}

@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>CodeTrail · 代码执行工作台</title>
+  <link rel="stylesheet" href="/style.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Crect width='48' height='48' rx='12' fill='%23edf3eb'/%3E%3Ctext x='9' y='35' font-family='Georgia' font-weight='bold' font-size='34' fill='%234b765e'%3EC%3C/text%3E%3Ccircle cx='37' cy='14' r='3' fill='%23d7985a'/%3E%3C/svg%3E">
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <aside class="sidebar">
+    <a class="brand" href="/" aria-label="CodeTrail 代码执行工作台"><span class="brand-mark">C<span>·</span></span><span>CodeTrail<small>代码执行工作台</small></span></a>
+    <button id="new-session" class="new-session"><span>＋</span> 新建会话 <kbd>N</kbd></button>
+    <div class="sidebar-heading"><span>最近会话</span><button id="refresh-sessions" class="icon-button" title="刷新会话" aria-label="刷新会话">↻</button></div>
+    <nav id="sessions" aria-label="历史会话"><div class="muted small sidebar-empty">正在读取会话…</div></nav>
+    <div class="sidebar-bottom"><span class="local-dot"></span><span>只在你的电脑上运行<small>127.0.0.1 · 本地服务</small></span></div>
+  </aside>
+  <main>
+    <header class="topbar"><div class="breadcrumb">工作空间 <span>/</span> <strong id="workspace-name">—</strong></div><div id="connection" class="connection"><span class="local-dot"></span>读取配置中</div></header>
+    <div class="page-heading"><div><div class="eyebrow">YOUR REPOSITORY, IN MOTION</div><h1>把任务，跑到结果。</h1><p>让 CodeTrail 读懂代码、执行工具，并把每一步留在这里。</p></div><button id="show-history" class="secondary-button"><span>◷</span> 运行记录</button></div>
+    <section class="workspace-grid">
+      <div class="conversation-column">
+        <div class="panel conversation-panel">
+          <div class="panel-heading"><div><span class="live-indicator"></span><strong id="conversation-title">新会话</strong></div><span id="session-badge" class="tag">准备就绪</span></div>
+          <div id="conversation" class="conversation" aria-live="polite">
+            <div id="welcome" class="welcome">
+              <div class="welcome-mark"><span>C</span><i></i></div>
+              <h2>从一个具体问题开始</h2><p>描述目标，查看过程，验证结果。<br>你的代码和会话记录都保存在本地。</p>
+              <div class="suggestions"><button data-suggestion="inspect" data-prompt="请列出当前工作区的主要文件，说明项目用途和测试入口，不修改文件。"><span>⌕</span><strong>读懂代码</strong><small>了解文件与实现</small><b>↗</b></button><button data-suggestion="repair" data-prompt="请先定位并运行项目测试，依据真实失败修复实现，再重新测试。不要修改或跳过测试。"><span>⌘</span><strong>检查与修复</strong><small>从失败测试开始</small><b>↗</b></button><button data-suggestion="verify" data-prompt="请找到并运行项目测试，汇报真实结果，不修改文件。"><span>✓</span><strong>验证结果</strong><small>运行现有测试</small><b>↗</b></button></div>
+            </div>
+          </div>
+          <div id="approval" class="approval hidden" aria-live="assertive"><div class="approval-heading"><span>◇</span><strong>这一步需要你确认</strong></div><p id="approval-name"></p><pre id="approval-args"></pre><div><button id="deny" class="secondary-button">拒绝这一步</button><button id="approve" class="primary-button">允许执行 ↗</button></div></div>
+          <div class="composer"><label for="prompt" class="sr-only">描述任务</label><textarea id="prompt" rows="3" placeholder="描述你想完成的任务，例如：检查测试失败并修复问题…"></textarea><div class="composer-toolbar"><div class="composer-options"><label><span>◇</span><select id="policy" aria-label="执行模式"><option value="ask">逐步确认</option><option value="auto">自动执行</option><option value="never">只读模式</option></select></label><label class="budget-label">最多 <input id="steps" type="number" min="1" max="20" value="8" aria-label="最多工具步数"> 步</label></div><button id="send" class="primary-button">开始任务 <span>↗</span></button></div><div class="composer-hint"><span>Ctrl / ⌘ + Enter 发送</span><span id="composer-state">写入和命令执行会先征求确认</span></div></div>
+        </div>
+        <div class="workspace-note"><span>▣</span><span id="workspace-path">读取工作目录…</span></div>
+      </div>
+      <aside class="inspector panel">
+        <div class="panel-heading"><strong>执行现场</strong><span id="task-status" class="status-pill">待开始</span></div>
+        <div class="metrics"><div><span id="tool-count">0</span><small>工具调用</small></div><div><span id="elapsed">—</span><small>运行时间</small></div><div><span id="token-count">—</span><small>累计 tokens</small></div></div>
+        <div id="run-outcome" class="run-outcome" aria-live="polite"><strong id="outcome-title">等待任务开始</strong><p id="outcome-detail">模型回答结束与验证命令通过会分别展示。</p><code id="verification-command"></code><p id="outcome-action"></p></div>
+        <div class="inspector-tabs" role="tablist" aria-label="执行详情"><button class="active" role="tab" aria-selected="true" data-tab="timeline">过程</button><button role="tab" aria-selected="false" data-tab="diffs">代码差异 <span id="diff-count">0</span></button><button role="tab" aria-selected="false" data-tab="tests">验证结果</button></div>
+        <section id="timeline" class="detail-view"><div class="detail-empty"><span>⌁</span><strong>每一步，都看得见</strong><p>开始任务后，模型请求、工具调用<br>和执行结果会出现在这里。</p></div></section>
+        <section id="diffs" class="detail-view hidden"><div class="detail-empty"><span>±</span><strong>等待代码变化</strong><p>任务结束后展示本次文本差异。<br>只读任务可能没有变化。</p></div></section>
+        <section id="tests" class="detail-view hidden"><div class="detail-empty"><span>✓</span><strong>用执行结果说话</strong><p>运行命令的输出与返回状态<br>会保留在这里供你核对。</p></div></section>
+        <div class="inspector-footer"><span class="local-dot"></span><span id="model-name">读取模型…</span></div>
+      </aside>
+    </section>
+  </main>
+  <dialog id="history-dialog"><div class="dialog-heading"><div><div class="eyebrow">RUN HISTORY</div><h2>运行记录</h2></div><button id="close-history" class="icon-button" aria-label="关闭运行记录">×</button></div><p class="muted">保存在当前工作区的真实运行记录，点击查看过程。</p><div id="run-history"></div></dialog>
+  <div id="toast" class="toast hidden" role="alert"></div>
+</body>
+</html>

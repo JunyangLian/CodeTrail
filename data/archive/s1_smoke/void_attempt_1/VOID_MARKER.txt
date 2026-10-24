@@ -1,1 +1,0 @@
-﻿VOID: attempt 1 ran the ScriptedPlanner by mistake (planner not passed to QCGraph). Zero tokens/requests consumed. NOT valid S1 data. Fixed in scripts/run_s1_smoke.py; real attempt re-ran into data/eval/s1_smoke.

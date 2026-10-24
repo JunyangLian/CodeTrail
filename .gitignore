@@ -1,21 +1,30 @@
-# Python
+# Local credentials and configuration
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Python and development state
 __pycache__/
 *.py[cod]
 .venv/
+venv/
 *.egg-info/
-dist/
-build/
 .pytest_cache/
 .ruff_cache/
+.coverage
+htmlcov/
+build/
+dist/
 
-# secrets - never commit
-.env
-*.key
-credentials*.json
-
-# runtime state (per-run data lives outside git)
-data/
-runs/
-*.sqlite
-*.sqlite3
-*.db
+# Private sessions, generated workspaces and raw model traces
+.pico/
+artifacts/
+tmp/
+.worktrees/
+release/
+readme_intro_locked/
+*.tmp
+*.temp
+.DS_Store

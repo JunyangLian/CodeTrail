@@ -1,62 +1,106 @@
-# GenomeQC Agent（AssemblyGenomics-Copilot V3）
+# CodeTrail · 代码执行工作台
 
-面向细胞器基因组的交互式质量检查智能体：用户提供 GenBank 或标准化公开证据包及检查需求，
-Agent 基于当前证据动态选择**只读工具**，执行生信质控、定位异常、核验证据，并生成可复核的 QC 决策报告。
+面向本地代码仓库的 Agent Harness 与网页工作台。把读取代码、执行工具、审批修改、运行测试和查看结果放在同一条可追踪的执行流程中。
 
-> 规则负责事实，LLM 负责规划与解释，人对高风险处置保有审批权。
-> 总控文件：[V3_MASTER_PLAN.md](V3_MASTER_PLAN.md)（唯一总控入口）。
+![CodeTrail 工作台](assets/screenshots/codetrail-qa-desktop-20261024.png)
 
-## 当前状态
+## 能力
 
-**V3.2 Release Candidate（RC-FINAL，commit `df02a07`）** — G0–G6 总控里程碑 + V3.1 进化闭环 + V3.2 能力增强全部完成。
+- **Agent 循环**：模型请求、工具调用、结果回传与最终回答。
+- **上下文管理**：分层组织历史、记忆与当前任务，按预算裁剪。
+- **轻量记忆检索**：tag、关键词与中文双字片段召回；文件摘要使用内容哈希检查新鲜度。
+- **操作治理**：参数和路径校验、写操作与命令审批、只读模式、重复调用拦截及日志脱敏。
+- **过程可视化**：工具事件、文本差异、命令退出码、历史运行与会话继续。
+- **结果判定**：区分模型回答结束、验证通过、验证失败和需要重测。
 
-- **G0–G6**：V2 资产审计与只读快照、Pydantic 合同 + V2Port 适配、LangGraph runtime（中断/恢复等价性）、FastAPI 七端点 + Streamlit 五页面、双模型受控验证（chloro 40 全量判定一致率 40/40）、冻结评分器对接、v2.1.1 基线升级
-- **V3.1 进化闭环**：失败情报池 → 策略提议 → 审批硬门（模拟审批阻断实测）→ E2 回归池；S1/S2 真实 A/B（16 + 120 观测，含 503 冻结协议修复与断点恢复实测）
-- **V3.2**：ContextBuilder（protected 块 + 逐调用溯源 receipt）、Failure Attribution 2.0（规则只播种、升级必经单因素干预）、Harness 稳健性注入（10 域）、144 观测重复 A/B（4 进程×5 线程）
+网页使用 Python 标准库 HTTP 服务与原生 HTML/CSS/JavaScript，无前端构建依赖。服务只绑定本机。
 
-测试：`206 passed`（Mock 全绿，CI 无网络；真实模型调用仅在授权下发生）。
+## 快速开始
 
-## 最终发布证据（400 次真实付费观测）
-
-| 实验 | 规模 | 关键结果 |
-|---|---|---|
-| S1 / S2（V3.1） | 16 + 120 观测 | 幻觉指针黄金对照；503 冻结协议修复双口径归档 |
-| V3.2 DEV A/B | 144 观测（3 重复） | 无效指针 A=4/72 vs B=0/72；质量层 72/72 双臂满分 |
-| 归因消融 | 24 观测 | C（仅证据块）0/12 vs D（token 等量填充）1/12 |
-| **独立 Holdout** | **96 观测** | **8 个全新属 × 24 任务，双臂 48/48 满分、0 无效指针、0 critical false pass** |
-
-- 有效性审计：[V3_2_AB_VALIDITY_AUDIT.md](docs/V3_2_AB_VALIDITY_AUDIT.md)（16 字段配置逐项对照 + 删证据负例排除 + 统计重分析）
-- 归因终验：[V3_2_FAILURE_ATTRIBUTION_FINAL.md](docs/V3_2_FAILURE_ATTRIBUTION_FINAL.md)（8 类失败完整证据链：4 confirmed / 3 experimentally_supported / 1 无实战实例）
-- 独立 Holdout：[V3_2_INDEPENDENT_HOLDOUT_REPORT.md](docs/V3_2_INDEPENDENT_HOLDOUT_REPORT.md)（NCBI 检索 → 隔离校验 → 先冻结后运行）
-- 发布决策：[V3_2_FINAL_RELEASE_REPORT.md](V3_2_FINAL_RELEASE_REPORT.md) + [Manifest](V3_2_FINAL_RELEASE_MANIFEST.json)（38 文件 SHA256）
-
-统计诚实声明：无效指针 4→0 为方向性/计数证据；Token 成本 +12.7~13.5% 为点估计（任务级配对 CI 含 0）；所有候选未经人工发布审批，active strategy 保持 promptv1。
-
-## 运行
+需要 Python 3.10 或更高版本。在项目根目录执行：
 
 ```powershell
-# 环境（Python 3.11，uv 锁定）
-uv sync --all-extras
-
-# 离线测试（Mock 全绿，无任何网络/模型调用）
-.venv\Scripts\python.exe -m pytest
-
-# 离线 smoke：公开输入 → 工具事实 → 结构化 QC finding
-.venv\Scripts\python.exe scripts\smoke_offline.py --packet examples\public_packets\chloro_C1_NC_013991_2_CHLORO-CDS-03
-
-# G3 API + UI
-.venv\Scripts\python.exe -m uvicorn genomeqc_agent.api.main:create_app --factory --host 127.0.0.1 --port 8000
-.venv\Scripts\python.exe -m streamlit run ui\streamlit_app.py
-
-# G5/G4 评测（脚本化 planner / 授权后真实模型）
-.venv\Scripts\python.exe scripts\eval_offline.py --candidates ..\AssemblyGenomics-Copilot_V2\data\organelle_v2\candidates --limit 8 --match chloro [--planner llm]
-
-# 最终回归（10 项稳定性 + 全套件）
-.venv\Scripts\python.exe -m pytest tests\unit\test_final_stability.py -q
+python -m venv .venv
+.venv\Scripts\Activate.ps1
+python -m pip install -e .
+Copy-Item .env.example .env
 ```
 
-## 边界
+在本地 `.env` 中填入模型服务的 API Key。默认示例使用硅基流动的 Chat Completions 接口；Key 不需要填写到网页中，也不应提交到仓库。
 
-- 默认离线 Mock；调用真实 GLM/DeepSeek 需另行授权（见总控 §6/§12）。
-- V2 仓库（`../AssemblyGenomics-Copilot_V2`）保持只读冻结；V3 通过哈希锚定的快照复用其公开纯函数。
-- 运行时禁止接触任何私有金标（expected/rubric/oracle）。
+```dotenv
+PICO_PROVIDER=openai
+PICO_OPENAI_API_BASE=https://api.siliconflow.cn/v1
+PICO_OPENAI_API_FORMAT=chat_completions
+PICO_OPENAI_MODEL=zai-org/GLM-5.3-Flash
+PICO_OPENAI_API_KEY=填写自己的Key
+```
+
+启动工作台：
+
+```powershell
+python -X utf8 -m pico.web --cwd examples/interview-demo --model-timeout 120 --open
+```
+
+Windows 也可以双击 `start-web.cmd`。默认网址为 **http://127.0.0.1:8765/**。修改 `.env` 后需要重启服务。
+
+选择“逐步确认”，输入任务；写入文件或执行命令前会显示审批卡片。运行结束后，结合代码差异、测试输出和退出码检查结果。具体用法见[网页指南](docs/local-web-workbench.md)。
+
+### 终端入口
+
+```powershell
+codetrail --cwd examples/interview-demo --approval ask
+codetrail-web --cwd examples/interview-demo --model-timeout 120
+```
+
+未安装命令入口时，可使用 `python -m pico` 和 `python -m pico.web`。底层 Python 包名、`PICO_*` 环境变量与 `.pico/` 数据目录保留兼容性。
+
+## 修复示例
+
+| 示例 | 内容 | 验收 |
+| --- | --- | --- |
+| `examples/interview-demo` | 商品数量、折扣、运费与输入校验 | 订单 12 项，加法 3 项 |
+| `examples/repair-demo-pagination_boundaries` | 分页起点、末页、向上取整与非法输入 | 8 项 |
+| `examples/repair-demo-user_lookup_contract` | 跨文件参数顺序、ID 规范化与查询契约 | 8 项 |
+
+订单示例保留已完成的修复结果。重复演示前运行：
+
+```powershell
+python examples/interview-demo/demo.py reset
+```
+
+它会备份当前实现，再恢复故意设置的缺陷。其他两个示例保留故障起点；任务要求见各自 README。
+
+## 验证与证据
+
+固定回归、受控消融和真实模型任务分开报告，不把单元测试数量当作独立任务数量。
+
+- 订单演示：真实模型修复后 15/15 测试通过，独立重测通过，测试文件未修改。
+- 两类新增修复任务，各运行两次：原始四次中功能验收 3/4、完整流程 2/4；参数反馈改进后的 1 次定向回归单独记录。
+- 实际 Tabbit 浏览器完成 17 项检查，覆盖审批、刷新恢复、历史、错误状态及桌面／窄屏布局。交互使用隔离的脚本模型后端；真实模型修复另行验证。
+
+这些是小规模工程验证，不代表复杂仓库的普遍修复成功率。
+
+- [评测口径](docs/evaluation-scope.md)
+- [真实修复与回归记录](docs/repair-validation.md)
+- [失败分析](docs/failure-analysis.md)
+- [网页验收](docs/workbench-browser-acceptance.md)
+- [运行架构](docs/architecture/agent-harness-v1-overview.md)
+
+本地执行相关自动化测试：
+
+```powershell
+python -m pip install pytest
+$env:PYTEST_DISABLE_PLUGIN_AUTOLOAD='1'
+python -m pytest tests/test_web.py tests/test_web_status.py tests/test_tool_executor.py tests/test_memory.py tests/test_verifier.py -q -p no:cacheprovider
+```
+
+真实模型实验脚本会调用自己的模型接口；固定单元与集成回归使用预设响应。原始私人会话、Key、缓存和生成工作区不随源码发布。
+
+## 使用范围
+
+这是本地单用户工具。命令审批与路径限制不等同于操作系统级沙箱，应在可信的示例或工作区中使用。记忆检索采用透明的词法规则，没有 Embedding、通用语义冲突消解或完整的记忆提示词注入防护。
+
+## 来源与改进
+
+CodeTrail 基于 [Pico](https://gitee.com/htxoffical/pico) 二次开发，保留其 Agent Harness 核心。新增和完善的内容包括本地网页工作台、硅基流动 Chat Completions 适配、中文词法召回、Windows 执行兼容、执行结果判定、可重复修复案例和运行证据整理。详见 [来源说明](UPSTREAM_NOTICE.md)。

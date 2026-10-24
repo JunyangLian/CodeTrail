@@ -1,0 +1,23 @@
+{
+  "kind": "scripted_HTTP_acceptance_not_browser_QA",
+  "captured_at": "2026-10-24T10:16:25.508098+00:00",
+  "passed": 10,
+  "cases": [
+    "页面与静态资源",
+    "页面重连所需的活动任务和待审批状态可重新获取（API层）",
+    "并发任务拒绝",
+    "允许审批后写入和差异",
+    "历史运行及重新加载持久化状态",
+    "继续同一会话",
+    "拒绝审批不落盘",
+    "只读模式拦截写入",
+    "超时原因实时与历史一致",
+    "步数耗尽与执行槽释放"
+  ],
+  "browser_click_qa": "Separate acceptance; see workbench-browser-acceptance-2026-10-24.json",
+  "source_sha256": {
+    "pico/web.py": "d71f3a6d79c43c52af3a22bd3277b7bb21cd4aeda5baa7a48965e34099d154a1",
+    "pico/web_assets/app.js": "582dcdd22fe2f74b39a18a4e377b631edb2803114687cd67bff9bf89d7fc7ff0",
+    "pico/web_assets/index.html": "85671afea8aaba89892ef04c533d0234970d935132ef2d26d781909ab4df30f6"
+  }
+}

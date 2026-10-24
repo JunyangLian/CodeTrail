@@ -1,0 +1,554 @@
+{
+  "schema_version": 1,
+  "audited_at": "2026-10-24T10:18:30.503586+00:00",
+  "manifest_sha256": "a1a63c654f0a7f6c607399bb230827136cfc4838ed92acbb450939837dbcc358",
+  "task_manifest": {
+    "schema_version": 1,
+    "scope": "Two author-created code repair tasks, two fresh runs each; small engineering validation, not a public benchmark or generalization estimate.",
+    "tasks": [
+      {
+        "id": "pagination_boundaries",
+        "category": "boundary_conditions",
+        "editable_files": [
+          "pagination.py"
+        ],
+        "expected_tests": 8,
+        "prompt": "先运行 python -B -m unittest discover -v 查看失败，再读取 pagination.py 和 test_pagination.py。只修复 pagination.py，不改测试或其他文件。规则：page从1开始；page_size是正整数；返回当前页items、总页数total_pages和是否还有下一页has_next；总页数向上取整，空列表总页数0；超出末页返回空items和has_next=False；bool不算合法整数。最后重新运行同一测试命令并汇报真实结果。",
+        "files": {
+          "pagination.py": "def paginate(items, page=1, page_size=3):\n    if type(page) is not int or page < 1:\n        raise ValueError('page must be a positive integer')\n    if type(page_size) is not int or page_size < 1:\n        raise ValueError('page_size must be a positive integer')\n    total = len(items)\n    start = page * page_size\n    return {\n        'items': items[start:start + page_size],\n        'total_pages': total // page_size,\n        'has_next': page * page_size <= total,\n    }\n",
+          "test_pagination.py": "import unittest\nfrom pagination import paginate\n\nclass PaginationTests(unittest.TestCase):\n    def test_first_page(self):\n        self.assertEqual(paginate([1,2,3,4,5]), {'items':[1,2,3], 'total_pages':2, 'has_next':True})\n    def test_second_page(self):\n        self.assertEqual(paginate(list(range(7)), 2, 3)['items'], [3,4,5])\n    def test_last_partial_page(self):\n        self.assertEqual(paginate(list(range(7)), 3, 3), {'items':[6], 'total_pages':3, 'has_next':False})\n    def test_exact_boundary_no_next(self):\n        self.assertEqual(paginate([1,2,3], 1, 3), {'items':[1,2,3], 'total_pages':1, 'has_next':False})\n    def test_page_beyond_end(self):\n        self.assertEqual(paginate([1,2,3,4], 4, 2), {'items':[], 'total_pages':2, 'has_next':False})\n    def test_empty(self):\n        self.assertEqual(paginate([]), {'items':[], 'total_pages':0, 'has_next':False})\n    def test_invalid_page(self):\n        for value in (0,-1,True,1.5):\n            with self.subTest(value=value), self.assertRaises(ValueError): paginate([1],value,2)\n    def test_invalid_size(self):\n        for value in (0,-1,True,1.5):\n            with self.subTest(value=value), self.assertRaises(ValueError): paginate([1],1,value)\n\nif __name__ == '__main__': unittest.main()\n"
+        },
+        "reference_edits": [
+          {
+            "path": "pagination.py",
+            "old": "start = page * page_size",
+            "new": "start = (page - 1) * page_size"
+          },
+          {
+            "path": "pagination.py",
+            "old": "total // page_size",
+            "new": "(total + page_size - 1) // page_size"
+          },
+          {
+            "path": "pagination.py",
+            "old": "page * page_size <= total",
+            "new": "page * page_size < total"
+          }
+        ]
+      },
+      {
+        "id": "user_lookup_contract",
+        "category": "cross_file_contract",
+        "editable_files": [
+          "repository.py",
+          "service.py"
+        ],
+        "expected_tests": 8,
+        "prompt": "先运行 python -B -m unittest discover -v，再读取 service.py、repository.py、id_normalization.py 和 test_user_lookup.py。只修改 service.py 和 repository.py，不改测试、id_normalization.py 或其他文件。修复跨文件调用契约：get_user(users,user_id)应使用既有normalize_user_id查找规范化键；display_name(users,user_id)调用仓储后返回用户name，找不到返回None；None ID仍由规范化函数抛ValueError；不修改输入字典。最后运行同一测试命令，汇报实际结果。",
+        "files": {
+          "id_normalization.py": "def normalize_user_id(value):\n    if value is None:\n        raise ValueError('user id cannot be None')\n    return str(value).strip().casefold()\n",
+          "repository.py": "from id_normalization import normalize_user_id\n\ndef get_user(users, user_id):\n    return users.get(user_id)\n",
+          "service.py": "from repository import get_user\n\ndef display_name(users, user_id):\n    user = get_user(user_id, users)\n    return user['name'] if user is not None else None\n",
+          "test_user_lookup.py": "import copy\nimport unittest\nfrom repository import get_user\nfrom service import display_name\n\nclass LookupTests(unittest.TestCase):\n    def setUp(self):\n        self.users = {'user-a':{'name':'Ada'}, 'user-b':{'name':'Lin'}}\n    def test_direct_repository_normalizes(self):\n        self.assertEqual(get_user(self.users, ' USER-A '), {'name':'Ada'})\n    def test_service_uses_correct_argument_order(self):\n        self.assertEqual(display_name(self.users, 'user-b'), 'Lin')\n    def test_service_normalizes(self):\n        self.assertEqual(display_name(self.users, ' User-A '), 'Ada')\n    def test_unknown_returns_none(self):\n        self.assertIsNone(display_name(self.users, 'missing'))\n    def test_empty_mapping(self):\n        self.assertIsNone(display_name({}, 'user-a'))\n    def test_none_id_is_rejected(self):\n        with self.assertRaises(ValueError): display_name(self.users, None)\n    def test_input_mapping_is_unchanged(self):\n        before = copy.deepcopy(self.users)\n        display_name(self.users, ' USER-A ')\n        self.assertEqual(self.users, before)\n    def test_empty_id_is_unknown(self):\n        self.assertIsNone(display_name(self.users, '   '))\n\nif __name__ == '__main__': unittest.main()\n"
+        },
+        "reference_edits": [
+          {
+            "path": "repository.py",
+            "old": "return users.get(user_id)",
+            "new": "return users.get(normalize_user_id(user_id))"
+          },
+          {
+            "path": "service.py",
+            "old": "get_user(user_id, users)",
+            "new": "get_user(users, user_id)"
+          }
+        ]
+      }
+    ]
+  },
+  "baseline": {
+    "source": "artifacts/repair-validation-2026-10-24/results.json",
+    "source_sha256": "b88e54851572bdd120e780de8917cfa99fecc746622f3c8a4c38b15f3217b6f2",
+    "configuration": {
+      "model": "zai-org/GLM-5.3-Flash",
+      "temperature": 0.2,
+      "timeout_seconds": 120,
+      "max_steps": 10,
+      "max_new_tokens": 2048,
+      "verify_command": "python -B -m unittest discover -v",
+      "notes": "Fresh workspace and session; immutable tests; only listed implementation files can be edited; shell approval only for exact verifier; no prompt edits, success-only filtering, or additional reruns."
+    },
+    "runtime_sha256": null,
+    "scope": "Two author-created code repair tasks, two fresh runs each; small engineering validation, not a public benchmark or generalization estimate.",
+    "unique_tasks": 2,
+    "runs": 4,
+    "workflow_passed": 2,
+    "functional_verifier_passed": 3,
+    "failure_categories": {
+      "no_code_change": 1,
+      "missing_agent_reverification": 1
+    },
+    "rows": [
+      {
+        "task_id": "pagination_boundaries",
+        "repeat": 1,
+        "run_id": "run_20261024-180055-b55c65",
+        "workflow_passed": true,
+        "functional_verifier_passed": true,
+        "classification": "",
+        "raw_failure_category": "",
+        "initial_verifier": {
+          "exit_code": 1,
+          "test_count": 8,
+          "output": "test_empty (test_pagination.PaginationTests) ... ok\r\ntest_exact_boundary_no_next (test_pagination.PaginationTests) ... FAIL\r\ntest_first_page (test_pagination.PaginationTests) ... FAIL\r\ntest_invalid_page (test_pagination.PaginationTests) ... ok\r\ntest_invalid_size (test_pagination.PaginationTests) ... ok\r\ntest_last_partial_page (test_pagination.PaginationTests) ... FAIL\r\ntest_page_beyond_end (test_pagination.PaginationTests) ... ok\r\ntest_second_page (test_pagination.PaginationTests) ... FAIL\r\n\r\n======================================================================\r\nFAIL: test_exact_boundary_no_next (test_pagination.PaginationTests)\r\n----------------------------------------------------------------------\r\nTraceback (most recent call last):\r\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\pico-main\\artifacts\\repair-validation-2026-10-24\\pagination_boundaries-1\\test_pagination.py\", line 12, in test_exact_boundary_no_next\r\n    self.assertEqual(paginate([1,2,3], 1, 3), {'items':[1,2,3], 'total_pages':1, 'has_next':False})\r\nAssertionError: {'items': [], 'total_pages': 1, 'has_next': True} != {'items': [1, 2, 3], 'total_pages': 1, 'has_next': False}\r\n- {'has_next': True, 'items': [], 'total_pages': 1}\r\n?              ^^^\r\n\r\n+ {'has_next': False, 'items': [1, 2, 3], 'total_pages': 1}\r\n?              ^^^^             +++++++\r\n\r\n\r\n======================================================================\r\nFAIL: test_first_page (test_pagination.PaginationTests)\r\n----------------------------------------------------------------------\r\nTraceback (most recent call last):\r\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\pico-main\\artifacts\\repair-validation-2026-10-24\\pagination_boundaries-1\\test_pagination.py\", line 6, in test_first_page\r\n    self.assertEqual(paginate([1,2,3,4,5]), {'items':[1,2,3], 'total_pages':2, 'has_next':True})\r\nAssertionError: {'items': [4, 5], 'total_pages': 1, 'has_next': True} != {'items': [1, 2, 3], 'total_pages': 2, 'has_next': True}\r\n- {'has_next': True, 'items': [4, 5], 'total_pages': 1}\r\n?                              ^  ^                  ^\r\n\r\n+ {'has_next': True, 'items': [1, 2, 3], 'total_pages': 2}\r\n?                              ^  ^^^^                  ^\r\n\r\n\r\n======================================================================\r\nFAIL: test_last_partial_page (test_pagination.PaginationTests)\r\n----------------------------------------------------------------------\r\nTraceback (most recent call last):\r\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\pico-main\\artifacts\\repair-validation-2026-10-24\\pagination_boundaries-1\\test_pagination.py\", line 10, in test_last_partial_page\r\n    self.assertEqual(paginate(list(range(7)), 3, 3), {'items':[6], 'total_pages':3, 'has_next':False})\r\nAssertionError: {'items': [], 'total_pages': 2, 'has_next': False} != {'items': [6], 'total_pages': 3, 'has_next': False}\r\n- {'has_next': False, 'items': [], 'total_pages': 2}\r\n?                                                 ^\r\n\r\n+ {'has_next': False, 'items': [6], 'total_pages': 3}\r\n?                               +                  ^\r\n\r\n\r\n======================================================================\r\nFAIL: test_second_page (test_pagination.PaginationTests)\r\n----------------------------------------------------------------------\r\nTraceback (most recent call last):\r\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\pico-main\\artifacts\\repair-validation-2026-10-24\\pagination_boundaries-1\\test_pagination.py\", line 8, in test_second_page\r\n    self.assertEqual(paginate(list(range(7)), 2, 3)['items'], [3,4,5])\r\nAssertionError: Lists differ: [6] != [3, 4, 5]\r\n\r\nFirst differing element 0:\r\n6\r\n3\r\n\r\nSecond list contains 2 additional elements.\r\nFirst extra element 1:\r\n4\r\n\r\n- [6]\r\n+ [3, 4, 5]\r\n\r\n----------------------------------------------------------------------\r\nRan 8 tests in 0.003s\r\n\r\nFAILED (failures=4)\r\n",
+          "elapsed_ms": 218
+        },
+        "independent_final_recheck": {
+          "exit_code": 0,
+          "test_count": 8,
+          "output": "test_empty (test_pagination.PaginationTests) ... ok\r\ntest_exact_boundary_no_next (test_pagination.PaginationTests) ... ok\r\ntest_first_page (test_pagination.PaginationTests) ... ok\r\ntest_invalid_page (test_pagination.PaginationTests) ... ok\r\ntest_invalid_size (test_pagination.PaginationTests) ... ok\r\ntest_last_partial_page (test_pagination.PaginationTests) ... ok\r\ntest_page_beyond_end (test_pagination.PaginationTests) ... ok\r\ntest_second_page (test_pagination.PaginationTests) ... ok\r\n\r\n----------------------------------------------------------------------\r\nRan 8 tests in 0.001s\r\n\r\nOK\r\n",
+          "elapsed_ms": 234
+        },
+        "agent_verifier_exit_codes": [
+          1,
+          0
+        ],
+        "protected_files_unchanged": true,
+        "changed_files": [
+          "pagination.py"
+        ],
+        "attempts": 9,
+        "tool_steps": 8,
+        "elapsed_ms": 149047,
+        "observed_input_tokens": 19306,
+        "observed_output_tokens": 7788,
+        "tool_issues": [
+          {
+            "trace_line": 5,
+            "name": "run_shell",
+            "code": "tool_failed",
+            "exit_code": 1,
+            "argument_fields": [
+              "command",
+              "timeout"
+            ]
+          },
+          {
+            "trace_line": 25,
+            "name": "patch_file",
+            "code": "invalid_arguments",
+            "exit_code": null,
+            "argument_fields": [
+              "old_text",
+              "path"
+            ]
+          },
+          {
+            "trace_line": 30,
+            "name": "patch_file",
+            "code": "invalid_arguments",
+            "exit_code": null,
+            "argument_fields": [
+              "old_text",
+              "path"
+            ]
+          }
+        ],
+        "trace": "artifacts/repair-validation-2026-10-24/pagination_boundaries-1/.pico/runs/run_20261024-180055-b55c65/trace.jsonl",
+        "trace_sha256": "9820fd11738525a3e18d7d57f989967aa2d36ed9000b560b1f493dc26e44059a",
+        "initial_sha256": {
+          "pagination.py": "5daa22c5d854045a370d18b98e4d76364450482e84ca334d97c8af77f712165f",
+          "test_pagination.py": "e827b6cd3661aa162d6b1cfeea8aee41769a41b65e1d7442d280ea1b69d711bd"
+        },
+        "final_sha256": {
+          "pagination.py": "94a3443b5d742da7d590cc53fc1c0d667bb438072ad7fd188de01f0c5bdbe345",
+          "test_pagination.py": "e827b6cd3661aa162d6b1cfeea8aee41769a41b65e1d7442d280ea1b69d711bd"
+        },
+        "diffs": [
+          {
+            "path": "pagination.py",
+            "diff": "--- a/pagination.py\n+++ b/pagination.py\n@@ -4,9 +4,9 @@\n     if type(page_size) is not int or page_size < 1:\n         raise ValueError('page_size must be a positive integer')\n     total = len(items)\n-    start = page * page_size\n+    start = (page - 1) * page_size\n     return {\n         'items': items[start:start + page_size],\n-        'total_pages': total // page_size,\n-        'has_next': page * page_size <= total,\n+        'total_pages': (total + page_size - 1) // page_size,\n+        'has_next': page * page_size < total,\n     }",
+            "truncated": false
+          }
+        ]
+      },
+      {
+        "task_id": "pagination_boundaries",
+        "repeat": 2,
+        "run_id": "run_20261024-180324-19120c",
+        "workflow_passed": false,
+        "functional_verifier_passed": false,
+        "classification": "no_code_change",
+        "raw_failure_category": "protected_file_or_scope",
+        "initial_verifier": {
+          "exit_code": 1,
+          "test_count": 8,
+          "output": "test_empty (test_pagination.PaginationTests) ... ok\r\ntest_exact_boundary_no_next (test_pagination.PaginationTests) ... FAIL\r\ntest_first_page (test_pagination.PaginationTests) ... FAIL\r\ntest_invalid_page (test_pagination.PaginationTests) ... ok\r\ntest_invalid_size (test_pagination.PaginationTests) ... ok\r\ntest_last_partial_page (test_pagination.PaginationTests) ... FAIL\r\ntest_page_beyond_end (test_pagination.PaginationTests) ... ok\r\ntest_second_page (test_pagination.PaginationTests) ... FAIL\r\n\r\n======================================================================\r\nFAIL: test_exact_boundary_no_next (test_pagination.PaginationTests)\r\n----------------------------------------------------------------------\r\nTraceback (most recent call last):\r\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\pico-main\\artifacts\\repair-validation-2026-10-24\\pagination_boundaries-2\\test_pagination.py\", line 12, in test_exact_boundary_no_next\r\n    self.assertEqual(paginate([1,2,3], 1, 3), {'items':[1,2,3], 'total_pages':1, 'has_next':False})\r\nAssertionError: {'items': [], 'total_pages': 1, 'has_next': True} != {'items': [1, 2, 3], 'total_pages': 1, 'has_next': False}\r\n- {'has_next': True, 'items': [], 'total_pages': 1}\r\n?              ^^^\r\n\r\n+ {'has_next': False, 'items': [1, 2, 3], 'total_pages': 1}\r\n?              ^^^^             +++++++\r\n\r\n\r\n======================================================================\r\nFAIL: test_first_page (test_pagination.PaginationTests)\r\n----------------------------------------------------------------------\r\nTraceback (most recent call last):\r\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\pico-main\\artifacts\\repair-validation-2026-10-24\\pagination_boundaries-2\\test_pagination.py\", line 6, in test_first_page\r\n    self.assertEqual(paginate([1,2,3,4,5]), {'items':[1,2,3], 'total_pages':2, 'has_next':True})\r\nAssertionError: {'items': [4, 5], 'total_pages': 1, 'has_next': True} != {'items': [1, 2, 3], 'total_pages': 2, 'has_next': True}\r\n- {'has_next': True, 'items': [4, 5], 'total_pages': 1}\r\n?                              ^  ^                  ^\r\n\r\n+ {'has_next': True, 'items': [1, 2, 3], 'total_pages': 2}\r\n?                              ^  ^^^^                  ^\r\n\r\n\r\n======================================================================\r\nFAIL: test_last_partial_page (test_pagination.PaginationTests)\r\n----------------------------------------------------------------------\r\nTraceback (most recent call last):\r\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\pico-main\\artifacts\\repair-validation-2026-10-24\\pagination_boundaries-2\\test_pagination.py\", line 10, in test_last_partial_page\r\n    self.assertEqual(paginate(list(range(7)), 3, 3), {'items':[6], 'total_pages':3, 'has_next':False})\r\nAssertionError: {'items': [], 'total_pages': 2, 'has_next': False} != {'items': [6], 'total_pages': 3, 'has_next': False}\r\n- {'has_next': False, 'items': [], 'total_pages': 2}\r\n?                                                 ^\r\n\r\n+ {'has_next': False, 'items': [6], 'total_pages': 3}\r\n?                               +                  ^\r\n\r\n\r\n======================================================================\r\nFAIL: test_second_page (test_pagination.PaginationTests)\r\n----------------------------------------------------------------------\r\nTraceback (most recent call last):\r\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\pico-main\\artifacts\\repair-validation-2026-10-24\\pagination_boundaries-2\\test_pagination.py\", line 8, in test_second_page\r\n    self.assertEqual(paginate(list(range(7)), 2, 3)['items'], [3,4,5])\r\nAssertionError: Lists differ: [6] != [3, 4, 5]\r\n\r\nFirst differing element 0:\r\n6\r\n3\r\n\r\nSecond list contains 2 additional elements.\r\nFirst extra element 1:\r\n4\r\n\r\n- [6]\r\n+ [3, 4, 5]\r\n\r\n----------------------------------------------------------------------\r\nRan 8 tests in 0.005s\r\n\r\nFAILED (failures=4)\r\n",
+          "elapsed_ms": 297
+        },
+        "independent_final_recheck": {
+          "exit_code": 1,
+          "test_count": 8,
+          "output": "test_empty (test_pagination.PaginationTests) ... ok\r\ntest_exact_boundary_no_next (test_pagination.PaginationTests) ... FAIL\r\ntest_first_page (test_pagination.PaginationTests) ... FAIL\r\ntest_invalid_page (test_pagination.PaginationTests) ... ok\r\ntest_invalid_size (test_pagination.PaginationTests) ... ok\r\ntest_last_partial_page (test_pagination.PaginationTests) ... FAIL\r\ntest_page_beyond_end (test_pagination.PaginationTests) ... ok\r\ntest_second_page (test_pagination.PaginationTests) ... FAIL\r\n\r\n======================================================================\r\nFAIL: test_exact_boundary_no_next (test_pagination.PaginationTests)\r\n----------------------------------------------------------------------\r\nTraceback (most recent call last):\r\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\pico-main\\artifacts\\repair-validation-2026-10-24\\pagination_boundaries-2\\test_pagination.py\", line 12, in test_exact_boundary_no_next\r\n    self.assertEqual(paginate([1,2,3], 1, 3), {'items':[1,2,3], 'total_pages':1, 'has_next':False})\r\nAssertionError: {'items': [], 'total_pages': 1, 'has_next': True} != {'items': [1, 2, 3], 'total_pages': 1, 'has_next': False}\r\n- {'has_next': True, 'items': [], 'total_pages': 1}\r\n?              ^^^\r\n\r\n+ {'has_next': False, 'items': [1, 2, 3], 'total_pages': 1}\r\n?              ^^^^             +++++++\r\n\r\n\r\n======================================================================\r\nFAIL: test_first_page (test_pagination.PaginationTests)\r\n----------------------------------------------------------------------\r\nTraceback (most recent call last):\r\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\pico-main\\artifacts\\repair-validation-2026-10-24\\pagination_boundaries-2\\test_pagination.py\", line 6, in test_first_page\r\n    self.assertEqual(paginate([1,2,3,4,5]), {'items':[1,2,3], 'total_pages':2, 'has_next':True})\r\nAssertionError: {'items': [4, 5], 'total_pages': 1, 'has_next': True} != {'items': [1, 2, 3], 'total_pages': 2, 'has_next': True}\r\n- {'has_next': True, 'items': [4, 5], 'total_pages': 1}\r\n?                              ^  ^                  ^\r\n\r\n+ {'has_next': True, 'items': [1, 2, 3], 'total_pages': 2}\r\n?                              ^  ^^^^                  ^\r\n\r\n\r\n======================================================================\r\nFAIL: test_last_partial_page (test_pagination.PaginationTests)\r\n----------------------------------------------------------------------\r\nTraceback (most recent call last):\r\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\pico-main\\artifacts\\repair-validation-2026-10-24\\pagination_boundaries-2\\test_pagination.py\", line 10, in test_last_partial_page\r\n    self.assertEqual(paginate(list(range(7)), 3, 3), {'items':[6], 'total_pages':3, 'has_next':False})\r\nAssertionError: {'items': [], 'total_pages': 2, 'has_next': False} != {'items': [6], 'total_pages': 3, 'has_next': False}\r\n- {'has_next': False, 'items': [], 'total_pages': 2}\r\n?                                                 ^\r\n\r\n+ {'has_next': False, 'items': [6], 'total_pages': 3}\r\n?                               +                  ^\r\n\r\n\r\n======================================================================\r\nFAIL: test_second_page (test_pagination.PaginationTests)\r\n----------------------------------------------------------------------\r\nTraceback (most recent call last):\r\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\pico-main\\artifacts\\repair-validation-2026-10-24\\pagination_boundaries-2\\test_pagination.py\", line 8, in test_second_page\r\n    self.assertEqual(paginate(list(range(7)), 2, 3)['items'], [3,4,5])\r\nAssertionError: Lists differ: [6] != [3, 4, 5]\r\n\r\nFirst differing element 0:\r\n6\r\n3\r\n\r\nSecond list contains 2 additional elements.\r\nFirst extra element 1:\r\n4\r\n\r\n- [6]\r\n+ [3, 4, 5]\r\n\r\n----------------------------------------------------------------------\r\nRan 8 tests in 0.003s\r\n\r\nFAILED (failures=4)\r\n",
+          "elapsed_ms": 234
+        },
+        "agent_verifier_exit_codes": [
+          1
+        ],
+        "protected_files_unchanged": true,
+        "changed_files": [],
+        "attempts": 11,
+        "tool_steps": 10,
+        "elapsed_ms": 146609,
+        "observed_input_tokens": 24700,
+        "observed_output_tokens": 6930,
+        "tool_issues": [
+          {
+            "trace_line": 5,
+            "name": "run_shell",
+            "code": "tool_failed",
+            "exit_code": 1,
+            "argument_fields": [
+              "command",
+              "timeout"
+            ]
+          },
+          {
+            "trace_line": 20,
+            "name": "patch_file",
+            "code": "invalid_arguments",
+            "exit_code": null,
+            "argument_fields": [
+              "old_text",
+              "path"
+            ]
+          },
+          {
+            "trace_line": 25,
+            "name": "patch_file",
+            "code": "invalid_arguments",
+            "exit_code": null,
+            "argument_fields": [
+              "old_text",
+              "path"
+            ]
+          },
+          {
+            "trace_line": 30,
+            "name": "patch_file",
+            "code": "invalid_arguments",
+            "exit_code": null,
+            "argument_fields": [
+              "old_text",
+              "path"
+            ]
+          },
+          {
+            "trace_line": 35,
+            "name": "patch_file",
+            "code": "invalid_arguments",
+            "exit_code": null,
+            "argument_fields": [
+              "old_text",
+              "path"
+            ]
+          },
+          {
+            "trace_line": 40,
+            "name": "patch_file",
+            "code": "invalid_arguments",
+            "exit_code": null,
+            "argument_fields": [
+              "old_text",
+              "path"
+            ]
+          }
+        ],
+        "trace": "artifacts/repair-validation-2026-10-24/pagination_boundaries-2/.pico/runs/run_20261024-180324-19120c/trace.jsonl",
+        "trace_sha256": "0fb5a91ec2abf003a7a11819ad8d3a5708718b01ddbcbfec45ba5d4a30ff55ef",
+        "initial_sha256": {
+          "pagination.py": "5daa22c5d854045a370d18b98e4d76364450482e84ca334d97c8af77f712165f",
+          "test_pagination.py": "e827b6cd3661aa162d6b1cfeea8aee41769a41b65e1d7442d280ea1b69d711bd"
+        },
+        "final_sha256": {
+          "pagination.py": "5daa22c5d854045a370d18b98e4d76364450482e84ca334d97c8af77f712165f",
+          "test_pagination.py": "e827b6cd3661aa162d6b1cfeea8aee41769a41b65e1d7442d280ea1b69d711bd"
+        },
+        "diffs": []
+      },
+      {
+        "task_id": "user_lookup_contract",
+        "repeat": 1,
+        "run_id": "run_20261024-180551-9845be",
+        "workflow_passed": false,
+        "functional_verifier_passed": true,
+        "classification": "missing_agent_reverification",
+        "raw_failure_category": "incomplete_run_or_missing_model_verification",
+        "initial_verifier": {
+          "exit_code": 1,
+          "test_count": 8,
+          "output": "test_direct_repository_normalizes (test_user_lookup.LookupTests) ... FAIL\r\ntest_empty_id_is_unknown (test_user_lookup.LookupTests) ... ERROR\r\ntest_empty_mapping (test_user_lookup.LookupTests) ... ERROR\r\ntest_input_mapping_is_unchanged (test_user_lookup.LookupTests) ... ERROR\r\ntest_none_id_is_rejected (test_user_lookup.LookupTests) ... ERROR\r\ntest_service_normalizes (test_user_lookup.LookupTests) ... ERROR\r\ntest_service_uses_correct_argument_order (test_user_lookup.LookupTests) ... ERROR\r\ntest_unknown_returns_none (test_user_lookup.LookupTests) ... ERROR\r\n\r\n======================================================================\r\nERROR: test_empty_id_is_unknown (test_user_lookup.LookupTests)\r\n----------------------------------------------------------------------\r\nTraceback (most recent call last):\r\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\pico-main\\artifacts\\repair-validation-2026-10-24\\user_lookup_contract-1\\test_user_lookup.py\", line 26, in test_empty_id_is_unknown\r\n    self.assertIsNone(display_name(self.users, '   '))\r\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\pico-main\\artifacts\\repair-validation-2026-10-24\\user_lookup_contract-1\\service.py\", line 4, in display_name\r\n    user = get_user(user_id, users)\r\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\pico-main\\artifacts\\repair-validation-2026-10-24\\user_lookup_contract-1\\repository.py\", line 4, in get_user\r\n    return users.get(user_id)\r\nAttributeError: 'str' object has no attribute 'get'\r\n\r\n======================================================================\r\nERROR: test_empty_mapping (test_user_lookup.LookupTests)\r\n----------------------------------------------------------------------\r\nTraceback (most recent call last):\r\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\pico-main\\artifacts\\repair-validation-2026-10-24\\user_lookup_contract-1\\test_user_lookup.py\", line 18, in test_empty_mapping\r\n    self.assertIsNone(display_name({}, 'user-a'))\r\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\pico-main\\artifacts\\repair-validation-2026-10-24\\user_lookup_contract-1\\service.py\", line 4, in display_name\r\n    user = get_user(user_id, users)\r\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\pico-main\\artifacts\\repair-validation-2026-10-24\\user_lookup_contract-1\\repository.py\", line 4, in get_user\r\n    return users.get(user_id)\r\nAttributeError: 'str' object has no attribute 'get'\r\n\r\n======================================================================\r\nERROR: test_input_mapping_is_unchanged (test_user_lookup.LookupTests)\r\n----------------------------------------------------------------------\r\nTraceback (most recent call last):\r\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\pico-main\\artifacts\\repair-validation-2026-10-24\\user_lookup_contract-1\\test_user_lookup.py\", line 23, in test_input_mapping_is_unchanged\r\n    display_name(self.users, ' USER-A ')\r\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\pico-main\\artifacts\\repair-validation-2026-10-24\\user_lookup_contract-1\\service.py\", line 4, in display_name\r\n    user = get_user(user_id, users)\r\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\pico-main\\artifacts\\repair-validation-2026-10-24\\user_lookup_contract-1\\repository.py\", line 4, in get_user\r\n    return users.get(user_id)\r\nAttributeError: 'str' object has no attribute 'get'\r\n\r\n======================================================================\r\nERROR: test_none_id_is_rejected (test_user_lookup.LookupTests)\r\n----------------------------------------------------------------------\r\nTraceback (most recent call last):\r\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\pico-main\\artifacts\\repair-validation-2026-10-24\\user_lookup_contract-1\\test_user_lookup.py\", line 20, in test_none_id_is_rejected\r\n    with self.assertRaises(ValueError): display_name(self.users, None)\r\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\pico-main\\artifacts\\repair-validation-2026-10-24\\user_lookup_contract-1\\service.py\", line 4, in display_name\r\n    user = get_user(user_id, users)\r\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\pico-main\\artifacts\\repair-validation-2026-10-24\\user_lookup_contract-1\\repository.py\", line 4, in get_user\r\n    return users.get(user_id)\r\nAttributeError: 'NoneType' object has no attribute 'get'\r\n\r\n======================================================================\r\nERROR: test_service_normalizes (test_user_lookup.LookupTests)\r\n----------------------------------------------------------------------\r\nTraceback (most recent call last):\r\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\pico-main\\artifacts\\repair-validation-2026-10-24\\user_lookup_contract-1\\test_user_lookup.py\", line 14, in test_service_normalizes\r\n    self.assertEqual(display_name(self.users, ' User-A '), 'Ada')\r\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\pico-main\\artifacts\\repair-validation-2026-10-24\\user_lookup_contract-1\\service.py\", line 4, in display_name\r\n    user = get_user(user_id, users)\r\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\pico-main\\artifacts\\repair-validation-2026-10-24\\user_lookup_contract-1\\repository.py\", line 4, in get_user\r\n    return users.get(user_id)\r\nAttributeError: 'str' object has no attribute 'get'\r\n\r\n======================================================================\r\nERROR: test_service_uses_correct_argument_order (test_user_lookup.LookupTests)\r\n----------------------------------------------------------------------\r\nTraceback (most recent call last):\r\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\pico-main\\artifacts\\repair-validation-2026-10-24\\user_lookup_contract-1\\test_user_lookup.py\", line 12, in test_service_uses_correct_argument_order\r\n    self.assertEqual(display_name(self.users, 'user-b'), 'Lin')\r\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\pico-main\\artifacts\\repair-validation-2026-10-24\\user_lookup_contract-1\\service.py\", line 4, in display_name\r\n    user = get_user(user_id, users)\r\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\pico-main\\artifacts\\repair-validation-2026-10-24\\user_lookup_contract-1\\repository.py\", line 4, in get_user\r\n    return users.get(user_id)\r\nAttributeError: 'str' object has no attribute 'get'\r\n\r\n======================================================================\r\nERROR: test_unknown_returns_none (test_user_lookup.LookupTests)\r\n----------------------------------------------------------------------\r\nTraceback (most recent call last):\r\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\pico-main\\artifacts\\repair-validation-2026-10-24\\user_lookup_contract-1\\test_user_lookup.py\", line 16, in test_unknown_returns_none\r\n    self.assertIsNone(display_name(self.users, 'missing'))\r\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\pico-main\\artifacts\\repair-validation-2026-10-24\\user_lookup_contract-1\\service.py\", line 4, in display_name\r\n    user = get_user(user_id, users)\r\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\pico-main\\artifacts\\repair-validation-2026-10-24\\user_lookup_contract-1\\repository.py\", line 4, in get_user\r\n    return users.get(user_id)\r\nAttributeError: 'str' object has no attribute 'get'\r\n\r\n======================================================================\r\nFAIL: test_direct_repository_normalizes (test_user_lookup.LookupTests)\r\n----------------------------------------------------------------------\r\nTraceback (most recent call last):\r\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\pico-main\\artifacts\\repair-validation-2026-10-24\\user_lookup_contract-1\\test_user_lookup.py\", line 10, in test_direct_repository_normalizes\r\n    self.assertEqual(get_user(self.users, ' USER-A '), {'name':'Ada'})\r\nAssertionError: None != {'name': 'Ada'}\r\n\r\n----------------------------------------------------------------------\r\nRan 8 tests in 0.007s\r\n\r\nFAILED (failures=1, errors=7)\r\n",
+          "elapsed_ms": 219
+        },
+        "independent_final_recheck": {
+          "exit_code": 0,
+          "test_count": 8,
+          "output": "test_direct_repository_normalizes (test_user_lookup.LookupTests) ... ok\r\ntest_empty_id_is_unknown (test_user_lookup.LookupTests) ... ok\r\ntest_empty_mapping (test_user_lookup.LookupTests) ... ok\r\ntest_input_mapping_is_unchanged (test_user_lookup.LookupTests) ... ok\r\ntest_none_id_is_rejected (test_user_lookup.LookupTests) ... ok\r\ntest_service_normalizes (test_user_lookup.LookupTests) ... ok\r\ntest_service_uses_correct_argument_order (test_user_lookup.LookupTests) ... ok\r\ntest_unknown_returns_none (test_user_lookup.LookupTests) ... ok\r\n\r\n----------------------------------------------------------------------\r\nRan 8 tests in 0.000s\r\n\r\nOK\r\n",
+          "elapsed_ms": 219
+        },
+        "agent_verifier_exit_codes": [
+          1
+        ],
+        "protected_files_unchanged": true,
+        "changed_files": [
+          "repository.py",
+          "service.py"
+        ],
+        "attempts": 11,
+        "tool_steps": 10,
+        "elapsed_ms": 166750,
+        "observed_input_tokens": 20608,
+        "observed_output_tokens": 7637,
+        "tool_issues": [
+          {
+            "trace_line": 5,
+            "name": "run_shell",
+            "code": "tool_failed",
+            "exit_code": 1,
+            "argument_fields": [
+              "command",
+              "timeout"
+            ]
+          },
+          {
+            "trace_line": 10,
+            "name": "run_shell",
+            "code": "approval_denied",
+            "exit_code": null,
+            "argument_fields": [
+              "command",
+              "timeout"
+            ]
+          }
+        ],
+        "trace": "artifacts/repair-validation-2026-10-24/user_lookup_contract-1/.pico/runs/run_20261024-180551-9845be/trace.jsonl",
+        "trace_sha256": "e7498d9b700bcfcd8a0a461f9688070670a13b043d33654067ad41cf7c2c62fa",
+        "initial_sha256": {
+          "id_normalization.py": "a1391ba295b189c68c2d4706f41eca1bf375e5b6c5d20ef2e9af11d9cb4e031f",
+          "repository.py": "e8301b785625793cabffafa142b394d4381df4e0083634f89bffd8da6f1b0363",
+          "service.py": "3fdd838c9ae694c7848bea33e99bf72ef2647af9c2824afbf65b149a5d116c40",
+          "test_user_lookup.py": "8697b8819fa0185d64a4b0e1451f7250ab951da96a78f62d2bb084241149c5ae"
+        },
+        "final_sha256": {
+          "id_normalization.py": "a1391ba295b189c68c2d4706f41eca1bf375e5b6c5d20ef2e9af11d9cb4e031f",
+          "repository.py": "ce6571b4f18d3b54ee3494bfc101bf0fd83e369623610dc7cfa99a4312293c6f",
+          "service.py": "8c53ee3fad5957112edac86037158432a96e105cdcf17f0437ea93663a757177",
+          "test_user_lookup.py": "8697b8819fa0185d64a4b0e1451f7250ab951da96a78f62d2bb084241149c5ae"
+        },
+        "diffs": [
+          {
+            "path": "repository.py",
+            "diff": "--- a/repository.py\n+++ b/repository.py\n@@ -1,4 +1,4 @@\n from id_normalization import normalize_user_id\n \n def get_user(users, user_id):\n-    return users.get(user_id)\n+    return users.get(normalize_user_id(user_id))",
+            "truncated": false
+          },
+          {
+            "path": "service.py",
+            "diff": "--- a/service.py\n+++ b/service.py\n@@ -1,5 +1,5 @@\n from repository import get_user\n \n def display_name(users, user_id):\n-    user = get_user(user_id, users)\n+    user = get_user(users, user_id)\n     return user['name'] if user is not None else None",
+            "truncated": false
+          }
+        ]
+      },
+      {
+        "task_id": "user_lookup_contract",
+        "repeat": 2,
+        "run_id": "run_20261024-180838-dab0ef",
+        "workflow_passed": true,
+        "functional_verifier_passed": true,
+        "classification": "",
+        "raw_failure_category": "",
+        "initial_verifier": {
+          "exit_code": 1,
+          "test_count": 8,
+          "output": "test_direct_repository_normalizes (test_user_lookup.LookupTests) ... FAIL\r\ntest_empty_id_is_unknown (test_user_lookup.LookupTests) ... ERROR\r\ntest_empty_mapping (test_user_lookup.LookupTests) ... ERROR\r\ntest_input_mapping_is_unchanged (test_user_lookup.LookupTests) ... ERROR\r\ntest_none_id_is_rejected (test_user_lookup.LookupTests) ... ERROR\r\ntest_service_normalizes (test_user_lookup.LookupTests) ... ERROR\r\ntest_service_uses_correct_argument_order (test_user_lookup.LookupTests) ... ERROR\r\ntest_unknown_returns_none (test_user_lookup.LookupTests) ... ERROR\r\n\r\n======================================================================\r\nERROR: test_empty_id_is_unknown (test_user_lookup.LookupTests)\r\n----------------------------------------------------------------------\r\nTraceback (most recent call last):\r\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\pico-main\\artifacts\\repair-validation-2026-10-24\\user_lookup_contract-2\\test_user_lookup.py\", line 26, in test_empty_id_is_unknown\r\n    self.assertIsNone(display_name(self.users, '   '))\r\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\pico-main\\artifacts\\repair-validation-2026-10-24\\user_lookup_contract-2\\service.py\", line 4, in display_name\r\n    user = get_user(user_id, users)\r\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\pico-main\\artifacts\\repair-validation-2026-10-24\\user_lookup_contract-2\\repository.py\", line 4, in get_user\r\n    return users.get(user_id)\r\nAttributeError: 'str' object has no attribute 'get'\r\n\r\n======================================================================\r\nERROR: test_empty_mapping (test_user_lookup.LookupTests)\r\n----------------------------------------------------------------------\r\nTraceback (most recent call last):\r\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\pico-main\\artifacts\\repair-validation-2026-10-24\\user_lookup_contract-2\\test_user_lookup.py\", line 18, in test_empty_mapping\r\n    self.assertIsNone(display_name({}, 'user-a'))\r\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\pico-main\\artifacts\\repair-validation-2026-10-24\\user_lookup_contract-2\\service.py\", line 4, in display_name\r\n    user = get_user(user_id, users)\r\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\pico-main\\artifacts\\repair-validation-2026-10-24\\user_lookup_contract-2\\repository.py\", line 4, in get_user\r\n    return users.get(user_id)\r\nAttributeError: 'str' object has no attribute 'get'\r\n\r\n======================================================================\r\nERROR: test_input_mapping_is_unchanged (test_user_lookup.LookupTests)\r\n----------------------------------------------------------------------\r\nTraceback (most recent call last):\r\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\pico-main\\artifacts\\repair-validation-2026-10-24\\user_lookup_contract-2\\test_user_lookup.py\", line 23, in test_input_mapping_is_unchanged\r\n    display_name(self.users, ' USER-A ')\r\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\pico-main\\artifacts\\repair-validation-2026-10-24\\user_lookup_contract-2\\service.py\", line 4, in display_name\r\n    user = get_user(user_id, users)\r\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\pico-main\\artifacts\\repair-validation-2026-10-24\\user_lookup_contract-2\\repository.py\", line 4, in get_user\r\n    return users.get(user_id)\r\nAttributeError: 'str' object has no attribute 'get'\r\n\r\n======================================================================\r\nERROR: test_none_id_is_rejected (test_user_lookup.LookupTests)\r\n----------------------------------------------------------------------\r\nTraceback (most recent call last):\r\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\pico-main\\artifacts\\repair-validation-2026-10-24\\user_lookup_contract-2\\test_user_lookup.py\", line 20, in test_none_id_is_rejected\r\n    with self.assertRaises(ValueError): display_name(self.users, None)\r\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\pico-main\\artifacts\\repair-validation-2026-10-24\\user_lookup_contract-2\\service.py\", line 4, in display_name\r\n    user = get_user(user_id, users)\r\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\pico-main\\artifacts\\repair-validation-2026-10-24\\user_lookup_contract-2\\repository.py\", line 4, in get_user\r\n    return users.get(user_id)\r\nAttributeError: 'NoneType' object has no attribute 'get'\r\n\r\n======================================================================\r\nERROR: test_service_normalizes (test_user_lookup.LookupTests)\r\n----------------------------------------------------------------------\r\nTraceback (most recent call last):\r\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\pico-main\\artifacts\\repair-validation-2026-10-24\\user_lookup_contract-2\\test_user_lookup.py\", line 14, in test_service_normalizes\r\n    self.assertEqual(display_name(self.users, ' User-A '), 'Ada')\r\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\pico-main\\artifacts\\repair-validation-2026-10-24\\user_lookup_contract-2\\service.py\", line 4, in display_name\r\n    user = get_user(user_id, users)\r\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\pico-main\\artifacts\\repair-validation-2026-10-24\\user_lookup_contract-2\\repository.py\", line 4, in get_user\r\n    return users.get(user_id)\r\nAttributeError: 'str' object has no attribute 'get'\r\n\r\n======================================================================\r\nERROR: test_service_uses_correct_argument_order (test_user_lookup.LookupTests)\r\n----------------------------------------------------------------------\r\nTraceback (most recent call last):\r\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\pico-main\\artifacts\\repair-validation-2026-10-24\\user_lookup_contract-2\\test_user_lookup.py\", line 12, in test_service_uses_correct_argument_order\r\n    self.assertEqual(display_name(self.users, 'user-b'), 'Lin')\r\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\pico-main\\artifacts\\repair-validation-2026-10-24\\user_lookup_contract-2\\service.py\", line 4, in display_name\r\n    user = get_user(user_id, users)\r\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\pico-main\\artifacts\\repair-validation-2026-10-24\\user_lookup_contract-2\\repository.py\", line 4, in get_user\r\n    return users.get(user_id)\r\nAttributeError: 'str' object has no attribute 'get'\r\n\r\n======================================================================\r\nERROR: test_unknown_returns_none (test_user_lookup.LookupTests)\r\n----------------------------------------------------------------------\r\nTraceback (most recent call last):\r\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\pico-main\\artifacts\\repair-validation-2026-10-24\\user_lookup_contract-2\\test_user_lookup.py\", line 16, in test_unknown_returns_none\r\n    self.assertIsNone(display_name(self.users, 'missing'))\r\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\pico-main\\artifacts\\repair-validation-2026-10-24\\user_lookup_contract-2\\service.py\", line 4, in display_name\r\n    user = get_user(user_id, users)\r\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\pico-main\\artifacts\\repair-validation-2026-10-24\\user_lookup_contract-2\\repository.py\", line 4, in get_user\r\n    return users.get(user_id)\r\nAttributeError: 'str' object has no attribute 'get'\r\n\r\n======================================================================\r\nFAIL: test_direct_repository_normalizes (test_user_lookup.LookupTests)\r\n----------------------------------------------------------------------\r\nTraceback (most recent call last):\r\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\pico-main\\artifacts\\repair-validation-2026-10-24\\user_lookup_contract-2\\test_user_lookup.py\", line 10, in test_direct_repository_normalizes\r\n    self.assertEqual(get_user(self.users, ' USER-A '), {'name':'Ada'})\r\nAssertionError: None != {'name': 'Ada'}\r\n\r\n----------------------------------------------------------------------\r\nRan 8 tests in 0.007s\r\n\r\nFAILED (failures=1, errors=7)\r\n",
+          "elapsed_ms": 219
+        },
+        "independent_final_recheck": {
+          "exit_code": 0,
+          "test_count": 8,
+          "output": "test_direct_repository_normalizes (test_user_lookup.LookupTests) ... ok\r\ntest_empty_id_is_unknown (test_user_lookup.LookupTests) ... ok\r\ntest_empty_mapping (test_user_lookup.LookupTests) ... ok\r\ntest_input_mapping_is_unchanged (test_user_lookup.LookupTests) ... ok\r\ntest_none_id_is_rejected (test_user_lookup.LookupTests) ... ok\r\ntest_service_normalizes (test_user_lookup.LookupTests) ... ok\r\ntest_service_uses_correct_argument_order (test_user_lookup.LookupTests) ... ok\r\ntest_unknown_returns_none (test_user_lookup.LookupTests) ... ok\r\n\r\n----------------------------------------------------------------------\r\nRan 8 tests in 0.000s\r\n\r\nOK\r\n",
+          "elapsed_ms": 234
+        },
+        "agent_verifier_exit_codes": [
+          1,
+          0
+        ],
+        "protected_files_unchanged": true,
+        "changed_files": [
+          "repository.py",
+          "service.py"
+        ],
+        "attempts": 9,
+        "tool_steps": 8,
+        "elapsed_ms": 82937,
+        "observed_input_tokens": 16126,
+        "observed_output_tokens": 3403,
+        "tool_issues": [
+          {
+            "trace_line": 5,
+            "name": "run_shell",
+            "code": "tool_failed",
+            "exit_code": 1,
+            "argument_fields": [
+              "command",
+              "timeout"
+            ]
+          }
+        ],
+        "trace": "artifacts/repair-validation-2026-10-24/user_lookup_contract-2/.pico/runs/run_20261024-180838-dab0ef/trace.jsonl",
+        "trace_sha256": "0e354dcfa5518d8afbfeb0b6e47ec5eb68d7145a59c1c985ba9c49bf33b5f8b7",
+        "initial_sha256": {
+          "id_normalization.py": "a1391ba295b189c68c2d4706f41eca1bf375e5b6c5d20ef2e9af11d9cb4e031f",
+          "repository.py": "e8301b785625793cabffafa142b394d4381df4e0083634f89bffd8da6f1b0363",
+          "service.py": "3fdd838c9ae694c7848bea33e99bf72ef2647af9c2824afbf65b149a5d116c40",
+          "test_user_lookup.py": "8697b8819fa0185d64a4b0e1451f7250ab951da96a78f62d2bb084241149c5ae"
+        },
+        "final_sha256": {
+          "id_normalization.py": "a1391ba295b189c68c2d4706f41eca1bf375e5b6c5d20ef2e9af11d9cb4e031f",
+          "repository.py": "ce6571b4f18d3b54ee3494bfc101bf0fd83e369623610dc7cfa99a4312293c6f",
+          "service.py": "8c53ee3fad5957112edac86037158432a96e105cdcf17f0437ea93663a757177",
+          "test_user_lookup.py": "8697b8819fa0185d64a4b0e1451f7250ab951da96a78f62d2bb084241149c5ae"
+        },
+        "diffs": [
+          {
+            "path": "repository.py",
+            "diff": "--- a/repository.py\n+++ b/repository.py\n@@ -1,4 +1,4 @@\n from id_normalization import normalize_user_id\n \n def get_user(users, user_id):\n-    return users.get(user_id)\n+    return users.get(normalize_user_id(user_id))",
+            "truncated": false
+          },
+          {
+            "path": "service.py",
+            "diff": "--- a/service.py\n+++ b/service.py\n@@ -1,5 +1,5 @@\n from repository import get_user\n \n def display_name(users, user_id):\n-    user = get_user(user_id, users)\n+    user = get_user(users, user_id)\n     return user['name'] if user is not None else None",
+            "truncated": false
+          }
+        ]
+      }
+    ],
+    "runtime_fingerprints": {
+      "captured": "After four baseline runs, before production feedback edit; baseline runtime files unchanged during these runs",
+      "sha256": {
+        "pico/runtime.py": "c7e29bcf04a43752c66fa2cc953977443d5dd201d691099fd00591805e780972",
+        "pico/agent_loop.py": "0974d719804eee6000ae877ff601066110c5ba452bccfb9352fa07f4c04ef00a",
+        "pico/tool_executor.py": "bf84eec1f13e52aadf7ea30a46db68f9eb6667b3cd0d6f3105e8e24a713ea2ff",
+        "pico/prompt_prefix.py": "b9aed16db484f15ed30be21401e7048b30dc10b7add50949206c2e36c824edbe",
+        "scripts/run_repair_validation.py": "1188c592f195ba31754bc7934757928baf2982c40f67465896d07735968be94d",
+        "benchmarks/repair_validation_tasks.json": "a1a63c654f0a7f6c607399bb230827136cfc4838ed92acbb450939837dbcc358"
+      }
+    }
+  },
+  "post_feedback_targeted_regression": {
+    "source": "artifacts/repair-feedback-regression-2026-10-24/results.json",
+    "source_sha256": "5341f2b315285668c738144e7763b982493af49a70f892ea210d796fbb44c4a5",
+    "configuration": {
+      "model": "zai-org/GLM-5.3-Flash",
+      "temperature": 0.2,
+      "timeout_seconds": 120,
+      "max_steps": 10,
+      "max_new_tokens": 2048,
+      "verify_command": "python -B -m unittest discover -v",
+      "notes": "Fresh workspace and session; immutable tests; only listed implementation files can be edited; shell approval only for exact verifier; no prompt edits, success-only filtering, or additional reruns."
+    },
+    "runtime_sha256": {
+      "pico/runtime.py": "c7e29bcf04a43752c66fa2cc953977443d5dd201d691099fd00591805e780972",
+      "pico/agent_loop.py": "0974d719804eee6000ae877ff601066110c5ba452bccfb9352fa07f4c04ef00a",
+      "pico/tool_executor.py": "a4b72be240a45f960ab27bb4f0d3c08ed63ceae17cac1d7fec2ebfbeb6bd3f37",
+      "pico/prompt_prefix.py": "b9aed16db484f15ed30be21401e7048b30dc10b7add50949206c2e36c824edbe"
+    },
+    "scope": "Targeted post-change regression; not added to original batch.",
+    "unique_tasks": 1,
+    "runs": 1,
+    "workflow_passed": 1,
+    "functional_verifier_passed": 1,
+    "failure_categories": {},
+    "rows": [
+      {
+        "task_id": "pagination_boundaries",
+        "repeat": 1,
+        "run_id": "run_20261024-181132-242abc",
+        "workflow_passed": true,
+        "functional_verifier_passed": true,
+        "classification": "",
+        "raw_failure_category": "",
+        "initial_verifier": {
+          "exit_code": 1,
+          "test_count": 8,
+          "output": "test_empty (test_pagination.PaginationTests) ... ok\r\ntest_exact_boundary_no_next (test_pagination.PaginationTests) ... FAIL\r\ntest_first_page (test_pagination.PaginationTests) ... FAIL\r\ntest_invalid_page (test_pagination.PaginationTests) ... ok\r\ntest_invalid_size (test_pagination.PaginationTests) ... ok\r\ntest_last_partial_page (test_pagination.PaginationTests) ... FAIL\r\ntest_page_beyond_end (test_pagination.PaginationTests) ... ok\r\ntest_second_page (test_pagination.PaginationTests) ... FAIL\r\n\r\n======================================================================\r\nFAIL: test_exact_boundary_no_next (test_pagination.PaginationTests)\r\n----------------------------------------------------------------------\r\nTraceback (most recent call last):\r\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\pico-main\\artifacts\\repair-feedback-regression-2026-10-24\\pagination_boundaries-1\\test_pagination.py\", line 12, in test_exact_boundary_no_next\r\n    self.assertEqual(paginate([1,2,3], 1, 3), {'items':[1,2,3], 'total_pages':1, 'has_next':False})\r\nAssertionError: {'items': [], 'total_pages': 1, 'has_next': True} != {'items': [1, 2, 3], 'total_pages': 1, 'has_next': False}\r\n- {'has_next': True, 'items': [], 'total_pages': 1}\r\n?              ^^^\r\n\r\n+ {'has_next': False, 'items': [1, 2, 3], 'total_pages': 1}\r\n?              ^^^^             +++++++\r\n\r\n\r\n======================================================================\r\nFAIL: test_first_page (test_pagination.PaginationTests)\r\n----------------------------------------------------------------------\r\nTraceback (most recent call last):\r\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\pico-main\\artifacts\\repair-feedback-regression-2026-10-24\\pagination_boundaries-1\\test_pagination.py\", line 6, in test_first_page\r\n    self.assertEqual(paginate([1,2,3,4,5]), {'items':[1,2,3], 'total_pages':2, 'has_next':True})\r\nAssertionError: {'items': [4, 5], 'total_pages': 1, 'has_next': True} != {'items': [1, 2, 3], 'total_pages': 2, 'has_next': True}\r\n- {'has_next': True, 'items': [4, 5], 'total_pages': 1}\r\n?                              ^  ^                  ^\r\n\r\n+ {'has_next': True, 'items': [1, 2, 3], 'total_pages': 2}\r\n?                              ^  ^^^^                  ^\r\n\r\n\r\n======================================================================\r\nFAIL: test_last_partial_page (test_pagination.PaginationTests)\r\n----------------------------------------------------------------------\r\nTraceback (most recent call last):\r\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\pico-main\\artifacts\\repair-feedback-regression-2026-10-24\\pagination_boundaries-1\\test_pagination.py\", line 10, in test_last_partial_page\r\n    self.assertEqual(paginate(list(range(7)), 3, 3), {'items':[6], 'total_pages':3, 'has_next':False})\r\nAssertionError: {'items': [], 'total_pages': 2, 'has_next': False} != {'items': [6], 'total_pages': 3, 'has_next': False}\r\n- {'has_next': False, 'items': [], 'total_pages': 2}\r\n?                                                 ^\r\n\r\n+ {'has_next': False, 'items': [6], 'total_pages': 3}\r\n?                               +                  ^\r\n\r\n\r\n======================================================================\r\nFAIL: test_second_page (test_pagination.PaginationTests)\r\n----------------------------------------------------------------------\r\nTraceback (most recent call last):\r\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\pico-main\\artifacts\\repair-feedback-regression-2026-10-24\\pagination_boundaries-1\\test_pagination.py\", line 8, in test_second_page\r\n    self.assertEqual(paginate(list(range(7)), 2, 3)['items'], [3,4,5])\r\nAssertionError: Lists differ: [6] != [3, 4, 5]\r\n\r\nFirst differing element 0:\r\n6\r\n3\r\n\r\nSecond list contains 2 additional elements.\r\nFirst extra element 1:\r\n4\r\n\r\n- [6]\r\n+ [3, 4, 5]\r\n\r\n----------------------------------------------------------------------\r\nRan 8 tests in 0.004s\r\n\r\nFAILED (failures=4)\r\n",
+          "elapsed_ms": 250
+        },
+        "independent_final_recheck": {
+          "exit_code": 0,
+          "test_count": 8,
+          "output": "test_empty (test_pagination.PaginationTests) ... ok\r\ntest_exact_boundary_no_next (test_pagination.PaginationTests) ... ok\r\ntest_first_page (test_pagination.PaginationTests) ... ok\r\ntest_invalid_page (test_pagination.PaginationTests) ... ok\r\ntest_invalid_size (test_pagination.PaginationTests) ... ok\r\ntest_last_partial_page (test_pagination.PaginationTests) ... ok\r\ntest_page_beyond_end (test_pagination.PaginationTests) ... ok\r\ntest_second_page (test_pagination.PaginationTests) ... ok\r\n\r\n----------------------------------------------------------------------\r\nRan 8 tests in 0.001s\r\n\r\nOK\r\n",
+          "elapsed_ms": 203
+        },
+        "agent_verifier_exit_codes": [
+          1,
+          0
+        ],
+        "protected_files_unchanged": true,
+        "changed_files": [
+          "pagination.py"
+        ],
+        "attempts": 8,
+        "tool_steps": 7,
+        "elapsed_ms": 75391,
+        "observed_input_tokens": 16731,
+        "observed_output_tokens": 3354,
+        "tool_issues": [
+          {
+            "trace_line": 5,
+            "name": "run_shell",
+            "code": "tool_failed",
+            "exit_code": 1,
+            "argument_fields": [
+              "command",
+              "timeout"
+            ]
+          },
+          {
+            "trace_line": 25,
+            "name": "patch_file",
+            "code": "invalid_arguments",
+            "exit_code": null,
+            "argument_fields": [
+              "old_text",
+              "path"
+            ]
+          }
+        ],
+        "trace": "artifacts/repair-feedback-regression-2026-10-24/pagination_boundaries-1/.pico/runs/run_20261024-181132-242abc/trace.jsonl",
+        "trace_sha256": "25eaf7b7fc796e6aef5ddddc6697bda48de7ec4aece242d56682d0d73cdea83c",
+        "initial_sha256": {
+          "pagination.py": "5daa22c5d854045a370d18b98e4d76364450482e84ca334d97c8af77f712165f",
+          "test_pagination.py": "e827b6cd3661aa162d6b1cfeea8aee41769a41b65e1d7442d280ea1b69d711bd"
+        },
+        "final_sha256": {
+          "pagination.py": "4da2eb48d071f11d397d4f699bc83e25966e859fcc4fc165491f27d614fea097",
+          "test_pagination.py": "e827b6cd3661aa162d6b1cfeea8aee41769a41b65e1d7442d280ea1b69d711bd"
+        },
+        "diffs": [
+          {
+            "path": "pagination.py",
+            "diff": "--- a/pagination.py\n+++ b/pagination.py\n@@ -4,9 +4,10 @@\n     if type(page_size) is not int or page_size < 1:\n         raise ValueError('page_size must be a positive integer')\n     total = len(items)\n-    start = page * page_size\n+    total_pages = (total + page_size - 1) // page_size\n+    start = (page - 1) * page_size\n     return {\n         'items': items[start:start + page_size],\n-        'total_pages': total // page_size,\n-        'has_next': page * page_size <= total,\n+        'total_pages': total_pages,\n+        'has_next': page < total_pages,\n     }",
+            "truncated": false
+          }
+        ]
+      }
+    ]
+  },
+  "boundary": "Two author-created tasks with two baseline runs each. One additional post-change regression is separate, not substituted into the baseline. This is not a public benchmark or stable success-rate estimate.",
+  "metric_definitions": {
+    "functional_verifier_passed": "Pristine test hashes unchanged, scope valid, external verifier exits zero with all expected tests.",
+    "workflow_passed": "Functional pass plus completed run plus a final successful verifier call observed in the agent trace."
+  },
+  "feedback_change": "Invalid patch_file arguments stay rejected; feedback provides separate JSON fields and an escaped-string example. No automatic repair or execution of malformed calls.",
+  "causal_limit": "Post-change sample n=1. Error feedback was exercised once and recovery observed, but this does not establish a statistically reliable success-rate improvement."
+}

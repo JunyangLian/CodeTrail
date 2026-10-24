@@ -1,8 +1,0 @@
-{
-  "at": "2026-10-18T04:37:21+00:00",
-  "candidate_id": "CAND-4096-to-8192",
-  "human_approval": true,
-  "metrics": null,
-  "simulation": "offline_simulation",
-  "transition": "approved"
-}

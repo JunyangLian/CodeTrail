@@ -1,0 +1,11 @@
+{
+  "captured": "After four baseline runs, before production feedback edit; baseline runtime files unchanged during these runs",
+  "sha256": {
+    "pico/runtime.py": "c7e29bcf04a43752c66fa2cc953977443d5dd201d691099fd00591805e780972",
+    "pico/agent_loop.py": "0974d719804eee6000ae877ff601066110c5ba452bccfb9352fa07f4c04ef00a",
+    "pico/tool_executor.py": "bf84eec1f13e52aadf7ea30a46db68f9eb6667b3cd0d6f3105e8e24a713ea2ff",
+    "pico/prompt_prefix.py": "b9aed16db484f15ed30be21401e7048b30dc10b7add50949206c2e36c824edbe",
+    "scripts/run_repair_validation.py": "1188c592f195ba31754bc7934757928baf2982c40f67465896d07735968be94d",
+    "benchmarks/repair_validation_tasks.json": "a1a63c654f0a7f6c607399bb230827136cfc4838ed92acbb450939837dbcc358"
+  }
+}

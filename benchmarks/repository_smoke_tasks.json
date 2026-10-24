@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "scope": "Small author-created repository reading smoke test; not a repair benchmark or model ranking.",
+  "frozen_before_first_run": true,
+  "tasks": [
+    {
+      "id": "retry_policy",
+      "category": "configuration_reading",
+      "filename": "settings.py",
+      "content": "DEFAULT_RETRY_COUNT = 4\nREQUEST_TIMEOUT_SECONDS = 17\nRETRYABLE_STATUS_CODES = (429, 502, 503)\n",
+      "prompt": "Read settings.py using read_file. Return only a JSON object with keys retry_count, timeout_seconds and retryable_status_codes, using the values from the file.",
+      "expected": {"retry_count": 4, "timeout_seconds": 17, "retryable_status_codes": [429, 502, 503]}
+    },
+    {
+      "id": "invoice_totals",
+      "category": "data_reasoning",
+      "filename": "invoice.json",
+      "content": "{\"items\":[{\"unit_price\":18,\"quantity\":3},{\"unit_price\":7,\"quantity\":2}],\"delivery_fee\":6,\"discount_amount\":8}\n",
+      "prompt": "Read invoice.json using read_file. Compute subtotal as sum(unit_price * quantity), and total as subtotal + delivery_fee - discount_amount. Return only a JSON object with keys subtotal and total.",
+      "expected": {"subtotal": 68, "total": 66}
+    },
+    {
+      "id": "route_precedence",
+      "category": "code_reasoning",
+      "filename": "router.py",
+      "content": "def route(path):\n    if path == '/health':\n        return 204\n    if path.startswith('/admin'):\n        return 403\n    if path.startswith('/api/'):\n        return 200\n    return 404\n",
+      "prompt": "Read router.py using read_file. Determine its return values for /health, /admin/api/users, /api/users, /unknown. Return only a JSON object mapping these four paths to their integer return values.",
+      "expected": {"/health": 204, "/admin/api/users": 403, "/api/users": 200, "/unknown": 404}
+    }
+  ]
+}

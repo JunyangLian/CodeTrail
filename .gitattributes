@@ -1,5 +1,3 @@
-# Frozen experiment data and snapshots must keep exact bytes:
-# manifests hash working-tree bytes, and EOL conversion on checkout
-# would break hash re-verification (see scripts/restore_snapshot_bytes.py).
-data/** -text
-src/genomeqc_agent/adapters/v2_snapshot/** -text
+# Preserve exact fixture and evidence bytes across Windows and Unix checkouts.
+# Source and test hashes in the published audit reports depend on these bytes.
+* -text
