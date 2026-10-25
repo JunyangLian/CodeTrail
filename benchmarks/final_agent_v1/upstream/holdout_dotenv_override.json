@@ -1,0 +1,19 @@
+{
+  "sha": "26ff5b74c676dbed391eb535ad2a591ecf98d3c6",
+  "html_url": "https://github.com/theskumar/python-dotenv/commit/26ff5b74c676dbed391eb535ad2a591ecf98d3c6",
+  "parents": [
+    {
+      "sha": "17dba65244c1d4d10f591fe37c924bd2c6fd1cfc",
+      "url": "https://api.github.com/repos/theskumar/python-dotenv/commits/17dba65244c1d4d10f591fe37c924bd2c6fd1cfc",
+      "html_url": "https://github.com/theskumar/python-dotenv/commit/17dba65244c1d4d10f591fe37c924bd2c6fd1cfc"
+    }
+  ],
+  "title": "Fix variable expansion order without override",
+  "committed_at": "2020-12-05T13:46:06Z",
+  "changed_files": [
+    "CHANGELOG.md",
+    "README.md",
+    "src/dotenv/main.py",
+    "tests/test_main.py"
+  ]
+}

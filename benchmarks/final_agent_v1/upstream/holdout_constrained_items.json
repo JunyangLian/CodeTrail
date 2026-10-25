@@ -1,0 +1,16 @@
+{
+  "sha": "d032cab7798c7a072ecbb8ade4dfa50030c75cb5",
+  "html_url": "https://github.com/more-itertools/more-itertools/commit/d032cab7798c7a072ecbb8ade4dfa50030c75cb5",
+  "parents": [
+    {
+      "sha": "19ddb972845ab0e5b9b7449d3fd5930781407441",
+      "url": "https://api.github.com/repos/more-itertools/more-itertools/commits/19ddb972845ab0e5b9b7449d3fd5930781407441",
+      "html_url": "https://github.com/more-itertools/more-itertools/commit/19ddb972845ab0e5b9b7449d3fd5930781407441"
+    }
+  ],
+  "title": "fix nonpositive item limits in constrained_batches",
+  "committed_at": "2026-09-09T17:12:29Z",
+  "changed_files": [
+    "more_itertools/more.py"
+  ]
+}

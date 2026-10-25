@@ -2,6 +2,7 @@
 
 import json
 from pathlib import Path
+from .persistence import write_json_atomic
 
 
 class SessionStore:
@@ -14,7 +15,7 @@ class SessionStore:
 
     def save(self, session):
         path = self.path(session["id"])
-        path.write_text(json.dumps(session, indent=2), encoding="utf-8")
+        write_json_atomic(path, session)
         return path
 
     def load(self, session_id):

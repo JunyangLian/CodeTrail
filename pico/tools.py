@@ -204,7 +204,9 @@ def tool_search(context, args):
     if shutil.which("rg"):
         # 优先用 rg，因为搜索会非常频繁，搜索延迟会直接影响 agent 控制循环。
         result = subprocess.run(
-            ["rg", "-n", "--smart-case", "--max-count", "200", pattern, str(path)],
+            ["rg", "-n", "--smart-case", "--max-count", "200",
+             "--glob", "!.env*", "--glob", "!*.pem", "--glob", "!*.key",
+             "--glob", "!.ssh/**", "--glob", "!.aws/**", pattern, str(path)],
             cwd=context.root,
             capture_output=True,
         )
@@ -216,6 +218,9 @@ def tool_search(context, args):
         if item.is_file() and not any(part in IGNORED_PATH_NAMES for part in item.relative_to(context.root).parts)
     ]
     for file_path in files:
+        from .security import sensitive_workspace_path
+        if sensitive_workspace_path(file_path.relative_to(context.root)):
+            continue
         for number, line in enumerate(file_path.read_text(encoding="utf-8", errors="replace").splitlines(), start=1):
             if pattern.lower() in line.lower():
                 matches.append(f"{file_path.relative_to(context.root)}:{number}:{line}")

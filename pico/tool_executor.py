@@ -89,7 +89,7 @@ class ToolExecutor:
                                           'Use a corrected native function call.')
             if example:
                 message += f"\nexample: {example}"
-            security_event_type = "path_escape" if "path escapes workspace" in str(exc) else ""
+            security_event_type = "path_escape" if "path escapes workspace" in str(exc) else "sensitive_path" if "sensitive path denied" in str(exc) else ""
             return ToolExecutionResult(
                 content=message,
                 metadata=_metadata(
@@ -129,7 +129,7 @@ class ToolExecutor:
         before_snapshot = agent.capture_workspace_snapshot() if tool["risky"] else {}
         after_snapshot = before_snapshot
         try:
-            content = clip(tool["run"](args), 12000 if name == 'run_shell' else 4000)
+            content = agent.redact_text(clip(tool["run"](args), 12000 if name == 'run_shell' else 4000))
             after_snapshot = agent.capture_workspace_snapshot() if tool["risky"] else before_snapshot
             affected_paths, diff_summary = agent.diff_workspace_snapshots(before_snapshot, after_snapshot)
             workspace_changed = bool(affected_paths)
@@ -163,7 +163,7 @@ class ToolExecutor:
             after_snapshot = agent.capture_workspace_snapshot() if tool["risky"] else before_snapshot
             affected_paths, diff_summary = agent.diff_workspace_snapshots(before_snapshot, after_snapshot)
             workspace_changed = bool(affected_paths)
-            security_event_type = "path_escape" if "path escapes workspace" in str(exc) else ""
+            security_event_type = "path_escape" if "path escapes workspace" in str(exc) else "sensitive_path" if "sensitive path denied" in str(exc) else ""
             metadata = _metadata(
                 "partial_success" if workspace_changed else "error",
                 tool_error_code="tool_partial_success" if workspace_changed else "tool_failed",

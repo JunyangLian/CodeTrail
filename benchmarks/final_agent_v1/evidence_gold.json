@@ -1,0 +1,1735 @@
+{
+  "holdout_bucket_falsey": {
+    "required_files": [
+      "more_itertools/more.py"
+    ],
+    "spans": [
+      {
+        "path": "more_itertools/more.py",
+        "start": 1183,
+        "end": 1187,
+        "lines": [
+          {
+            "number": 1183,
+            "text": "        self._key = key"
+          },
+          {
+            "number": 1184,
+            "text": "        self._cache = defaultdict(deque)"
+          },
+          {
+            "number": 1185,
+            "text": "        self._validator = validator or (lambda x: True)"
+          },
+          {
+            "number": 1187,
+            "text": "    def __contains__(self, value):"
+          }
+        ]
+      }
+    ],
+    "definition": "Changed upstream faulty source plus two context lines, before first edit; frozen by controller, never installed in workspace."
+  },
+  "holdout_constrained_items": {
+    "required_files": [
+      "more_itertools/more.py"
+    ],
+    "spans": [
+      {
+        "path": "more_itertools/more.py",
+        "start": 4939,
+        "end": 4943,
+        "lines": [
+          {
+            "number": 4940,
+            "text": "    If a *max_count* is supplied, the number of items per batch is also"
+          },
+          {
+            "number": 4941,
+            "text": "    limited:"
+          },
+          {
+            "number": 4943,
+            "text": "    >>> iterable = [b'12345', b'123', b'12345678', b'1', b'1', b'12', b'1']"
+          }
+        ]
+      },
+      {
+        "path": "more_itertools/more.py",
+        "start": 4953,
+        "end": 4957,
+        "lines": [
+          {
+            "number": 4953,
+            "text": "    if max_size <= 0:"
+          },
+          {
+            "number": 4954,
+            "text": "        raise ValueError('maximum size must be greater than zero')"
+          },
+          {
+            "number": 4956,
+            "text": "    batch = []"
+          },
+          {
+            "number": 4957,
+            "text": "    batch_size = 0"
+          }
+        ]
+      }
+    ],
+    "definition": "Changed upstream faulty source plus two context lines, before first edit; frozen by controller, never installed in workspace."
+  },
+  "holdout_numeric_reverse": {
+    "required_files": [
+      "more_itertools/more.py"
+    ],
+    "spans": [
+      {
+        "path": "more_itertools/more.py",
+        "start": 2403,
+        "end": 2407,
+        "lines": [
+          {
+            "number": 2404,
+            "text": "    def __reversed__(self):"
+          },
+          {
+            "number": 2405,
+            "text": "        return iter("
+          },
+          {
+            "number": 2406,
+            "text": "            numeric_range("
+          },
+          {
+            "number": 2407,
+            "text": "                self._get_by_index(-1), self._start - self._step, -self._step"
+          }
+        ]
+      },
+      {
+        "path": "more_itertools/more.py",
+        "start": 2404,
+        "end": 2410,
+        "lines": [
+          {
+            "number": 2404,
+            "text": "    def __reversed__(self):"
+          },
+          {
+            "number": 2405,
+            "text": "        return iter("
+          },
+          {
+            "number": 2406,
+            "text": "            numeric_range("
+          },
+          {
+            "number": 2407,
+            "text": "                self._get_by_index(-1), self._start - self._step, -self._step"
+          },
+          {
+            "number": 2408,
+            "text": "            )"
+          },
+          {
+            "number": 2409,
+            "text": "        )"
+          }
+        ]
+      }
+    ],
+    "definition": "Changed upstream faulty source plus two context lines, before first edit; frozen by controller, never installed in workspace."
+  },
+  "holdout_interleave_empty": {
+    "required_files": [
+      "more_itertools/more.py"
+    ],
+    "spans": [
+      {
+        "path": "more_itertools/more.py",
+        "start": 1338,
+        "end": 1342,
+        "lines": [
+          {
+            "number": 1339,
+            "text": "    dims = len(lengths)"
+          },
+          {
+            "number": 1341,
+            "text": "    # sort iterables by length, descending"
+          },
+          {
+            "number": 1342,
+            "text": "    lengths_permute = sorted("
+          }
+        ]
+      }
+    ],
+    "definition": "Changed upstream faulty source plus two context lines, before first edit; frozen by controller, never installed in workspace."
+  },
+  "holdout_seekable_zero": {
+    "required_files": [
+      "more_itertools/more.py"
+    ],
+    "spans": [
+      {
+        "path": "more_itertools/more.py",
+        "start": 3132,
+        "end": 3136,
+        "lines": [
+          {
+            "number": 3132,
+            "text": "                raise"
+          },
+          {
+            "number": 3133,
+            "text": "            return default"
+          },
+          {
+            "number": 3134,
+            "text": "        if self._index is None:"
+          },
+          {
+            "number": 3135,
+            "text": "            self._index = len(self._cache)"
+          },
+          {
+            "number": 3136,
+            "text": "        self._index -= 1"
+          }
+        ]
+      }
+    ],
+    "definition": "Changed upstream faulty source plus two context lines, before first edit; frozen by controller, never installed in workspace."
+  },
+  "holdout_dotenv_inline_empty": {
+    "required_files": [
+      "dotenv/main.py",
+      "dotenv/parser.py"
+    ],
+    "spans": [
+      {
+        "path": "dotenv/parser.py",
+        "start": 157,
+        "end": 162,
+        "lines": [
+          {
+            "number": 157,
+            "text": "        reader.read_regex(_whitespace)"
+          },
+          {
+            "number": 158,
+            "text": "        if reader.peek(1) == \"=\":"
+          },
+          {
+            "number": 159,
+            "text": "            reader.read_regex(_equal_sign)"
+          },
+          {
+            "number": 160,
+            "text": "            value: Optional[str] = parse_value(reader)"
+          },
+          {
+            "number": 161,
+            "text": "        else:"
+          },
+          {
+            "number": 162,
+            "text": "            value = None"
+          }
+        ]
+      },
+      {
+        "path": "dotenv/main.py",
+        "start": 92,
+        "end": 95,
+        "lines": [
+          {
+            "number": 92,
+            "text": "        with self._get_stream() as stream:"
+          },
+          {
+            "number": 93,
+            "text": "            for mapping in with_warn_for_invalid_lines(parse_stream(stream)):"
+          },
+          {
+            "number": 94,
+            "text": "                if mapping.key is not None:"
+          },
+          {
+            "number": 95,
+            "text": "                    yield mapping.key, mapping.value"
+          }
+        ]
+      }
+    ],
+    "definition": "Changed upstream faulty source plus two context lines, before first edit; frozen by controller, never installed in workspace."
+  },
+  "holdout_dotenv_backslash": {
+    "required_files": [
+      "dotenv/main.py",
+      "dotenv/parser.py"
+    ],
+    "spans": [
+      {
+        "path": "dotenv/main.py",
+        "start": 217,
+        "end": 221,
+        "lines": [
+          {
+            "number": 218,
+            "text": "    if quote:"
+          },
+          {
+            "number": 219,
+            "text": "        value_out = \"'{}'\".format(value_to_set.replace(\"'\", \"\\\\'\"))"
+          },
+          {
+            "number": 220,
+            "text": "    else:"
+          },
+          {
+            "number": 221,
+            "text": "        value_out = value_to_set"
+          }
+        ]
+      },
+      {
+        "path": "dotenv/parser.py",
+        "start": 23,
+        "end": 28,
+        "lines": [
+          {
+            "number": 23,
+            "text": "_unquoted_key = make_regex(r\"([^=\\#\\s]+)\")"
+          },
+          {
+            "number": 24,
+            "text": "_equal_sign = make_regex(r\"(=[^\\S\\r\\n]*)\")"
+          },
+          {
+            "number": 25,
+            "text": "_single_quoted_value = make_regex(r\"'((?:\\\\'|[^'])*)'\")"
+          },
+          {
+            "number": 26,
+            "text": "_double_quoted_value = make_regex(r'\"((?:\\\\\"|[^\"])*)\"')"
+          },
+          {
+            "number": 27,
+            "text": "_unquoted_value = make_regex(r\"([^\\r\\n]*)\")"
+          },
+          {
+            "number": 28,
+            "text": "_comment = make_regex(r\"(?:[^\\S\\r\\n]*#[^\\r\\n]*)?\")"
+          }
+        ]
+      }
+    ],
+    "definition": "Changed upstream faulty source plus two context lines, before first edit; frozen by controller, never installed in workspace."
+  },
+  "holdout_dotenv_override": {
+    "required_files": [
+      "dotenv/main.py",
+      "dotenv/variables.py"
+    ],
+    "spans": [
+      {
+        "path": "dotenv/main.py",
+        "start": 44,
+        "end": 49,
+        "lines": [
+          {
+            "number": 44,
+            "text": "class DotEnv():"
+          },
+          {
+            "number": 46,
+            "text": "    def __init__(self, dotenv_path, verbose=False, encoding=None, interpolate=True):"
+          },
+          {
+            "number": 47,
+            "text": "        # type: (Union[Text, _PathLike, _StringIO], bool, Union[None, Text], bool) -> None"
+          },
+          {
+            "number": 48,
+            "text": "        self.dotenv_path = dotenv_path  # type: Union[Text,_PathLike, _StringIO]"
+          },
+          {
+            "number": 49,
+            "text": "        self._dict = None  # type: Optional[Dict[Text, Optional[Text]]]"
+          }
+        ]
+      },
+      {
+        "path": "dotenv/main.py",
+        "start": 51,
+        "end": 55,
+        "lines": [
+          {
+            "number": 51,
+            "text": "        self.encoding = encoding  # type: Union[None, Text]"
+          },
+          {
+            "number": 52,
+            "text": "        self.interpolate = interpolate  # type: bool"
+          },
+          {
+            "number": 54,
+            "text": "    @contextmanager"
+          },
+          {
+            "number": 55,
+            "text": "    def _get_stream(self):"
+          }
+        ]
+      },
+      {
+        "path": "dotenv/main.py",
+        "start": 74,
+        "end": 78,
+        "lines": [
+          {
+            "number": 75,
+            "text": "        if self.interpolate:"
+          },
+          {
+            "number": 76,
+            "text": "            self._dict = OrderedDict(resolve_variables(raw_values))"
+          },
+          {
+            "number": 77,
+            "text": "        else:"
+          },
+          {
+            "number": 78,
+            "text": "            self._dict = OrderedDict(raw_values)"
+          }
+        ]
+      },
+      {
+        "path": "dotenv/main.py",
+        "start": 87,
+        "end": 92,
+        "lines": [
+          {
+            "number": 87,
+            "text": "                    yield mapping.key, mapping.value"
+          },
+          {
+            "number": 89,
+            "text": "    def set_as_environment_variables(self, override=False):"
+          },
+          {
+            "number": 90,
+            "text": "        # type: (bool) -> bool"
+          },
+          {
+            "number": 91,
+            "text": "        \"\"\""
+          },
+          {
+            "number": 92,
+            "text": "        Load the current dotenv as system environemt variable."
+          }
+        ]
+      },
+      {
+        "path": "dotenv/main.py",
+        "start": 93,
+        "end": 97,
+        "lines": [
+          {
+            "number": 93,
+            "text": "        \"\"\""
+          },
+          {
+            "number": 94,
+            "text": "        for k, v in self.dict().items():"
+          },
+          {
+            "number": 95,
+            "text": "            if k in os.environ and not override:"
+          },
+          {
+            "number": 96,
+            "text": "                continue"
+          },
+          {
+            "number": 97,
+            "text": "            if v is not None:"
+          }
+        ]
+      },
+      {
+        "path": "dotenv/main.py",
+        "start": 206,
+        "end": 211,
+        "lines": [
+          {
+            "number": 208,
+            "text": "def resolve_variables(values):"
+          },
+          {
+            "number": 209,
+            "text": "    # type: (Iterable[Tuple[Text, Optional[Text]]]) -> Mapping[Text, Optional[Text]]"
+          },
+          {
+            "number": 211,
+            "text": "    new_values = {}  # type: Dict[Text, Optional[Text]]"
+          }
+        ]
+      },
+      {
+        "path": "dotenv/main.py",
+        "start": 217,
+        "end": 222,
+        "lines": [
+          {
+            "number": 217,
+            "text": "            atoms = parse_variables(value)"
+          },
+          {
+            "number": 218,
+            "text": "            env = {}  # type: Dict[Text, Optional[Text]]"
+          },
+          {
+            "number": 219,
+            "text": "            env.update(os.environ)  # type: ignore"
+          },
+          {
+            "number": 220,
+            "text": "            env.update(new_values)"
+          },
+          {
+            "number": 221,
+            "text": "            result = \"\".join(atom.resolve(env) for atom in atoms)"
+          }
+        ]
+      },
+      {
+        "path": "dotenv/main.py",
+        "start": 300,
+        "end": 304,
+        "lines": [
+          {
+            "number": 300,
+            "text": "    \"\"\""
+          },
+          {
+            "number": 301,
+            "text": "    f = dotenv_path or stream or find_dotenv()"
+          },
+          {
+            "number": 302,
+            "text": "    return DotEnv(f, verbose=verbose, interpolate=interpolate, **kwargs).set_as_environment_variables(override=override)"
+          }
+        ]
+      },
+      {
+        "path": "dotenv/main.py",
+        "start": 306,
+        "end": 308,
+        "lines": [
+          {
+            "number": 306,
+            "text": "    # type: (Union[Text, _PathLike, None], Optional[_StringIO], bool, bool, Union[None, Text]) -> Dict[Text, Optional[Text]]  # noqa: E501"
+          },
+          {
+            "number": 307,
+            "text": "    f = dotenv_path or stream or find_dotenv()"
+          },
+          {
+            "number": 308,
+            "text": "    return DotEnv(f, verbose=verbose, interpolate=interpolate, **kwargs).dict()"
+          }
+        ]
+      },
+      {
+        "path": "dotenv/variables.py",
+        "start": 84,
+        "end": 86,
+        "lines": [
+          {
+            "number": 84,
+            "text": "        default = self.default if self.default is not None else \"\""
+          },
+          {
+            "number": 85,
+            "text": "        result = env.get(self.name, default)"
+          },
+          {
+            "number": 86,
+            "text": "        return result if result is not None else \"\""
+          }
+        ]
+      }
+    ],
+    "definition": "Changed upstream faulty source plus two context lines, before first edit; frozen by controller, never installed in workspace."
+  },
+  "holdout_dotenv_spaces": {
+    "required_files": [
+      "dotenv/parser.py"
+    ],
+    "spans": [
+      {
+        "path": "dotenv/parser.py",
+        "start": 25,
+        "end": 29,
+        "lines": [
+          {
+            "number": 25,
+            "text": "_single_quoted_value = make_regex(r\"'((?:\\\\'|[^'])*)'\")"
+          },
+          {
+            "number": 26,
+            "text": "_double_quoted_value = make_regex(r'\"((?:\\\\\"|[^\"])*)\"')"
+          },
+          {
+            "number": 27,
+            "text": "_unquoted_value_part = make_regex(r\"([^ \\r\\n]*)\")"
+          },
+          {
+            "number": 28,
+            "text": "_comment = make_regex(r\"(?:[^\\S\\r\\n]*#[^\\r\\n]*)?\")"
+          },
+          {
+            "number": 29,
+            "text": "_end_of_line = make_regex(r\"[^\\S\\r\\n]*(?:\\r\\n|\\n|\\r|$)\")"
+          }
+        ]
+      },
+      {
+        "path": "dotenv/parser.py",
+        "start": 168,
+        "end": 179,
+        "lines": [
+          {
+            "number": 168,
+            "text": "def parse_unquoted_value(reader):"
+          },
+          {
+            "number": 169,
+            "text": "    # type: (Reader) -> Text"
+          },
+          {
+            "number": 170,
+            "text": "    value = u\"\""
+          },
+          {
+            "number": 171,
+            "text": "    while True:"
+          },
+          {
+            "number": 172,
+            "text": "        (part,) = reader.read_regex(_unquoted_value_part)"
+          },
+          {
+            "number": 173,
+            "text": "        value += part"
+          },
+          {
+            "number": 174,
+            "text": "        after = reader.peek(2)"
+          },
+          {
+            "number": 175,
+            "text": "        if len(after) < 2 or after[0] in u\"\\r\\n\" or after[1] in u\" #\\r\\n\":"
+          },
+          {
+            "number": 176,
+            "text": "            return value"
+          },
+          {
+            "number": 177,
+            "text": "        value += reader.read(2)"
+          }
+        ]
+      }
+    ],
+    "definition": "Changed upstream faulty source plus two context lines, before first edit; frozen by controller, never installed in workspace."
+  },
+  "holdout_dotenv_bom": {
+    "required_files": [
+      "dotenv/parser.py"
+    ],
+    "spans": [
+      {
+        "path": "dotenv/parser.py",
+        "start": 69,
+        "end": 73,
+        "lines": [
+          {
+            "number": 69,
+            "text": "class Reader:"
+          },
+          {
+            "number": 70,
+            "text": "    def __init__(self, stream: IO[str]) -> None:"
+          },
+          {
+            "number": 71,
+            "text": "        self.string = stream.read()"
+          },
+          {
+            "number": 72,
+            "text": "        self.position = Position.start()"
+          },
+          {
+            "number": 73,
+            "text": "        self.mark = Position.start()"
+          }
+        ]
+      }
+    ],
+    "definition": "Changed upstream faulty source plus two context lines, before first edit; frozen by controller, never installed in workspace."
+  },
+  "pagination_boundaries": {
+    "required_files": [
+      "pagination.py"
+    ],
+    "spans": [
+      {
+        "path": "pagination.py",
+        "start": 5,
+        "end": 9,
+        "lines": [
+          {
+            "number": 5,
+            "text": "        raise ValueError('page_size must be a positive integer')"
+          },
+          {
+            "number": 6,
+            "text": "    total = len(items)"
+          },
+          {
+            "number": 7,
+            "text": "    start = page * page_size"
+          },
+          {
+            "number": 8,
+            "text": "    return {"
+          },
+          {
+            "number": 9,
+            "text": "        'items': items[start:start + page_size],"
+          }
+        ]
+      },
+      {
+        "path": "pagination.py",
+        "start": 8,
+        "end": 12,
+        "lines": [
+          {
+            "number": 8,
+            "text": "    return {"
+          },
+          {
+            "number": 9,
+            "text": "        'items': items[start:start + page_size],"
+          },
+          {
+            "number": 10,
+            "text": "        'total_pages': total // page_size,"
+          },
+          {
+            "number": 11,
+            "text": "        'has_next': page * page_size <= total,"
+          },
+          {
+            "number": 12,
+            "text": "    }"
+          }
+        ]
+      }
+    ],
+    "definition": "Frozen faulty implementation regions against existing reference, plus two context lines; original tests unchanged."
+  },
+  "user_lookup_contract": {
+    "required_files": [
+      "repository.py",
+      "service.py"
+    ],
+    "spans": [
+      {
+        "path": "repository.py",
+        "start": 2,
+        "end": 4,
+        "lines": [
+          {
+            "number": 3,
+            "text": "def get_user(users, user_id):"
+          },
+          {
+            "number": 4,
+            "text": "    return users.get(user_id)"
+          }
+        ]
+      },
+      {
+        "path": "service.py",
+        "start": 2,
+        "end": 5,
+        "lines": [
+          {
+            "number": 3,
+            "text": "def display_name(users, user_id):"
+          },
+          {
+            "number": 4,
+            "text": "    user = get_user(user_id, users)"
+          },
+          {
+            "number": 5,
+            "text": "    return user['name'] if user is not None else None"
+          }
+        ]
+      }
+    ],
+    "definition": "Frozen faulty implementation regions against existing reference, plus two context lines; original tests unchanged."
+  },
+  "interval_union": {
+    "required_files": [
+      "intervals.py"
+    ],
+    "spans": [
+      {
+        "path": "intervals.py",
+        "start": 5,
+        "end": 10,
+        "lines": [
+          {
+            "number": 5,
+            "text": "        if start > end:"
+          },
+          {
+            "number": 6,
+            "text": "            raise ValueError('reversed interval')"
+          },
+          {
+            "number": 7,
+            "text": "        if result and start < result[-1][1]:"
+          },
+          {
+            "number": 8,
+            "text": "            result[-1][1] = end"
+          },
+          {
+            "number": 9,
+            "text": "        else:"
+          },
+          {
+            "number": 10,
+            "text": "            result.append([start, end])"
+          }
+        ]
+      }
+    ],
+    "definition": "Frozen faulty implementation regions against existing reference, plus two context lines; original tests unchanged."
+  },
+  "ttl_expiry": {
+    "required_files": [
+      "cache.py"
+    ],
+    "spans": [
+      {
+        "path": "cache.py",
+        "start": 4,
+        "end": 8,
+        "lines": [
+          {
+            "number": 4,
+            "text": "        self.entries = {}"
+          },
+          {
+            "number": 5,
+            "text": "    def put(self, key, value, ttl):"
+          },
+          {
+            "number": 6,
+            "text": "        self.entries[key] = (value, ttl)"
+          },
+          {
+            "number": 7,
+            "text": "    def get(self, key, default=None):"
+          },
+          {
+            "number": 8,
+            "text": "        if key not in self.entries:"
+          }
+        ]
+      },
+      {
+        "path": "cache.py",
+        "start": 9,
+        "end": 13,
+        "lines": [
+          {
+            "number": 9,
+            "text": "            return default"
+          },
+          {
+            "number": 10,
+            "text": "        value, expiry = self.entries[key]"
+          },
+          {
+            "number": 11,
+            "text": "        if self.clock() > expiry:"
+          },
+          {
+            "number": 12,
+            "text": "            del self.entries[key]"
+          },
+          {
+            "number": 13,
+            "text": "            return default"
+          }
+        ]
+      }
+    ],
+    "definition": "Frozen faulty implementation regions against existing reference, plus two context lines; original tests unchanged."
+  },
+  "retry_schedule": {
+    "required_files": [
+      "retry.py"
+    ],
+    "spans": [
+      {
+        "path": "retry.py",
+        "start": 1,
+        "end": 4,
+        "lines": [
+          {
+            "number": 1,
+            "text": "def retry_delays(attempts, base=1, factor=2, cap=60):"
+          },
+          {
+            "number": 2,
+            "text": "    if not isinstance(attempts, int) or attempts < 0:"
+          },
+          {
+            "number": 3,
+            "text": "        raise ValueError('invalid attempts')"
+          },
+          {
+            "number": 4,
+            "text": "    if base < 0 or factor < 1 or cap < 0:"
+          }
+        ]
+      },
+      {
+        "path": "retry.py",
+        "start": 4,
+        "end": 6,
+        "lines": [
+          {
+            "number": 4,
+            "text": "    if base < 0 or factor < 1 or cap < 0:"
+          },
+          {
+            "number": 5,
+            "text": "        raise ValueError('invalid delay')"
+          },
+          {
+            "number": 6,
+            "text": "    return [max(cap, base * factor**i) for i in range(attempts)]"
+          }
+        ]
+      }
+    ],
+    "definition": "Frozen faulty implementation regions against existing reference, plus two context lines; original tests unchanged."
+  },
+  "dependency_order": {
+    "required_files": [
+      "graph.py"
+    ],
+    "spans": [
+      {
+        "path": "graph.py",
+        "start": 1,
+        "end": 5,
+        "lines": [
+          {
+            "number": 1,
+            "text": "def dependency_order(graph):"
+          },
+          {
+            "number": 2,
+            "text": "    done = set()"
+          },
+          {
+            "number": 3,
+            "text": "    result = []"
+          },
+          {
+            "number": 4,
+            "text": "    def visit(node):"
+          },
+          {
+            "number": 5,
+            "text": "        if node in done:"
+          }
+        ]
+      },
+      {
+        "path": "graph.py",
+        "start": 5,
+        "end": 9,
+        "lines": [
+          {
+            "number": 5,
+            "text": "        if node in done:"
+          },
+          {
+            "number": 6,
+            "text": "            return"
+          },
+          {
+            "number": 7,
+            "text": "        done.add(node)"
+          },
+          {
+            "number": 8,
+            "text": "        result.append(node)"
+          },
+          {
+            "number": 9,
+            "text": "        for child in graph.get(node, []):"
+          }
+        ]
+      },
+      {
+        "path": "graph.py",
+        "start": 7,
+        "end": 12,
+        "lines": [
+          {
+            "number": 7,
+            "text": "        done.add(node)"
+          },
+          {
+            "number": 8,
+            "text": "        result.append(node)"
+          },
+          {
+            "number": 9,
+            "text": "        for child in graph.get(node, []):"
+          },
+          {
+            "number": 10,
+            "text": "            visit(child)"
+          },
+          {
+            "number": 11,
+            "text": "    for node in graph:"
+          },
+          {
+            "number": 12,
+            "text": "        visit(node)"
+          }
+        ]
+      }
+    ],
+    "definition": "Frozen faulty implementation regions against existing reference, plus two context lines; original tests unchanged."
+  },
+  "money_minor_units": {
+    "required_files": [
+      "billing.py",
+      "money.py"
+    ],
+    "spans": [
+      {
+        "path": "money.py",
+        "start": 1,
+        "end": 3,
+        "lines": [
+          {
+            "number": 1,
+            "text": "from decimal import Decimal, ROUND_HALF_UP"
+          },
+          {
+            "number": 2,
+            "text": "def to_minor(value):"
+          },
+          {
+            "number": 3,
+            "text": "    return int(float(value) * 100)"
+          }
+        ]
+      },
+      {
+        "path": "billing.py",
+        "start": 1,
+        "end": 3,
+        "lines": [
+          {
+            "number": 1,
+            "text": "from money import to_minor"
+          },
+          {
+            "number": 2,
+            "text": "def invoice_total(values):"
+          },
+          {
+            "number": 3,
+            "text": "    return to_minor(sum(float(value) for value in values))"
+          }
+        ]
+      }
+    ],
+    "definition": "Frozen faulty implementation regions against existing reference, plus two context lines; original tests unchanged."
+  },
+  "config_precedence": {
+    "required_files": [
+      "flags.py",
+      "settings.py"
+    ],
+    "spans": [
+      {
+        "path": "flags.py",
+        "start": 1,
+        "end": 2,
+        "lines": [
+          {
+            "number": 1,
+            "text": "def parse_bool(value):"
+          },
+          {
+            "number": 2,
+            "text": "    return bool(value)"
+          }
+        ]
+      },
+      {
+        "path": "settings.py",
+        "start": 1,
+        "end": 5,
+        "lines": [
+          {
+            "number": 1,
+            "text": "from flags import parse_bool"
+          },
+          {
+            "number": 2,
+            "text": "def load_settings(defaults, env):"
+          },
+          {
+            "number": 3,
+            "text": "    debug = env.get('debug') or defaults.get('debug', False)"
+          },
+          {
+            "number": 4,
+            "text": "    port = env.get('port') or defaults.get('port', 8000)"
+          },
+          {
+            "number": 5,
+            "text": "    return {'debug': parse_bool(debug), 'port': int(port)}"
+          }
+        ]
+      }
+    ],
+    "definition": "Frozen faulty implementation regions against existing reference, plus two context lines; original tests unchanged."
+  },
+  "cursor_roundtrip": {
+    "required_files": [
+      "cursor_codec.py",
+      "pagination.py"
+    ],
+    "spans": [
+      {
+        "path": "cursor_codec.py",
+        "start": 5,
+        "end": 7,
+        "lines": [
+          {
+            "number": 5,
+            "text": "    return base64.urlsafe_b64encode(str(offset).encode()).decode()"
+          },
+          {
+            "number": 6,
+            "text": "def decode(token):"
+          },
+          {
+            "number": 7,
+            "text": "    return int(token)"
+          }
+        ]
+      },
+      {
+        "path": "pagination.py",
+        "start": 5,
+        "end": 7,
+        "lines": [
+          {
+            "number": 5,
+            "text": "    start = 0 if cursor is None else decode(cursor)"
+          },
+          {
+            "number": 6,
+            "text": "    end = start + size"
+          },
+          {
+            "number": 7,
+            "text": "    return items[start:end], encode(size) if end < len(items) else None"
+          }
+        ]
+      }
+    ],
+    "definition": "Frozen faulty implementation regions against existing reference, plus two context lines; original tests unchanged."
+  },
+  "error_response_contract": {
+    "required_files": [
+      "api.py",
+      "errors.py"
+    ],
+    "spans": [
+      {
+        "path": "errors.py",
+        "start": 2,
+        "end": 6,
+        "lines": [
+          {
+            "number": 2,
+            "text": "    def __init__(self, message, field):"
+          },
+          {
+            "number": 3,
+            "text": "        super().__init__(message)"
+          },
+          {
+            "number": 4,
+            "text": "        self.field = message"
+          },
+          {
+            "number": 5,
+            "text": "class MissingError(Exception):"
+          },
+          {
+            "number": 6,
+            "text": "    pass"
+          }
+        ]
+      },
+      {
+        "path": "api.py",
+        "start": 3,
+        "end": 6,
+        "lines": [
+          {
+            "number": 3,
+            "text": "    try:"
+          },
+          {
+            "number": 4,
+            "text": "        return 200, action()"
+          },
+          {
+            "number": 5,
+            "text": "    except Exception as exc:"
+          },
+          {
+            "number": 6,
+            "text": "        return 500, {'error':str(exc)}"
+          }
+        ]
+      }
+    ],
+    "definition": "Frozen faulty implementation regions against existing reference, plus two context lines; original tests unchanged."
+  },
+  "utc_storage_contract": {
+    "required_files": [
+      "store.py",
+      "timestamps.py"
+    ],
+    "spans": [
+      {
+        "path": "timestamps.py",
+        "start": 1,
+        "end": 3,
+        "lines": [
+          {
+            "number": 1,
+            "text": "from datetime import timezone"
+          },
+          {
+            "number": 2,
+            "text": "def to_epoch(value):"
+          },
+          {
+            "number": 3,
+            "text": "    return value.replace(tzinfo=timezone.utc).timestamp()"
+          }
+        ]
+      },
+      {
+        "path": "store.py",
+        "start": 1,
+        "end": 4,
+        "lines": [
+          {
+            "number": 1,
+            "text": "from timestamps import to_epoch"
+          },
+          {
+            "number": 2,
+            "text": "def save_event(event):"
+          },
+          {
+            "number": 3,
+            "text": "    event['timestamp'] = int(to_epoch(event['at']) * 1000)"
+          },
+          {
+            "number": 4,
+            "text": "    return event"
+          }
+        ]
+      }
+    ],
+    "definition": "Frozen faulty implementation regions against existing reference, plus two context lines; original tests unchanged."
+  },
+  "inventory_reservation": {
+    "required_files": [
+      "orders.py",
+      "stock.py"
+    ],
+    "spans": [
+      {
+        "path": "stock.py",
+        "start": 1,
+        "end": 4,
+        "lines": [
+          {
+            "number": 1,
+            "text": "def reserve(stock, sku, qty):"
+          },
+          {
+            "number": 2,
+            "text": "    if not isinstance(qty, int) or qty < 1:"
+          },
+          {
+            "number": 3,
+            "text": "        raise ValueError('invalid quantity')"
+          },
+          {
+            "number": 4,
+            "text": "    stock[sku] -= qty"
+          }
+        ]
+      },
+      {
+        "path": "stock.py",
+        "start": 2,
+        "end": 6,
+        "lines": [
+          {
+            "number": 2,
+            "text": "    if not isinstance(qty, int) or qty < 1:"
+          },
+          {
+            "number": 3,
+            "text": "        raise ValueError('invalid quantity')"
+          },
+          {
+            "number": 4,
+            "text": "    stock[sku] -= qty"
+          },
+          {
+            "number": 5,
+            "text": "    if stock[sku] < 0:"
+          },
+          {
+            "number": 6,
+            "text": "        raise ValueError('insufficient stock')"
+          }
+        ]
+      },
+      {
+        "path": "stock.py",
+        "start": 3,
+        "end": 7,
+        "lines": [
+          {
+            "number": 3,
+            "text": "        raise ValueError('invalid quantity')"
+          },
+          {
+            "number": 4,
+            "text": "    stock[sku] -= qty"
+          },
+          {
+            "number": 5,
+            "text": "    if stock[sku] < 0:"
+          },
+          {
+            "number": 6,
+            "text": "        raise ValueError('insufficient stock')"
+          },
+          {
+            "number": 7,
+            "text": "    return stock[sku]"
+          }
+        ]
+      },
+      {
+        "path": "orders.py",
+        "start": 1,
+        "end": 5,
+        "lines": [
+          {
+            "number": 1,
+            "text": "from stock import reserve"
+          },
+          {
+            "number": 2,
+            "text": "def place_order(stock, sku, qty):"
+          },
+          {
+            "number": 3,
+            "text": "    reserve(stock, sku, qty)"
+          },
+          {
+            "number": 4,
+            "text": "    stock[sku] -= qty"
+          },
+          {
+            "number": 5,
+            "text": "    return {'sku':sku, 'quantity':qty, 'remaining':stock[sku]}"
+          }
+        ]
+      }
+    ],
+    "definition": "Frozen faulty implementation regions against existing reference, plus two context lines; original tests unchanged."
+  },
+  "boltons_isoparse": {
+    "required_files": [
+      "config.py",
+      "public_api.py",
+      "time_core.py",
+      "transport.py",
+      "validation.py"
+    ],
+    "spans": [
+      {
+        "path": "time_core.py",
+        "start": 26,
+        "end": 30,
+        "lines": [
+          {
+            "number": 26,
+            "text": "    .. _dateutil: https://pypi.python.org/pypi/python-dateutil"
+          },
+          {
+            "number": 28,
+            "text": "    \"\"\""
+          },
+          {
+            "number": 29,
+            "text": "    dt_args = [int(p) for p in _NONDIGIT_RE.split(iso_str)]"
+          },
+          {
+            "number": 30,
+            "text": "    return datetime(*dt_args)"
+          }
+        ]
+      },
+      {
+        "path": "time_core.py",
+        "start": 27,
+        "end": 30,
+        "lines": [
+          {
+            "number": 28,
+            "text": "    \"\"\""
+          },
+          {
+            "number": 29,
+            "text": "    dt_args = [int(p) for p in _NONDIGIT_RE.split(iso_str)]"
+          },
+          {
+            "number": 30,
+            "text": "    return datetime(*dt_args)"
+          }
+        ]
+      }
+    ],
+    "definition": "Frozen faulty implementation regions against existing reference, plus two context lines; original tests unchanged."
+  },
+  "boltons_xfrange": {
+    "required_files": [
+      "config.py",
+      "public_api.py",
+      "sequence_core.py",
+      "transport.py",
+      "validation.py"
+    ],
+    "spans": [
+      {
+        "path": "sequence_core.py",
+        "start": 17,
+        "end": 21,
+        "lines": [
+          {
+            "number": 17,
+            "text": "        # swap when all args are used"
+          },
+          {
+            "number": 18,
+            "text": "        stop, start = start * 1.0, stop * 1.0"
+          },
+          {
+            "number": 19,
+            "text": "    cur = start"
+          },
+          {
+            "number": 20,
+            "text": "    while cur < stop:"
+          },
+          {
+            "number": 21,
+            "text": "        yield cur"
+          }
+        ]
+      },
+      {
+        "path": "sequence_core.py",
+        "start": 18,
+        "end": 22,
+        "lines": [
+          {
+            "number": 18,
+            "text": "        stop, start = start * 1.0, stop * 1.0"
+          },
+          {
+            "number": 19,
+            "text": "    cur = start"
+          },
+          {
+            "number": 20,
+            "text": "    while cur < stop:"
+          },
+          {
+            "number": 21,
+            "text": "        yield cur"
+          },
+          {
+            "number": 22,
+            "text": "        cur += step"
+          }
+        ]
+      }
+    ],
+    "definition": "Frozen faulty implementation regions against existing reference, plus two context lines; original tests unchanged."
+  },
+  "boltons_multireplace": {
+    "required_files": [
+      "config.py",
+      "public_api.py",
+      "replacement_core.py",
+      "transport.py",
+      "validation.py"
+    ],
+    "spans": [
+      {
+        "path": "replacement_core.py",
+        "start": 102,
+        "end": 104,
+        "lines": [
+          {
+            "number": 102,
+            "text": "        constructor."
+          },
+          {
+            "number": 103,
+            "text": "        \"\"\""
+          },
+          {
+            "number": 104,
+            "text": "        return self.combined_pattern.sub(self._get_value, text)"
+          }
+        ]
+      }
+    ],
+    "definition": "Frozen faulty implementation regions against existing reference, plus two context lines; original tests unchanged."
+  },
+  "boltons_splitlines": {
+    "required_files": [
+      "config.py",
+      "public_api.py",
+      "text_core.py",
+      "transport.py",
+      "validation.py"
+    ],
+    "spans": [
+      {
+        "path": "text_core.py",
+        "start": 1,
+        "end": 5,
+        "lines": [
+          {
+            "number": 1,
+            "text": "import re"
+          },
+          {
+            "number": 3,
+            "text": "_line_ending_re = re.compile(r'(\\r\\n|\\n|\\x0b|\\f|\\r|\\x85|\\x2028|\\x2029)',"
+          },
+          {
+            "number": 4,
+            "text": "                             re.UNICODE)"
+          }
+        ]
+      }
+    ],
+    "definition": "Frozen faulty implementation regions against existing reference, plus two context lines; original tests unchanged."
+  },
+  "humanize_list": {
+    "required_files": [
+      "formatter.py"
+    ],
+    "spans": [
+      {
+        "path": "formatter.py",
+        "start": 21,
+        "end": 25,
+        "lines": [
+          {
+            "number": 21,
+            "text": "        str: A string with commas and 'and' in the right places."
+          },
+          {
+            "number": 22,
+            "text": "    \"\"\""
+          },
+          {
+            "number": 23,
+            "text": "    if len(items) == 1:"
+          },
+          {
+            "number": 24,
+            "text": "        return str(items[0])"
+          },
+          {
+            "number": 25,
+            "text": "    elif len(items) == 2:"
+          }
+        ]
+      }
+    ],
+    "definition": "Frozen faulty implementation regions against existing reference, plus two context lines; original tests unchanged."
+  },
+  "humanize_fractional": {
+    "required_files": [
+      "formatter.py"
+    ],
+    "spans": [
+      {
+        "path": "formatter.py",
+        "start": 74,
+        "end": 76,
+        "lines": [
+          {
+            "number": 74,
+            "text": "        return f\"{numerator:.0f}/{denominator:.0f}\""
+          },
+          {
+            "number": 76,
+            "text": "    return f\"{whole_number:.0f} {numerator:.0f}/{denominator:.0f}\""
+          }
+        ]
+      }
+    ],
+    "definition": "Frozen faulty implementation regions against existing reference, plus two context lines; original tests unchanged."
+  },
+  "humanize_metric": {
+    "required_files": [
+      "formatter.py"
+    ],
+    "spans": [
+      {
+        "path": "formatter.py",
+        "start": 119,
+        "end": 123,
+        "lines": [
+          {
+            "number": 119,
+            "text": "        return scientific(value, precision - 1) + unit"
+          },
+          {
+            "number": 121,
+            "text": "    value /= 10 ** (exponent // 3 * 3)"
+          },
+          {
+            "number": 122,
+            "text": "    if exponent >= 3:"
+          },
+          {
+            "number": 123,
+            "text": "        ordinal_ = \"kMGTPEZYRQ\"[exponent // 3 - 1]"
+          }
+        ]
+      },
+      {
+        "path": "formatter.py",
+        "start": 126,
+        "end": 130,
+        "lines": [
+          {
+            "number": 126,
+            "text": "    else:"
+          },
+          {
+            "number": 127,
+            "text": "        ordinal_ = \"\""
+          },
+          {
+            "number": 128,
+            "text": "    value_ = format(value, f\".{int(max(0, precision - exponent % 3 - 1))}f\")"
+          },
+          {
+            "number": 129,
+            "text": "    if not (unit or ordinal_) or unit in (\"°\", \"′\", \"″\"):"
+          },
+          {
+            "number": 130,
+            "text": "        space = \"\""
+          }
+        ]
+      }
+    ],
+    "definition": "Frozen faulty implementation regions against existing reference, plus two context lines; original tests unchanged."
+  },
+  "humanize_size": {
+    "required_files": [
+      "formatter.py"
+    ],
+    "spans": [
+      {
+        "path": "formatter.py",
+        "start": 93,
+        "end": 97,
+        "lines": [
+          {
+            "number": 94,
+            "text": "    exp = int(min(log(abs_bytes, base), len(suffix)))"
+          },
+          {
+            "number": 95,
+            "text": "    space = \"\" if gnu else \" \""
+          },
+          {
+            "number": 96,
+            "text": "    ret: str = format % (bytes_ / (base**exp)) + space + _(suffix[exp - 1])"
+          },
+          {
+            "number": 97,
+            "text": "    return ret"
+          }
+        ]
+      }
+    ],
+    "definition": "Frozen faulty implementation regions against existing reference, plus two context lines; original tests unchanged."
+  }
+}

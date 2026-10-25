@@ -1,0 +1,17 @@
+{
+  "sha": "6b1907de293a655fb77881bf81948f95fd15bd7c",
+  "html_url": "https://github.com/more-itertools/more-itertools/commit/6b1907de293a655fb77881bf81948f95fd15bd7c",
+  "parents": [
+    {
+      "sha": "ca711220a6657a22655f6fa497524d006a735c5f",
+      "url": "https://api.github.com/repos/more-itertools/more-itertools/commits/ca711220a6657a22655f6fa497524d006a735c5f",
+      "html_url": "https://github.com/more-itertools/more-itertools/commit/ca711220a6657a22655f6fa497524d006a735c5f"
+    }
+  ],
+  "title": "fix: seekable.peek/bool no longer drop items when maxlen is 0",
+  "committed_at": "2026-09-09T14:09:31Z",
+  "changed_files": [
+    "more_itertools/more.py",
+    "tests/test_more.py"
+  ]
+}

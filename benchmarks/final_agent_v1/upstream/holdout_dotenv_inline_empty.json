@@ -1,0 +1,18 @@
+{
+  "sha": "f5485a61eefa5e686d6d5bdc7aa9ad6b104b1e92",
+  "html_url": "https://github.com/theskumar/python-dotenv/commit/f5485a61eefa5e686d6d5bdc7aa9ad6b104b1e92",
+  "parents": [
+    {
+      "sha": "49515afee2d50c33cad9419b3800b3a0dc93fc59",
+      "url": "https://api.github.com/repos/theskumar/python-dotenv/commits/49515afee2d50c33cad9419b3800b3a0dc93fc59",
+      "html_url": "https://github.com/theskumar/python-dotenv/commit/49515afee2d50c33cad9419b3800b3a0dc93fc59"
+    }
+  ],
+  "title": "fix: parse empty unquoted value with inline comment as empty string",
+  "committed_at": "2026-08-17T07:41:31Z",
+  "changed_files": [
+    "src/dotenv/parser.py",
+    "tests/test_main.py",
+    "tests/test_parser.py"
+  ]
+}

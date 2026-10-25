@@ -1,0 +1,9 @@
+{
+  "at": "2026-10-25T10:11:08.589494+00:00",
+  "frozen_source_and_assets_unchanged": true,
+  "all_recorded_run_files_unchanged": true,
+  "archive_sha256": "2fc5e42cf764504137d4243b509171bcba46d3df6a254896e827ed42487d1c76",
+  "archive_entries": 4836,
+  "credential_scan": "passed",
+  "private_references_excluded": true
+}

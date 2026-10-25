@@ -1,0 +1,1118 @@
+[
+  {
+    "execution_id": "final-agent-90-2026-10-25/01-dependency_order-r1",
+    "original_category": "success",
+    "specific_category": "success",
+    "http_status_counts": {},
+    "evidence": "artifacts/final-agent-90-2026-10-25/runs/01-dependency_order-r1/transport.jsonl"
+  },
+  {
+    "execution_id": "final-agent-90-2026-10-25/02-holdout_interleave_empty-r2",
+    "original_category": "success",
+    "specific_category": "success",
+    "http_status_counts": {},
+    "evidence": "artifacts/final-agent-90-2026-10-25/runs/02-holdout_interleave_empty-r2/transport.jsonl"
+  },
+  {
+    "execution_id": "final-agent-90-2026-10-25/03-holdout_dotenv_inline_empty-r1",
+    "original_category": "success",
+    "specific_category": "success",
+    "http_status_counts": {},
+    "evidence": "artifacts/final-agent-90-2026-10-25/runs/03-holdout_dotenv_inline_empty-r1/transport.jsonl"
+  },
+  {
+    "execution_id": "final-agent-90-2026-10-25/04-cursor_roundtrip-r3",
+    "original_category": "success",
+    "specific_category": "success",
+    "http_status_counts": {},
+    "evidence": "artifacts/final-agent-90-2026-10-25/runs/04-cursor_roundtrip-r3/transport.jsonl"
+  },
+  {
+    "execution_id": "final-agent-90-2026-10-25/05-holdout_constrained_items-r1",
+    "original_category": "success",
+    "specific_category": "success",
+    "http_status_counts": {},
+    "evidence": "artifacts/final-agent-90-2026-10-25/runs/05-holdout_constrained_items-r1/transport.jsonl"
+  },
+  {
+    "execution_id": "final-agent-90-2026-10-25/06-humanize_size-r3",
+    "original_category": "success",
+    "specific_category": "success",
+    "http_status_counts": {},
+    "evidence": "artifacts/final-agent-90-2026-10-25/runs/06-humanize_size-r3/transport.jsonl"
+  },
+  {
+    "execution_id": "final-agent-90-2026-10-25/07-retry_schedule-r2",
+    "original_category": "success",
+    "specific_category": "success",
+    "http_status_counts": {},
+    "evidence": "artifacts/final-agent-90-2026-10-25/runs/07-retry_schedule-r2/transport.jsonl"
+  },
+  {
+    "execution_id": "final-agent-90-2026-10-25/08-pagination_boundaries-r1",
+    "original_category": "success",
+    "specific_category": "success",
+    "http_status_counts": {},
+    "evidence": "artifacts/final-agent-90-2026-10-25/runs/08-pagination_boundaries-r1/transport.jsonl"
+  },
+  {
+    "execution_id": "final-agent-90-2026-10-25/09-boltons_multireplace-r1",
+    "original_category": "success",
+    "specific_category": "success",
+    "http_status_counts": {},
+    "evidence": "artifacts/final-agent-90-2026-10-25/runs/09-boltons_multireplace-r1/transport.jsonl"
+  },
+  {
+    "execution_id": "final-agent-90-2026-10-25/10-boltons_splitlines-r3",
+    "original_category": "success",
+    "specific_category": "success",
+    "http_status_counts": {},
+    "evidence": "artifacts/final-agent-90-2026-10-25/runs/10-boltons_splitlines-r3/transport.jsonl"
+  },
+  {
+    "execution_id": "final-agent-90-2026-10-25/11-holdout_dotenv_backslash-r1",
+    "original_category": "success",
+    "specific_category": "success",
+    "http_status_counts": {},
+    "evidence": "artifacts/final-agent-90-2026-10-25/runs/11-holdout_dotenv_backslash-r1/transport.jsonl"
+  },
+  {
+    "execution_id": "final-agent-90-2026-10-25/12-boltons_isoparse-r1",
+    "original_category": "success",
+    "specific_category": "success",
+    "http_status_counts": {},
+    "evidence": "artifacts/final-agent-90-2026-10-25/runs/12-boltons_isoparse-r1/transport.jsonl"
+  },
+  {
+    "execution_id": "final-agent-90-2026-10-25/13-holdout_dotenv_inline_empty-r2",
+    "original_category": "success",
+    "specific_category": "success",
+    "http_status_counts": {},
+    "evidence": "artifacts/final-agent-90-2026-10-25/runs/13-holdout_dotenv_inline_empty-r2/transport.jsonl"
+  },
+  {
+    "execution_id": "final-agent-90-2026-10-25/14-boltons_isoparse-r3",
+    "original_category": "success",
+    "specific_category": "success",
+    "http_status_counts": {},
+    "evidence": "artifacts/final-agent-90-2026-10-25/runs/14-boltons_isoparse-r3/transport.jsonl"
+  },
+  {
+    "execution_id": "final-agent-90-2026-10-25/15-holdout_bucket_falsey-r3",
+    "original_category": "success",
+    "specific_category": "success",
+    "http_status_counts": {},
+    "evidence": "artifacts/final-agent-90-2026-10-25/runs/15-holdout_bucket_falsey-r3/transport.jsonl"
+  },
+  {
+    "execution_id": "final-agent-90-2026-10-25/16-boltons_xfrange-r2",
+    "original_category": "success",
+    "specific_category": "success",
+    "http_status_counts": {},
+    "evidence": "artifacts/final-agent-90-2026-10-25/runs/16-boltons_xfrange-r2/transport.jsonl"
+  },
+  {
+    "execution_id": "final-agent-90-2026-10-25/17-inventory_reservation-r1",
+    "original_category": "success",
+    "specific_category": "success",
+    "http_status_counts": {},
+    "evidence": "artifacts/final-agent-90-2026-10-25/runs/17-inventory_reservation-r1/transport.jsonl"
+  },
+  {
+    "execution_id": "final-agent-90-2026-10-25/18-ttl_expiry-r3",
+    "original_category": "success",
+    "specific_category": "success",
+    "http_status_counts": {},
+    "evidence": "artifacts/final-agent-90-2026-10-25/runs/18-ttl_expiry-r3/transport.jsonl"
+  },
+  {
+    "execution_id": "final-agent-90-2026-10-25/19-holdout_dotenv_override-r2",
+    "original_category": "success",
+    "specific_category": "success",
+    "http_status_counts": {},
+    "evidence": "artifacts/final-agent-90-2026-10-25/runs/19-holdout_dotenv_override-r2/transport.jsonl"
+  },
+  {
+    "execution_id": "final-agent-90-2026-10-25/20-holdout_seekable_zero-r3",
+    "original_category": "success",
+    "specific_category": "success",
+    "http_status_counts": {},
+    "evidence": "artifacts/final-agent-90-2026-10-25/runs/20-holdout_seekable_zero-r3/transport.jsonl"
+  },
+  {
+    "execution_id": "final-agent-90-2026-10-25/21-dependency_order-r2",
+    "original_category": "success",
+    "specific_category": "success",
+    "http_status_counts": {},
+    "evidence": "artifacts/final-agent-90-2026-10-25/runs/21-dependency_order-r2/transport.jsonl"
+  },
+  {
+    "execution_id": "final-agent-90-2026-10-25/22-holdout_dotenv_bom-r1",
+    "original_category": "success",
+    "specific_category": "success",
+    "http_status_counts": {},
+    "evidence": "artifacts/final-agent-90-2026-10-25/runs/22-holdout_dotenv_bom-r1/transport.jsonl"
+  },
+  {
+    "execution_id": "final-agent-90-2026-10-25/23-inventory_reservation-r3",
+    "original_category": "success",
+    "specific_category": "success",
+    "http_status_counts": {},
+    "evidence": "artifacts/final-agent-90-2026-10-25/runs/23-inventory_reservation-r3/transport.jsonl"
+  },
+  {
+    "execution_id": "final-agent-90-2026-10-25/24-holdout_numeric_reverse-r3",
+    "original_category": "success",
+    "specific_category": "success",
+    "http_status_counts": {},
+    "evidence": "artifacts/final-agent-90-2026-10-25/runs/24-holdout_numeric_reverse-r3/transport.jsonl"
+  },
+  {
+    "execution_id": "final-agent-90-2026-10-25/25-holdout_numeric_reverse-r2",
+    "original_category": "success",
+    "specific_category": "success",
+    "http_status_counts": {},
+    "evidence": "artifacts/final-agent-90-2026-10-25/runs/25-holdout_numeric_reverse-r2/transport.jsonl"
+  },
+  {
+    "execution_id": "final-agent-90-2026-10-25/26-holdout_interleave_empty-r3",
+    "original_category": "success",
+    "specific_category": "success",
+    "http_status_counts": {},
+    "evidence": "artifacts/final-agent-90-2026-10-25/runs/26-holdout_interleave_empty-r3/transport.jsonl"
+  },
+  {
+    "execution_id": "final-agent-90-2026-10-25/27-holdout_dotenv_spaces-r2",
+    "original_category": "success",
+    "specific_category": "success",
+    "http_status_counts": {},
+    "evidence": "artifacts/final-agent-90-2026-10-25/runs/27-holdout_dotenv_spaces-r2/transport.jsonl"
+  },
+  {
+    "execution_id": "final-agent-90-2026-10-25/28-config_precedence-r2",
+    "original_category": "success",
+    "specific_category": "success",
+    "http_status_counts": {},
+    "evidence": "artifacts/final-agent-90-2026-10-25/runs/28-config_precedence-r2/transport.jsonl"
+  },
+  {
+    "execution_id": "final-agent-90-2026-10-25/29-utc_storage_contract-r1",
+    "original_category": "success",
+    "specific_category": "success",
+    "http_status_counts": {},
+    "evidence": "artifacts/final-agent-90-2026-10-25/runs/29-utc_storage_contract-r1/transport.jsonl"
+  },
+  {
+    "execution_id": "final-agent-90-2026-10-25/30-config_precedence-r1",
+    "original_category": "success",
+    "specific_category": "success",
+    "http_status_counts": {},
+    "evidence": "artifacts/final-agent-90-2026-10-25/runs/30-config_precedence-r1/transport.jsonl"
+  },
+  {
+    "execution_id": "final-agent-90-2026-10-25/31-holdout_constrained_items-r2",
+    "original_category": "success",
+    "specific_category": "success",
+    "http_status_counts": {},
+    "evidence": "artifacts/final-agent-90-2026-10-25/runs/31-holdout_constrained_items-r2/transport.jsonl"
+  },
+  {
+    "execution_id": "final-agent-90-2026-10-25/32-humanize_metric-r2",
+    "original_category": "success",
+    "specific_category": "success",
+    "http_status_counts": {},
+    "evidence": "artifacts/final-agent-90-2026-10-25/runs/32-humanize_metric-r2/transport.jsonl"
+  },
+  {
+    "execution_id": "final-agent-90-2026-10-25/33-holdout_constrained_items-r3",
+    "original_category": "success",
+    "specific_category": "success",
+    "http_status_counts": {},
+    "evidence": "artifacts/final-agent-90-2026-10-25/runs/33-holdout_constrained_items-r3/transport.jsonl"
+  },
+  {
+    "execution_id": "final-agent-90-2026-10-25/34-boltons_multireplace-r3",
+    "original_category": "success",
+    "specific_category": "success",
+    "http_status_counts": {},
+    "evidence": "artifacts/final-agent-90-2026-10-25/runs/34-boltons_multireplace-r3/transport.jsonl"
+  },
+  {
+    "execution_id": "final-agent-90-2026-10-25/35-holdout_dotenv_spaces-r3",
+    "original_category": "provider_or_runtime_error",
+    "specific_category": "api_billing_insufficient_balance",
+    "http_status_counts": {
+      "402": 1
+    },
+    "evidence": "artifacts/final-agent-90-2026-10-25/runs/35-holdout_dotenv_spaces-r3/transport.jsonl"
+  },
+  {
+    "execution_id": "final-agent-90-2026-10-25/36-money_minor_units-r2",
+    "original_category": "success",
+    "specific_category": "success",
+    "http_status_counts": {},
+    "evidence": "artifacts/final-agent-90-2026-10-25/runs/36-money_minor_units-r2/transport.jsonl"
+  },
+  {
+    "execution_id": "final-agent-90-2026-10-25/37-holdout_numeric_reverse-r1",
+    "original_category": "success",
+    "specific_category": "success",
+    "http_status_counts": {},
+    "evidence": "artifacts/final-agent-90-2026-10-25/runs/37-holdout_numeric_reverse-r1/transport.jsonl"
+  },
+  {
+    "execution_id": "final-agent-90-2026-10-25/38-holdout_dotenv_override-r1",
+    "original_category": "provider_or_runtime_error",
+    "specific_category": "api_billing_insufficient_balance",
+    "http_status_counts": {
+      "402": 1
+    },
+    "evidence": "artifacts/final-agent-90-2026-10-25/runs/38-holdout_dotenv_override-r1/transport.jsonl"
+  },
+  {
+    "execution_id": "final-agent-90-2026-10-25/39-holdout_seekable_zero-r1",
+    "original_category": "provider_or_runtime_error",
+    "specific_category": "api_billing_insufficient_balance",
+    "http_status_counts": {
+      "402": 1
+    },
+    "evidence": "artifacts/final-agent-90-2026-10-25/runs/39-holdout_seekable_zero-r1/transport.jsonl"
+  },
+  {
+    "execution_id": "final-agent-90-2026-10-25/40-humanize_fractional-r1",
+    "original_category": "provider_or_runtime_error",
+    "specific_category": "api_billing_insufficient_balance",
+    "http_status_counts": {
+      "402": 1
+    },
+    "evidence": "artifacts/final-agent-90-2026-10-25/runs/40-humanize_fractional-r1/transport.jsonl"
+  },
+  {
+    "execution_id": "final-agent-90-2026-10-25/41-holdout_interleave_empty-r1",
+    "original_category": "provider_or_runtime_error",
+    "specific_category": "api_billing_insufficient_balance",
+    "http_status_counts": {
+      "402": 1
+    },
+    "evidence": "artifacts/final-agent-90-2026-10-25/runs/41-holdout_interleave_empty-r1/transport.jsonl"
+  },
+  {
+    "execution_id": "final-agent-90-2026-10-25/42-boltons_xfrange-r1",
+    "original_category": "provider_or_runtime_error",
+    "specific_category": "api_billing_insufficient_balance",
+    "http_status_counts": {
+      "402": 1
+    },
+    "evidence": "artifacts/final-agent-90-2026-10-25/runs/42-boltons_xfrange-r1/transport.jsonl"
+  },
+  {
+    "execution_id": "final-agent-90-2026-10-25/43-humanize_list-r3",
+    "original_category": "provider_or_runtime_error",
+    "specific_category": "api_billing_insufficient_balance",
+    "http_status_counts": {
+      "402": 1
+    },
+    "evidence": "artifacts/final-agent-90-2026-10-25/runs/43-humanize_list-r3/transport.jsonl"
+  },
+  {
+    "execution_id": "final-agent-90-2026-10-25/44-holdout_dotenv_backslash-r3",
+    "original_category": "provider_or_runtime_error",
+    "specific_category": "api_billing_insufficient_balance",
+    "http_status_counts": {
+      "402": 1
+    },
+    "evidence": "artifacts/final-agent-90-2026-10-25/runs/44-holdout_dotenv_backslash-r3/transport.jsonl"
+  },
+  {
+    "execution_id": "final-agent-90-2026-10-25/45-config_precedence-r3",
+    "original_category": "provider_or_runtime_error",
+    "specific_category": "api_billing_insufficient_balance",
+    "http_status_counts": {
+      "402": 1
+    },
+    "evidence": "artifacts/final-agent-90-2026-10-25/runs/45-config_precedence-r3/transport.jsonl"
+  },
+  {
+    "execution_id": "final-agent-90-2026-10-25/46-user_lookup_contract-r1",
+    "original_category": "provider_or_runtime_error",
+    "specific_category": "api_billing_insufficient_balance",
+    "http_status_counts": {
+      "402": 1
+    },
+    "evidence": "artifacts/final-agent-90-2026-10-25/runs/46-user_lookup_contract-r1/transport.jsonl"
+  },
+  {
+    "execution_id": "final-agent-90-2026-10-25/47-boltons_xfrange-r3",
+    "original_category": "provider_or_runtime_error",
+    "specific_category": "api_billing_insufficient_balance",
+    "http_status_counts": {
+      "402": 1
+    },
+    "evidence": "artifacts/final-agent-90-2026-10-25/runs/47-boltons_xfrange-r3/transport.jsonl"
+  },
+  {
+    "execution_id": "final-agent-90-2026-10-25/48-holdout_dotenv_bom-r2",
+    "original_category": "provider_or_runtime_error",
+    "specific_category": "api_billing_insufficient_balance",
+    "http_status_counts": {
+      "402": 1
+    },
+    "evidence": "artifacts/final-agent-90-2026-10-25/runs/48-holdout_dotenv_bom-r2/transport.jsonl"
+  },
+  {
+    "execution_id": "final-agent-90-2026-10-25/49-holdout_dotenv_bom-r3",
+    "original_category": "provider_or_runtime_error",
+    "specific_category": "api_billing_insufficient_balance",
+    "http_status_counts": {
+      "402": 1
+    },
+    "evidence": "artifacts/final-agent-90-2026-10-25/runs/49-holdout_dotenv_bom-r3/transport.jsonl"
+  },
+  {
+    "execution_id": "final-agent-90-2026-10-25/50-interval_union-r3",
+    "original_category": "provider_or_runtime_error",
+    "specific_category": "api_billing_insufficient_balance",
+    "http_status_counts": {
+      "402": 1
+    },
+    "evidence": "artifacts/final-agent-90-2026-10-25/runs/50-interval_union-r3/transport.jsonl"
+  },
+  {
+    "execution_id": "final-agent-90-2026-10-25/51-humanize_size-r1",
+    "original_category": "provider_or_runtime_error",
+    "specific_category": "api_billing_insufficient_balance",
+    "http_status_counts": {
+      "402": 1
+    },
+    "evidence": "artifacts/final-agent-90-2026-10-25/runs/51-humanize_size-r1/transport.jsonl"
+  },
+  {
+    "execution_id": "final-agent-90-2026-10-25/52-humanize_size-r2",
+    "original_category": "provider_or_runtime_error",
+    "specific_category": "api_billing_insufficient_balance",
+    "http_status_counts": {
+      "402": 1
+    },
+    "evidence": "artifacts/final-agent-90-2026-10-25/runs/52-humanize_size-r2/transport.jsonl"
+  },
+  {
+    "execution_id": "final-agent-90-2026-10-25/53-boltons_isoparse-r2",
+    "original_category": "provider_or_runtime_error",
+    "specific_category": "api_billing_insufficient_balance",
+    "http_status_counts": {
+      "402": 1
+    },
+    "evidence": "artifacts/final-agent-90-2026-10-25/runs/53-boltons_isoparse-r2/transport.jsonl"
+  },
+  {
+    "execution_id": "final-agent-90-2026-10-25/54-holdout_dotenv_backslash-r2",
+    "original_category": "provider_or_runtime_error",
+    "specific_category": "api_billing_insufficient_balance",
+    "http_status_counts": {
+      "402": 1
+    },
+    "evidence": "artifacts/final-agent-90-2026-10-25/runs/54-holdout_dotenv_backslash-r2/transport.jsonl"
+  },
+  {
+    "execution_id": "final-agent-90-2026-10-25/55-error_response_contract-r3",
+    "original_category": "provider_or_runtime_error",
+    "specific_category": "api_billing_insufficient_balance",
+    "http_status_counts": {
+      "402": 1
+    },
+    "evidence": "artifacts/final-agent-90-2026-10-25/runs/55-error_response_contract-r3/transport.jsonl"
+  },
+  {
+    "execution_id": "final-agent-90-2026-10-25/56-inventory_reservation-r2",
+    "original_category": "provider_or_runtime_error",
+    "specific_category": "api_billing_insufficient_balance",
+    "http_status_counts": {
+      "402": 1
+    },
+    "evidence": "artifacts/final-agent-90-2026-10-25/runs/56-inventory_reservation-r2/transport.jsonl"
+  },
+  {
+    "execution_id": "final-agent-90-2026-10-25/57-cursor_roundtrip-r1",
+    "original_category": "provider_or_runtime_error",
+    "specific_category": "api_billing_insufficient_balance",
+    "http_status_counts": {
+      "402": 1
+    },
+    "evidence": "artifacts/final-agent-90-2026-10-25/runs/57-cursor_roundtrip-r1/transport.jsonl"
+  },
+  {
+    "execution_id": "final-agent-90-2026-10-25/58-retry_schedule-r3",
+    "original_category": "provider_or_runtime_error",
+    "specific_category": "api_billing_insufficient_balance",
+    "http_status_counts": {
+      "402": 1
+    },
+    "evidence": "artifacts/final-agent-90-2026-10-25/runs/58-retry_schedule-r3/transport.jsonl"
+  },
+  {
+    "execution_id": "final-agent-90-2026-10-25/59-money_minor_units-r3",
+    "original_category": "provider_or_runtime_error",
+    "specific_category": "api_billing_insufficient_balance",
+    "http_status_counts": {
+      "402": 1
+    },
+    "evidence": "artifacts/final-agent-90-2026-10-25/runs/59-money_minor_units-r3/transport.jsonl"
+  },
+  {
+    "execution_id": "final-agent-90-2026-10-25/60-holdout_dotenv_inline_empty-r3",
+    "original_category": "provider_or_runtime_error",
+    "specific_category": "api_billing_insufficient_balance",
+    "http_status_counts": {
+      "402": 1
+    },
+    "evidence": "artifacts/final-agent-90-2026-10-25/runs/60-holdout_dotenv_inline_empty-r3/transport.jsonl"
+  },
+  {
+    "execution_id": "final-agent-90-2026-10-25/61-pagination_boundaries-r2",
+    "original_category": "provider_or_runtime_error",
+    "specific_category": "api_billing_insufficient_balance",
+    "http_status_counts": {
+      "402": 1
+    },
+    "evidence": "artifacts/final-agent-90-2026-10-25/runs/61-pagination_boundaries-r2/transport.jsonl"
+  },
+  {
+    "execution_id": "final-agent-90-2026-10-25/62-pagination_boundaries-r3",
+    "original_category": "provider_or_runtime_error",
+    "specific_category": "api_billing_insufficient_balance",
+    "http_status_counts": {
+      "402": 1
+    },
+    "evidence": "artifacts/final-agent-90-2026-10-25/runs/62-pagination_boundaries-r3/transport.jsonl"
+  },
+  {
+    "execution_id": "final-agent-90-2026-10-25/63-utc_storage_contract-r2",
+    "original_category": "provider_or_runtime_error",
+    "specific_category": "api_billing_insufficient_balance",
+    "http_status_counts": {
+      "402": 1
+    },
+    "evidence": "artifacts/final-agent-90-2026-10-25/runs/63-utc_storage_contract-r2/transport.jsonl"
+  },
+  {
+    "execution_id": "final-agent-90-2026-10-25/64-error_response_contract-r1",
+    "original_category": "provider_or_runtime_error",
+    "specific_category": "api_billing_insufficient_balance",
+    "http_status_counts": {
+      "402": 1
+    },
+    "evidence": "artifacts/final-agent-90-2026-10-25/runs/64-error_response_contract-r1/transport.jsonl"
+  },
+  {
+    "execution_id": "final-agent-90-2026-10-25/65-holdout_bucket_falsey-r1",
+    "original_category": "provider_or_runtime_error",
+    "specific_category": "api_billing_insufficient_balance",
+    "http_status_counts": {
+      "402": 1
+    },
+    "evidence": "artifacts/final-agent-90-2026-10-25/runs/65-holdout_bucket_falsey-r1/transport.jsonl"
+  },
+  {
+    "execution_id": "final-agent-90-2026-10-25/66-humanize_fractional-r3",
+    "original_category": "provider_or_runtime_error",
+    "specific_category": "api_billing_insufficient_balance",
+    "http_status_counts": {
+      "402": 1
+    },
+    "evidence": "artifacts/final-agent-90-2026-10-25/runs/66-humanize_fractional-r3/transport.jsonl"
+  },
+  {
+    "execution_id": "final-agent-90-2026-10-25/67-utc_storage_contract-r3",
+    "original_category": "provider_or_runtime_error",
+    "specific_category": "api_billing_insufficient_balance",
+    "http_status_counts": {
+      "402": 1
+    },
+    "evidence": "artifacts/final-agent-90-2026-10-25/runs/67-utc_storage_contract-r3/transport.jsonl"
+  },
+  {
+    "execution_id": "final-agent-90-2026-10-25/68-user_lookup_contract-r2",
+    "original_category": "provider_or_runtime_error",
+    "specific_category": "api_billing_insufficient_balance",
+    "http_status_counts": {
+      "402": 1
+    },
+    "evidence": "artifacts/final-agent-90-2026-10-25/runs/68-user_lookup_contract-r2/transport.jsonl"
+  },
+  {
+    "execution_id": "final-agent-90-2026-10-25/69-retry_schedule-r1",
+    "original_category": "provider_or_runtime_error",
+    "specific_category": "api_billing_insufficient_balance",
+    "http_status_counts": {
+      "402": 1
+    },
+    "evidence": "artifacts/final-agent-90-2026-10-25/runs/69-retry_schedule-r1/transport.jsonl"
+  },
+  {
+    "execution_id": "final-agent-90-2026-10-25/70-interval_union-r2",
+    "original_category": "provider_or_runtime_error",
+    "specific_category": "api_billing_insufficient_balance",
+    "http_status_counts": {
+      "402": 1
+    },
+    "evidence": "artifacts/final-agent-90-2026-10-25/runs/70-interval_union-r2/transport.jsonl"
+  },
+  {
+    "execution_id": "final-agent-90-2026-10-25/71-user_lookup_contract-r3",
+    "original_category": "provider_or_runtime_error",
+    "specific_category": "api_billing_insufficient_balance",
+    "http_status_counts": {
+      "402": 1
+    },
+    "evidence": "artifacts/final-agent-90-2026-10-25/runs/71-user_lookup_contract-r3/transport.jsonl"
+  },
+  {
+    "execution_id": "final-agent-90-2026-10-25/72-holdout_bucket_falsey-r2",
+    "original_category": "provider_or_runtime_error",
+    "specific_category": "api_billing_insufficient_balance",
+    "http_status_counts": {
+      "402": 1
+    },
+    "evidence": "artifacts/final-agent-90-2026-10-25/runs/72-holdout_bucket_falsey-r2/transport.jsonl"
+  },
+  {
+    "execution_id": "final-agent-90-2026-10-25/73-ttl_expiry-r2",
+    "original_category": "provider_or_runtime_error",
+    "specific_category": "api_billing_insufficient_balance",
+    "http_status_counts": {
+      "402": 1
+    },
+    "evidence": "artifacts/final-agent-90-2026-10-25/runs/73-ttl_expiry-r2/transport.jsonl"
+  },
+  {
+    "execution_id": "final-agent-90-2026-10-25/74-boltons_splitlines-r1",
+    "original_category": "provider_or_runtime_error",
+    "specific_category": "api_billing_insufficient_balance",
+    "http_status_counts": {
+      "402": 1
+    },
+    "evidence": "artifacts/final-agent-90-2026-10-25/runs/74-boltons_splitlines-r1/transport.jsonl"
+  },
+  {
+    "execution_id": "final-agent-90-2026-10-25/75-holdout_dotenv_override-r3",
+    "original_category": "provider_or_runtime_error",
+    "specific_category": "api_billing_insufficient_balance",
+    "http_status_counts": {
+      "402": 1
+    },
+    "evidence": "artifacts/final-agent-90-2026-10-25/runs/75-holdout_dotenv_override-r3/transport.jsonl"
+  },
+  {
+    "execution_id": "final-agent-90-2026-10-25/76-humanize_list-r2",
+    "original_category": "provider_or_runtime_error",
+    "specific_category": "api_billing_insufficient_balance",
+    "http_status_counts": {
+      "402": 1
+    },
+    "evidence": "artifacts/final-agent-90-2026-10-25/runs/76-humanize_list-r2/transport.jsonl"
+  },
+  {
+    "execution_id": "final-agent-90-2026-10-25/77-holdout_dotenv_spaces-r1",
+    "original_category": "provider_or_runtime_error",
+    "specific_category": "api_billing_insufficient_balance",
+    "http_status_counts": {
+      "402": 1
+    },
+    "evidence": "artifacts/final-agent-90-2026-10-25/runs/77-holdout_dotenv_spaces-r1/transport.jsonl"
+  },
+  {
+    "execution_id": "final-agent-90-2026-10-25/78-boltons_multireplace-r2",
+    "original_category": "provider_or_runtime_error",
+    "specific_category": "api_billing_insufficient_balance",
+    "http_status_counts": {
+      "402": 1
+    },
+    "evidence": "artifacts/final-agent-90-2026-10-25/runs/78-boltons_multireplace-r2/transport.jsonl"
+  },
+  {
+    "execution_id": "final-agent-90-2026-10-25/79-interval_union-r1",
+    "original_category": "provider_or_runtime_error",
+    "specific_category": "api_billing_insufficient_balance",
+    "http_status_counts": {
+      "402": 1
+    },
+    "evidence": "artifacts/final-agent-90-2026-10-25/runs/79-interval_union-r1/transport.jsonl"
+  },
+  {
+    "execution_id": "final-agent-90-2026-10-25/80-dependency_order-r3",
+    "original_category": "provider_or_runtime_error",
+    "specific_category": "api_billing_insufficient_balance",
+    "http_status_counts": {
+      "402": 1
+    },
+    "evidence": "artifacts/final-agent-90-2026-10-25/runs/80-dependency_order-r3/transport.jsonl"
+  },
+  {
+    "execution_id": "final-agent-90-2026-10-25/81-money_minor_units-r1",
+    "original_category": "provider_or_runtime_error",
+    "specific_category": "api_billing_insufficient_balance",
+    "http_status_counts": {
+      "402": 1
+    },
+    "evidence": "artifacts/final-agent-90-2026-10-25/runs/81-money_minor_units-r1/transport.jsonl"
+  },
+  {
+    "execution_id": "final-agent-90-2026-10-25/82-boltons_splitlines-r2",
+    "original_category": "provider_or_runtime_error",
+    "specific_category": "api_billing_insufficient_balance",
+    "http_status_counts": {
+      "402": 1
+    },
+    "evidence": "artifacts/final-agent-90-2026-10-25/runs/82-boltons_splitlines-r2/transport.jsonl"
+  },
+  {
+    "execution_id": "final-agent-90-2026-10-25/83-humanize_fractional-r2",
+    "original_category": "provider_or_runtime_error",
+    "specific_category": "api_billing_insufficient_balance",
+    "http_status_counts": {
+      "402": 1
+    },
+    "evidence": "artifacts/final-agent-90-2026-10-25/runs/83-humanize_fractional-r2/transport.jsonl"
+  },
+  {
+    "execution_id": "final-agent-90-2026-10-25/84-ttl_expiry-r1",
+    "original_category": "provider_or_runtime_error",
+    "specific_category": "api_billing_insufficient_balance",
+    "http_status_counts": {
+      "402": 1
+    },
+    "evidence": "artifacts/final-agent-90-2026-10-25/runs/84-ttl_expiry-r1/transport.jsonl"
+  },
+  {
+    "execution_id": "final-agent-90-2026-10-25/85-humanize_metric-r3",
+    "original_category": "provider_or_runtime_error",
+    "specific_category": "api_billing_insufficient_balance",
+    "http_status_counts": {
+      "402": 1
+    },
+    "evidence": "artifacts/final-agent-90-2026-10-25/runs/85-humanize_metric-r3/transport.jsonl"
+  },
+  {
+    "execution_id": "final-agent-90-2026-10-25/86-holdout_seekable_zero-r2",
+    "original_category": "provider_or_runtime_error",
+    "specific_category": "api_billing_insufficient_balance",
+    "http_status_counts": {
+      "402": 1
+    },
+    "evidence": "artifacts/final-agent-90-2026-10-25/runs/86-holdout_seekable_zero-r2/transport.jsonl"
+  },
+  {
+    "execution_id": "final-agent-90-2026-10-25/87-cursor_roundtrip-r2",
+    "original_category": "provider_or_runtime_error",
+    "specific_category": "api_billing_insufficient_balance",
+    "http_status_counts": {
+      "402": 1
+    },
+    "evidence": "artifacts/final-agent-90-2026-10-25/runs/87-cursor_roundtrip-r2/transport.jsonl"
+  },
+  {
+    "execution_id": "final-agent-90-2026-10-25/88-error_response_contract-r2",
+    "original_category": "provider_or_runtime_error",
+    "specific_category": "api_billing_insufficient_balance",
+    "http_status_counts": {
+      "402": 1
+    },
+    "evidence": "artifacts/final-agent-90-2026-10-25/runs/88-error_response_contract-r2/transport.jsonl"
+  },
+  {
+    "execution_id": "final-agent-90-2026-10-25/89-humanize_list-r1",
+    "original_category": "provider_or_runtime_error",
+    "specific_category": "api_billing_insufficient_balance",
+    "http_status_counts": {
+      "402": 1
+    },
+    "evidence": "artifacts/final-agent-90-2026-10-25/runs/89-humanize_list-r1/transport.jsonl"
+  },
+  {
+    "execution_id": "final-agent-90-2026-10-25/90-humanize_metric-r1",
+    "original_category": "provider_or_runtime_error",
+    "specific_category": "api_billing_insufficient_balance",
+    "http_status_counts": {
+      "402": 1
+    },
+    "evidence": "artifacts/final-agent-90-2026-10-25/runs/90-humanize_metric-r1/transport.jsonl"
+  },
+  {
+    "execution_id": "final-agent-credential-recovery-2026-10-25/35-holdout_dotenv_spaces-r3",
+    "original_category": "success",
+    "specific_category": "success",
+    "http_status_counts": {},
+    "evidence": "artifacts/final-agent-credential-recovery-2026-10-25/runs/35-holdout_dotenv_spaces-r3/transport.jsonl"
+  },
+  {
+    "execution_id": "final-agent-credential-recovery-2026-10-25/38-holdout_dotenv_override-r1",
+    "original_category": "success",
+    "specific_category": "success",
+    "http_status_counts": {},
+    "evidence": "artifacts/final-agent-credential-recovery-2026-10-25/runs/38-holdout_dotenv_override-r1/transport.jsonl"
+  },
+  {
+    "execution_id": "final-agent-credential-recovery-2026-10-25/39-holdout_seekable_zero-r1",
+    "original_category": "success",
+    "specific_category": "success",
+    "http_status_counts": {},
+    "evidence": "artifacts/final-agent-credential-recovery-2026-10-25/runs/39-holdout_seekable_zero-r1/transport.jsonl"
+  },
+  {
+    "execution_id": "final-agent-credential-recovery-2026-10-25/40-humanize_fractional-r1",
+    "original_category": "success",
+    "specific_category": "success",
+    "http_status_counts": {},
+    "evidence": "artifacts/final-agent-credential-recovery-2026-10-25/runs/40-humanize_fractional-r1/transport.jsonl"
+  },
+  {
+    "execution_id": "final-agent-credential-recovery-2026-10-25/41-holdout_interleave_empty-r1",
+    "original_category": "success",
+    "specific_category": "success",
+    "http_status_counts": {},
+    "evidence": "artifacts/final-agent-credential-recovery-2026-10-25/runs/41-holdout_interleave_empty-r1/transport.jsonl"
+  },
+  {
+    "execution_id": "final-agent-credential-recovery-2026-10-25/42-boltons_xfrange-r1",
+    "original_category": "success",
+    "specific_category": "success",
+    "http_status_counts": {},
+    "evidence": "artifacts/final-agent-credential-recovery-2026-10-25/runs/42-boltons_xfrange-r1/transport.jsonl"
+  },
+  {
+    "execution_id": "final-agent-credential-recovery-2026-10-25/43-humanize_list-r3",
+    "original_category": "success",
+    "specific_category": "success",
+    "http_status_counts": {},
+    "evidence": "artifacts/final-agent-credential-recovery-2026-10-25/runs/43-humanize_list-r3/transport.jsonl"
+  },
+  {
+    "execution_id": "final-agent-credential-recovery-2026-10-25/44-holdout_dotenv_backslash-r3",
+    "original_category": "success",
+    "specific_category": "success",
+    "http_status_counts": {},
+    "evidence": "artifacts/final-agent-credential-recovery-2026-10-25/runs/44-holdout_dotenv_backslash-r3/transport.jsonl"
+  },
+  {
+    "execution_id": "final-agent-credential-recovery-2026-10-25/45-config_precedence-r3",
+    "original_category": "success",
+    "specific_category": "success",
+    "http_status_counts": {},
+    "evidence": "artifacts/final-agent-credential-recovery-2026-10-25/runs/45-config_precedence-r3/transport.jsonl"
+  },
+  {
+    "execution_id": "final-agent-credential-recovery-2026-10-25/46-user_lookup_contract-r1",
+    "original_category": "success",
+    "specific_category": "success",
+    "http_status_counts": {},
+    "evidence": "artifacts/final-agent-credential-recovery-2026-10-25/runs/46-user_lookup_contract-r1/transport.jsonl"
+  },
+  {
+    "execution_id": "final-agent-credential-recovery-2026-10-25/47-boltons_xfrange-r3",
+    "original_category": "success",
+    "specific_category": "success",
+    "http_status_counts": {},
+    "evidence": "artifacts/final-agent-credential-recovery-2026-10-25/runs/47-boltons_xfrange-r3/transport.jsonl"
+  },
+  {
+    "execution_id": "final-agent-credential-recovery-2026-10-25/48-holdout_dotenv_bom-r2",
+    "original_category": "success",
+    "specific_category": "success",
+    "http_status_counts": {},
+    "evidence": "artifacts/final-agent-credential-recovery-2026-10-25/runs/48-holdout_dotenv_bom-r2/transport.jsonl"
+  },
+  {
+    "execution_id": "final-agent-credential-recovery-2026-10-25/49-holdout_dotenv_bom-r3",
+    "original_category": "success",
+    "specific_category": "success",
+    "http_status_counts": {},
+    "evidence": "artifacts/final-agent-credential-recovery-2026-10-25/runs/49-holdout_dotenv_bom-r3/transport.jsonl"
+  },
+  {
+    "execution_id": "final-agent-credential-recovery-2026-10-25/50-interval_union-r3",
+    "original_category": "success",
+    "specific_category": "success",
+    "http_status_counts": {},
+    "evidence": "artifacts/final-agent-credential-recovery-2026-10-25/runs/50-interval_union-r3/transport.jsonl"
+  },
+  {
+    "execution_id": "final-agent-credential-recovery-2026-10-25/51-humanize_size-r1",
+    "original_category": "success",
+    "specific_category": "success",
+    "http_status_counts": {},
+    "evidence": "artifacts/final-agent-credential-recovery-2026-10-25/runs/51-humanize_size-r1/transport.jsonl"
+  },
+  {
+    "execution_id": "final-agent-credential-recovery-2026-10-25/52-humanize_size-r2",
+    "original_category": "success",
+    "specific_category": "success",
+    "http_status_counts": {},
+    "evidence": "artifacts/final-agent-credential-recovery-2026-10-25/runs/52-humanize_size-r2/transport.jsonl"
+  },
+  {
+    "execution_id": "final-agent-credential-recovery-2026-10-25/53-boltons_isoparse-r2",
+    "original_category": "success",
+    "specific_category": "success",
+    "http_status_counts": {},
+    "evidence": "artifacts/final-agent-credential-recovery-2026-10-25/runs/53-boltons_isoparse-r2/transport.jsonl"
+  },
+  {
+    "execution_id": "final-agent-credential-recovery-2026-10-25/54-holdout_dotenv_backslash-r2",
+    "original_category": "success",
+    "specific_category": "success",
+    "http_status_counts": {},
+    "evidence": "artifacts/final-agent-credential-recovery-2026-10-25/runs/54-holdout_dotenv_backslash-r2/transport.jsonl"
+  },
+  {
+    "execution_id": "final-agent-credential-recovery-2026-10-25/55-error_response_contract-r3",
+    "original_category": "success",
+    "specific_category": "success",
+    "http_status_counts": {},
+    "evidence": "artifacts/final-agent-credential-recovery-2026-10-25/runs/55-error_response_contract-r3/transport.jsonl"
+  },
+  {
+    "execution_id": "final-agent-credential-recovery-2026-10-25/56-inventory_reservation-r2",
+    "original_category": "success",
+    "specific_category": "success",
+    "http_status_counts": {},
+    "evidence": "artifacts/final-agent-credential-recovery-2026-10-25/runs/56-inventory_reservation-r2/transport.jsonl"
+  },
+  {
+    "execution_id": "final-agent-credential-recovery-2026-10-25/57-cursor_roundtrip-r1",
+    "original_category": "success",
+    "specific_category": "success",
+    "http_status_counts": {},
+    "evidence": "artifacts/final-agent-credential-recovery-2026-10-25/runs/57-cursor_roundtrip-r1/transport.jsonl"
+  },
+  {
+    "execution_id": "final-agent-credential-recovery-2026-10-25/58-retry_schedule-r3",
+    "original_category": "success",
+    "specific_category": "success",
+    "http_status_counts": {},
+    "evidence": "artifacts/final-agent-credential-recovery-2026-10-25/runs/58-retry_schedule-r3/transport.jsonl"
+  },
+  {
+    "execution_id": "final-agent-credential-recovery-2026-10-25/59-money_minor_units-r3",
+    "original_category": "success",
+    "specific_category": "success",
+    "http_status_counts": {},
+    "evidence": "artifacts/final-agent-credential-recovery-2026-10-25/runs/59-money_minor_units-r3/transport.jsonl"
+  },
+  {
+    "execution_id": "final-agent-credential-recovery-2026-10-25/60-holdout_dotenv_inline_empty-r3",
+    "original_category": "success",
+    "specific_category": "success",
+    "http_status_counts": {},
+    "evidence": "artifacts/final-agent-credential-recovery-2026-10-25/runs/60-holdout_dotenv_inline_empty-r3/transport.jsonl"
+  },
+  {
+    "execution_id": "final-agent-credential-recovery-2026-10-25/61-pagination_boundaries-r2",
+    "original_category": "success",
+    "specific_category": "success",
+    "http_status_counts": {},
+    "evidence": "artifacts/final-agent-credential-recovery-2026-10-25/runs/61-pagination_boundaries-r2/transport.jsonl"
+  },
+  {
+    "execution_id": "final-agent-credential-recovery-2026-10-25/62-pagination_boundaries-r3",
+    "original_category": "success",
+    "specific_category": "success",
+    "http_status_counts": {},
+    "evidence": "artifacts/final-agent-credential-recovery-2026-10-25/runs/62-pagination_boundaries-r3/transport.jsonl"
+  },
+  {
+    "execution_id": "final-agent-credential-recovery-2026-10-25/63-utc_storage_contract-r2",
+    "original_category": "success",
+    "specific_category": "success",
+    "http_status_counts": {},
+    "evidence": "artifacts/final-agent-credential-recovery-2026-10-25/runs/63-utc_storage_contract-r2/transport.jsonl"
+  },
+  {
+    "execution_id": "final-agent-credential-recovery-2026-10-25/64-error_response_contract-r1",
+    "original_category": "success",
+    "specific_category": "success",
+    "http_status_counts": {},
+    "evidence": "artifacts/final-agent-credential-recovery-2026-10-25/runs/64-error_response_contract-r1/transport.jsonl"
+  },
+  {
+    "execution_id": "final-agent-credential-recovery-2026-10-25/65-holdout_bucket_falsey-r1",
+    "original_category": "success",
+    "specific_category": "success",
+    "http_status_counts": {},
+    "evidence": "artifacts/final-agent-credential-recovery-2026-10-25/runs/65-holdout_bucket_falsey-r1/transport.jsonl"
+  },
+  {
+    "execution_id": "final-agent-credential-recovery-2026-10-25/66-humanize_fractional-r3",
+    "original_category": "success",
+    "specific_category": "success",
+    "http_status_counts": {},
+    "evidence": "artifacts/final-agent-credential-recovery-2026-10-25/runs/66-humanize_fractional-r3/transport.jsonl"
+  },
+  {
+    "execution_id": "final-agent-credential-recovery-2026-10-25/67-utc_storage_contract-r3",
+    "original_category": "success",
+    "specific_category": "success",
+    "http_status_counts": {},
+    "evidence": "artifacts/final-agent-credential-recovery-2026-10-25/runs/67-utc_storage_contract-r3/transport.jsonl"
+  },
+  {
+    "execution_id": "final-agent-credential-recovery-2026-10-25/68-user_lookup_contract-r2",
+    "original_category": "success",
+    "specific_category": "success",
+    "http_status_counts": {},
+    "evidence": "artifacts/final-agent-credential-recovery-2026-10-25/runs/68-user_lookup_contract-r2/transport.jsonl"
+  },
+  {
+    "execution_id": "final-agent-credential-recovery-2026-10-25/69-retry_schedule-r1",
+    "original_category": "success",
+    "specific_category": "success",
+    "http_status_counts": {},
+    "evidence": "artifacts/final-agent-credential-recovery-2026-10-25/runs/69-retry_schedule-r1/transport.jsonl"
+  },
+  {
+    "execution_id": "final-agent-credential-recovery-2026-10-25/70-interval_union-r2",
+    "original_category": "success",
+    "specific_category": "success",
+    "http_status_counts": {},
+    "evidence": "artifacts/final-agent-credential-recovery-2026-10-25/runs/70-interval_union-r2/transport.jsonl"
+  },
+  {
+    "execution_id": "final-agent-credential-recovery-2026-10-25/71-user_lookup_contract-r3",
+    "original_category": "success",
+    "specific_category": "success",
+    "http_status_counts": {},
+    "evidence": "artifacts/final-agent-credential-recovery-2026-10-25/runs/71-user_lookup_contract-r3/transport.jsonl"
+  },
+  {
+    "execution_id": "final-agent-credential-recovery-2026-10-25/72-holdout_bucket_falsey-r2",
+    "original_category": "success",
+    "specific_category": "success",
+    "http_status_counts": {},
+    "evidence": "artifacts/final-agent-credential-recovery-2026-10-25/runs/72-holdout_bucket_falsey-r2/transport.jsonl"
+  },
+  {
+    "execution_id": "final-agent-credential-recovery-2026-10-25/73-ttl_expiry-r2",
+    "original_category": "success",
+    "specific_category": "success",
+    "http_status_counts": {},
+    "evidence": "artifacts/final-agent-credential-recovery-2026-10-25/runs/73-ttl_expiry-r2/transport.jsonl"
+  },
+  {
+    "execution_id": "final-agent-credential-recovery-2026-10-25/74-boltons_splitlines-r1",
+    "original_category": "success",
+    "specific_category": "success",
+    "http_status_counts": {},
+    "evidence": "artifacts/final-agent-credential-recovery-2026-10-25/runs/74-boltons_splitlines-r1/transport.jsonl"
+  },
+  {
+    "execution_id": "final-agent-credential-recovery-2026-10-25/75-holdout_dotenv_override-r3",
+    "original_category": "success",
+    "specific_category": "success",
+    "http_status_counts": {},
+    "evidence": "artifacts/final-agent-credential-recovery-2026-10-25/runs/75-holdout_dotenv_override-r3/transport.jsonl"
+  },
+  {
+    "execution_id": "final-agent-credential-recovery-2026-10-25/76-humanize_list-r2",
+    "original_category": "success",
+    "specific_category": "success",
+    "http_status_counts": {},
+    "evidence": "artifacts/final-agent-credential-recovery-2026-10-25/runs/76-humanize_list-r2/transport.jsonl"
+  },
+  {
+    "execution_id": "final-agent-credential-recovery-2026-10-25/77-holdout_dotenv_spaces-r1",
+    "original_category": "incomplete_fix_or_regression",
+    "specific_category": "incomplete_fix_or_regression",
+    "http_status_counts": {},
+    "evidence": "artifacts/final-agent-credential-recovery-2026-10-25/runs/77-holdout_dotenv_spaces-r1/transport.jsonl"
+  },
+  {
+    "execution_id": "final-agent-credential-recovery-2026-10-25/78-boltons_multireplace-r2",
+    "original_category": "success",
+    "specific_category": "success",
+    "http_status_counts": {},
+    "evidence": "artifacts/final-agent-credential-recovery-2026-10-25/runs/78-boltons_multireplace-r2/transport.jsonl"
+  },
+  {
+    "execution_id": "final-agent-credential-recovery-2026-10-25/79-interval_union-r1",
+    "original_category": "success",
+    "specific_category": "success",
+    "http_status_counts": {},
+    "evidence": "artifacts/final-agent-credential-recovery-2026-10-25/runs/79-interval_union-r1/transport.jsonl"
+  },
+  {
+    "execution_id": "final-agent-credential-recovery-2026-10-25/80-dependency_order-r3",
+    "original_category": "success",
+    "specific_category": "success",
+    "http_status_counts": {},
+    "evidence": "artifacts/final-agent-credential-recovery-2026-10-25/runs/80-dependency_order-r3/transport.jsonl"
+  },
+  {
+    "execution_id": "final-agent-credential-recovery-2026-10-25/81-money_minor_units-r1",
+    "original_category": "success",
+    "specific_category": "success",
+    "http_status_counts": {},
+    "evidence": "artifacts/final-agent-credential-recovery-2026-10-25/runs/81-money_minor_units-r1/transport.jsonl"
+  },
+  {
+    "execution_id": "final-agent-credential-recovery-2026-10-25/82-boltons_splitlines-r2",
+    "original_category": "success",
+    "specific_category": "success",
+    "http_status_counts": {},
+    "evidence": "artifacts/final-agent-credential-recovery-2026-10-25/runs/82-boltons_splitlines-r2/transport.jsonl"
+  },
+  {
+    "execution_id": "final-agent-credential-recovery-2026-10-25/83-humanize_fractional-r2",
+    "original_category": "success",
+    "specific_category": "success",
+    "http_status_counts": {},
+    "evidence": "artifacts/final-agent-credential-recovery-2026-10-25/runs/83-humanize_fractional-r2/transport.jsonl"
+  },
+  {
+    "execution_id": "final-agent-credential-recovery-2026-10-25/84-ttl_expiry-r1",
+    "original_category": "success",
+    "specific_category": "success",
+    "http_status_counts": {},
+    "evidence": "artifacts/final-agent-credential-recovery-2026-10-25/runs/84-ttl_expiry-r1/transport.jsonl"
+  },
+  {
+    "execution_id": "final-agent-credential-recovery-2026-10-25/85-humanize_metric-r3",
+    "original_category": "success",
+    "specific_category": "success",
+    "http_status_counts": {},
+    "evidence": "artifacts/final-agent-credential-recovery-2026-10-25/runs/85-humanize_metric-r3/transport.jsonl"
+  },
+  {
+    "execution_id": "final-agent-credential-recovery-2026-10-25/86-holdout_seekable_zero-r2",
+    "original_category": "success",
+    "specific_category": "success",
+    "http_status_counts": {},
+    "evidence": "artifacts/final-agent-credential-recovery-2026-10-25/runs/86-holdout_seekable_zero-r2/transport.jsonl"
+  },
+  {
+    "execution_id": "final-agent-credential-recovery-2026-10-25/87-cursor_roundtrip-r2",
+    "original_category": "success",
+    "specific_category": "success",
+    "http_status_counts": {},
+    "evidence": "artifacts/final-agent-credential-recovery-2026-10-25/runs/87-cursor_roundtrip-r2/transport.jsonl"
+  },
+  {
+    "execution_id": "final-agent-credential-recovery-2026-10-25/88-error_response_contract-r2",
+    "original_category": "success",
+    "specific_category": "success",
+    "http_status_counts": {},
+    "evidence": "artifacts/final-agent-credential-recovery-2026-10-25/runs/88-error_response_contract-r2/transport.jsonl"
+  },
+  {
+    "execution_id": "final-agent-credential-recovery-2026-10-25/89-humanize_list-r1",
+    "original_category": "success",
+    "specific_category": "success",
+    "http_status_counts": {},
+    "evidence": "artifacts/final-agent-credential-recovery-2026-10-25/runs/89-humanize_list-r1/transport.jsonl"
+  },
+  {
+    "execution_id": "final-agent-credential-recovery-2026-10-25/90-humanize_metric-r1",
+    "original_category": "success",
+    "specific_category": "success",
+    "http_status_counts": {},
+    "evidence": "artifacts/final-agent-credential-recovery-2026-10-25/runs/90-humanize_metric-r1/transport.jsonl"
+  }
+]

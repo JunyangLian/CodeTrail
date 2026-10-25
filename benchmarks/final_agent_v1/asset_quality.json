@@ -1,0 +1,312 @@
+[
+  {
+    "task_id": "holdout_bucket_falsey",
+    "buggy": {
+      "successful": false,
+      "tests_run": 4,
+      "failures": 2,
+      "errors": 0,
+      "skipped": 0,
+      "expected_failures": 0,
+      "unexpected_successes": 0,
+      "output": "test_01 (test_acceptance.RepairTests) ... FAIL\ntest_02 (test_acceptance.RepairTests) ... FAIL\ntest_03 (test_acceptance.RepairTests) ... ok\ntest_04 (test_acceptance.RepairTests) ... ok\n\n======================================================================\nFAIL: test_01 (test_acceptance.RepairTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\final-asset-quality-v3-2026-10-25\\holdout_bucket_falsey\\buggy\\test_acceptance.py\", line 10, in test_01\n    self.assertEqual(list(b[1]),[])\nAssertionError: Lists differ: [1, 1] != []\n\nFirst list contains 2 additional elements.\nFirst extra element 0:\n1\n\n- [1, 1]\n+ []\n\n======================================================================\nFAIL: test_02 (test_acceptance.RepairTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\final-asset-quality-v3-2026-10-25\\holdout_bucket_falsey\\buggy\\test_acceptance.py\", line 15, in test_02\n    self.assertNotIn(1,b)\nAssertionError: 1 unexpectedly found in <more_itertools.more.bucket object at 0x0000018D179591E0>\n\n----------------------------------------------------------------------\nRan 4 tests in 0.001s\n\nFAILED (failures=2)\n",
+      "elapsed_ms": 234,
+      "exit_code": 1,
+      "stderr": "",
+      "accepted": false
+    },
+    "fixed": {
+      "successful": true,
+      "tests_run": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "expected_failures": 0,
+      "unexpected_successes": 0,
+      "output": "test_01 (test_acceptance.RepairTests) ... ok\ntest_02 (test_acceptance.RepairTests) ... ok\ntest_03 (test_acceptance.RepairTests) ... ok\ntest_04 (test_acceptance.RepairTests) ... ok\n\n----------------------------------------------------------------------\nRan 4 tests in 0.000s\n\nOK\n",
+      "elapsed_ms": 219,
+      "exit_code": 0,
+      "stderr": "",
+      "accepted": true
+    }
+  },
+  {
+    "task_id": "holdout_constrained_items",
+    "buggy": {
+      "successful": false,
+      "tests_run": 5,
+      "failures": 3,
+      "errors": 0,
+      "skipped": 0,
+      "expected_failures": 0,
+      "unexpected_successes": 0,
+      "output": "test_01 (test_acceptance.RepairTests) ... FAIL\ntest_02 (test_acceptance.RepairTests) ... FAIL\ntest_03 (test_acceptance.RepairTests) ... FAIL\ntest_04 (test_acceptance.RepairTests) ... ok\ntest_05 (test_acceptance.RepairTests) ... ok\n\n======================================================================\nFAIL: test_01 (test_acceptance.RepairTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\final-asset-quality-v3-2026-10-25\\holdout_constrained_items\\buggy\\test_acceptance.py\", line 7, in test_01\n    with self.assertRaises(ValueError): list(mi.constrained_batches([b\"a\"],3,max_count=0))\nAssertionError: ValueError not raised\n\n======================================================================\nFAIL: test_02 (test_acceptance.RepairTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\final-asset-quality-v3-2026-10-25\\holdout_constrained_items\\buggy\\test_acceptance.py\", line 9, in test_02\n    with self.assertRaises(ValueError): list(mi.constrained_batches([b\"a\"],3,max_count=-1))\nAssertionError: ValueError not raised\n\n======================================================================\nFAIL: test_03 (test_acceptance.RepairTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\final-asset-quality-v3-2026-10-25\\holdout_constrained_items\\buggy\\test_acceptance.py\", line 11, in test_03\n    with self.assertRaises(ValueError): list(mi.constrained_batches([],3,max_count=0))\nAssertionError: ValueError not raised\n\n----------------------------------------------------------------------\nRan 5 tests in 0.001s\n\nFAILED (failures=3)\n",
+      "elapsed_ms": 219,
+      "exit_code": 1,
+      "stderr": "",
+      "accepted": false
+    },
+    "fixed": {
+      "successful": true,
+      "tests_run": 5,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "expected_failures": 0,
+      "unexpected_successes": 0,
+      "output": "test_01 (test_acceptance.RepairTests) ... ok\ntest_02 (test_acceptance.RepairTests) ... ok\ntest_03 (test_acceptance.RepairTests) ... ok\ntest_04 (test_acceptance.RepairTests) ... ok\ntest_05 (test_acceptance.RepairTests) ... ok\n\n----------------------------------------------------------------------\nRan 5 tests in 0.000s\n\nOK\n",
+      "elapsed_ms": 219,
+      "exit_code": 0,
+      "stderr": "",
+      "accepted": true
+    }
+  },
+  {
+    "task_id": "holdout_numeric_reverse",
+    "buggy": {
+      "successful": false,
+      "tests_run": 5,
+      "failures": 0,
+      "errors": 3,
+      "skipped": 0,
+      "expected_failures": 0,
+      "unexpected_successes": 0,
+      "output": "test_01 (test_acceptance.RepairTests) ... ERROR\ntest_02 (test_acceptance.RepairTests) ... ERROR\ntest_03 (test_acceptance.RepairTests) ... ERROR\ntest_04 (test_acceptance.RepairTests) ... ok\ntest_05 (test_acceptance.RepairTests) ... ok\n\n======================================================================\nERROR: test_01 (test_acceptance.RepairTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\final-asset-quality-v3-2026-10-25\\holdout_numeric_reverse\\buggy\\test_acceptance.py\", line 7, in test_01\n    self.assertEqual(list(reversed(mi.numeric_range(0))),[])\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\final-asset-quality-v3-2026-10-25\\holdout_numeric_reverse\\buggy\\more_itertools\\more.py\", line 2407, in __reversed__\n    self._get_by_index(-1), self._start - self._step, -self._step\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\final-asset-quality-v3-2026-10-25\\holdout_numeric_reverse\\buggy\\more_itertools\\more.py\", line 2432, in _get_by_index\n    raise IndexError(\"numeric range object index out of range\")\nIndexError: numeric range object index out of range\n\n======================================================================\nERROR: test_02 (test_acceptance.RepairTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\final-asset-quality-v3-2026-10-25\\holdout_numeric_reverse\\buggy\\test_acceptance.py\", line 9, in test_02\n    self.assertEqual(list(reversed(mi.numeric_range(4,1))),[])\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\final-asset-quality-v3-2026-10-25\\holdout_numeric_reverse\\buggy\\more_itertools\\more.py\", line 2407, in __reversed__\n    self._get_by_index(-1), self._start - self._step, -self._step\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\final-asset-quality-v3-2026-10-25\\holdout_numeric_reverse\\buggy\\more_itertools\\more.py\", line 2432, in _get_by_index\n    raise IndexError(\"numeric range object index out of range\")\nIndexError: numeric range object index out of range\n\n======================================================================\nERROR: test_03 (test_acceptance.RepairTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\final-asset-quality-v3-2026-10-25\\holdout_numeric_reverse\\buggy\\test_acceptance.py\", line 11, in test_03\n    self.assertEqual(list(reversed(mi.numeric_range(1,4,-1))),[])\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\final-asset-quality-v3-2026-10-25\\holdout_numeric_reverse\\buggy\\more_itertools\\more.py\", line 2407, in __reversed__\n    self._get_by_index(-1), self._start - self._step, -self._step\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\final-asset-quality-v3-2026-10-25\\holdout_numeric_reverse\\buggy\\more_itertools\\more.py\", line 2432, in _get_by_index\n    raise IndexError(\"numeric range object index out of range\")\nIndexError: numeric range object index out of range\n\n----------------------------------------------------------------------\nRan 5 tests in 0.010s\n\nFAILED (errors=3)\n",
+      "elapsed_ms": 219,
+      "exit_code": 1,
+      "stderr": "",
+      "accepted": false
+    },
+    "fixed": {
+      "successful": true,
+      "tests_run": 5,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "expected_failures": 0,
+      "unexpected_successes": 0,
+      "output": "test_01 (test_acceptance.RepairTests) ... ok\ntest_02 (test_acceptance.RepairTests) ... ok\ntest_03 (test_acceptance.RepairTests) ... ok\ntest_04 (test_acceptance.RepairTests) ... ok\ntest_05 (test_acceptance.RepairTests) ... ok\n\n----------------------------------------------------------------------\nRan 5 tests in 0.007s\n\nOK\n",
+      "elapsed_ms": 219,
+      "exit_code": 0,
+      "stderr": "",
+      "accepted": true
+    }
+  },
+  {
+    "task_id": "holdout_interleave_empty",
+    "buggy": {
+      "successful": false,
+      "tests_run": 4,
+      "failures": 0,
+      "errors": 2,
+      "skipped": 0,
+      "expected_failures": 0,
+      "unexpected_successes": 0,
+      "output": "test_01 (test_acceptance.RepairTests) ... ERROR\ntest_02 (test_acceptance.RepairTests) ... ERROR\ntest_03 (test_acceptance.RepairTests) ... ok\ntest_04 (test_acceptance.RepairTests) ... ok\n\n======================================================================\nERROR: test_01 (test_acceptance.RepairTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\final-asset-quality-v3-2026-10-25\\holdout_interleave_empty\\buggy\\test_acceptance.py\", line 7, in test_01\n    self.assertEqual(list(mi.interleave_evenly([])),[])\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\final-asset-quality-v3-2026-10-25\\holdout_interleave_empty\\buggy\\more_itertools\\more.py\", line 1350, in interleave_evenly\n    delta_primary, deltas_secondary = lengths_desc[0], lengths_desc[1:]\nIndexError: list index out of range\n\n======================================================================\nERROR: test_02 (test_acceptance.RepairTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\final-asset-quality-v3-2026-10-25\\holdout_interleave_empty\\buggy\\test_acceptance.py\", line 9, in test_02\n    self.assertEqual(list(mi.interleave_evenly([],lengths=[])),[])\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\final-asset-quality-v3-2026-10-25\\holdout_interleave_empty\\buggy\\more_itertools\\more.py\", line 1350, in interleave_evenly\n    delta_primary, deltas_secondary = lengths_desc[0], lengths_desc[1:]\nIndexError: list index out of range\n\n----------------------------------------------------------------------\nRan 4 tests in 0.003s\n\nFAILED (errors=2)\n",
+      "elapsed_ms": 234,
+      "exit_code": 1,
+      "stderr": "",
+      "accepted": false
+    },
+    "fixed": {
+      "successful": true,
+      "tests_run": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "expected_failures": 0,
+      "unexpected_successes": 0,
+      "output": "test_01 (test_acceptance.RepairTests) ... ok\ntest_02 (test_acceptance.RepairTests) ... ok\ntest_03 (test_acceptance.RepairTests) ... ok\ntest_04 (test_acceptance.RepairTests) ... ok\n\n----------------------------------------------------------------------\nRan 4 tests in 0.000s\n\nOK\n",
+      "elapsed_ms": 218,
+      "exit_code": 0,
+      "stderr": "",
+      "accepted": true
+    }
+  },
+  {
+    "task_id": "holdout_seekable_zero",
+    "buggy": {
+      "successful": false,
+      "tests_run": 4,
+      "failures": 2,
+      "errors": 0,
+      "skipped": 0,
+      "expected_failures": 0,
+      "unexpected_successes": 0,
+      "output": "test_01 (test_acceptance.RepairTests) ... FAIL\ntest_02 (test_acceptance.RepairTests) ... FAIL\ntest_03 (test_acceptance.RepairTests) ... ok\ntest_04 (test_acceptance.RepairTests) ... ok\n\n======================================================================\nFAIL: test_01 (test_acceptance.RepairTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\final-asset-quality-v3-2026-10-25\\holdout_seekable_zero\\buggy\\test_acceptance.py\", line 9, in test_01\n    self.assertEqual(s.peek(),10)\nAssertionError: 20 != 10\n\n======================================================================\nFAIL: test_02 (test_acceptance.RepairTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\final-asset-quality-v3-2026-10-25\\holdout_seekable_zero\\buggy\\test_acceptance.py\", line 14, in test_02\n    self.assertEqual(list(s),[1,2])\nAssertionError: Lists differ: [2] != [1, 2]\n\nFirst differing element 0:\n2\n1\n\nSecond list contains 1 additional elements.\nFirst extra element 1:\n2\n\n- [2]\n+ [1, 2]\n\n----------------------------------------------------------------------\nRan 4 tests in 0.001s\n\nFAILED (failures=2)\n",
+      "elapsed_ms": 218,
+      "exit_code": 1,
+      "stderr": "",
+      "accepted": false
+    },
+    "fixed": {
+      "successful": true,
+      "tests_run": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "expected_failures": 0,
+      "unexpected_successes": 0,
+      "output": "test_01 (test_acceptance.RepairTests) ... ok\ntest_02 (test_acceptance.RepairTests) ... ok\ntest_03 (test_acceptance.RepairTests) ... ok\ntest_04 (test_acceptance.RepairTests) ... ok\n\n----------------------------------------------------------------------\nRan 4 tests in 0.000s\n\nOK\n",
+      "elapsed_ms": 218,
+      "exit_code": 0,
+      "stderr": "",
+      "accepted": true
+    }
+  },
+  {
+    "task_id": "holdout_dotenv_inline_empty",
+    "buggy": {
+      "successful": false,
+      "tests_run": 7,
+      "failures": 3,
+      "errors": 0,
+      "skipped": 0,
+      "expected_failures": 0,
+      "unexpected_successes": 0,
+      "output": "test_01 (test_acceptance.RepairTests) ... FAIL\ntest_02 (test_acceptance.RepairTests) ... FAIL\ntest_03 (test_acceptance.RepairTests) ... ok\ntest_04 (test_acceptance.RepairTests) ... ok\ntest_05 (test_acceptance.RepairTests) ... ok\ntest_06 (test_acceptance.RepairTests) ... FAIL\ntest_07 (test_acceptance.RepairTests) ... ok\n\n======================================================================\nFAIL: test_01 (test_acceptance.RepairTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\final-asset-quality-v3-2026-10-25\\holdout_dotenv_inline_empty\\buggy\\test_acceptance.py\", line 12, in test_01\n    self.assertEqual(dotenv.dotenv_values(stream=StringIO('KEY= # comment')),{'KEY': ''})\nAssertionError: OrderedDict([('KEY', '# comment')]) != {'KEY': ''}\n\n======================================================================\nFAIL: test_02 (test_acceptance.RepairTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\final-asset-quality-v3-2026-10-25\\holdout_dotenv_inline_empty\\buggy\\test_acceptance.py\", line 14, in test_02\n    self.assertEqual(dotenv.dotenv_values(stream=StringIO('KEY=\\t# comment')),{'KEY': ''})\nAssertionError: OrderedDict([('KEY', '# comment')]) != {'KEY': ''}\n\n======================================================================\nFAIL: test_06 (test_acceptance.RepairTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\final-asset-quality-v3-2026-10-25\\holdout_dotenv_inline_empty\\buggy\\test_acceptance.py\", line 22, in test_06\n    self.assertEqual(dotenv.dotenv_values(stream=StringIO('KEY= #c\\nOTHER=x')),{'KEY': '', 'OTHER': 'x'})\nAssertionError: OrderedDict([('KEY', '#c'), ('OTHER', 'x')]) != {'KEY': '', 'OTHER': 'x'}\n\n----------------------------------------------------------------------\nRan 7 tests in 0.002s\n\nFAILED (failures=3)\n",
+      "elapsed_ms": 312,
+      "exit_code": 1,
+      "stderr": "",
+      "accepted": false
+    },
+    "fixed": {
+      "successful": true,
+      "tests_run": 7,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "expected_failures": 0,
+      "unexpected_successes": 0,
+      "output": "test_01 (test_acceptance.RepairTests) ... ok\ntest_02 (test_acceptance.RepairTests) ... ok\ntest_03 (test_acceptance.RepairTests) ... ok\ntest_04 (test_acceptance.RepairTests) ... ok\ntest_05 (test_acceptance.RepairTests) ... ok\ntest_06 (test_acceptance.RepairTests) ... ok\ntest_07 (test_acceptance.RepairTests) ... ok\n\n----------------------------------------------------------------------\nRan 7 tests in 0.001s\n\nOK\n",
+      "elapsed_ms": 312,
+      "exit_code": 0,
+      "stderr": "",
+      "accepted": true
+    }
+  },
+  {
+    "task_id": "holdout_dotenv_backslash",
+    "buggy": {
+      "successful": false,
+      "tests_run": 7,
+      "failures": 2,
+      "errors": 0,
+      "skipped": 0,
+      "expected_failures": 0,
+      "unexpected_successes": 0,
+      "output": "test_01 (test_acceptance.RepairTests) ... python-dotenv could not parse statement starting at line 1\nKey a not found in C:\\Users\\羊叽叽\\AppData\\Local\\Temp\\tmp90fjumgc\\settings.env.\nFAIL\ntest_02 (test_acceptance.RepairTests) ... ok\ntest_03 (test_acceptance.RepairTests) ... python-dotenv could not parse statement starting at line 1\nKey a not found in C:\\Users\\羊叽叽\\AppData\\Local\\Temp\\tmpp1ehjh9b\\settings.env.\nFAIL\ntest_04 (test_acceptance.RepairTests) ... ok\ntest_05 (test_acceptance.RepairTests) ... ok\ntest_06 (test_acceptance.RepairTests) ... ok\ntest_07 (test_acceptance.RepairTests) ... ok\n\n======================================================================\nFAIL: test_01 (test_acceptance.RepairTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\final-asset-quality-v3-2026-10-25\\holdout_dotenv_backslash\\buggy\\test_acceptance.py\", line 18, in test_01\n    self.assertEqual(dotenv.get_key(p,\"a\"),value)\nAssertionError: None != 'C:\\\\Users\\\\'\n\n======================================================================\nFAIL: test_03 (test_acceptance.RepairTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\final-asset-quality-v3-2026-10-25\\holdout_dotenv_backslash\\buggy\\test_acceptance.py\", line 36, in test_03\n    self.assertEqual(dotenv.get_key(p,\"a\"),value)\nAssertionError: None != 'back\\\\'\n\n----------------------------------------------------------------------\nRan 7 tests in 0.088s\n\nFAILED (failures=2)\n",
+      "elapsed_ms": 406,
+      "exit_code": 1,
+      "stderr": "",
+      "accepted": false
+    },
+    "fixed": {
+      "successful": true,
+      "tests_run": 7,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "expected_failures": 0,
+      "unexpected_successes": 0,
+      "output": "test_01 (test_acceptance.RepairTests) ... ok\ntest_02 (test_acceptance.RepairTests) ... ok\ntest_03 (test_acceptance.RepairTests) ... ok\ntest_04 (test_acceptance.RepairTests) ... ok\ntest_05 (test_acceptance.RepairTests) ... ok\ntest_06 (test_acceptance.RepairTests) ... ok\ntest_07 (test_acceptance.RepairTests) ... ok\n\n----------------------------------------------------------------------\nRan 7 tests in 0.113s\n\nOK\n",
+      "elapsed_ms": 422,
+      "exit_code": 0,
+      "stderr": "",
+      "accepted": true
+    }
+  },
+  {
+    "task_id": "holdout_dotenv_override",
+    "buggy": {
+      "successful": false,
+      "tests_run": 4,
+      "failures": 1,
+      "errors": 0,
+      "skipped": 0,
+      "expected_failures": 0,
+      "unexpected_successes": 0,
+      "output": "test_01 (test_acceptance.RepairTests) ... FAIL\ntest_02 (test_acceptance.RepairTests) ... ok\ntest_03 (test_acceptance.RepairTests) ... ok\ntest_04 (test_acceptance.RepairTests) ... ok\n\n======================================================================\nFAIL: test_01 (test_acceptance.RepairTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\final-asset-quality-v3-2026-10-25\\holdout_dotenv_override\\buggy\\test_acceptance.py\", line 15, in test_01\n    self.assertEqual(os.environ[\"CT_FINAL_B\"],\"environment\")\nAssertionError: 'file' != 'environment'\n- file\n+ environment\n\n\n----------------------------------------------------------------------\nRan 4 tests in 0.002s\n\nFAILED (failures=1)\n",
+      "elapsed_ms": 328,
+      "exit_code": 1,
+      "stderr": "",
+      "accepted": false
+    },
+    "fixed": {
+      "successful": true,
+      "tests_run": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "expected_failures": 0,
+      "unexpected_successes": 0,
+      "output": "test_01 (test_acceptance.RepairTests) ... ok\ntest_02 (test_acceptance.RepairTests) ... ok\ntest_03 (test_acceptance.RepairTests) ... ok\ntest_04 (test_acceptance.RepairTests) ... ok\n\n----------------------------------------------------------------------\nRan 4 tests in 0.001s\n\nOK\n",
+      "elapsed_ms": 312,
+      "exit_code": 0,
+      "stderr": "",
+      "accepted": true
+    }
+  },
+  {
+    "task_id": "holdout_dotenv_spaces",
+    "buggy": {
+      "successful": false,
+      "tests_run": 6,
+      "failures": 1,
+      "errors": 0,
+      "skipped": 0,
+      "expected_failures": 0,
+      "unexpected_successes": 0,
+      "output": "test_01 (test_acceptance.RepairTests) ... Python-dotenv could not parse statement starting at line 1\nFAIL\ntest_02 (test_acceptance.RepairTests) ... ok\ntest_03 (test_acceptance.RepairTests) ... ok\ntest_04 (test_acceptance.RepairTests) ... ok\ntest_05 (test_acceptance.RepairTests) ... ok\ntest_06 (test_acceptance.RepairTests) ... ok\n\n======================================================================\nFAIL: test_01 (test_acceptance.RepairTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\final-asset-quality-v3-2026-10-25\\holdout_dotenv_spaces\\buggy\\test_acceptance.py\", line 12, in test_01\n    self.assertEqual(dotenv.dotenv_values(stream=StringIO('a=b  c')),{\"a\":'b  c'})\nAssertionError: {} != {'a': 'b  c'}\n- {}\n+ {'a': 'b  c'}\n\n----------------------------------------------------------------------\nRan 6 tests in 0.002s\n\nFAILED (failures=1)\n",
+      "elapsed_ms": 312,
+      "exit_code": 1,
+      "stderr": "",
+      "accepted": false
+    },
+    "fixed": {
+      "successful": true,
+      "tests_run": 6,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "expected_failures": 0,
+      "unexpected_successes": 0,
+      "output": "test_01 (test_acceptance.RepairTests) ... ok\ntest_02 (test_acceptance.RepairTests) ... ok\ntest_03 (test_acceptance.RepairTests) ... ok\ntest_04 (test_acceptance.RepairTests) ... ok\ntest_05 (test_acceptance.RepairTests) ... ok\ntest_06 (test_acceptance.RepairTests) ... ok\n\n----------------------------------------------------------------------\nRan 6 tests in 0.001s\n\nOK\n",
+      "elapsed_ms": 313,
+      "exit_code": 0,
+      "stderr": "",
+      "accepted": true
+    }
+  },
+  {
+    "task_id": "holdout_dotenv_bom",
+    "buggy": {
+      "successful": false,
+      "tests_run": 4,
+      "failures": 2,
+      "errors": 0,
+      "skipped": 0,
+      "expected_failures": 0,
+      "unexpected_successes": 0,
+      "output": "test_01 (test_acceptance.RepairTests) ... FAIL\ntest_02 (test_acceptance.RepairTests) ... FAIL\ntest_03 (test_acceptance.RepairTests) ... ok\ntest_04 (test_acceptance.RepairTests) ... ok\n\n======================================================================\nFAIL: test_01 (test_acceptance.RepairTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\final-asset-quality-v3-2026-10-25\\holdout_dotenv_bom\\buggy\\test_acceptance.py\", line 12, in test_01\n    self.assertEqual(dotenv.dotenv_values(stream=StringIO('\\ufeffa=b')),{'a': 'b'})\nAssertionError: OrderedDict([('\\ufeffa', 'b')]) != {'a': 'b'}\n\n======================================================================\nFAIL: test_02 (test_acceptance.RepairTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\1_yanjiusheng\\实习项目\\agent\\CodeTrail\\artifacts\\final-asset-quality-v3-2026-10-25\\holdout_dotenv_bom\\buggy\\test_acceptance.py\", line 14, in test_02\n    self.assertEqual(dotenv.dotenv_values(stream=StringIO('\\ufeffa=b\\nc=d')),{'a': 'b', 'c': 'd'})\nAssertionError: OrderedDict([('\\ufeffa', 'b'), ('c', 'd')]) != {'a': 'b', 'c': 'd'}\n\n----------------------------------------------------------------------\nRan 4 tests in 0.002s\n\nFAILED (failures=2)\n",
+      "elapsed_ms": 297,
+      "exit_code": 1,
+      "stderr": "",
+      "accepted": false
+    },
+    "fixed": {
+      "successful": true,
+      "tests_run": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "expected_failures": 0,
+      "unexpected_successes": 0,
+      "output": "test_01 (test_acceptance.RepairTests) ... ok\ntest_02 (test_acceptance.RepairTests) ... ok\ntest_03 (test_acceptance.RepairTests) ... ok\ntest_04 (test_acceptance.RepairTests) ... ok\n\n----------------------------------------------------------------------\nRan 4 tests in 0.001s\n\nOK\n",
+      "elapsed_ms": 313,
+      "exit_code": 0,
+      "stderr": "",
+      "accepted": true
+    }
+  }
+]

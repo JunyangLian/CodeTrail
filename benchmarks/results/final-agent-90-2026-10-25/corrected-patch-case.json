@@ -1,0 +1,17 @@
+{
+  "run": "51-humanize_size-r1",
+  "path": "artifacts/final-agent-credential-recovery-2026-10-25/runs/51-humanize_size-r1",
+  "recovery": {
+    "tool_index": 5,
+    "name": "patch_file",
+    "code": "invalid_arguments",
+    "expected_initial_red_test": false,
+    "later_same_tool_ok": true,
+    "same_file_patch_corrected": true,
+    "eventual_workflow_success": true
+  },
+  "functional": true,
+  "workflow": true,
+  "trace_sha256": "aa0096443a05f31b8ace6614d9cede829de173d5b009b15fc2abb116de58c685",
+  "note": "Observed one rejected patch followed by same-file correction; n=1, not broad autonomous recovery evidence."
+}

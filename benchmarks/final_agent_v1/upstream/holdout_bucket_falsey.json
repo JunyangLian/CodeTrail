@@ -1,0 +1,18 @@
+{
+  "sha": "67fcf640477c78605580f5ee703a54c73c1e7a8a",
+  "html_url": "https://github.com/more-itertools/more-itertools/commit/67fcf640477c78605580f5ee703a54c73c1e7a8a",
+  "parents": [
+    {
+      "sha": "1ea82a711c69f590054987b5cb194157f8ce8ac4",
+      "url": "https://api.github.com/repos/more-itertools/more-itertools/commits/1ea82a711c69f590054987b5cb194157f8ce8ac4",
+      "html_url": "https://github.com/more-itertools/more-itertools/commit/1ea82a711c69f590054987b5cb194157f8ce8ac4"
+    }
+  ],
+  "title": "fix: honour a falsey validator in bucket (#1308)",
+  "committed_at": "2026-10-06T22:23:13Z",
+  "changed_files": [
+    "docs/versions.rst",
+    "more_itertools/more.py",
+    "tests/test_more.py"
+  ]
+}

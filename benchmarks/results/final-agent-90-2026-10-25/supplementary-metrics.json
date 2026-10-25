@@ -1,0 +1,61 @@
+{
+  "at": "2026-10-25T09:45:13.349403+00:00",
+  "kind": "Supplementary aggregation of frozen fields; primary metrics, criteria and raw run results unchanged.",
+  "source_script_sha256": "18557e0467231db664cb9000d747e3fae4c902a80ef927ebfeecf66175ecc061",
+  "groups": {
+    "existing": {
+      "patch_rejections": 0,
+      "same_file_patch_corrected": 0,
+      "patch_correction_fraction": {
+        "numerator": 0,
+        "denominator": 0,
+        "value": null
+      },
+      "unexpected_tool_errors": 13,
+      "later_same_tool_success_proxy": {
+        "numerator": 9,
+        "denominator": 13,
+        "value": 0.6923076923076923
+      },
+      "transport_logical_requests_with_failures": 40,
+      "transport_recovered_requests": 0,
+      "persistence_writes_with_retry_or_failure": 0,
+      "persistence_recovered_writes": 0,
+      "persistence_terminal_failures": 0,
+      "reasoning_budget_observed_responses": 211,
+      "reasoning_tokens_exceed_requested_4096": 0
+    },
+    "holdout": {
+      "patch_rejections": 0,
+      "same_file_patch_corrected": 0,
+      "patch_correction_fraction": {
+        "numerator": 0,
+        "denominator": 0,
+        "value": null
+      },
+      "unexpected_tool_errors": 46,
+      "later_same_tool_success_proxy": {
+        "numerator": 25,
+        "denominator": 46,
+        "value": 0.5434782608695652
+      },
+      "transport_logical_requests_with_failures": 14,
+      "transport_recovered_requests": 0,
+      "persistence_writes_with_retry_or_failure": 0,
+      "persistence_recovered_writes": 0,
+      "persistence_terminal_failures": 0,
+      "reasoning_budget_observed_responses": 279,
+      "reasoning_tokens_exceed_requested_4096": 2
+    }
+  },
+  "checks": {
+    "all_runs_started_after_freeze": true,
+    "original_twenty_files_and_scopes_unchanged": true,
+    "gold_lines_match_original_faulty_source": true,
+    "private_gold_hash_unchanged": true,
+    "source_snapshot_matches_frozen_hashes": true,
+    "private_references_excluded_from_snapshot": true
+  },
+  "timing_definition": "elapsed_ms is worker start through entry to finalization, before external verification. External verifier elapsed_ms is stored separately. Not a total end-to-end latency including audit.",
+  "recovery_limits": "Initial expected red tests excluded from unexpected tool errors. Later same-tool success is a proxy, not causal attribution. Patch fraction follows the pre-frozen same-file criterion; no denominator yields null."
+}

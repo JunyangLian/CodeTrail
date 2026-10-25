@@ -281,7 +281,7 @@ class Pico:
         return prompt
 
     def record(self, item):
-        self.session["history"].append(item)
+        self.session["history"].append(self.redact_artifact(item))
         self.session_path = self.session_store.save(self.session)
 
     @staticmethod
@@ -797,4 +797,6 @@ class Pico:
         # 这样既能防住 "../" 逃逸，也能防住符号链接解析后跳出仓库。
         if os.path.commonpath([str(self.root), str(resolved)]) != str(self.root):
             raise ValueError(f"path escapes workspace: {raw_path}")
+        if securitylib.sensitive_workspace_path(resolved.relative_to(self.root)):
+            raise ValueError(f"sensitive path denied: {raw_path}")
         return resolved

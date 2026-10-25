@@ -1,0 +1,18 @@
+{
+  "sha": "7b172fe24830bb8fd8cd943b73570e8cd6515ba1",
+  "html_url": "https://github.com/theskumar/python-dotenv/commit/7b172fe24830bb8fd8cd943b73570e8cd6515ba1",
+  "parents": [
+    {
+      "sha": "6ca2e2ab399c7e41be276bc830f21af3092f5d28",
+      "url": "https://api.github.com/repos/theskumar/python-dotenv/commits/6ca2e2ab399c7e41be276bc830f21af3092f5d28",
+      "html_url": "https://github.com/theskumar/python-dotenv/commit/6ca2e2ab399c7e41be276bc830f21af3092f5d28"
+    }
+  ],
+  "title": "Fix parsing of unquoted values with two spaces",
+  "committed_at": "2020-09-23T21:10:38Z",
+  "changed_files": [
+    "CHANGELOG.md",
+    "src/dotenv/parser.py",
+    "tests/test_parser.py"
+  ]
+}

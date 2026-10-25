@@ -1,0 +1,57 @@
+{
+  "at": "2026-10-25T10:06:15.202204+00:00",
+  "source_sha256": "ab41384e200ec280ac1cb5710c8467a7b400ba19508f6faf503ff88735b0a920",
+  "details": {
+    "existing": {
+      "runs": 100,
+      "unexpected_tool_errors": 37,
+      "later_same_tool_success_proxy": {
+        "numerator": 24,
+        "denominator": 37,
+        "value": 0.6486486486486487
+      },
+      "patch_rejection_same_file_correction": {
+        "numerator": 1,
+        "denominator": 1,
+        "value": 1.0
+      },
+      "tool_steps_p50_p95": {
+        "0.5": 5.0,
+        "0.95": 12.049999999999997
+      },
+      "transport_failed_attempts": 40,
+      "transport_failure_phases": {
+        "connect_or_response_headers": 40
+      },
+      "persistence_events": {},
+      "reasoning_usage_known_responses": 586,
+      "reasoning_tokens_over_4096": 0
+    },
+    "holdout": {
+      "runs": 44,
+      "unexpected_tool_errors": 93,
+      "later_same_tool_success_proxy": {
+        "numerator": 51,
+        "denominator": 93,
+        "value": 0.5483870967741935
+      },
+      "patch_rejection_same_file_correction": {
+        "numerator": 0,
+        "denominator": 0,
+        "value": null
+      },
+      "tool_steps_p50_p95": {
+        "0.5": 10.5,
+        "0.95": 20.0
+      },
+      "transport_failed_attempts": 14,
+      "transport_failure_phases": {
+        "connect_or_response_headers": 14
+      },
+      "persistence_events": {},
+      "reasoning_usage_known_responses": 522,
+      "reasoning_tokens_over_4096": 9
+    }
+  },
+  "note": "Post-run aggregation only. Frozen gold, primary formulas, runtime and all raw observations unchanged."
+}

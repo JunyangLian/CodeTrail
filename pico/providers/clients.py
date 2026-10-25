@@ -6,6 +6,7 @@ runtime 只关心一件事：给我一个 prompt，我拿回一段文本。
 """
 
 import json
+import hashlib
 import time
 from http.client import RemoteDisconnected, IncompleteRead
 import urllib.error
@@ -256,11 +257,17 @@ class OpenAICompatibleModelClient:
         self.last_completion_metadata = {}
         self.max_transport_attempts = 3
         self.on_transport_event = None
-        self.supports_native_tools = api_format == 'chat_completions' and urlparse(self.base_url).hostname == 'api.deepseek.com'
+        self.on_wire_event = None
+        host = urlparse(self.base_url).hostname
+        self.siliconflow_deepseek = host == 'api.siliconflow.cn' and model == 'deepseek-ai/DeepSeek-V4.1-Flash'
+        self.supports_native_tools = api_format == 'chat_completions' and (host == 'api.deepseek.com' or self.siliconflow_deepseek)
+        self.native_wire_options = {'enable_thinking': True, 'thinking_budget': 4096} if self.siliconflow_deepseek else None
+        self.top_p = None
         self.native_conversation = None
 
     def begin_native_run(self, tools, context, request, verification_command):
-        self.native_conversation = NativeToolConversation(tools, context, request, verification_command)
+        self.native_conversation = NativeToolConversation(tools, context, request, verification_command,
+                                                        self.native_wire_options, require_reasoning=not self.siliconflow_deepseek)
 
     def observe_native_tool(self, content):
         self.native_conversation.observe(content)
@@ -323,6 +330,8 @@ class OpenAICompatibleModelClient:
             }
         if self.temperature is not None:
             payload["temperature"] = self.temperature
+        if self.top_p is not None:
+            payload['top_p'] = self.top_p
         if self.native_conversation is not None:
             payload.update(self.native_conversation.payload())
         # runtime 传入的是“稳定前缀”的签名，而不是整段 prompt 的签名。
@@ -346,6 +355,9 @@ class OpenAICompatibleModelClient:
             headers=headers,
             method="POST",
         )
+        if self.on_wire_event:
+            self.on_wire_event({'event':'request','body':request.data.decode('utf-8'),
+                                'sha256':hashlib.sha256(request.data).hexdigest()})
         attempts = self.max_transport_attempts
         deadline = time.monotonic() + self.timeout * 2
         for attempt in range(attempts):
@@ -354,16 +366,24 @@ class OpenAICompatibleModelClient:
             if remaining <= 0:
                 raise TimeoutError('OpenAI-compatible transport retry budget exhausted; failed-request usage is unknown')
             try:
+                phase = 'connect_or_response_headers'
                 with urllib.request.urlopen(request, timeout=min(self.timeout, remaining)) as response:
+                    phase = 'response_body'
                     body_text = response.read().decode("utf-8")
                     headers = getattr(response, "headers", {}) or {}
                     content_type = headers.get("Content-Type", "")
+                if self.on_wire_event:
+                    self.on_wire_event({'event':'response','body':body_text,
+                                        'sha256':hashlib.sha256(body_text.encode('utf-8')).hexdigest()})
                 self._transport_event({'attempt':attempt+1, 'ok':True,
-                    'request_id':headers.get('x-request-id') or headers.get('X-Request-ID'),
+                    'request_id':headers.get('x-request-id') or headers.get('X-Request-ID') or headers.get('x-siliconcloud-trace-id'),
                     'elapsed_ms':round((time.monotonic()-started)*1000)})
                 break
             except urllib.error.HTTPError as exc:
                 body = exc.read().decode("utf-8", errors="replace")
+                if self.on_wire_event:
+                    self.on_wire_event({'event':'http_error','status_code':exc.code,'body':body,
+                                        'sha256':hashlib.sha256(body.encode('utf-8')).hexdigest()})
                 delay = 0.5 * (attempt + 1)
                 if exc.code==429:
                     retry_after = exc.headers.get('Retry-After','') if exc.headers else ''
@@ -371,7 +391,7 @@ class OpenAICompatibleModelClient:
                         delay = min(10, int(retry_after))
                 retry = (exc.code in {408,429} or exc.code>=500) and attempt<attempts-1 and deadline-time.monotonic()>delay
                 self._transport_event({'attempt':attempt+1,'ok':False,'status_code':exc.code,
-                    'error_type':type(exc).__name__,'will_retry':retry,'retry_delay_seconds':delay if retry else 0,
+                    'error_type':type(exc).__name__,'phase':phase,'will_retry':retry,'retry_delay_seconds':delay if retry else 0,
                     'elapsed_ms':round((time.monotonic()-started)*1000)})
                 if retry:
                     time.sleep(delay)
@@ -380,7 +400,7 @@ class OpenAICompatibleModelClient:
             except (urllib.error.URLError, RemoteDisconnected, TimeoutError, ConnectionResetError, IncompleteRead) as exc:
                 delay = 0.5 * (attempt + 1)
                 retry = attempt<attempts-1 and deadline-time.monotonic()>delay
-                self._transport_event({'attempt':attempt+1,'ok':False,'error_type':type(exc).__name__,
+                self._transport_event({'attempt':attempt+1,'ok':False,'error_type':type(exc).__name__,'phase':phase,
                     'will_retry':retry,'retry_delay_seconds':delay if retry else 0,
                     'elapsed_ms':round((time.monotonic()-started)*1000)})
                 if retry:
@@ -429,8 +449,11 @@ class OpenAICompatibleModelClient:
             "prompt_cache_retention": prompt_cache_retention,
             **_extract_usage_cache_details(data),
         }
-        if urlparse(self.base_url).hostname=='api.deepseek.com':
+        if urlparse(self.base_url).hostname in {'api.deepseek.com','api.siliconflow.cn'}:
             self.last_completion_metadata['provider_finish_reason']=(data.get('choices') or [{}])[0].get('finish_reason')
+            self.last_completion_metadata.update(provider_model=data.get('model'),system_fingerprint=data.get('system_fingerprint'),
+                reasoning_tokens=(data.get('usage',{}).get('completion_tokens_details') or {}).get('reasoning_tokens'),
+                provider_usage=data.get('usage'))
         if self.native_conversation is not None:
             return self.native_conversation.accept(data, self.last_completion_metadata)
         return _normalize_provider_text(self, _extract_openai_text(data))

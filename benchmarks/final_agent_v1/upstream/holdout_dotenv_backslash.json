@@ -1,0 +1,20 @@
+{
+  "sha": "f7b18d9c72d1abcc2ad4023424b84f5bee30d266",
+  "html_url": "https://github.com/theskumar/python-dotenv/commit/f7b18d9c72d1abcc2ad4023424b84f5bee30d266",
+  "parents": [
+    {
+      "sha": "751f8c148222e58aa173c83c4e5e6cfccb2cc124",
+      "url": "https://api.github.com/repos/theskumar/python-dotenv/commits/751f8c148222e58aa173c83c4e5e6cfccb2cc124",
+      "html_url": "https://github.com/theskumar/python-dotenv/commit/751f8c148222e58aa173c83c4e5e6cfccb2cc124"
+    }
+  ],
+  "title": "fix: round-trip backslashes through set_key (#680)",
+  "committed_at": "2026-08-16T15:23:35Z",
+  "changed_files": [
+    "CHANGELOG.md",
+    "src/dotenv/main.py",
+    "src/dotenv/parser.py",
+    "tests/test_main.py",
+    "tests/test_parser.py"
+  ]
+}

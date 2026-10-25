@@ -1,9 +1,18 @@
 """Security and redaction helpers for runtime artifacts."""
 
 import os
+from pathlib import Path
 
 SENSITIVE_ENV_NAME_MARKERS = ("API_KEY", "TOKEN", "SECRET", "PASSWORD")
 REDACTED_VALUE = "<redacted>"
+
+
+def sensitive_workspace_path(relative):
+    parts = [p.casefold() for p in Path(relative).parts]
+    name = parts[-1] if parts else ''
+    return (any(p in {'.ssh', '.aws'} for p in parts)
+            or name == '.env' or (name.startswith('.env.') and name != '.env.example')
+            or name.endswith(('.pem', '.key')))
 
 
 def _normalized_secret_names(secret_env_names):

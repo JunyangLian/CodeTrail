@@ -151,7 +151,7 @@ class AgentLoop:
         if native:
             agent.model_client.begin_native_run(
                 agent.tools,
-                agent.workspace.text() + '\n\n' + agent.memory_text() + '\n\n' + agent.history_text(),
+                agent.redact_text(agent.workspace.text() + '\n\n' + agent.memory_text() + '\n\n' + agent.history_text()),
                 user_message, agent.verification_command)
         agent.emit_trace(
             task_state,

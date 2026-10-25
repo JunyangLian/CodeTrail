@@ -1,0 +1,17 @@
+{
+  "sha": "edb3346f835ca917efbfda5e2d6664ab952da369",
+  "html_url": "https://github.com/more-itertools/more-itertools/commit/edb3346f835ca917efbfda5e2d6664ab952da369",
+  "parents": [
+    {
+      "sha": "247e15b3a489d5805375c95dfa79486c9bd0eb1b",
+      "url": "https://api.github.com/repos/more-itertools/more-itertools/commits/247e15b3a489d5805375c95dfa79486c9bd0eb1b",
+      "html_url": "https://github.com/more-itertools/more-itertools/commit/247e15b3a489d5805375c95dfa79486c9bd0eb1b"
+    }
+  ],
+  "title": "Fix empty ranges in numeric_range.__reversed__",
+  "committed_at": "2026-04-10T19:29:02Z",
+  "changed_files": [
+    "more_itertools/more.py",
+    "tests/test_more.py"
+  ]
+}

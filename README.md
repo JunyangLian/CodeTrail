@@ -4,6 +4,43 @@
 
 ![CodeTrail 工作台](assets/screenshots/codetrail-qa-desktop-20261024.png)
 
+## 最终七维评测（2026-10-25）
+
+本轮冻结 **30道不同任务：原20道＋新10道真实开源故障**，原计划每题3次、90次。硅基流动实际模型ID为 `deepseek-ai/DeepSeek-V4.1-Flash`，使用原生Tool Calling，Thinking与输出分别请求4096 Token，工具20步、并发3，协议与金标在正式调用前冻结。
+
+首批90次已全部记录并独立重测：**功能与流程均为36/90（40.00%）**，其中原题20/60、留出16/30；另外54次因平台HTTP402余额不足中断。替换凭据后的追加恢复单独记录，首批失败不覆盖。不得将余额中断解释为模型修复能力，也不得从总体分母删除。
+
+| 批次 | 原20题功能/流程 | 新10题功能/流程 | 全部功能/流程 |
+|---|---|---|---|
+| 首批90次 | 20/60 | 16/30 | 36/90（40.00%） |
+| 凭据恢复追加54次 | 40/40 | 13/14 | 53/54（98.15%） |
+| 实际全部144次 | 60/100 | 29/44 | 89/144（61.81%） |
+
+**全部144次包含54条余额失败和1条真实修复失败，不将追加覆盖成一次90/90实验。** 真实失败是连续空格解析题：错误补丁、5次拒绝调用与分页读取耗尽20步，最后修改后未重测。没有放宽权限或重跑掩盖。
+
+过程共904个工具步、114次多工具包协议拒绝，重复读取0/355；这些是不同口径。独立安全守卫13/14，真实模型README攻击6/6；保留获批代码读取本地假canary的隔离缺口。Windows真实IO专项捕获短时WinError5并有限重试恢复；实际费用未获可归因账单。
+
+- **[最终工程报告](benchmarks/results/final-agent-90-2026-10-25/final-report.md)**、[凭据恢复报告](benchmarks/results/final-agent-90-2026-10-25/credential-recovery-report.md)、[全部执行CSV](benchmarks/results/final-agent-90-2026-10-25/all-executions.csv)、[逐题首批→追加分布](benchmarks/results/final-agent-90-2026-10-25/per-task-with-recovery.csv)。
+- [完整证据包](benchmarks/results/final-agent-90-2026-10-25/evidence.zip)、[SHA256](benchmarks/results/final-agent-90-2026-10-25/evidence.sha256)与[公开复现命令](docs/final-agent-reproduction.md)。参考补丁不发布，公开重跑不依赖私有金标。
+- [首批完整报告](benchmarks/results/final-agent-90-2026-10-25/report.md)与[七维指标定义](benchmarks/results/final-agent-90-2026-10-25/methodology.md)：结果、检索上下文、证据忠实性、工具过程、稳定恢复、成本效率、安全权限。
+- [架构图](docs/final-agent-architecture.md)与[面试讲解](docs/final-agent-interview.md)：独立外部验收、冻结金标、过程监控、Windows有限重试、失败保留和安全边界。
+- 全量自动化测试 **292/292通过**；测试用例数与Agent任务数分开统计。任务数量有限，旧20道已用于历史评测，其中6道参与额外调优；新10道只保证此前未用于本项目Agent调优，无法保证模型训练未见。
+- 安全独立统计。应用层拒绝越界、敏感路径、未经批准的Shell和测试修改；**批准的Python仍以当前用户运行，没有OS沙箱**。真实费用、广义语义忠实性及真实任务长期记忆收益没有可靠观测时标为未评估。
+
+本轮真实修复的离线回放（不调用API，不增加任务数）：
+
+```powershell
+python -X utf8 scripts/replay_repair_demo.py --run artifacts/final-agent-90-2026-10-25/runs/01-dependency_order-r1 --destination artifacts/your-demo-replay
+```
+
+原始轨迹可从最终证据包解压到项目根目录。运行本地网页Demo前，在本地进程环境设置 `SILICONFLOW_API_KEY`；随后执行：
+
+```powershell
+python -X utf8 scripts/run_final_demo.py
+```
+
+该入口只读取环境凭据，不加载旧 `.env`，固定硅基流动模型，保留交互审批。故障任务见 `examples/final-eval-demo/README.md`，初始验收故意失败；实际正式评测由独立控制器执行，网页操作不计入评测指标。
+
 ## 能力
 
 - **Agent 循环**：模型请求、工具调用、结果回传与最终回答。
@@ -26,15 +63,15 @@ python -m pip install -e .
 Copy-Item .env.example .env
 ```
 
-在本地 `.env` 中填入模型服务的 API Key。默认示例使用DeepSeek官方V4.1 Flash的Chat Completions接口；Key不需要填写到网页中，也不应提交到仓库。
+在本地 `.env` 中填入模型服务的 API Key。通用示例使用硅基流动DeepSeek V4.1 Flash的Chat Completions接口；本轮评测与专用Demo仅从环境变量读Key；Key不需要填写到网页中，也不应提交到仓库。
 
 ```dotenv
 PICO_PROVIDER=openai
-PICO_OPENAI_API_BASE=https://api.deepseek.com/v1
+PICO_OPENAI_API_BASE=https://api.siliconflow.cn/v1
 PICO_OPENAI_API_FORMAT=chat_completions
-PICO_OPENAI_MODEL=deepseek-flash
+PICO_OPENAI_MODEL=deepseek-ai/DeepSeek-V4.1-Flash
 PICO_OPENAI_API_KEY=填写自己的Key
-PICO_MAX_NEW_TOKENS=8192
+PICO_MAX_NEW_TOKENS=4096
 ```
 
 启动工作台：

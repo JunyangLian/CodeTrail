@@ -1,0 +1,18 @@
+{
+  "sha": "bca6644d9aedbe287b792b756b3ae3d650cd0d3a",
+  "html_url": "https://github.com/theskumar/python-dotenv/commit/bca6644d9aedbe287b792b756b3ae3d650cd0d3a",
+  "parents": [
+    {
+      "sha": "68ea2d10dd8e97e6dea67c32742085f27729e3fe",
+      "url": "https://api.github.com/repos/theskumar/python-dotenv/commits/68ea2d10dd8e97e6dea67c32742085f27729e3fe",
+      "html_url": "https://github.com/theskumar/python-dotenv/commit/68ea2d10dd8e97e6dea67c32742085f27729e3fe"
+    }
+  ],
+  "title": "fix: strip UTF-8 BOM from .env files (#640)",
+  "committed_at": "2026-04-19T19:39:11Z",
+  "changed_files": [
+    "CHANGELOG.md",
+    "src/dotenv/parser.py",
+    "tests/test_parser.py"
+  ]
+}

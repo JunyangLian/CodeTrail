@@ -14,7 +14,10 @@ class NativeReply(str):
 
 
 class NativeToolConversation:
-    def __init__(self, tools, context, request, verification_command):
+    def __init__(self, tools, context, request, verification_command, wire_options=None, require_reasoning=True):
+        self.require_reasoning = require_reasoning
+        self.wire_options = copy.deepcopy(wire_options if wire_options is not None else
+                                          {'thinking': {'type': 'enabled'}, 'reasoning_effort': 'high'})
         self.tools = []
         for name, spec in tools.items():
             properties, required = {}, []
@@ -59,17 +62,17 @@ class NativeToolConversation:
         if self.pending:
             raise RuntimeError('Cannot request model before delivering tool result')
         return {'messages': copy.deepcopy(self.messages), 'tools': self.tools,
-                'tool_choice': 'auto', 'thinking': {'type': 'enabled'}, 'reasoning_effort': 'high'}
+                'tool_choice': 'auto', **copy.deepcopy(self.wire_options)}
 
     def audit_request(self):
         messages = copy.deepcopy(self.messages)
         for message in messages:
             if 'reasoning_content' in message:
                 reasoning = message.pop('reasoning_content')
-                message['reasoning_audit'] = {'chars': len(reasoning),
-                    'sha256': hashlib.sha256(reasoning.encode()).hexdigest()}
+                message['reasoning_audit'] = {'chars': len(reasoning or ''),
+                    'sha256': hashlib.sha256((reasoning or '').encode()).hexdigest()}
         return {'messages': messages, 'tools': self.tools, 'tool_choice': 'auto',
-                'thinking': {'type': 'enabled'}, 'reasoning_effort': 'high'}
+                **copy.deepcopy(self.wire_options)}
 
     def accept(self, data, metadata):
         choice = data['choices'][0]
@@ -88,7 +91,7 @@ class NativeToolConversation:
             return NativeReply(reason, 'retry')
         if choice.get('finish_reason') == 'length':
             return retry('Output token limit reached; return one complete native call or final answer.')
-        if not isinstance(reasoning, str):
+        if self.require_reasoning and not isinstance(reasoning, str):
             return retry('Thinking response omitted reasoning_content; no executable action accepted.')
         # Preserve the actual assistant message, including all tool IDs and reasoning.
         # This object is private to one run; it is never passed to session/memory/logging.
