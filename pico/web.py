@@ -14,7 +14,7 @@ from pathlib import Path
 from urllib.parse import urlsplit
 
 from .cli import _build_model_client, _configured_secret_names, build_arg_parser
-from .config import load_project_env
+from .config import load_project_env, provider_env
 from .runtime import Pico
 from .security import redact_artifact
 from .session_store import SessionStore
@@ -126,7 +126,7 @@ class Task:
 
 
 class Workbench:
-    def __init__(self, workspace, factory=None, verification_command=None, model_timeout=180):
+    def __init__(self, workspace, factory=None, verification_command=None, model_timeout=180, max_new_tokens=None):
         if type(model_timeout) is not int or not 1 <= model_timeout <= 300:
             raise ValueError("模型超时应在 1–300 秒之间。")
         self.root = Path(workspace).resolve()
@@ -138,6 +138,13 @@ class Workbench:
         if not self.root.is_dir():
             raise ValueError("工作目录不存在。")
         load_project_env(self.root)
+        token_budget=max_new_tokens if max_new_tokens is not None else provider_env('PICO_MAX_NEW_TOKENS',default='1024')
+        try:
+            self.max_new_tokens=int(token_budget)
+        except (TypeError,ValueError) as exc:
+            raise ValueError('模型输出预算应为128–65536的整数') from exc
+        if isinstance(token_budget,bool) or not 128<=self.max_new_tokens<=65536:
+            raise ValueError('模型输出预算应为128–65536的整数')
         self.args = build_arg_parser().parse_args([
             "--cwd", str(self.root), "--openai-timeout", str(model_timeout),
             "--ollama-timeout", str(model_timeout),
@@ -154,6 +161,7 @@ class Workbench:
             "workspace": str(self.root), "workspace_name": self.root.name,
             "model": self.model.model, "configured": bool(getattr(self.model, "api_key", True)),
             "model_timeout": self.args.openai_timeout,
+            "max_new_tokens": self.max_new_tokens,
             "csrf": self.csrf, "active_id": self.active_id,
             "verification_command": self.verification_command,
             "demo": self.root == (Path(__file__).resolve().parent.parent / "examples/interview-demo"),
@@ -168,7 +176,7 @@ class Workbench:
         options = dict(
             model_client=model, workspace=workspace, session_store=store,
             approval_policy=policy, read_only=policy == "never", max_steps=max_steps,
-            max_new_tokens=1024, secret_env_names=_configured_secret_names(self.args),
+            max_new_tokens=self.max_new_tokens, secret_env_names=_configured_secret_names(self.args),
             verification_command=self.verification_command,
         )
         if session_id:
@@ -446,10 +454,11 @@ def main(argv=None):
     parser.add_argument("--open", action="store_true", help="Open the local page in your browser")
     parser.add_argument("--verify-command", help="Exact shell command used as verification evidence; never runs automatically")
     parser.add_argument("--model-timeout", type=int, default=180, help="Model request timeout per transport attempt in seconds (1-300); retries are bounded")
+    parser.add_argument('--max-new-tokens',type=int,default=None,help='Model completion budget; defaults to PICO_MAX_NEW_TOKENS or 1024')
     args = parser.parse_args(argv)
     if not 1 <= args.model_timeout <= 300:
         parser.error("--model-timeout must be between 1 and 300 seconds")
-    app = Workbench(args.cwd, verification_command=args.verify_command, model_timeout=args.model_timeout)
+    app = Workbench(args.cwd, verification_command=args.verify_command, model_timeout=args.model_timeout, max_new_tokens=args.max_new_tokens)
     server = make_server(app, args.port)
     url = f"http://127.0.0.1:{server.server_port}"
     print(f"CodeTrail workbench: {url}\nWorkspace: {app.root}\nPress Ctrl+C to stop.", flush=True)

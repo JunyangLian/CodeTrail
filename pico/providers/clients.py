@@ -10,8 +10,22 @@ import time
 from http.client import RemoteDisconnected, IncompleteRead
 import urllib.error
 import urllib.request
+from urllib.parse import urlparse
+
+from .deepseek_protocol import normalize_dsml_call
 
 OPENAI_COMPATIBLE_USER_AGENT = "pico/0.1"
+
+
+def _normalize_provider_text(client, text):
+    if urlparse(client.base_url).hostname == 'api.deepseek.com' and 'DSML' in text:
+        normalized=normalize_dsml_call(text)
+        client.last_completion_metadata.update(
+            response_protocol='deepseek_dsml', dsml_normalization='normalized' if normalized else 'unrecognized',
+            provider_visible_text=text)
+        if normalized:
+            return normalized
+    return text
 
 
 class FakeModelClient:
@@ -378,7 +392,7 @@ class OpenAICompatibleModelClient:
                     **_extract_usage_cache_details(response_data),
                 }
             if text:
-                return text
+                return _normalize_provider_text(self, text)
             raise RuntimeError("OpenAI-compatible error: could not extract text from event stream response")
 
         try:
@@ -396,7 +410,9 @@ class OpenAICompatibleModelClient:
             "prompt_cache_retention": prompt_cache_retention,
             **_extract_usage_cache_details(data),
         }
-        return _extract_openai_text(data)
+        if urlparse(self.base_url).hostname=='api.deepseek.com':
+            self.last_completion_metadata['provider_finish_reason']=(data.get('choices') or [{}])[0].get('finish_reason')
+        return _normalize_provider_text(self, _extract_openai_text(data))
 
 
 def _extract_anthropic_text(data):
@@ -507,7 +523,7 @@ class AnthropicCompatibleModelClient:
         self.last_completion_metadata = _extract_anthropic_metadata(data)
         text = _extract_anthropic_text(data)
         if text:
-            return text
+            return _normalize_provider_text(self, text)
         stop_reason = self.last_completion_metadata["stop_reason"] or "unknown"
         content_types = ",".join(self.last_completion_metadata["content_block_types"]) or "none"
         raise RuntimeError(

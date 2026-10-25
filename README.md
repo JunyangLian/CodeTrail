@@ -26,14 +26,15 @@ python -m pip install -e .
 Copy-Item .env.example .env
 ```
 
-在本地 `.env` 中填入模型服务的 API Key。默认示例使用硅基流动的 Chat Completions 接口；Key 不需要填写到网页中，也不应提交到仓库。
+在本地 `.env` 中填入模型服务的 API Key。默认示例使用DeepSeek官方V4.1 Flash的Chat Completions接口；Key不需要填写到网页中，也不应提交到仓库。
 
 ```dotenv
 PICO_PROVIDER=openai
-PICO_OPENAI_API_BASE=https://api.siliconflow.cn/v1
+PICO_OPENAI_API_BASE=https://api.deepseek.com/v1
 PICO_OPENAI_API_FORMAT=chat_completions
-PICO_OPENAI_MODEL=zai-org/GLM-5.3-Flash
+PICO_OPENAI_MODEL=deepseek-flash
 PICO_OPENAI_API_KEY=填写自己的Key
+PICO_MAX_NEW_TOKENS=8192
 ```
 
 启动工作台：
@@ -49,7 +50,7 @@ Windows 也可以双击 `start-web.cmd`。默认网址为 **http://127.0.0.1:876
 ### 终端入口
 
 ```powershell
-codetrail --cwd examples/interview-demo --approval ask
+codetrail --cwd examples/interview-demo --approval ask --max-new-tokens 8192
 codetrail-web --cwd examples/interview-demo --model-timeout 180
 ```
 
@@ -119,6 +120,12 @@ python scripts/check_repair_baseline.py
 另用25次HTTP诊断区分输入长度、并发、开始输出前的等待与生成阶段耗时，不执行Agent工具，也不计入修复成功率。128/8192/32768字符的固定输出请求在串行和三路并发下18/18完成；真实失败提示词的流式重放显示，开始思考较快，可见答案却可能长期不出现。`max_tokens`不包含硅基流动的思考Token，socket等待与重试预算也不是严格总时限。没有服务端队列日志，不能据此宣称完全排除后台负载或并发影响。
 
 详见[分段计时与结论](benchmarks/results/api-timeout-diagnosis-2026-10-25/report.md)、[完整诊断数据](benchmarks/results/api-timeout-diagnosis-2026-10-25/summary.json)及[原始证据包](benchmarks/results/api-timeout-diagnosis-2026-10-25/evidence.zip)。本次只新增诊断与本地超时复现，生产模型参数及既有冻结评测均未改变。
+
+随后单独测试DeepSeek官方V4.1 Flash：同一提示词的7次HTTP对照均完成，约1.0–3.4秒。真实任务分三轮，各6题×2次：旧Anthropic非思考适配1/12，DSML转换后2/12，Chat Completions默认思考/high和8192总输出预算4/12；三轮均无传输失败，原始失败全部保留。更快的响应没有直接解决修复正确率，仍存在混合文本协议、重复读取和实现修复不完整的问题。
+
+当前示例改为官方Chat Completions；仅对官方DeepSeek域名兼容一个完整DSML工具调用，继续经过原工具校验和审批。网页可用 `PICO_MAX_NEW_TOKENS` 或 `--max-new-tokens` 设置包含思考的总输出预算。详见[官方接口测试与局限](benchmarks/results/deepseek-official-2026-10-25/report.md)、[全部36次独立重测](benchmarks/results/deepseek-official-2026-10-25/audit.json)和[完整证据包](benchmarks/results/deepseek-official-2026-10-25/evidence.zip)。旧批次应使用其归档源码和对应后端的本地凭据配置，不应直接套用当前模型配置。
+
+本次适配后的全量软件测试 **267/267通过**，见[JUnit记录](benchmarks/results/deepseek-official-2026-10-25/full-tests.xml)。软件测试通过不代表真实模型任务全部修复成功。
 
 此前的独立验证批次（不并入上述60次）：
 

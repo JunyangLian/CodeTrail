@@ -36,6 +36,22 @@ def finish(task):
     return task.view()
 
 
+def test_model_output_budget_can_be_configured_without_a_key_in_browser(tmp_path,monkeypatch):
+    monkeypatch.setenv('PICO_PROVIDER','openai')
+    monkeypatch.setenv('PICO_MAX_NEW_TOKENS','8192')
+    monkeypatch.setenv('PICO_OPENAI_API_KEY','local-web-fake-key')
+    app=Workbench(tmp_path)
+    assert app.config()['max_new_tokens']==8192
+    assert app._build_agent(None,'never',2).max_new_tokens==8192
+    assert Workbench(tmp_path,max_new_tokens=2048).max_new_tokens==2048
+
+
+@pytest.mark.parametrize('value',[0,65537,True,'bad'])
+def test_invalid_model_output_budget_is_rejected(tmp_path,value):
+    with pytest.raises(ValueError,match='输出预算'):
+        Workbench(tmp_path,max_new_tokens=value)
+
+
 def test_task_records_real_events_diffs_and_persistent_history(make_app, tmp_path):
     (tmp_path / "app.py").write_text("answer = 1\n", encoding="utf-8")
     app = make_app([

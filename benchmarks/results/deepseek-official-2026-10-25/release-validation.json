@@ -1,0 +1,36 @@
+{
+  "full_tests": {
+    "name": "pytest",
+    "errors": "0",
+    "failures": "0",
+    "skipped": "0",
+    "tests": "267",
+    "time": "542.436",
+    "timestamp": "2026-10-25T12:44:41.022251+08:00",
+    "hostname": "羊叽叽"
+  },
+  "full_tests_sha256": "1dde290d54e1c951b4f15eb539193461a283737ef687c0dec201bb7f39cb0e8c",
+  "local_workbench": {
+    "model": "deepseek-flash",
+    "configured": true,
+    "model_timeout": 180,
+    "max_new_tokens": 8192,
+    "verification_command": "python -m unittest discover -v",
+    "active_id": null
+  },
+  "additional_connectivity_checks": {
+    "official_models_get": {
+      "status": 200,
+      "elapsed_ms": 407
+    },
+    "existing_anthropic_adapter_ok": {
+      "status": 200,
+      "elapsed_ms": 719
+    },
+    "exploratory_forced_native_action_smoke": {
+      "status": 400,
+      "detail": "Fixed OK prompt only; not deployed or counted as task/latency success. Error body was not retained."
+    }
+  },
+  "cancelled_test_attempt": "Earlier full-suite attempt stopped for subsequent source changes, not counted as passed"
+}
