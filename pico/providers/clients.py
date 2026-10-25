@@ -13,6 +13,7 @@ import urllib.request
 from urllib.parse import urlparse
 
 from .deepseek_protocol import normalize_dsml_call
+from .native_tools import NativeToolConversation
 
 OPENAI_COMPATIBLE_USER_AGENT = "pico/0.1"
 
@@ -255,6 +256,20 @@ class OpenAICompatibleModelClient:
         self.last_completion_metadata = {}
         self.max_transport_attempts = 3
         self.on_transport_event = None
+        self.supports_native_tools = api_format == 'chat_completions' and urlparse(self.base_url).hostname == 'api.deepseek.com'
+        self.native_conversation = None
+
+    def begin_native_run(self, tools, context, request, verification_command):
+        self.native_conversation = NativeToolConversation(tools, context, request, verification_command)
+
+    def observe_native_tool(self, content):
+        self.native_conversation.observe(content)
+
+    def native_notice(self, text):
+        self.native_conversation.notice(text)
+
+    def restore_native_conversation(self, conversation):
+        self.native_conversation = conversation
 
     def _transport_event(self, event):
         self.transport_events.append(event)
@@ -308,6 +323,8 @@ class OpenAICompatibleModelClient:
             }
         if self.temperature is not None:
             payload["temperature"] = self.temperature
+        if self.native_conversation is not None:
+            payload.update(self.native_conversation.payload())
         # runtime 传入的是“稳定前缀”的签名，而不是整段 prompt 的签名。
         # 这样缓存复用针对的是稳定段，不会因为动态 history 每轮变化而失效。
         if self.supports_prompt_cache and prompt_cache_key:
@@ -380,6 +397,8 @@ class OpenAICompatibleModelClient:
         # 有些兼容后端返回普通 JSON，有些返回 SSE。
         # 这里两种都接住，并尽量统一抽取文本和 usage/cache 元数据。
         if content_type.startswith("text/event-stream") or body_text.lstrip().startswith("data:"):
+            if self.native_conversation is not None:
+                raise RuntimeError('Native tool mode requested non-stream JSON but received SSE; no text-protocol fallback is permitted')
             text, response_data = _extract_openai_response_from_sse(body_text)
             if isinstance(response_data, dict) and response_data:
                 # 这些元数据会一路传回 runtime，进入 trace 和 report，
@@ -412,6 +431,8 @@ class OpenAICompatibleModelClient:
         }
         if urlparse(self.base_url).hostname=='api.deepseek.com':
             self.last_completion_metadata['provider_finish_reason']=(data.get('choices') or [{}])[0].get('finish_reason')
+        if self.native_conversation is not None:
+            return self.native_conversation.accept(data, self.last_completion_metadata)
         return _normalize_provider_text(self, _extract_openai_text(data))
 
 

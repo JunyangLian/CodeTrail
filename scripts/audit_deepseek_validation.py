@@ -72,7 +72,7 @@ def audit_batch(label,name):
             values=[r.get('usage',{}).get(field) for r in responses]
             metric={'observed_total':sum(v for v in values if isinstance(v,int)),
                 'observed_calls':sum(isinstance(v,int) for v in values),'successful_calls':len(responses),
-                'complete':bool(values) and all(isinstance(v,int) for v in values) and not failed and not errors}
+                'complete':bool(values) and all(isinstance(v,int) for v in values) and not failed and not errors and not raw.get('error')}
             assert metric==raw[field]
         reply_latencies.extend(r['elapsed_ms'] for r in responses)
         normalizations=sum(r.get('usage',{}).get('dsml_normalization')=='normalized' for r in responses)

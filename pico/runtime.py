@@ -617,7 +617,12 @@ class Pico:
         # 子 agent 以只读方式运行、步数更少，最后只把结论文本返回给父 agent。
         child.session["memory"]["task"] = task
         child.session["memory"]["notes"] = [clip(self.history_text(), 300)]
-        return "delegate_result:\n" + child.ask(task)
+        conversation = getattr(self.model_client, 'native_conversation', None)
+        try:
+            return "delegate_result:\n" + child.ask(task)
+        finally:
+            if getattr(self.model_client, 'supports_native_tools', False):
+                self.model_client.restore_native_conversation(conversation)
 
     def tool_list_files(self, args):
         return toolkit.tool_list_files(self.tool_context(), args)
@@ -671,6 +676,10 @@ class Pico:
         进入平台控制流的第一道结构化关口。
         """
         raw = str(raw)
+        if re.search(r'[｜|]+DSML', raw):
+            return 'retry', Pico.retry_notice('mixed or unrecognized DSML; no action executed')
+        if len(re.findall(r'<tool(?:\s|>)', raw)) > 1:
+            return 'retry', Pico.retry_notice('multiple text tool calls; send exactly one action')
         # 这里支持两种工具格式：
         # 1. <tool>...</tool> 里包 JSON，适合简短调用
         # 2. XML 风格属性/子标签，适合写文件这类多行内容

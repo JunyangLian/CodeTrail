@@ -171,10 +171,15 @@ class RecordingClient:
         self.supports_prompt_cache = client.supports_prompt_cache
         self.last_completion_metadata = {}
         self.index = 0
+    def __getattr__(self, name):
+        # Forward native conversation hooks without copying private reasoning state.
+        return getattr(self.client, name)
     def complete(self, prompt, max_new_tokens, **kwargs):
         self.index += 1
         started = time.monotonic()
-        append_json(self.output, {'event':'request','index':self.index,'at':utcnow(),'prompt':prompt,'max_new_tokens':max_new_tokens})
+        conversation = getattr(self.client, 'native_conversation', None)
+        wire = {'native_request': conversation.audit_request()} if conversation is not None else {}
+        append_json(self.output, {'event':'request','index':self.index,'at':utcnow(),'prompt':prompt,'max_new_tokens':max_new_tokens, **wire})
         try:
             answer = self.client.complete(prompt,max_new_tokens,**kwargs)
             self.last_completion_metadata = dict(self.client.last_completion_metadata)

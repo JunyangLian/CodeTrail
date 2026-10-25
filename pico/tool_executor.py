@@ -82,6 +82,11 @@ class ToolExecutor:
                 example = "<tool>" + json.dumps({"name": "patch_file", "args": {
                     "path": "file.py", "old_text": "exact old text", "new_text": "replacement text",
                 }}) + "</tool>"
+                message += '\nNo edit was applied. Read the current target range once, copy exact old_text without line numbers, and retry with a smaller unique block. Preserve newlines and indentation.'
+            if getattr(agent.model_client, 'supports_native_tools', False):
+                example = ''
+                message = message.replace('Return one corrected JSON tool call or a final answer.',
+                                          'Use a corrected native function call.')
             if example:
                 message += f"\nexample: {example}"
             security_event_type = "path_escape" if "path escapes workspace" in str(exc) else ""
@@ -98,7 +103,9 @@ class ToolExecutor:
 
         if agent.repeated_tool_call(name, args):
             return ToolExecutionResult(
-                content=f"error: repeated identical tool call for {name}; choose a different tool or return a final answer",
+                content=(f"error: repeated identical tool call for {name}; no new information. "
+                         "Use the previous result. For clipped reads request only the unread line range; "
+                         "for a rejected patch correct old_text from current source; for failing tests fix code before rerunning."),
                 metadata=_metadata(
                     "rejected",
                     tool_error_code="repeated_identical_call",
@@ -122,7 +129,7 @@ class ToolExecutor:
         before_snapshot = agent.capture_workspace_snapshot() if tool["risky"] else {}
         after_snapshot = before_snapshot
         try:
-            content = clip(tool["run"](args))
+            content = clip(tool["run"](args), 12000 if name == 'run_shell' else 4000)
             after_snapshot = agent.capture_workspace_snapshot() if tool["risky"] else before_snapshot
             affected_paths, diff_summary = agent.diff_workspace_snapshots(before_snapshot, after_snapshot)
             workspace_changed = bool(affected_paths)

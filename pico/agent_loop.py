@@ -92,7 +92,10 @@ class AgentLoop:
             prompt_metadata.update(completion_metadata)
         agent.last_completion_metadata = completion_metadata
         agent.last_prompt_metadata = prompt_metadata
-        kind, payload = agent.parse(raw)
+        if hasattr(raw, 'action_kind'):
+            kind, payload = raw.action_kind, raw.action
+        else:
+            kind, payload = agent.parse(raw)
         agent.emit_trace(
             task_state,
             "model_parsed",
@@ -144,6 +147,12 @@ class AgentLoop:
         task_state.resume_status = agent.resume_state.get("status", CHECKPOINT_NONE_STATUS)
         agent.current_task_state = task_state
         agent.current_run_dir = agent.run_store.start_run(task_state)
+        native = bool(getattr(agent.model_client, 'supports_native_tools', False))
+        if native:
+            agent.model_client.begin_native_run(
+                agent.tools,
+                agent.workspace.text() + '\n\n' + agent.memory_text() + '\n\n' + agent.history_text(),
+                user_message, agent.verification_command)
         agent.emit_trace(
             task_state,
             "run_started",
@@ -235,6 +244,8 @@ class AgentLoop:
                 tool_result = agent.execute_tool(name, args)
                 completion.observe(name, args, tool_result.metadata)
                 result = tool_result.content
+                if native:
+                    agent.model_client.observe_native_tool(result)
                 agent.record(
                     {
                         "role": "tool",
@@ -269,6 +280,8 @@ class AgentLoop:
                 continue
 
             if kind == "retry":
+                if native:
+                    agent.model_client.native_notice(payload)
                 agent.record({"role": "assistant", "content": payload, "created_at": now()})
                 agent.run_store.write_task_state(task_state)
                 continue
@@ -278,12 +291,16 @@ class AgentLoop:
             if problem:
                 agent.emit_trace(task_state, 'completion_rejected', dict(completion.state))
                 agent.record({'role':'assistant', 'content':problem, 'created_at':now()})
+                if native:
+                    agent.model_client.native_notice(problem)
                 if completion.state['status']=='blocked':
                     return self._finish_stopped(task_state, user_message, 'verification_incomplete', problem, run_started_at)
                 continue
             return self._finish_success(task_state, user_message, final, run_started_at)
 
         if tool_steps >= agent.max_steps:
+            if native:
+                agent.model_client.native_notice('Tool budget exhausted. Do not call tools. Give a concise final answer based on actual evidence.')
             task_state.record_attempt()
             agent.run_store.write_task_state(task_state)
             prompt_started_at = time.monotonic()

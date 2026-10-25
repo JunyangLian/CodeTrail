@@ -178,8 +178,21 @@ def tool_read_file(context, args):
     if start < 1 or end < start:
         raise ValueError("invalid line range")
     lines = path.read_text(encoding="utf-8", errors="replace").splitlines()
-    body = "\n".join(f"{number:>4}: {line}" for number, line in enumerate(lines[start - 1:end], start=start))
-    return f"# {path.relative_to(context.root)}\n{body}"
+    # Stop at a line boundary and report the actual unread range. Silent head
+    # clipping made the same broad read look like it had returned the entire file.
+    output = [f"# {path.relative_to(context.root)} ({len(lines)} total lines)"]
+    used = len(output[0]); last = start - 1
+    for number, line in enumerate(lines[start - 1:end], start=start):
+        rendered = f"{number:>4}: {line}"
+        if used + len(rendered) + 1 > 3500:
+            if last == start - 1:
+                output.append(rendered[:3000] + ' [line truncated; narrow the source with search]')
+                last = number
+            break
+        output.append(rendered); used += len(rendered) + 1; last = number
+    if last < min(end, len(lines)):
+        output.append(f"[Unread lines {last + 1}..{min(end, len(lines))}; use read_file start={last + 1} end={min(end, len(lines))}. Do not repeat the same range.]")
+    return '\n'.join(output)
 
 
 def tool_search(context, args):

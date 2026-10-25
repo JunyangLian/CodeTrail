@@ -123,9 +123,19 @@ python scripts/check_repair_baseline.py
 
 随后单独测试DeepSeek官方V4.1 Flash：同一提示词的7次HTTP对照均完成，约1.0–3.4秒。真实任务分三轮，各6题×2次：旧Anthropic非思考适配1/12，DSML转换后2/12，Chat Completions默认思考/high和8192总输出预算4/12；三轮均无传输失败，原始失败全部保留。更快的响应没有直接解决修复正确率，仍存在混合文本协议、重复读取和实现修复不完整的问题。
 
-当前示例改为官方Chat Completions；仅对官方DeepSeek域名兼容一个完整DSML工具调用，继续经过原工具校验和审批。网页可用 `PICO_MAX_NEW_TOKENS` 或 `--max-new-tokens` 设置包含思考的总输出预算。详见[官方接口测试与局限](benchmarks/results/deepseek-official-2026-10-25/report.md)、[全部36次独立重测](benchmarks/results/deepseek-official-2026-10-25/audit.json)和[完整证据包](benchmarks/results/deepseek-official-2026-10-25/evidence.zip)。旧批次应使用其归档源码和对应后端的本地凭据配置，不应直接套用当前模型配置。
+此前示例改为官方Chat Completions，并对官方DeepSeek域名兼容一个完整DSML工具调用；该阶段仍有协议混用和上下文截断问题。网页可用 `PICO_MAX_NEW_TOKENS` 或 `--max-new-tokens` 设置包含思考的总输出预算。详见[官方接口测试与局限](benchmarks/results/deepseek-official-2026-10-25/report.md)、[全部36次独立重测](benchmarks/results/deepseek-official-2026-10-25/audit.json)和[完整证据包](benchmarks/results/deepseek-official-2026-10-25/evidence.zip)。旧批次应使用其归档源码和对应后端的本地凭据配置，不应直接套用当前模型配置。
 
 本次适配后的全量软件测试 **267/267通过**，见[JUnit记录](benchmarks/results/deepseek-official-2026-10-25/full-tests.xml)。软件测试通过不代表真实模型任务全部修复成功。
+
+### DeepSeek 协议与修复循环治理
+
+对以上36次轨迹逐条离线分析，发现旧 Thinking 轮有31次格式重试、145次实际文件读取中的35次同参数同输出重复读取，以及91次读取的部分源码行未进入下一轮有效请求。最近工具结果曾被历史渲染压到900字符；前两轮还出现DSML结束标记进入补丁内容。旧请求没有原生 `tools`，因此不能把它们的失败直接归因于缺少 `reasoning_content` 回传。
+
+当前官方 DeepSeek Chat Completions 使用原生 function tool_calls；回传实际 assistant 的 content、tool_calls 与内存中的 reasoning_content，再以真实 tool_call_id 提交工具结果。文本工具协议不作为回退执行通道。长文件读取明确返回未读范围，原生会话保留工具反馈，补丁拒绝明确提示未写入及精确重试方法。路径隔离、写入审批、重复调用拦截和最后一次修改后验收门禁均保留；其他模型接口继续使用原兼容协议。
+
+本轮沿用 **6道独立冻结题 × 每题2次，共12次运行**，不是12道独立题。复用原 Thinking 轮计划、题目、测试和模型/工具预算；协议、上下文交付及反馈是组合修复，不能将效果分别归因于某一个改动。详见[受控复测与根因报告](benchmarks/results/deepseek-controlled-2026-10-25/report.md)、[独立审计及逐次指标](benchmarks/results/deepseek-controlled-2026-10-25/audit.json)和[完整可见证据](benchmarks/results/deepseek-controlled-2026-10-25/evidence.zip)。思考正文只在运行内存中回传，审计保留长度和哈希；冻结源代码与参数可重跑，无法逐字重放历史思考正文，也不保证服务端随机输出一致。
+
+全量自动化测试 **280/280通过**。相同计划的独立复验结果：功能验收和完整流程均 **11/12（91.67%）**，旧 Thinking 轮均为4/12；平均工具步数17.17→9.58，同参数同输出的重复读取35→0。输入/输出可观测Token为601600/50060，失败运行的完整性标记保留为false。12次协议重试均为多调用包被拒绝，24次未批准的shell命令尝试被拦截，未授权最终变更为0。唯一失败为Windows原子替换状态文件时的 `WinError 5`，未单独补跑；额外100次不调用模型的状态文件替换探测复现了1次同类错误，具体占用者未确定，该持久化健壮性问题仍待处理。不能将本轮结果描述为零协议错误、零失败或复杂仓库泛化能力。
 
 此前的独立验证批次（不并入上述60次）：
 
