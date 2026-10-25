@@ -119,6 +119,17 @@ def failure_category(row,transport):
     return 'success'
 
 
+def fatal_provider_reason(row):
+    """A terminal account/model error stops new work; old observations are retained."""
+    import re
+    error=row.get('error') or ''
+    match=re.search(r'\bHTTP\s+(401|402|403)\b',error)
+    if match:return {'401':'api_authorization','402':'api_billing_insufficient_balance','403':'api_authorization'}[match.group(1)]
+    if row.get('failure_category')=='api_authorization':return 'api_authorization'
+    if 'different model ID' in error:return 'provider_model_mismatch'
+    return None
+
+
 def finalize(output,slot,error=None,controller_timeout=False):
     tasks={t['id']:t for t in load_json(ASSETS/'tasks.json')['tasks']};task=tasks[slot['task_id']]
     directory=output/'runs'/slot['run_key'];workspace=directory/'workspace'
@@ -236,9 +247,10 @@ def run(output):
             row=load_json(directory/'result.json')
             print(json.dumps({k:row[k] for k in ('run_key','functional_passed','workflow_passed','failure_category','elapsed_ms')}),flush=True)
             del active[key]
-            if pending and (row['failure_category']=='api_authorization' or 'different model ID' in row.get('error','')):
+            terminal=fatal_provider_reason(row)
+            if pending and terminal:
                 not_started=list(pending);pending.clear()
-                write_json(output/'stopped.json',{'at':utcnow(),'reason':row['failure_category'],
+                write_json(output/'stopped.json',{'at':utcnow(),'reason':terminal,
                            'trigger_run':key,'not_started':not_started},exclusive=True)
             write_json(output/'progress.json',{'completed':len(list((output/'runs').glob('*/result.json'))),'planned':90})
         if active:time.sleep(.25)

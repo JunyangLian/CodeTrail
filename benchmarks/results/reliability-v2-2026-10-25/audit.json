@@ -1,0 +1,81 @@
+{
+  "at": "2026-10-25T12:13:16.037289+00:00",
+  "software_tests": {
+    "tests": 308,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "frozen_guards": {
+    "passed": 14,
+    "evaluated": 14,
+    "backend": "AppContainer"
+  },
+  "controlled_loopback_network": {
+    "at": "2026-10-25T12:02:48.225670+00:00",
+    "passed": true,
+    "actual_delivery_events": [
+      [
+        "tcp",
+        "HOST_CONTROL"
+      ],
+      [
+        "udp",
+        "HOST_CONTROL"
+      ]
+    ],
+    "worker": {
+      "returncode": 0,
+      "output": "test_tcp_attempt (test_acceptance.Tests) ... ok\r\ntest_udp_attempt (test_acceptance.Tests) ... ok\r\n\r\n----------------------------------------------------------------------\r\nRan 2 tests in 1.005s\r\n\r\nOK\r\nTCP_OBSERVED TimeoutError None\r\n"
+    },
+    "host_controls_passed": true,
+    "internet_egress": "not_evaluated",
+    "no_model_used": true
+  },
+  "initial_errno_probe_passed": false,
+  "historical_reports_unchanged": true,
+  "historical_files_verified": 27,
+  "recall": {
+    "all144": {
+      "runs": 144,
+      "legacy_recall_at_5": {
+        "numerator": 141,
+        "denominator": 265,
+        "value": 0.5320754716981132
+      }
+    },
+    "first90": {
+      "runs": 90,
+      "legacy_recall_at_5": {
+        "numerator": 60,
+        "denominator": 168,
+        "value": 0.35714285714285715
+      }
+    },
+    "additional54": {
+      "runs": 54,
+      "legacy_recall_at_5": {
+        "numerator": 81,
+        "denominator": 97,
+        "value": 0.8350515463917526
+      }
+    },
+    "non_billing90": {
+      "runs": 90,
+      "legacy_recall_at_5": {
+        "numerator": 137,
+        "denominator": 168,
+        "value": 0.8154761904761905
+      }
+    }
+  },
+  "model_calls_this_round": 0,
+  "new_repair_tasks": 0,
+  "new_repair_success_rate": null,
+  "limits": [
+    "No model efficacy, protocol-error reduction, Recall improvement or cost decrease experiment.",
+    "No corrected replacement gold; legacy53.21% retained.",
+    "Host backend still unisolated; optional AppContainer only supports stdlib unittest verifier.",
+    "AppContainer shares Windows kernel; Internet egress, kernel escapes and disk hard quotas unassessed."
+  ]
+}

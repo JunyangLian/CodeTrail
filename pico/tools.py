@@ -236,6 +236,9 @@ def tool_run_shell(context, args):
     timeout = int(args.get("timeout", 20))
     if timeout < 1 or timeout > 120:
         raise ValueError("timeout must be in [1, 120]")
+    if getattr(context, 'isolated_shell_runner', None) is not None:
+        isolated = context.isolated_shell_runner(command, timeout)
+        return f"exit_code: {isolated['returncode']}\nstdout:\n{isolated['output'].strip() or '(empty)'}\nstderr:\n(empty)"
     result = subprocess.run(
         command,
         cwd=context.root,

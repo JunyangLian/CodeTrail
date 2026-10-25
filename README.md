@@ -4,6 +4,16 @@
 
 ![CodeTrail 工作台](assets/screenshots/codetrail-qa-desktop-20261024.png)
 
+## 可靠性与Windows隔离更新
+
+新增[Recall诊断与AppContainer说明](docs/reliability-v2.md)，保持下方历史评测和金标原样。Recall@5主结果仍为53.21%；余额未中断的描述性切片为81.55%，同时发现4题将可修改范围误标为必要证据。未修改金标、未事后重算一个替代高分，也未声称检索性能提高。
+
+Windows可选择 **AppContainer测试执行**：过滤工作区副本、独立标准库、无网络能力、Job进程/内存/输出/超时限制，失败不回退宿主。相同14个守卫在新后端通过14/14；旧13/14失败保留。受测宿主文件读写被拒、本地网络投递被阻断；外网出口与内核漏洞未评估，不能宣称完整VM沙箱。通用CLI/网页的host兼容模式仍无OS隔离，界面明确标注。
+
+普通评测入口已补齐余额/鉴权故障停止派发；原生工具增加真实参数范围和剩余步数提示，最后一步保留验证。没有新增模型评测，协议/Recall/成本改善尚未验证。
+
+专用Demo默认隔离执行：`python -X utf8 scripts/run_final_demo.py`。全量自动化回归 **308/308通过**；完整新证据见[本轮报告](benchmarks/results/reliability-v2-2026-10-25/report.md)。
+
 ## 最终七维评测（2026-10-25）
 
 本轮冻结 **30道不同任务：原20道＋新10道真实开源故障**，原计划每题3次、90次。硅基流动实际模型ID为 `deepseek-ai/DeepSeek-V4.1-Flash`，使用原生Tool Calling，Thinking与输出分别请求4096 Token，工具20步、并发3，协议与金标在正式调用前冻结。

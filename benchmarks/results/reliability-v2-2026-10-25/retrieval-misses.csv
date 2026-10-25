@@ -1,0 +1,15 @@
+﻿batch,run_key,task_id,functional_passed,hits,denominator,first_five_files,missing_at_5,read_later,not_read
+first90,09-boltons_multireplace-r1,boltons_multireplace,True,2,5,"['replacement_core.py', 'public_api.py', 'test_acceptance.py']","['config.py', 'transport.py', 'validation.py']",[],"['config.py', 'transport.py', 'validation.py']"
+first90,10-boltons_splitlines-r3,boltons_splitlines,True,3,5,"['text_core.py', 'public_api.py', 'test_acceptance.py', 'config.py']","['transport.py', 'validation.py']",[],"['transport.py', 'validation.py']"
+first90,12-boltons_isoparse-r1,boltons_isoparse,True,3,5,"['test_acceptance.py', 'time_core.py', 'public_api.py', 'README.md', 'validation.py']","['config.py', 'transport.py']",[],"['config.py', 'transport.py']"
+first90,14-boltons_isoparse-r3,boltons_isoparse,True,2,5,"['time_core.py', 'test_acceptance.py', 'public_api.py']","['config.py', 'transport.py', 'validation.py']",[],"['config.py', 'transport.py', 'validation.py']"
+first90,16-boltons_xfrange-r2,boltons_xfrange,True,4,5,"['test_acceptance.py', 'public_api.py', 'sequence_core.py', 'transport.py', 'config.py']",['validation.py'],['validation.py'],[]
+first90,34-boltons_multireplace-r3,boltons_multireplace,True,1,5,['replacement_core.py'],"['config.py', 'public_api.py', 'transport.py', 'validation.py']",[],"['config.py', 'public_api.py', 'transport.py', 'validation.py']"
+additional54,38-holdout_dotenv_override-r1,holdout_dotenv_override,True,1,2,"['test_acceptance.py', 'dotenv/main.py']",['dotenv/variables.py'],[],['dotenv/variables.py']
+additional54,42-boltons_xfrange-r1,boltons_xfrange,True,3,5,"['test_acceptance.py', 'public_api.py', 'sequence_core.py', 'validation.py', 'README.md']","['config.py', 'transport.py']",[],"['config.py', 'transport.py']"
+additional54,47-boltons_xfrange-r3,boltons_xfrange,True,2,5,"['test_acceptance.py', 'public_api.py', 'sequence_core.py']","['config.py', 'transport.py', 'validation.py']",[],"['config.py', 'transport.py', 'validation.py']"
+additional54,53-boltons_isoparse-r2,boltons_isoparse,True,4,5,"['test_acceptance.py', 'time_core.py', 'public_api.py', 'validation.py', 'transport.py']",['config.py'],['config.py'],[]
+additional54,74-boltons_splitlines-r1,boltons_splitlines,True,4,5,"['test_acceptance.py', 'public_api.py', 'text_core.py', 'config.py', 'validation.py']",['transport.py'],['transport.py'],[]
+additional54,75-holdout_dotenv_override-r3,holdout_dotenv_override,True,1,2,"['test_acceptance.py', 'dotenv/main.py']",['dotenv/variables.py'],[],['dotenv/variables.py']
+additional54,78-boltons_multireplace-r2,boltons_multireplace,True,1,5,"['replacement_core.py', 'test_acceptance.py']","['config.py', 'public_api.py', 'transport.py', 'validation.py']",[],"['config.py', 'public_api.py', 'transport.py', 'validation.py']"
+additional54,82-boltons_splitlines-r2,boltons_splitlines,True,2,5,"['test_acceptance.py', 'public_api.py', 'text_core.py', 'README.md']","['config.py', 'transport.py', 'validation.py']",[],"['config.py', 'transport.py', 'validation.py']"

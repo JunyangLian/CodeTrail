@@ -74,6 +74,7 @@ class Pico:
         feature_flags=None,
         allowed_tools=None,
         verification_command=None,
+        shell_backend="host",
     ):
         self.model_client = model_client
         self.workspace = workspace
@@ -88,6 +89,13 @@ class Pico:
         if verification_command is not None and (not isinstance(verification_command, str) or not verification_command.strip()):
             raise ValueError('verification_command must be a non-empty string or None')
         self.verification_command = verification_command.strip() if verification_command else None
+        if shell_backend not in {"host", "appcontainer"}:
+            raise ValueError("shell_backend must be host or appcontainer")
+        if shell_backend == "appcontainer":
+            from .windows_sandbox import VERIFY
+            if self.verification_command != VERIFY:
+                raise ValueError("AppContainer requires the exact approved unittest verification command")
+        self.shell_backend = shell_backend
         self.last_verification = {}
         self.shell_env_allowlist = tuple(shell_env_allowlist or DEFAULT_SHELL_ENV_ALLOWLIST)
         self.secret_env_names = {str(name).upper() for name in (secret_env_names or ())}
@@ -110,6 +118,8 @@ class Pico:
         )
         self.session["memory"] = self.memory.to_dict()
         self.tools = self._apply_tool_allowlist(self.build_tools())
+        if self.shell_backend == "appcontainer" and "run_shell" in self.tools:
+            self.tools["run_shell"] = {**self.tools["run_shell"], "command_allowlist": [self.verification_command]}
         self.tool_executor = ToolExecutor(self)
         self.prefix_state = self.build_prefix()
         self.prefix = self.prefix_state.text
@@ -595,7 +605,12 @@ class Pico:
             depth=self.depth,
             max_depth=self.max_depth,
             spawn_delegate=self.spawn_delegate,
+            isolated_shell_runner=self._isolated_shell if self.shell_backend == "appcontainer" else None,
         )
+
+    def _isolated_shell(self, command, timeout):
+        from .windows_sandbox import run_verification
+        return run_verification(self.root, command, timeout)
 
     def spawn_delegate(self, args):
         task = str(args.get("task", "")).strip()

@@ -260,6 +260,7 @@ def build_agent(args):
             max_new_tokens=args.max_new_tokens,
             secret_env_names=configured_secret_names,
             verification_command=getattr(args, 'verify_command', None),
+            shell_backend=getattr(args, 'shell_backend', 'host'),
         )
     return Pico(
         model_client=model,
@@ -270,6 +271,7 @@ def build_agent(args):
         max_new_tokens=args.max_new_tokens,
         secret_env_names=configured_secret_names,
         verification_command=getattr(args, 'verify_command', None),
+        shell_backend=getattr(args, 'shell_backend', 'host'),
     )
 
 
@@ -308,6 +310,7 @@ def build_arg_parser():
     )
     parser.add_argument("--max-steps", type=int, default=6, help="Maximum tool/model iterations per request.")
     parser.add_argument('--verify-command', default=None, help='Require this exact command to pass after the latest edit before finishing; normal approval still applies.')
+    parser.add_argument('--shell-backend', choices=('host','appcontainer'), default='host', help='AppContainer isolates the exact unittest verifier on Windows and fails closed; host has no OS isolation.')
     parser.add_argument("--max-new-tokens", type=int, default=512, help="Maximum model output tokens per step.")
     parser.add_argument("--temperature", type=float, default=0.2, help="Sampling temperature sent to Ollama.")
     parser.add_argument("--top-p", type=float, default=0.9, help="Top-p sampling value sent to Ollama.")

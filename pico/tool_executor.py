@@ -46,6 +46,11 @@ class ToolExecutor:
 
     def execute(self, name, args):
         agent = self.agent
+        if (name in {'write_file','patch_file'} and getattr(agent,'verification_command',None)
+                and getattr(agent.model_client,'supports_native_tools',False)
+                and getattr(agent,'remaining_tool_steps',None)==1):
+            return ToolExecutionResult(content='error: last tool step is reserved for the exact verification command; no edit applied',
+                metadata=_metadata('rejected',tool_error_code='verification_budget_reserved',risk_level='high',read_only=False))
         if agent.allowed_tools is not None and name not in agent.allowed_tools:
             return ToolExecutionResult(
                 content=f"error: tool '{name}' is not allowed in this run",
@@ -115,8 +120,10 @@ class ToolExecutor:
             )
 
         if tool["risky"] and not agent.approve(name, args):
+            detail = (f"; use the exact configured verification command {agent.verification_command!r}; "
+                      "do not try pipes or alternative commands" if name=='run_shell' and agent.verification_command else '')
             return ToolExecutionResult(
-                content=f"error: approval denied for {name}",
+                content=f"error: approval denied for {name}"+detail,
                 metadata=_metadata(
                     "rejected",
                     tool_error_code="approval_denied",
@@ -157,6 +164,7 @@ class ToolExecutor:
             )
             if name == "run_shell":
                 metadata["exit_code"] = int(match.group(1)) if match else None
+                metadata["execution_backend"] = getattr(agent, 'shell_backend', 'host')
             agent.record_process_note_for_tool(name, metadata)
             return ToolExecutionResult(content=content, metadata=metadata)
         except Exception as exc:
@@ -178,5 +186,9 @@ class ToolExecutor:
             if isinstance(exc, subprocess.TimeoutExpired):
                 metadata["tool_error_code"] = "tool_timeout"
                 metadata["timed_out"] = True
+            if name == 'run_shell':
+                metadata['execution_backend'] = getattr(agent, 'shell_backend', 'host')
+                if exc.__class__.__name__ == 'SandboxUnavailable':
+                    metadata['tool_error_code'] = 'sandbox_unavailable'
             agent.record_process_note_for_tool(name, metadata)
             return ToolExecutionResult(content=f"error: tool {name} failed: {exc}", metadata=metadata)

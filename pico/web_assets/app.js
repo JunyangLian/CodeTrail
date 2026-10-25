@@ -389,7 +389,8 @@ async function init() {
     $("workspace-path").textContent = state.config.workspace;
     $("workspace-path").title = state.config.workspace;
     $("model-name").textContent = state.config.model;
-    $("connection").replaceChildren(node("span", "local-dot"), document.createTextNode(state.config.configured ? "模型已配置 · 本地运行" : "模型尚未配置"));
+    const executionMode = state.config.shell_backend === "appcontainer" ? "AppContainer 隔离模式" : "宿主执行 · 无 OS 隔离";
+    $("connection").replaceChildren(node("span", "local-dot"), document.createTextNode(state.config.configured ? `模型已配置 · ${executionMode}` : `模型尚未配置 · ${executionMode}`));
     await refreshSessions();
     if (state.config.active_id) {
       const job = await api(`/api/tasks/${state.config.active_id}`);

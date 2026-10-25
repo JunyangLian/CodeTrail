@@ -1,0 +1,484 @@
+{
+  "at": "2026-10-25T11:44:16.913410+00:00",
+  "script_sha256": "1406ace50f58cfc02fd262cc915db9056d107dfbc36f10f7c96c9ba117ea9ea4",
+  "historical_gold_sha256": "2ce04b6186adea053de378d7c15cf626b245f2675e3c7c8f673da1d9e1a82c18",
+  "historical_gold_unchanged": true,
+  "groups": {
+    "all144": {
+      "runs": 144,
+      "legacy_recall_at_5": {
+        "numerator": 141,
+        "denominator": 265,
+        "value": 0.5320754716981132
+      }
+    },
+    "first90": {
+      "runs": 90,
+      "legacy_recall_at_5": {
+        "numerator": 60,
+        "denominator": 168,
+        "value": 0.35714285714285715
+      }
+    },
+    "additional54": {
+      "runs": 54,
+      "legacy_recall_at_5": {
+        "numerator": 81,
+        "denominator": 97,
+        "value": 0.8350515463917526
+      }
+    },
+    "non_billing90": {
+      "runs": 90,
+      "legacy_recall_at_5": {
+        "numerator": 137,
+        "denominator": 168,
+        "value": 0.8154761904761905
+      }
+    }
+  },
+  "annotation_errors": [
+    {
+      "task_id": "boltons_isoparse",
+      "frozen_required_files": [
+        "config.py",
+        "public_api.py",
+        "time_core.py",
+        "transport.py",
+        "validation.py"
+      ],
+      "editable_files": [
+        "time_core.py",
+        "public_api.py",
+        "validation.py",
+        "transport.py",
+        "config.py"
+      ],
+      "static_local_import_closure_from_tests": [
+        "public_api.py",
+        "test_acceptance.py",
+        "time_core.py"
+      ],
+      "required_but_outside_import_closure": [
+        "config.py",
+        "transport.py",
+        "validation.py"
+      ],
+      "finding": "Editable scope was mistakenly treated as necessary evidence; config/health/validation distractors have no static path from these visible tests. This diagnosis does not replace frozen gold or re-score the experiment."
+    },
+    {
+      "task_id": "boltons_xfrange",
+      "frozen_required_files": [
+        "config.py",
+        "public_api.py",
+        "sequence_core.py",
+        "transport.py",
+        "validation.py"
+      ],
+      "editable_files": [
+        "sequence_core.py",
+        "public_api.py",
+        "validation.py",
+        "transport.py",
+        "config.py"
+      ],
+      "static_local_import_closure_from_tests": [
+        "public_api.py",
+        "sequence_core.py",
+        "test_acceptance.py"
+      ],
+      "required_but_outside_import_closure": [
+        "config.py",
+        "transport.py",
+        "validation.py"
+      ],
+      "finding": "Editable scope was mistakenly treated as necessary evidence; config/health/validation distractors have no static path from these visible tests. This diagnosis does not replace frozen gold or re-score the experiment."
+    },
+    {
+      "task_id": "boltons_multireplace",
+      "frozen_required_files": [
+        "config.py",
+        "public_api.py",
+        "replacement_core.py",
+        "transport.py",
+        "validation.py"
+      ],
+      "editable_files": [
+        "replacement_core.py",
+        "public_api.py",
+        "validation.py",
+        "transport.py",
+        "config.py"
+      ],
+      "static_local_import_closure_from_tests": [
+        "public_api.py",
+        "replacement_core.py",
+        "test_acceptance.py"
+      ],
+      "required_but_outside_import_closure": [
+        "config.py",
+        "transport.py",
+        "validation.py"
+      ],
+      "finding": "Editable scope was mistakenly treated as necessary evidence; config/health/validation distractors have no static path from these visible tests. This diagnosis does not replace frozen gold or re-score the experiment."
+    },
+    {
+      "task_id": "boltons_splitlines",
+      "frozen_required_files": [
+        "config.py",
+        "public_api.py",
+        "text_core.py",
+        "transport.py",
+        "validation.py"
+      ],
+      "editable_files": [
+        "text_core.py",
+        "public_api.py",
+        "validation.py",
+        "transport.py",
+        "config.py"
+      ],
+      "static_local_import_closure_from_tests": [
+        "public_api.py",
+        "test_acceptance.py",
+        "text_core.py"
+      ],
+      "required_but_outside_import_closure": [
+        "config.py",
+        "transport.py",
+        "validation.py"
+      ],
+      "finding": "Editable scope was mistakenly treated as necessary evidence; config/health/validation distractors have no static path from these visible tests. This diagnosis does not replace frozen gold or re-score the experiment."
+    }
+  ],
+  "non_billing_misses": [
+    {
+      "batch": "first90",
+      "run_key": "09-boltons_multireplace-r1",
+      "task_id": "boltons_multireplace",
+      "functional_passed": true,
+      "hits": 2,
+      "denominator": 5,
+      "first_five_files": [
+        "replacement_core.py",
+        "public_api.py",
+        "test_acceptance.py"
+      ],
+      "missing_at_5": [
+        "config.py",
+        "transport.py",
+        "validation.py"
+      ],
+      "read_later": [],
+      "not_read": [
+        "config.py",
+        "transport.py",
+        "validation.py"
+      ]
+    },
+    {
+      "batch": "first90",
+      "run_key": "10-boltons_splitlines-r3",
+      "task_id": "boltons_splitlines",
+      "functional_passed": true,
+      "hits": 3,
+      "denominator": 5,
+      "first_five_files": [
+        "text_core.py",
+        "public_api.py",
+        "test_acceptance.py",
+        "config.py"
+      ],
+      "missing_at_5": [
+        "transport.py",
+        "validation.py"
+      ],
+      "read_later": [],
+      "not_read": [
+        "transport.py",
+        "validation.py"
+      ]
+    },
+    {
+      "batch": "first90",
+      "run_key": "12-boltons_isoparse-r1",
+      "task_id": "boltons_isoparse",
+      "functional_passed": true,
+      "hits": 3,
+      "denominator": 5,
+      "first_five_files": [
+        "test_acceptance.py",
+        "time_core.py",
+        "public_api.py",
+        "README.md",
+        "validation.py"
+      ],
+      "missing_at_5": [
+        "config.py",
+        "transport.py"
+      ],
+      "read_later": [],
+      "not_read": [
+        "config.py",
+        "transport.py"
+      ]
+    },
+    {
+      "batch": "first90",
+      "run_key": "14-boltons_isoparse-r3",
+      "task_id": "boltons_isoparse",
+      "functional_passed": true,
+      "hits": 2,
+      "denominator": 5,
+      "first_five_files": [
+        "time_core.py",
+        "test_acceptance.py",
+        "public_api.py"
+      ],
+      "missing_at_5": [
+        "config.py",
+        "transport.py",
+        "validation.py"
+      ],
+      "read_later": [],
+      "not_read": [
+        "config.py",
+        "transport.py",
+        "validation.py"
+      ]
+    },
+    {
+      "batch": "first90",
+      "run_key": "16-boltons_xfrange-r2",
+      "task_id": "boltons_xfrange",
+      "functional_passed": true,
+      "hits": 4,
+      "denominator": 5,
+      "first_five_files": [
+        "test_acceptance.py",
+        "public_api.py",
+        "sequence_core.py",
+        "transport.py",
+        "config.py"
+      ],
+      "missing_at_5": [
+        "validation.py"
+      ],
+      "read_later": [
+        "validation.py"
+      ],
+      "not_read": []
+    },
+    {
+      "batch": "first90",
+      "run_key": "34-boltons_multireplace-r3",
+      "task_id": "boltons_multireplace",
+      "functional_passed": true,
+      "hits": 1,
+      "denominator": 5,
+      "first_five_files": [
+        "replacement_core.py"
+      ],
+      "missing_at_5": [
+        "config.py",
+        "public_api.py",
+        "transport.py",
+        "validation.py"
+      ],
+      "read_later": [],
+      "not_read": [
+        "config.py",
+        "public_api.py",
+        "transport.py",
+        "validation.py"
+      ]
+    },
+    {
+      "batch": "additional54",
+      "run_key": "38-holdout_dotenv_override-r1",
+      "task_id": "holdout_dotenv_override",
+      "functional_passed": true,
+      "hits": 1,
+      "denominator": 2,
+      "first_five_files": [
+        "test_acceptance.py",
+        "dotenv/main.py"
+      ],
+      "missing_at_5": [
+        "dotenv/variables.py"
+      ],
+      "read_later": [],
+      "not_read": [
+        "dotenv/variables.py"
+      ]
+    },
+    {
+      "batch": "additional54",
+      "run_key": "42-boltons_xfrange-r1",
+      "task_id": "boltons_xfrange",
+      "functional_passed": true,
+      "hits": 3,
+      "denominator": 5,
+      "first_five_files": [
+        "test_acceptance.py",
+        "public_api.py",
+        "sequence_core.py",
+        "validation.py",
+        "README.md"
+      ],
+      "missing_at_5": [
+        "config.py",
+        "transport.py"
+      ],
+      "read_later": [],
+      "not_read": [
+        "config.py",
+        "transport.py"
+      ]
+    },
+    {
+      "batch": "additional54",
+      "run_key": "47-boltons_xfrange-r3",
+      "task_id": "boltons_xfrange",
+      "functional_passed": true,
+      "hits": 2,
+      "denominator": 5,
+      "first_five_files": [
+        "test_acceptance.py",
+        "public_api.py",
+        "sequence_core.py"
+      ],
+      "missing_at_5": [
+        "config.py",
+        "transport.py",
+        "validation.py"
+      ],
+      "read_later": [],
+      "not_read": [
+        "config.py",
+        "transport.py",
+        "validation.py"
+      ]
+    },
+    {
+      "batch": "additional54",
+      "run_key": "53-boltons_isoparse-r2",
+      "task_id": "boltons_isoparse",
+      "functional_passed": true,
+      "hits": 4,
+      "denominator": 5,
+      "first_five_files": [
+        "test_acceptance.py",
+        "time_core.py",
+        "public_api.py",
+        "validation.py",
+        "transport.py"
+      ],
+      "missing_at_5": [
+        "config.py"
+      ],
+      "read_later": [
+        "config.py"
+      ],
+      "not_read": []
+    },
+    {
+      "batch": "additional54",
+      "run_key": "74-boltons_splitlines-r1",
+      "task_id": "boltons_splitlines",
+      "functional_passed": true,
+      "hits": 4,
+      "denominator": 5,
+      "first_five_files": [
+        "test_acceptance.py",
+        "public_api.py",
+        "text_core.py",
+        "config.py",
+        "validation.py"
+      ],
+      "missing_at_5": [
+        "transport.py"
+      ],
+      "read_later": [
+        "transport.py"
+      ],
+      "not_read": []
+    },
+    {
+      "batch": "additional54",
+      "run_key": "75-holdout_dotenv_override-r3",
+      "task_id": "holdout_dotenv_override",
+      "functional_passed": true,
+      "hits": 1,
+      "denominator": 2,
+      "first_five_files": [
+        "test_acceptance.py",
+        "dotenv/main.py"
+      ],
+      "missing_at_5": [
+        "dotenv/variables.py"
+      ],
+      "read_later": [],
+      "not_read": [
+        "dotenv/variables.py"
+      ]
+    },
+    {
+      "batch": "additional54",
+      "run_key": "78-boltons_multireplace-r2",
+      "task_id": "boltons_multireplace",
+      "functional_passed": true,
+      "hits": 1,
+      "denominator": 5,
+      "first_five_files": [
+        "replacement_core.py",
+        "test_acceptance.py"
+      ],
+      "missing_at_5": [
+        "config.py",
+        "public_api.py",
+        "transport.py",
+        "validation.py"
+      ],
+      "read_later": [],
+      "not_read": [
+        "config.py",
+        "public_api.py",
+        "transport.py",
+        "validation.py"
+      ]
+    },
+    {
+      "batch": "additional54",
+      "run_key": "82-boltons_splitlines-r2",
+      "task_id": "boltons_splitlines",
+      "functional_passed": true,
+      "hits": 2,
+      "denominator": 5,
+      "first_five_files": [
+        "test_acceptance.py",
+        "public_api.py",
+        "text_core.py",
+        "README.md"
+      ],
+      "missing_at_5": [
+        "config.py",
+        "transport.py",
+        "validation.py"
+      ],
+      "read_later": [],
+      "not_read": [
+        "config.py",
+        "transport.py",
+        "validation.py"
+      ]
+    }
+  ],
+  "meaning": "Published metric counts necessary-file coverage among the first five DISTINCT successful read/search file observations in an Agent sequence. It is not the Top-5 quality of a standalone ranked retriever.",
+  "limits": [
+    "Non-billing slice is descriptive only; all54 billing failures remain in primary results.",
+    "No replacement gold, corrected score, Agent rerun, new task, or measured retrieval improvement is claimed.",
+    "Static import closure is diagnostic evidence for these four small fixtures, not an automatic universal necessary-evidence gold.",
+    "Two dotenv_override runs omitted a predeclared variables.py contract file despite functional success; passing tests do not prove evidence completeness."
+  ]
+}

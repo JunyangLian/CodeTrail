@@ -173,6 +173,10 @@ class AgentLoop:
         # 4. 记录：把结果写回 history / task_state / trace / memory
         # 然后进入下一轮，直到停机条件满足
         while tool_steps < agent.max_steps and attempts < max_attempts:
+            agent.remaining_tool_steps = agent.max_steps - tool_steps
+            conversation = getattr(agent.model_client, 'native_conversation', None) if native else None
+            if conversation is not None and hasattr(conversation, 'set_budget'):
+                conversation.set_budget(agent.remaining_tool_steps)
             attempts += 1
             task_state.record_attempt()
             agent.run_store.write_task_state(task_state)
