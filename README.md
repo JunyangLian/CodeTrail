@@ -114,6 +114,12 @@ python scripts/check_repair_baseline.py
 
 本次全量软件测试 **242/242通过**。另外冻结6道已知问题题目、每题2次的真实回归，独立重测结果为功能与完整流程均 **5/12（41.67%）**，7次因接口读取超时失败；1次在传输失败后重试并完成。库存与UTC契约两题各2/2通过，splitlines为1/2，另外三题各0/2。本轮未触发最终回答拦截事件，门槛机制的行为由软件测试验证，不能归因于真实成功率变化。详见[修复说明](docs/recovery-fixes.md)、[单独回归报告](benchmarks/results/repair-regression-v2-2026-10-24/report.md)、[独立审计](benchmarks/results/repair-regression-v2-2026-10-24/audit.json)和[完整证据包](benchmarks/results/repair-regression-v2-2026-10-24/evidence.zip)。
 
+### API超时诊断
+
+另用25次HTTP诊断区分输入长度、并发、开始输出前的等待与生成阶段耗时，不执行Agent工具，也不计入修复成功率。128/8192/32768字符的固定输出请求在串行和三路并发下18/18完成；真实失败提示词的流式重放显示，开始思考较快，可见答案却可能长期不出现。`max_tokens`不包含硅基流动的思考Token，socket等待与重试预算也不是严格总时限。没有服务端队列日志，不能据此宣称完全排除后台负载或并发影响。
+
+详见[分段计时与结论](benchmarks/results/api-timeout-diagnosis-2026-10-25/report.md)、[完整诊断数据](benchmarks/results/api-timeout-diagnosis-2026-10-25/summary.json)及[原始证据包](benchmarks/results/api-timeout-diagnosis-2026-10-25/evidence.zip)。本次只新增诊断与本地超时复现，生产模型参数及既有冻结评测均未改变。
+
 此前的独立验证批次（不并入上述60次）：
 
 - 订单演示：真实模型修复后 15/15 测试通过，独立重测通过，测试文件未修改。

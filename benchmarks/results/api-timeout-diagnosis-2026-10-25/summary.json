@@ -1,0 +1,577 @@
+{
+  "scope": "Transport diagnostics only, not task success rates. One public failing prompt repeated.",
+  "freeze_sha256": "401b5e826475d6c3447befb3be07eaf0eb44692d90882b612f796af9bf2f5e1b",
+  "historical": {
+    "logical_requests": 105,
+    "completed_responses": 98,
+    "final_errors": 7,
+    "transport_attempts": 113,
+    "failed_transports": 15,
+    "length_bins": [
+      {
+        "chars_from": 0,
+        "chars_to_exclusive": 8000,
+        "requests": 58,
+        "errors": 0
+      },
+      {
+        "chars_from": 8000,
+        "chars_to_exclusive": 16000,
+        "requests": 47,
+        "errors": 7
+      },
+      {
+        "chars_from": 16000,
+        "chars_to_exclusive": 32000,
+        "requests": 0,
+        "errors": 0
+      },
+      {
+        "chars_from": 32000,
+        "chars_to_exclusive": 10000000,
+        "requests": 0,
+        "errors": 0
+      }
+    ],
+    "overlap_bins": [
+      {
+        "other_requests_at_start": 0,
+        "requests": 1,
+        "errors": 0
+      },
+      {
+        "other_requests_at_start": 1,
+        "requests": 12,
+        "errors": 0
+      },
+      {
+        "other_requests_at_start": 2,
+        "requests": 92,
+        "errors": 7
+      }
+    ],
+    "failure_prompt_chars": [
+      9552,
+      9628,
+      9762,
+      8862,
+      8364,
+      8356,
+      9916
+    ],
+    "successful_prompt_chars_range": [
+      4230,
+      9858
+    ]
+  },
+  "planned_requests": 25,
+  "completed_requests": 19,
+  "http_status_counts": {
+    "200": 24,
+    "None": 1
+  },
+  "synthetic_groups": [
+    {
+      "kind": "padding128",
+      "concurrency": 1,
+      "requests": 3,
+      "completed": 3,
+      "headers_received_median_ms": 610,
+      "first_reasoning_median_ms": 625,
+      "first_visible_median_ms": 6078,
+      "elapsed_median_ms": 6438,
+      "prompt_tokens": [
+        44,
+        44,
+        44
+      ],
+      "cached_tokens": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "padding128",
+      "concurrency": 3,
+      "requests": 3,
+      "completed": 3,
+      "headers_received_median_ms": 734,
+      "first_reasoning_median_ms": 750,
+      "first_visible_median_ms": 4547,
+      "elapsed_median_ms": 4969,
+      "prompt_tokens": [
+        44,
+        44,
+        44
+      ],
+      "cached_tokens": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "padding8192",
+      "concurrency": 1,
+      "requests": 3,
+      "completed": 3,
+      "headers_received_median_ms": 625,
+      "first_reasoning_median_ms": 625,
+      "first_visible_median_ms": 2547,
+      "elapsed_median_ms": 3031,
+      "prompt_tokens": [
+        3126,
+        3126,
+        3126
+      ],
+      "cached_tokens": [
+        0,
+        3072,
+        3072
+      ]
+    },
+    {
+      "kind": "padding8192",
+      "concurrency": 3,
+      "requests": 3,
+      "completed": 3,
+      "headers_received_median_ms": 562,
+      "first_reasoning_median_ms": 562,
+      "first_visible_median_ms": 2453,
+      "elapsed_median_ms": 2890,
+      "prompt_tokens": [
+        3126,
+        3126,
+        3126
+      ],
+      "cached_tokens": [
+        3072,
+        3072,
+        3072
+      ]
+    },
+    {
+      "kind": "padding32768",
+      "concurrency": 1,
+      "requests": 3,
+      "completed": 3,
+      "headers_received_median_ms": 828,
+      "first_reasoning_median_ms": 844,
+      "first_visible_median_ms": 1469,
+      "elapsed_median_ms": 2015,
+      "prompt_tokens": [
+        12524,
+        12524,
+        12524
+      ],
+      "cached_tokens": [
+        3072,
+        12416,
+        12416
+      ]
+    },
+    {
+      "kind": "padding32768",
+      "concurrency": 3,
+      "requests": 3,
+      "completed": 3,
+      "headers_received_median_ms": 688,
+      "first_reasoning_median_ms": 703,
+      "first_visible_median_ms": 1765,
+      "elapsed_median_ms": 2359,
+      "prompt_tokens": [
+        12524,
+        12524,
+        12524
+      ],
+      "cached_tokens": [
+        12416,
+        12416,
+        12416
+      ]
+    }
+  ],
+  "real_replays": [
+    {
+      "id": "19-real-c1-r1",
+      "group": "real-serial-before",
+      "concurrency": 1,
+      "stream": true,
+      "ok": true,
+      "http_status": 200,
+      "elapsed_ms": 78265,
+      "started_at": "2026-10-25T03:12:22.923195+00:00",
+      "finished_at": "2026-10-25T03:13:41.179198+00:00",
+      "prompt_sha256": "9071e5e6800db18a0ae3d087317d1d888743e26b1d08b8f8de95685e8b4538ad",
+      "payload_sha256": "34f1a564bf96e9a0c6806f1d84d5baa6bc9baede9b7e340aee0f4dd4a9688f91",
+      "phase": "body",
+      "error_type": null,
+      "error": null,
+      "trace_id": "03b8cdb9b89145f3a72f2d8a6aed8959",
+      "response_headers": {
+        "Date": "Sun, 25 Oct 2026 03:12:22 GMT",
+        "Content-Type": "text/event-stream",
+        "X-Siliconcloud-Trace-Id": "03b8cdb9b89145f3a72f2d8a6aed8959"
+      },
+      "reasoning_chars": 14147,
+      "visible_chars": 89,
+      "finish_reason": "stop",
+      "timings_from_request_sent_ms": {
+        "headers_received": 953,
+        "first_byte": 968,
+        "first_reasoning": 968,
+        "first_visible": 77468
+      },
+      "usage": {
+        "prompt_tokens": 2673,
+        "completion_tokens": 4686,
+        "total_tokens": 7359,
+        "completion_tokens_details": {
+          "reasoning_tokens": 4660
+        },
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 2673
+      },
+      "usage_is_final": true,
+      "tokens_over_3072": true,
+      "last_stream_progress_ms": 76890,
+      "approx_client_observed_reasoning_tokens_per_second": 60.91503267973856
+    },
+    {
+      "id": "20-real-c3-r1",
+      "group": "real-parallel",
+      "concurrency": 3,
+      "stream": true,
+      "ok": false,
+      "http_status": 200,
+      "elapsed_ms": 240156,
+      "started_at": "2026-10-25T03:13:56.641639+00:00",
+      "finished_at": "2026-10-25T03:17:56.432411+00:00",
+      "prompt_sha256": "9071e5e6800db18a0ae3d087317d1d888743e26b1d08b8f8de95685e8b4538ad",
+      "payload_sha256": "34f1a564bf96e9a0c6806f1d84d5baa6bc9baede9b7e340aee0f4dd4a9688f91",
+      "phase": "body",
+      "error_type": "HardDeadline",
+      "error": "Diagnostic deadline reached; partial telemetry retained",
+      "trace_id": "c0f5174e3ee542158c81d110019973ad",
+      "response_headers": {
+        "Date": "Sun, 25 Oct 2026 03:13:55 GMT",
+        "Content-Type": "text/event-stream",
+        "X-Siliconcloud-Trace-Id": "c0f5174e3ee542158c81d110019973ad"
+      },
+      "reasoning_chars": 33138,
+      "visible_chars": 0,
+      "finish_reason": null,
+      "timings_from_request_sent_ms": {
+        "headers_received": 515,
+        "first_byte": 515,
+        "first_reasoning": 515
+      },
+      "usage": {
+        "prompt_tokens": 2673,
+        "completion_tokens": 11458,
+        "total_tokens": 14131,
+        "completion_tokens_details": {
+          "reasoning_tokens": 11458
+        },
+        "prompt_tokens_details": {
+          "cached_tokens": 2560
+        },
+        "prompt_cache_hit_tokens": 2560,
+        "prompt_cache_miss_tokens": 113
+      },
+      "usage_is_final": false,
+      "tokens_over_3072": true,
+      "last_stream_progress_ms": 234485,
+      "approx_client_observed_reasoning_tokens_per_second": 49.06393984550297
+    },
+    {
+      "id": "21-real-c3-r2",
+      "group": "real-parallel",
+      "concurrency": 3,
+      "stream": true,
+      "ok": false,
+      "http_status": 200,
+      "elapsed_ms": 240156,
+      "started_at": "2026-10-25T03:13:56.677977+00:00",
+      "finished_at": "2026-10-25T03:17:56.456694+00:00",
+      "prompt_sha256": "9071e5e6800db18a0ae3d087317d1d888743e26b1d08b8f8de95685e8b4538ad",
+      "payload_sha256": "34f1a564bf96e9a0c6806f1d84d5baa6bc9baede9b7e340aee0f4dd4a9688f91",
+      "phase": "body",
+      "error_type": "HardDeadline",
+      "error": "Diagnostic deadline reached; partial telemetry retained",
+      "trace_id": "348929b35f2d45aa83f75a6cadd58155",
+      "response_headers": {
+        "Date": "Sun, 25 Oct 2026 03:13:55 GMT",
+        "Content-Type": "text/event-stream",
+        "X-Siliconcloud-Trace-Id": "348929b35f2d45aa83f75a6cadd58155"
+      },
+      "reasoning_chars": 33881,
+      "visible_chars": 0,
+      "finish_reason": null,
+      "timings_from_request_sent_ms": {
+        "headers_received": 547,
+        "first_byte": 547,
+        "first_reasoning": 563
+      },
+      "usage": {
+        "prompt_tokens": 2673,
+        "completion_tokens": 10817,
+        "total_tokens": 13490,
+        "completion_tokens_details": {
+          "reasoning_tokens": 10817
+        },
+        "prompt_tokens_details": {
+          "cached_tokens": 2560
+        },
+        "prompt_cache_hit_tokens": 2560,
+        "prompt_cache_miss_tokens": 113
+      },
+      "usage_is_final": false,
+      "tokens_over_3072": true,
+      "last_stream_progress_ms": 234453,
+      "approx_client_observed_reasoning_tokens_per_second": 46.33183134305344
+    },
+    {
+      "id": "22-real-c3-r3",
+      "group": "real-parallel",
+      "concurrency": 3,
+      "stream": true,
+      "ok": false,
+      "http_status": 200,
+      "elapsed_ms": 240125,
+      "started_at": "2026-10-25T03:13:56.721740+00:00",
+      "finished_at": "2026-10-25T03:17:56.481424+00:00",
+      "prompt_sha256": "9071e5e6800db18a0ae3d087317d1d888743e26b1d08b8f8de95685e8b4538ad",
+      "payload_sha256": "34f1a564bf96e9a0c6806f1d84d5baa6bc9baede9b7e340aee0f4dd4a9688f91",
+      "phase": "body",
+      "error_type": "HardDeadline",
+      "error": "Diagnostic deadline reached; partial telemetry retained",
+      "trace_id": "52bab7d6f5fc458cbea8dd0ce9b354fb",
+      "response_headers": {
+        "Date": "Sun, 25 Oct 2026 03:13:55 GMT",
+        "Content-Type": "text/event-stream",
+        "X-Siliconcloud-Trace-Id": "52bab7d6f5fc458cbea8dd0ce9b354fb"
+      },
+      "reasoning_chars": 32082,
+      "visible_chars": 0,
+      "finish_reason": null,
+      "timings_from_request_sent_ms": {
+        "headers_received": 594,
+        "first_byte": 594,
+        "first_reasoning": 594
+      },
+      "usage": {
+        "prompt_tokens": 2673,
+        "completion_tokens": 11007,
+        "total_tokens": 13680,
+        "completion_tokens_details": {
+          "reasoning_tokens": 11007
+        },
+        "prompt_tokens_details": {
+          "cached_tokens": 2560
+        },
+        "prompt_cache_hit_tokens": 2560,
+        "prompt_cache_miss_tokens": 113
+      },
+      "usage_is_final": false,
+      "tokens_over_3072": true,
+      "last_stream_progress_ms": 234438,
+      "approx_client_observed_reasoning_tokens_per_second": 47.14867660728284
+    },
+    {
+      "id": "23-real-c1-r2",
+      "group": "real-serial-after",
+      "concurrency": 1,
+      "stream": true,
+      "ok": false,
+      "http_status": 200,
+      "elapsed_ms": 240219,
+      "started_at": "2026-10-25T03:18:11.870537+00:00",
+      "finished_at": "2026-10-25T03:22:11.744700+00:00",
+      "prompt_sha256": "9071e5e6800db18a0ae3d087317d1d888743e26b1d08b8f8de95685e8b4538ad",
+      "payload_sha256": "34f1a564bf96e9a0c6806f1d84d5baa6bc9baede9b7e340aee0f4dd4a9688f91",
+      "phase": "body",
+      "error_type": "HardDeadline",
+      "error": "Diagnostic deadline reached; partial telemetry retained",
+      "trace_id": "322acc4e685e40f1b100833875b5b0d0",
+      "response_headers": {
+        "Date": "Sun, 25 Oct 2026 03:18:11 GMT",
+        "Content-Type": "text/event-stream",
+        "X-Siliconcloud-Trace-Id": "322acc4e685e40f1b100833875b5b0d0"
+      },
+      "reasoning_chars": 21184,
+      "visible_chars": 0,
+      "finish_reason": null,
+      "timings_from_request_sent_ms": {
+        "headers_received": 719,
+        "first_byte": 719,
+        "first_reasoning": 719
+      },
+      "usage": {
+        "prompt_tokens": 2673,
+        "completion_tokens": 7681,
+        "total_tokens": 10354,
+        "completion_tokens_details": {
+          "reasoning_tokens": 7681
+        },
+        "prompt_tokens_details": {
+          "cached_tokens": 2560
+        },
+        "prompt_cache_hit_tokens": 2560,
+        "prompt_cache_miss_tokens": 113
+      },
+      "usage_is_final": false,
+      "tokens_over_3072": true,
+      "last_stream_progress_ms": 234718,
+      "approx_client_observed_reasoning_tokens_per_second": 32.8753638075672
+    },
+    {
+      "id": "24-real-c1-r3",
+      "group": "real-serial-after",
+      "concurrency": 1,
+      "stream": true,
+      "ok": false,
+      "http_status": 200,
+      "elapsed_ms": 240062,
+      "started_at": "2026-10-25T03:22:12.118586+00:00",
+      "finished_at": "2026-10-25T03:26:11.840624+00:00",
+      "prompt_sha256": "9071e5e6800db18a0ae3d087317d1d888743e26b1d08b8f8de95685e8b4538ad",
+      "payload_sha256": "34f1a564bf96e9a0c6806f1d84d5baa6bc9baede9b7e340aee0f4dd4a9688f91",
+      "phase": "body",
+      "error_type": "HardDeadline",
+      "error": "Diagnostic deadline reached; partial telemetry retained",
+      "trace_id": "5cd39fb81dc94fcb9278a46448a4971d",
+      "response_headers": {
+        "Date": "Sun, 25 Oct 2026 03:22:17 GMT",
+        "Content-Type": "text/event-stream",
+        "X-Siliconcloud-Trace-Id": "5cd39fb81dc94fcb9278a46448a4971d"
+      },
+      "reasoning_chars": 17659,
+      "visible_chars": 0,
+      "finish_reason": null,
+      "timings_from_request_sent_ms": {
+        "headers_received": 6391,
+        "first_byte": 6391,
+        "first_reasoning": 6406
+      },
+      "usage": {
+        "prompt_tokens": 2673,
+        "completion_tokens": 6051,
+        "total_tokens": 8724,
+        "completion_tokens_details": {
+          "reasoning_tokens": 6051
+        },
+        "prompt_tokens_details": {
+          "cached_tokens": 2560
+        },
+        "prompt_cache_hit_tokens": 2560,
+        "prompt_cache_miss_tokens": 113
+      },
+      "usage_is_final": false,
+      "tokens_over_3072": true,
+      "last_stream_progress_ms": 239578,
+      "approx_client_observed_reasoning_tokens_per_second": 25.99606471735563
+    },
+    {
+      "id": "25-real-c1-r1",
+      "group": "real-nonstream",
+      "concurrency": 1,
+      "stream": false,
+      "ok": false,
+      "http_status": null,
+      "elapsed_ms": 180891,
+      "started_at": "2026-10-25T03:26:27.234641+00:00",
+      "finished_at": "2026-10-25T03:29:28.117809+00:00",
+      "prompt_sha256": "9071e5e6800db18a0ae3d087317d1d888743e26b1d08b8f8de95685e8b4538ad",
+      "payload_sha256": "5f919cd8f8b86a5531da3392eb87d045569e6b41cab4ad5f3750bb3c8318e348",
+      "phase": "headers",
+      "error_type": "TimeoutError",
+      "error": "The read operation timed out",
+      "trace_id": "abd2cf2a6b624b57a4927d958421a0fa",
+      "response_headers": null,
+      "reasoning_chars": 0,
+      "visible_chars": 0,
+      "finish_reason": null,
+      "timings_from_request_sent_ms": {},
+      "usage": {},
+      "usage_is_final": false,
+      "tokens_over_3072": false,
+      "last_stream_progress_ms": null
+    }
+  ],
+  "local_timeout_lab": {
+    "kind": "Local loopback diagnostic; zero provider calls",
+    "finding": "Blocking-operation idle timeout and retry-start checks do not enforce a total wall deadline",
+    "rows": [
+      {
+        "case": "/late-headers",
+        "phase": "headers",
+        "timeout_seconds": 0.25,
+        "elapsed_ms": 266,
+        "ok": false,
+        "error_type": "TimeoutError"
+      },
+      {
+        "case": "/late-body",
+        "phase": "body",
+        "timeout_seconds": 0.25,
+        "elapsed_ms": 250,
+        "ok": false,
+        "error_type": "TimeoutError"
+      },
+      {
+        "case": "periodic-body",
+        "timeout_seconds": 0.4,
+        "nominal_retry_budget_seconds": 0.8,
+        "elapsed_ms": 1281,
+        "ok": true,
+        "transport_attempts": 1
+      }
+    ]
+  },
+  "limitations": [
+    "Client concurrency does not expose the provider account queue.",
+    "Cancelled requests may continue server-side; cooldown does not prove cancellation.",
+    "Repeated prompts may hit provider cache; usage is retained.",
+    "Only one public failing prompt is replayed; results do not estimate Agent pass rates.",
+    "This is one account and time window; provider queue/server load is not exposed.",
+    "Synthetic groups happened to run all serial before all parallel; time and cache are confounders.",
+    "Historical requests did not record first-byte timing. New replays cannot identify every historical timeout phase.",
+    "Diagnostic direct HTTPS client and User-Agent differ from runtime; only within-diagnostic comparisons are controlled.",
+    "Streaming exposes generation progress; it does not make inference faster or guarantee completion.",
+    "Reasoning text is counted but never retained. Deadline usage may be a partial cumulative counter, not final billing."
+  ],
+  "network_phases": {
+    "dns": {
+      "observations": 25,
+      "median_ms": 31,
+      "maximum_ms": 94
+    },
+    "tcp": {
+      "observations": 25,
+      "median_ms": 47,
+      "maximum_ms": 500
+    },
+    "tls": {
+      "observations": 25,
+      "median_ms": 203,
+      "maximum_ms": 234
+    },
+    "headers_wait": {
+      "observations": 24,
+      "median_ms": 695.5,
+      "maximum_ms": 6391
+    }
+  },
+  "real_serial_stream": {
+    "completed": 1,
+    "HardDeadline": 2
+  },
+  "real_parallel_stream": {
+    "HardDeadline": 3
+  }
+}
