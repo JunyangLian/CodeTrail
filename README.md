@@ -4,6 +4,12 @@
 
 ![CodeTrail 工作台](assets/screenshots/codetrail-qa-desktop-20261024.png)
 
+## 真实 Tabbit 网页集成测试（2026-10-25）
+
+通过已打开的 Tabbit 真实点击、输入、逐项审批和结果回放，在硅基流动 `deepseek-ai/DeepSeek-V4.1-Flash` 与 AppContainer 后端完成三类冻结修复任务：单文件、跨文件、未知位置定位。三个全新工作区均通过独立验收，每题 8/8 条测试；测试文件未修改。额外验证连接恢复和审批拒绝，**不计入历史 Benchmark 成功率**。
+
+修复状态轮询一次断连后永久停止的问题，增加有限退避重试；Tabbit 重做相同断连后自动恢复原审批。全量自动化 **309/309 通过**。保留三次多工具包协议拒绝、首轮失败测试及截图工具超时。[完整测试报告与证据](benchmarks/results/tabbit-e2e-2026-10-25/report.md)包含真实截图、逐运行 CSV、独立验收、代码差异、隔离审计、原始浏览器 receipt 和复现命令。
+
 ## 可靠性与Windows隔离更新
 
 新增[Recall诊断与AppContainer说明](docs/reliability-v2.md)，保持下方历史评测和金标原样。Recall@5主结果仍为53.21%；余额未中断的描述性切片为81.55%，同时发现4题将可修改范围误标为必要证据。未修改金标、未事后重算一个替代高分，也未声称检索性能提高。

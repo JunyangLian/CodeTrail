@@ -157,19 +157,31 @@ async function send() {
     toast(error.message);
   }
 }
-async function poll(id) {
+function renderConnection() {
+  const mode = state.config.shell_backend === "appcontainer" ? "AppContainer 隔离模式" : "宿主执行 · 无 OS 隔离";
+  $("connection").replaceChildren(node("span", "local-dot"), document.createTextNode(state.config.configured ? `模型已配置 · ${mode}` : `模型尚未配置 · ${mode}`));
+}
+async function poll(id, failures = 0) {
   if (state.taskId !== id) return;
   try {
     const job = await api(`/api/tasks/${id}`);
     if (state.taskId !== id) return;
+    renderConnection();
     renderJob(job);
     if (["completed", "failed", "stopped"].includes(job.status)) {
       setBusy(false);
-      await refreshSessions();
+      await refreshSessions().catch((error) => toast(error.message));
     } else setTimeout(() => poll(id), 1000);
   } catch (error) {
-    $("connection").textContent = "连接中断 · 请刷新页面";
-    toast(error.message);
+    if (state.taskId !== id) return;
+    const attempts = failures + 1;
+    if (attempts < 5) {
+      $("connection").textContent = `连接中断 · 正在重试 ${attempts}/4`;
+      setTimeout(() => poll(id, attempts), Math.min(1000 * 2 ** failures, 8000));
+    } else {
+      $("connection").textContent = "连接中断 · 自动重试已停止，请刷新页面";
+      toast(error.message);
+    }
   }
 }
 function renderJob(job) {
@@ -389,8 +401,7 @@ async function init() {
     $("workspace-path").textContent = state.config.workspace;
     $("workspace-path").title = state.config.workspace;
     $("model-name").textContent = state.config.model;
-    const executionMode = state.config.shell_backend === "appcontainer" ? "AppContainer 隔离模式" : "宿主执行 · 无 OS 隔离";
-    $("connection").replaceChildren(node("span", "local-dot"), document.createTextNode(state.config.configured ? `模型已配置 · ${executionMode}` : `模型尚未配置 · ${executionMode}`));
+    renderConnection();
     await refreshSessions();
     if (state.config.active_id) {
       const job = await api(`/api/tasks/${state.config.active_id}`);

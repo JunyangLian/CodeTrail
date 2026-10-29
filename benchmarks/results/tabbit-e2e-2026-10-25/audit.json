@@ -1,0 +1,108 @@
+[
+  {
+    "task_id": "pagination_boundaries",
+    "category": "single_file",
+    "run_id": "run_20261025-203428-671636",
+    "functional_passed": true,
+    "workflow_passed": true,
+    "tests_run": 8,
+    "tool_steps": 5,
+    "attempts": 7,
+    "protocol_rejections": 1,
+    "input_tokens": 24875,
+    "output_tokens": 833,
+    "usage_complete": true,
+    "elapsed_seconds": 123.518,
+    "protected_files_unchanged": true,
+    "appcontainer_shells_verified": true,
+    "changed_files": [
+      "pagination.py"
+    ],
+    "external_verifier": {
+      "successful": true,
+      "tests_run": 8,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "expected_failures": 0,
+      "unexpected_successes": 0,
+      "output": "test_empty (test_pagination.PaginationTests) ... ok\ntest_exact_boundary_no_next (test_pagination.PaginationTests) ... ok\ntest_first_page (test_pagination.PaginationTests) ... ok\ntest_invalid_page (test_pagination.PaginationTests) ... ok\ntest_invalid_size (test_pagination.PaginationTests) ... ok\ntest_last_partial_page (test_pagination.PaginationTests) ... ok\ntest_page_beyond_end (test_pagination.PaginationTests) ... ok\ntest_second_page (test_pagination.PaginationTests) ... ok\n\n----------------------------------------------------------------------\nRan 8 tests in 0.000s\n\nOK\n",
+      "elapsed_ms": 296,
+      "exit_code": 0,
+      "stderr": "",
+      "accepted": true
+    },
+    "failure_category": null
+  },
+  {
+    "task_id": "user_lookup_contract",
+    "category": "cross_file",
+    "run_id": "run_20261025-203430-13b599",
+    "functional_passed": true,
+    "workflow_passed": true,
+    "tests_run": 8,
+    "tool_steps": 8,
+    "attempts": 10,
+    "protocol_rejections": 1,
+    "input_tokens": 48772,
+    "output_tokens": 1360,
+    "usage_complete": true,
+    "elapsed_seconds": 133.836,
+    "protected_files_unchanged": true,
+    "appcontainer_shells_verified": true,
+    "changed_files": [
+      "repository.py",
+      "service.py"
+    ],
+    "external_verifier": {
+      "successful": true,
+      "tests_run": 8,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "expected_failures": 0,
+      "unexpected_successes": 0,
+      "output": "test_direct_repository_normalizes (test_user_lookup.LookupTests) ... ok\ntest_empty_id_is_unknown (test_user_lookup.LookupTests) ... ok\ntest_empty_mapping (test_user_lookup.LookupTests) ... ok\ntest_input_mapping_is_unchanged (test_user_lookup.LookupTests) ... ok\ntest_none_id_is_rejected (test_user_lookup.LookupTests) ... ok\ntest_service_normalizes (test_user_lookup.LookupTests) ... ok\ntest_service_uses_correct_argument_order (test_user_lookup.LookupTests) ... ok\ntest_unknown_returns_none (test_user_lookup.LookupTests) ... ok\n\n----------------------------------------------------------------------\nRan 8 tests in 0.001s\n\nOK\n",
+      "elapsed_ms": 265,
+      "exit_code": 0,
+      "stderr": "",
+      "accepted": true
+    },
+    "failure_category": null
+  },
+  {
+    "task_id": "boltons_splitlines",
+    "category": "unknown_location",
+    "run_id": "run_20261025-203433-bb77c3",
+    "functional_passed": true,
+    "workflow_passed": true,
+    "tests_run": 8,
+    "tool_steps": 7,
+    "attempts": 9,
+    "protocol_rejections": 1,
+    "input_tokens": 30949,
+    "output_tokens": 1238,
+    "usage_complete": true,
+    "elapsed_seconds": 125.761,
+    "protected_files_unchanged": true,
+    "appcontainer_shells_verified": true,
+    "changed_files": [
+      "text_core.py"
+    ],
+    "external_verifier": {
+      "successful": true,
+      "tests_run": 8,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "expected_failures": 0,
+      "unexpected_successes": 0,
+      "output": "test_01 (test_acceptance.RepairTests) ... ok\ntest_02 (test_acceptance.RepairTests) ... ok\ntest_03 (test_acceptance.RepairTests) ... ok\ntest_04 (test_acceptance.RepairTests) ... ok\ntest_05 (test_acceptance.RepairTests) ... ok\ntest_06 (test_acceptance.RepairTests) ... ok\ntest_07 (test_acceptance.RepairTests) ... ok\ntest_08 (test_acceptance.RepairTests) ... ok\n\n----------------------------------------------------------------------\nRan 8 tests in 0.000s\n\nOK\n",
+      "elapsed_ms": 265,
+      "exit_code": 0,
+      "stderr": "",
+      "accepted": true
+    },
+    "failure_category": null
+  }
+]

@@ -1,0 +1,4 @@
+﻿task_id,category,run_id,functional_passed,workflow_passed,tests_run,tool_steps,attempts,protocol_rejections,input_tokens,output_tokens,usage_complete,elapsed_seconds,protected_files_unchanged,appcontainer_shells_verified,failure_category
+pagination_boundaries,single_file,run_20261025-203428-671636,True,True,8,5,7,1,24875,833,True,123.518,True,True,
+user_lookup_contract,cross_file,run_20261025-203430-13b599,True,True,8,8,10,1,48772,1360,True,133.836,True,True,
+boltons_splitlines,unknown_location,run_20261025-203433-bb77c3,True,True,8,7,9,1,30949,1238,True,125.761,True,True,
