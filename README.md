@@ -218,6 +218,6 @@ python -X utf8 -m pytest tests -q -p no:cacheprovider
 
 这是本地单用户工具。命令审批与路径限制不等同于操作系统级沙箱，应在可信的示例或工作区中使用。记忆检索采用透明的词法规则，没有 Embedding、通用语义冲突消解或完整的记忆提示词注入防护。
 
-## 来源与改进
+## 项目组成
 
-CodeTrail 基于 [Pico](https://gitee.com/htxoffical/pico) 二次开发，保留其 Agent Harness 核心。新增和完善的内容包括本地网页工作台、硅基流动 Chat Completions 适配、中文词法召回、Windows 执行兼容、执行结果判定、可重复修复案例和运行证据整理。详见 [来源说明](UPSTREAM_NOTICE.md)。
+CodeTrail 覆盖 Agent Harness、本地网页工作台、硅基流动 Chat Completions 接入、中文词法召回、Windows 执行兼容、执行结果判定、可重复修复案例及运行证据整理。第三方代码的来源与授权信息见 [来源说明](UPSTREAM_NOTICE.md)。

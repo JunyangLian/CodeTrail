@@ -1,6 +1,6 @@
 # CodeTrail · 代码执行工作台
 
-CodeTrail 表示“代码执行轨迹”，用于查看从任务输入、工具执行到结果验证的完整过程。项目基于 [Pico](https://gitee.com/htxoffical/pico) 二次开发，沿用底层包名、配置和数据目录；网页与终端展示名统一使用 CodeTrail。
+CodeTrail 表示“代码执行轨迹”，用于查看从任务输入、工具执行到结果验证的完整过程。网页与终端展示名统一使用 CodeTrail，底层包名、配置和数据目录保持兼容。
 
 启动命令：
 
@@ -51,7 +51,7 @@ python -m pico.web --cwd path/to/project --verify-command "python -m pytest -q"
 
 - `pico/web.py`：Python 标准库 HTTP 服务、单任务后台线程、审批等待和运行记录适配。
 - `pico/web_assets/`：HTML/CSS/JS，按一秒间隔读取任务进度。
-- 沿用现有 Pico 主循环、模型协议、工具治理、会话和 checkpoint。
+- 复用现有 Agent 主循环、模型协议、工具治理、会话和 checkpoint。
 - 使用目录文本快照生成 diff，不要求演示目录有 Git。跳过 `.env`、内部状态、二进制、符号链接和大文件；最多取 400 个文本文件、2 MB，展示最多 20 个差异文件。它不是完整仓库变更审计。
 - 原有 CLI 记录可查看过程和回答；只有经网页执行的新任务保存了网页差异快照。
 - 页面刷新可以重新接上当前任务；服务重启后通过历史运行和会话继续。内存任务 ID 本身不跨服务重启。

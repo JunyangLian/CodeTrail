@@ -1,10 +1,10 @@
-# Pico Review Pack
+# CodeTrail Review Pack
 
 Current evaluation scope and claim boundaries: [evaluation evidence](../evaluation-scope.md). Historical scripted regression, controlled ablation, and real-model walkthroughs must not be reported as one model-capability score.
 
 ## Project pitch
 
-Pico is a lightweight local coding agent harness for repository-grounded engineering tasks. It wraps a model with workspace context, explicit tools, state tracking, memory, run artifacts, and benchmark evidence.
+CodeTrail is a lightweight local coding agent harness for repository-grounded engineering tasks. It wraps a model with workspace context, explicit tools, state tracking, memory, run artifacts, and benchmark evidence.
 
 ## Architecture map
 

@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "mini-pico"
 version = "0.1.0"
-description = "Teaching-sized Pico agent harness"
+description = "Teaching-sized CodeTrail agent harness"
 requires-python = ">=3.10"
 dependencies = []
 
