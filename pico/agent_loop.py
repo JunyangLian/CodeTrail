@@ -50,11 +50,25 @@ class AgentLoop:
 
     def _request_model(self, task_state, user_message, prompt, prompt_metadata, run_started_at, purpose):
         agent = self.agent
+        if agent.capabilities:
+            agent.cancellation.check()
+            from .extensions import PolicyChanged
+            if agent.capabilities.hooks.fingerprint() != agent.capabilities.policy_at_start:
+                raise PolicyChanged('Host policy changed; start a new run so revoked historical content is not resent')
         conversation = getattr(agent.model_client, 'native_conversation', None)
         if conversation is not None:
             agent.session['working_state']['stale_paths'] = list(agent.resume_state.get('stale_paths', []))
             conversation.context_state = agent.redact_artifact(agent.session.get('working_state', {}))
-            notes = agent.memory.retrieval_candidates(user_message)
+            conversation.context_state['plan'] = agent.session.get('plan', [])
+            if agent.capabilities:
+                conversation.context_rules = agent.redact_text(agent.capabilities.refresh_rules(
+                    getattr(agent.capabilities, 'active_path', agent.workspace.cwd)))
+            query = user_message
+            if agent.capabilities:
+                failures = agent.session.get('working_state', {}).get('failed_attempts', [])
+                if failures:
+                    query = (query + '\n' + failures[-1].get('evidence', ''))[:5000]
+            notes = (agent.memory.retrieval_candidates(query) if agent.feature_enabled('memory') and agent.feature_enabled('relevant_memory') else [])
             conversation.context_memory = agent.redact_artifact([
                 {'text': n['text'], 'source': n.get('source'), 'kind': n.get('kind'),
                  'evidence': n.get('evidence', []), 'version': n.get('version'),
@@ -78,6 +92,9 @@ class AgentLoop:
         model_started_at = time.monotonic()
         transport_hook = hasattr(agent.model_client, 'on_transport_event')
         previous_hook = getattr(agent.model_client, 'on_transport_event', None)
+        previous_delta = getattr(agent.model_client, 'on_delta', None)
+        if agent.capabilities and hasattr(agent.model_client, 'on_delta'):
+            agent.model_client.on_delta = lambda text: agent.emit_trace(task_state, 'model_delta', {'text': text})
         if transport_hook:
             def observe_transport(event):
                 agent.emit_trace(task_state, 'model_transport', {'purpose':purpose, **event})
@@ -92,6 +109,9 @@ class AgentLoop:
                 prompt_cache_retention=prompt_cache_retention,
             )
         except Exception as exc:
+            from .control import Cancelled
+            if isinstance(exc, Cancelled) or agent.cancellation.event.is_set():
+                raise Cancelled('Cancelled during model request; usage may be unknown') from exc
             completion_metadata = dict(getattr(agent.model_client, "last_completion_metadata", {}) or {})
             if completion_metadata:
                 prompt_metadata.update(completion_metadata)
@@ -102,6 +122,8 @@ class AgentLoop:
         finally:
             if transport_hook:
                 agent.model_client.on_transport_event = previous_hook
+            if agent.capabilities and hasattr(agent.model_client, 'on_delta'):
+                agent.model_client.on_delta = previous_delta
         completion_metadata = dict(getattr(agent.model_client, "last_completion_metadata", {}) or {})
         if completion_metadata:
             prompt_metadata.update(completion_metadata)
@@ -125,9 +147,16 @@ class AgentLoop:
 
     def _finish_success(self, task_state, user_message, final, run_started_at):
         agent = self.agent
+        if agent.capabilities:
+            agent.cancellation.check()
         agent.record({"role": "assistant", "content": final, "created_at": now()})
         task_state.finish_success(final)
-        agent.promote_durable_memory(user_message, final)
+        if agent.feature_enabled('memory'):
+            agent.promote_durable_memory(user_message, final)
+        if agent.capabilities and agent.feature_enabled('memory'):
+            experience = agent.capabilities.experience(task_state)
+            if experience:
+                agent.emit_trace(task_state, 'experience_recorded', {'memory_id': experience['id'], 'evidence': experience['evidence']})
         checkpoint = agent.create_checkpoint(task_state, user_message, trigger="run_finished")
         agent.run_store.write_task_state(task_state)
         agent.emit_trace(
@@ -153,10 +182,17 @@ class AgentLoop:
 
     def run(self, user_message):
         agent = self.agent
+        if agent.capabilities:
+            agent.cancellation.check()
         completion = CompletionGate(agent)
         run_started_at = time.monotonic()
         agent.memory.set_task_summary(user_message)
         previous_working_state = agent.session.get('working_state', {})
+        if agent.capabilities:
+            from .evidence import invalidate_plan
+            invalidated = invalidate_plan(agent)
+            if invalidated:
+                agent.session['plan_invalidations'] = invalidated
         agent.session['working_state'] = {'goal': user_message[:300], 'changed_files': [],
                                           'failed_attempts': [], 'verification': {'status': 'not_run'}}
         agent.record({"role": "user", "content": user_message, "created_at": now()})
@@ -176,12 +212,22 @@ class AgentLoop:
             carryover = {k: previous_working_state[k] for k in ('goal', 'changed_files', 'failed_attempts') if k in previous_working_state}
             agent.model_client.begin_native_run(
                 agent.tools,
-                agent.redact_text(agent.workspace.text() + '\n\n' + agent.memory_text() + '\n\n' + instructions +
+                agent.redact_text(agent.workspace.text() + '\n\n' + (agent.memory_text() if agent.feature_enabled('memory') else 'Memory: disabled') + '\n\n' + instructions +
                     '\n\nHistorical task state (not a current verification):\n' + json.dumps(carryover, ensure_ascii=False)),
                 user_message, agent.verification_command)
             conversation = getattr(agent.model_client, 'native_conversation', None)
             if conversation is not None:
                 conversation.context_budget = agent.native_context_policy
+                if agent.capabilities:
+                    conversation.batch_limit = 8
+                    conversation.messages[0]['content'] = conversation.messages[0]['content'].replace(
+                        'Send exactly one function call per step.',
+                        'You may return at most 8 native calls per request; execution is ordered, budgeted and individually approved. ')
+                    conversation.messages[0]['content'] += (' Use code_search or symbol_info to navigate. '
+                        'Persist a small plan for multi-step tasks. Prose memories stay candidates until operator confirmation. '
+                        'Use evidence IDs to recover details after compaction. Available skills (load only when relevant): ' +
+                        str(agent.capabilities.skills))
+                    agent.model_client.cancellation = agent.cancellation
         agent.emit_trace(
             task_state,
             "run_started",
@@ -202,6 +248,8 @@ class AgentLoop:
         # 4. 记录：把结果写回 history / task_state / trace / memory
         # 然后进入下一轮，直到停机条件满足
         while tool_steps < agent.max_steps and attempts < max_attempts:
+            if agent.capabilities:
+                agent.cancellation.check()
             agent.remaining_tool_steps = agent.max_steps - tool_steps
             conversation = getattr(agent.model_client, 'native_conversation', None) if native else None
             if conversation is not None and hasattr(conversation, 'set_budget'):
@@ -268,55 +316,22 @@ class AgentLoop:
                 purpose="action",
             )
 
-            if kind == "tool":
-                tool_steps += 1
-                name = payload.get("name", "")
-                args = payload.get("args", {})
-                task_state.record_tool(name)
-                tool_started_at = time.monotonic()
-                tool_result = agent.execute_tool(name, args)
-                completion.observe(name, args, tool_result.metadata)
-                result = tool_result.content
-                working = agent.session['working_state']
-                working['verification'] = dict(completion.state)
-                working['changed_files'] = sorted(set(working['changed_files']) | set(tool_result.metadata.get('affected_paths', [])))
-                if tool_result.metadata.get('tool_status') != 'ok':
-                    working['failed_attempts'].append({'tool': name, 'path': args.get('path'),
-                        'error': tool_result.metadata.get('tool_error_code'), 'evidence': result[:400]})
-                    working['failed_attempts'] = working['failed_attempts'][-6:]
-                if native:
-                    agent.model_client.observe_native_tool(result)
-                agent.record(
-                    {
-                        "role": "tool",
-                        "name": name,
-                        "args": args,
-                        "content": result,
-                        "created_at": now(),
-                    }
-                )
-                agent.run_store.write_task_state(task_state)
-                agent.emit_trace(
-                    task_state,
-                    "tool_executed",
-                    {
-                        "name": name,
-                        "args": args,
-                        "result": clip(result, 12000 if name == "run_shell" else 500),
-                        "duration_ms": int((time.monotonic() - tool_started_at) * 1000),
-                        **dict(tool_result.metadata or {}),
-                    },
-                )
-                checkpoint = agent.create_checkpoint(task_state, user_message, trigger="tool_executed")
-                agent.run_store.write_task_state(task_state)
-                agent.emit_trace(
-                    task_state,
-                    "checkpoint_created",
-                    {
-                        "checkpoint_id": checkpoint["checkpoint_id"],
-                        "trigger": "tool_executed",
-                    },
-                )
+            if kind in {'tool', 'tools'}:
+                actions = payload if kind == 'tools' else [payload]
+                for action in actions:
+                    if agent.cancellation.event.is_set():
+                        if native:
+                            while conversation.pending:
+                                agent.model_client.observe_native_tool('Not executed: operator cancellation')
+                        agent.cancellation.check()
+                    if tool_steps >= agent.max_steps:
+                        if native:
+                            agent.model_client.observe_native_tool('Not executed: tool budget exhausted')
+                        agent.emit_trace(task_state, 'tool_not_executed', {'name': action.get('name'), 'reason': 'budget_exhausted'})
+                        continue
+                    agent.remaining_tool_steps = agent.max_steps - tool_steps
+                    tool_steps += 1
+                    self._execute_action(action, task_state, completion, native, user_message)
                 continue
 
             if kind == "retry":
@@ -339,6 +354,8 @@ class AgentLoop:
             return self._finish_success(task_state, user_message, final, run_started_at)
 
         if tool_steps >= agent.max_steps:
+            if agent.capabilities:
+                agent.cancellation.check()
             if native:
                 agent.model_client.native_notice('Tool budget exhausted. Do not call tools. Give a concise final answer based on actual evidence.')
             task_state.record_attempt()
@@ -375,6 +392,10 @@ class AgentLoop:
                     return self._finish_success(task_state, user_message, final, run_started_at)
                 agent.emit_trace(task_state, 'completion_rejected', dict(completion.state))
                 return self._finish_stopped(task_state, user_message, 'verification_incomplete', problem, run_started_at)
+            if native and kind in {'tool', 'tools'}:
+                conversation = getattr(agent.model_client, 'native_conversation', None)
+                while conversation and conversation.pending:
+                    agent.model_client.observe_native_tool('Not executed: finalization has no tool budget')
 
         if attempts >= max_attempts and tool_steps < agent.max_steps:
             final = "Stopped after too many malformed model responses without a valid tool call or final answer."
@@ -383,6 +404,41 @@ class AgentLoop:
             final = "Stopped after reaching the step limit without a final answer."
             task_state.stop_step_limit(final)
         return self._finish_stopped(task_state, user_message, task_state.stop_reason, final, run_started_at)
+
+    def _execute_action(self, payload, task_state, completion, native, user_message):
+        agent = self.agent
+        name, args = payload.get('name', ''), payload.get('args', {})
+        task_state.record_tool(name)
+        if agent.capabilities and args.get('path'):
+            try:
+                path = agent.path(args['path'])
+            except ValueError:
+                path = None
+            if path is not None:
+                agent.capabilities.refresh_rules(path)
+                agent.capabilities.active_path = path
+        started = time.monotonic()
+        tool_result = agent.execute_tool(name, args)
+        completion.observe(name, args, tool_result.metadata)
+        result = tool_result.content
+        working = agent.session['working_state']
+        working['verification'] = dict(completion.state)
+        working['changed_files'] = sorted(set(working['changed_files']) | set(tool_result.metadata.get('affected_paths', [])))
+        if tool_result.metadata.get('tool_status') != 'ok':
+            working['failed_attempts'].append({'tool': name, 'path': args.get('path'),
+                'error': tool_result.metadata.get('tool_error_code'), 'evidence': result[:400]})
+            working['failed_attempts'] = working['failed_attempts'][-6:]
+        if native:
+            agent.model_client.observe_native_tool(result)
+        agent.record({'role': 'tool', 'name': name, 'args': args, 'content': result, 'created_at': now(),
+                      'source_paths': tool_result.metadata.get('source_paths', [])})
+        agent.run_store.write_task_state(task_state)
+        agent.emit_trace(task_state, 'tool_executed', {'name': name, 'args': args,
+            'result': clip(result, 12000 if name == 'run_shell' else 500),
+            'duration_ms': int((time.monotonic()-started)*1000), **dict(tool_result.metadata or {})})
+        checkpoint = agent.create_checkpoint(task_state, user_message, trigger='tool_executed')
+        agent.run_store.write_task_state(task_state)
+        agent.emit_trace(task_state, 'checkpoint_created', {'checkpoint_id': checkpoint['checkpoint_id'], 'trigger': 'tool_executed'})
 
     def _finish_stopped(self, task_state, user_message, reason, final, run_started_at):
         agent = self.agent

@@ -28,7 +28,7 @@ class SandboxUnavailable(RuntimeError):
     pass
 
 
-def snapshot(source, destination):
+def snapshot(source, destination, path_filter=None):
     """No links, credentials, runtime state or host mount in the execution view."""
     source=Path(source).resolve();destination=Path(destination)
     known=[v.encode() for k,v in os.environ.items() if len(v)>=8 and any(m in k.upper() for m in ('API_KEY','SECRET','PASSWORD','TOKEN'))]
@@ -38,10 +38,12 @@ def snapshot(source, destination):
         for name in list(dirs):
             p=parent/name;relative=p.relative_to(source)
             if name in IGNORED_PATH_NAMES or sensitive_workspace_path(relative):dirs.remove(name);continue
+            if path_filter and not path_filter(p):dirs.remove(name);continue
             if getattr(p.lstat(),'st_file_attributes',0) & 0x400 or p.is_symlink():raise ValueError('Reparse directory refused in sandbox snapshot')
         for name in files:
             p=parent/name;relative=p.relative_to(source)
             if sensitive_workspace_path(relative) or name.casefold().endswith(('.env','.pyc')):continue
+            if path_filter and not path_filter(p):continue
             if getattr(p.lstat(),'st_file_attributes',0) & 0x400 or p.is_symlink():raise ValueError('Reparse file refused in sandbox snapshot')
             info=p.stat()
             if not stat.S_ISREG(info.st_mode) or info.st_nlink!=1:raise ValueError('Non-regular or hardlinked file refused in sandbox snapshot')
@@ -67,7 +69,7 @@ def _private_python(destination):
         if p.suffix.lower() in ('.pyd','.dll'):shutil.copyfile(p,destination/'DLLs'/p.name)
 
 
-def _execute(source,timeout,audit):
+def _execute(source,timeout,audit,cancellation=None,path_filter=None):
     if os.name!='nt':raise SandboxUnavailable('Windows AppContainer is unavailable on this OS')
     import msvcrt
     k=C.WinDLL('kernel32',use_last_error=True);u=C.WinDLL('userenv',use_last_error=True);a=C.WinDLL('advapi32',use_last_error=True)
@@ -140,7 +142,8 @@ def _execute(source,timeout,audit):
             raise SandboxUnavailable('Unexpected AppContainer profile location; refusing execution')
         audit.update(profile_name=name,profile_path=str(profile),appcontainer_sid=sid_string,capabilities=[],host_acl_changed=False)
         runtime=profile/'runtime';workspace=profile/'workspace';workspace.mkdir();(profile/'tmp').mkdir()
-        _private_python(runtime);audit['snapshot']=snapshot(source,workspace)
+        _private_python(runtime);audit['snapshot']=snapshot(source,workspace,path_filter=path_filter)
+        audit['source_policy_filtered'] = path_filter is not None
         r,w=os.pipe();ir,iw=os.pipe();fds=[r,w,ir,iw];os.close(iw);fds.remove(iw)
         wh=msvcrt.get_osfhandle(w);ih=msvcrt.get_osfhandle(ir)
         os.set_handle_inheritable(wh,True);os.set_handle_inheritable(ih,True)
@@ -181,7 +184,16 @@ def _execute(source,timeout,audit):
         thread=threading.Thread(target=collect,daemon=True);thread.start()
         if resume(pi.thread)==0xffffffff:checked(False)
         started=True;audit['worker_started']=True
-        code=wait(pi.process,int(timeout*1000))
+        if cancellation:
+            deadline=time.monotonic()+timeout
+            while True:
+                if cancellation.event.is_set():
+                    job_kill(job,1);audit['cancel_job_terminated']=wait(pi.process,5000)==0
+                    cancellation.check()
+                code=wait(pi.process,100)
+                if code!=258 or time.monotonic()>=deadline:break
+        else:
+            code=wait(pi.process,int(timeout*1000))
         if code==258:
             job_kill(job,1);audit['timeout_job_terminated']=wait(pi.process,5000)==0
             raise subprocess.TimeoutExpired(VERIFY,timeout)
@@ -209,14 +221,16 @@ def _execute(source,timeout,audit):
         if sid:free_sid(sid)
 
 
-def run_verification(root,command,timeout=20):
+def run_verification(root,command,timeout=20,cancellation=None,path_filter=None):
     if command.strip()!=VERIFY:raise ValueError('AppContainer only supports the exact approved unittest verification command')
     if not 1<=timeout<=120:raise ValueError('Sandbox timeout must be in [1,120]')
     root=Path(root).resolve();audit={'backend':'windows_appcontainer','command':VERIFY,'timeout':timeout,
        'network_capabilities':False,'child_process_limit':1,'memory_limit_bytes':256*1024*1024,'host_fallback':False}
     start=time.monotonic()
     try:
-        result=_execute(root,timeout,audit);audit.update(status='exited',exit_code=result['returncode']);return result
+        if cancellation:cancellation.check()
+        result=_execute(root,timeout,audit,cancellation,path_filter) if cancellation or path_filter else _execute(root,timeout,audit)
+        audit.update(status='exited',exit_code=result['returncode']);return result
     except Exception as exc:
         audit.update(status='failed_closed',error_type=type(exc).__name__,winerror=getattr(exc,'winerror',None));raise
     finally:

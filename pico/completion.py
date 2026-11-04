@@ -18,9 +18,17 @@ class CompletionGate:
             self.state['exit_code'] = code
             if metadata.get('tool_error_code')=='approval_denied':
                 self.state['status']='blocked'
+            elif code == 0 and metadata.get('workspace_changed'):
+                self.state['status'] = 'stale'
+                self.state['reason'] = 'verification_mutated_workspace'
+                self.snapshot = None
             elif code==0 and metadata.get('tool_status')=='ok':
                 self.state['status']='passed'
+                self.state.pop('reason', None)
                 self.snapshot=self.agent.capture_workspace_snapshot()
+                from .operations import snapshot_hash
+                self.state['snapshot_sha256'] = snapshot_hash(self.snapshot)
+                self.state['evidence_id'] = metadata.get('evidence_id')
             else:
                 self.state['status']='failed'
         elif metadata.get('workspace_changed') and self.state['status']=='passed':

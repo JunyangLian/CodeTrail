@@ -77,10 +77,25 @@ class Pico:
         shell_backend="host",
         native_input_budget=32768,
         native_context_window=65536,
+        harness_profile='classic',
+        embedding_mode='off',
+        persist_session=True,
+        network_route='environment',
     ):
         self.model_client = model_client
         self.workspace = workspace
         self.root = Path(workspace.repo_root)
+        if harness_profile not in {'classic', 'workbench'}:
+            raise ValueError('Unknown harness profile')
+        self.harness_profile = harness_profile
+        from .control import Cancellation
+        self.cancellation = Cancellation()
+        self.embedding_mode = embedding_mode
+        if network_route not in {'environment', 'direct'}:
+            raise ValueError('Unknown network route')
+        self.network_route = network_route
+        if hasattr(model_client, 'network_route'):
+            model_client.network_route = network_route
         self.session_store = session_store
         self.approval_policy = approval_policy
         self.max_steps = max_steps
@@ -123,6 +138,21 @@ class Pico:
         self.memory.session_id = self.session['id']
         from .operations import OperationJournal
         self.operations = OperationJournal(self.root)
+        self.capabilities = None
+        self.evidence = None
+        self.current_task_state = None
+        if harness_profile == 'workbench':
+            from .evidence import EvidenceStore, restore_session
+            from .workbench import Capabilities
+            self.evidence = EvidenceStore(self.root)
+            restore_session(self)
+            self.capabilities = Capabilities(self, embedding_mode)
+            self.evidence.path_filter = self.capabilities.allowed_path
+            self.workspace.project_docs = {k: v for k, v in self.workspace.project_docs.items() if self.capabilities.allowed_path(k)}
+            self.memory.retriever = self.capabilities.index
+            if hasattr(self.model_client, 'stream'):
+                self.model_client.stream = True
+                self.model_client.cancellation = self.cancellation
         self.session["memory"] = self.memory.to_dict()
         self.tools = self._apply_tool_allowlist(self.build_tools())
         if self.shell_backend == "appcontainer" and "run_shell" in self.tools:
@@ -132,7 +162,7 @@ class Pico:
         self.prefix = self.prefix_state.text
         self.context_manager = ContextManager(self)
         self.resume_state = self.evaluate_resume_state()
-        self.session_path = self.session_store.save(self.session)
+        self.session_path = self.session_store.save(self.session) if persist_session else self.session_store.path(self.session['id'])
         self.current_task_state = None
         self.current_run_dir = None
         self.last_prompt_metadata = {}
@@ -202,7 +232,12 @@ class Pico:
         del bucket[:-limit]
 
     def build_tools(self):
-        return toolkit.build_tool_registry(self.tool_context())
+        tools = toolkit.build_tool_registry(self.tool_context())
+        if self.capabilities:
+            tools.update(self.capabilities.registry())
+            for name in ('write_file', 'patch_file'):
+                tools[name]['run'] = lambda args, name=name: self.capabilities.legacy_edit(name, args)
+        return tools
 
     @staticmethod
     def _normalize_allowed_tools(allowed_tools):
@@ -244,7 +279,10 @@ class Pico:
 
         # 工作区事实相对稳定，所以这里按整体刷新；
         # 只有这些事实真的变化了，才重建完整 prefix。
-        refreshed_workspace = WorkspaceContext.build(self.root)
+        refreshed_workspace = (WorkspaceContext.build(self.root, repo_root_override=self.root) if self.capabilities
+                               else WorkspaceContext.build(self.root))
+        if self.capabilities:
+            refreshed_workspace.project_docs = {k: v for k, v in refreshed_workspace.project_docs.items() if self.capabilities.allowed_path(k)}
         refreshed_workspace_fingerprint = refreshed_workspace.fingerprint()
         workspace_changed = force or refreshed_workspace_fingerprint != previous_workspace_fingerprint
         if workspace_changed:
@@ -265,7 +303,7 @@ class Pico:
         return self.memory.render_memory_text()
 
     def history_text(self):
-        history = self.session["history"]
+        history = self.prompt_history()
         if not history:
             return "- empty"
 
@@ -298,8 +336,25 @@ class Pico:
         return prompt
 
     def record(self, item):
+        if self.evidence:
+            self.evidence.event(self.session['id'], getattr(self.current_task_state, 'run_id', ''),
+                                'session_record', item)
         self.session["history"].append(self.redact_artifact(item))
         self.session_path = self.session_store.save(self.session)
+
+    def prompt_history(self):
+        if not self.capabilities:
+            return self.session['history']
+        result = []
+        for item in self.session['history']:
+            if item.get('role') == 'tool':
+                paths = list(item.get('source_paths', []))
+                if item.get('args', {}).get('path'):
+                    paths.append(item['args']['path'])
+                if not all(self.capabilities.allowed_path(p) for p in paths):
+                    item = {**item, 'content': '[Historical content withheld by current source policy]'}
+            result.append(item)
+        return result
 
     @staticmethod
     def looks_sensitive_env_name(name):
@@ -337,6 +392,10 @@ class Pico:
         refresh = self.refresh_prefix()
         self.resume_state = self.evaluate_resume_state()
         prompt, metadata = self.context_manager.build(user_message)
+        if self.capabilities and not getattr(self.model_client, 'supports_native_tools', False):
+            prompt += '\n\n' + self.redact_text(self.capabilities.refresh_rules(
+                getattr(self.capabilities, 'active_path', self.workspace.cwd)))
+            prompt += '\n\nPersisted task plan (evidence data):\n' + json.dumps(self.session.get('plan', []))
         # 这里把“这轮 prompt 是怎么拼出来的”连同缓存相关状态一起记下来，
         # 后面 trace/report 才能解释清楚：为什么这一轮 prefix 变了、缓存有没有命中。
         metadata.update(
@@ -361,6 +420,8 @@ class Pico:
                 "stale_paths": list(self.resume_state.get("stale_paths", [])),
                 "runtime_identity_mismatch_fields": list(self.resume_state.get("runtime_identity_mismatch_fields", [])),
                 "unresolved_operations": self.operations.unresolved(),
+                "harness_profile": self.harness_profile,
+                "rule_sources": self.session.get('rule_sources', []),
             }
         )
         metadata.update(self.detected_secret_env_summary())
@@ -529,7 +590,13 @@ class Pico:
 
     def promote_durable_memory(self, user_message, final_answer):
         promotions, rejections = self.extract_durable_promotions(user_message, final_answer)
-        promoted, superseded = self.memory.promote_durable(promotions)
+        if self.capabilities:
+            promoted, superseded = [], []
+            for topic, text in promotions:
+                candidate = self.memory.knowledge.propose(text, 'legacy-proposal:' + topic + ':' + hashlib.sha256(text.encode()).hexdigest()[:12])
+                promoted.append('candidate_requires_confirmation:' + candidate['id'])
+        else:
+            promoted, superseded = self.memory.promote_durable(promotions)
         self.session["memory"] = self.memory.to_dict()
         self.last_durable_promotions = promoted
         self.last_durable_rejections = rejections
@@ -538,11 +605,70 @@ class Pico:
 
     def ask(self, user_message):
         from .agent_loop import AgentLoop
+        from .control import Cancelled
+        import time
+        loop = AgentLoop(self)
+        started = time.monotonic()
+        from .extensions import PolicyChanged
+        if self.capabilities:
+            self.capabilities.policy_at_start = self.capabilities.hooks.fingerprint()
+        try:
+            return loop.run(user_message)
+        except Cancelled:
+            if self.current_task_state is None:
+                raise
+            conversation = getattr(self.model_client, 'native_conversation', None)
+            while conversation is not None and conversation.pending:
+                self.model_client.observe_native_tool('Not executed: operator cancelled the remaining calls')
+            return loop._finish_stopped(self.current_task_state, user_message, 'cancelled',
+                                        'Cancelled by operator. Completed effects and uncertain operations are preserved.', started)
+        except PolicyChanged as exc:
+            if self.current_task_state is None:
+                raise
+            return loop._finish_stopped(self.current_task_state, user_message, 'policy_changed', str(exc), started)
 
-        return AgentLoop(self).run(user_message)
+    def cancel(self):
+        self.cancellation.cancel()
+        callback = getattr(self.model_client, 'cancel_request', None)
+        if callback:
+            callback()
 
     def execute_tool(self, name, args):
+        self._raw_tool_evidence = None
+        if self.capabilities:
+            self.capabilities.last_sources = []
+            if not isinstance(args, dict):
+                from .tool_executor import ToolExecutionResult
+                return ToolExecutionResult('Tool parameters must be an object', {'tool_status': 'rejected', 'tool_error_code': 'invalid_arguments', 'workspace_changed': False})
+            try:
+                hook = self.capabilities.hooks.before(name, args)
+            except (ValueError, OSError, TypeError, KeyError) as exc:
+                from .tool_executor import ToolExecutionResult
+                return ToolExecutionResult(str(exc), {'tool_status': 'rejected', 'tool_error_code': 'policy_hook_denied',
+                    'security_event_type': 'policy_denied', 'workspace_changed': False})
+            self.evidence.event(self.session['id'], getattr(self.current_task_state, 'run_id', ''), 'policy_hook', hook)
         result = self.tool_executor.execute(name, args)
+        if self.evidence:
+            from .tool_executor import ToolExecutionResult
+            metadata = dict(result.metadata)
+            metadata['source_paths'] = list(getattr(self.capabilities, 'last_sources', [])) + list(metadata.get('affected_paths', []))
+            if name == 'run_shell':
+                from .operations import snapshot_hash
+                metadata['snapshot_sha256'] = snapshot_hash(self.capture_workspace_snapshot())
+            if name == 'read_file' and metadata.get('tool_status') == 'ok':
+                match = re.search(r'sha256=([0-9a-f]{64})', result.content)
+                metadata['source_sha256'] = match.group(1) if match else None
+            raw = getattr(self, '_raw_tool_evidence', None)
+            self._raw_tool_evidence = None
+            key = self.evidence.put(self.session['id'], getattr(self.current_task_state, 'run_id', ''), name,
+                                    raw if raw is not None else result.content, {'args': args, **metadata})
+            metadata['evidence_id'] = key
+            self.evidence.event(self.session['id'], getattr(self.current_task_state, 'run_id', ''), 'policy_hook',
+                                self.capabilities.hooks.after(name, metadata))
+            suffix = '\nEvidence ID: ' + key
+            if metadata.get('source_sha256'):
+                suffix += '\nSource SHA256: ' + metadata['source_sha256']
+            result = ToolExecutionResult(self.redact_text(result.content) + suffix, metadata)
         self._last_tool_result_metadata = dict(result.metadata)
         return result
 
@@ -604,6 +730,9 @@ class Pico:
             "durable_rejections": list(self.last_durable_rejections),
             "durable_superseded": list(self.last_durable_superseded),
             "redacted_env": self.detected_secret_env_summary(),
+            "harness_profile": self.harness_profile,
+            "plan": self.session.get('plan', []),
+            "retrieval": dict(getattr(getattr(self.capabilities, 'index', None), 'last_audit', {})),
         }
 
     def tool_example(self, name):
@@ -611,7 +740,20 @@ class Pico:
 
     def validate_tool(self, name, args):
         """把通用工具校验和 runtime 级额外约束串起来。"""
-        toolkit.validate_tool(self.tool_context(), name, args)
+        if self.capabilities and name in self.tools:
+            schema = self.tools[name]['schema']
+            if not isinstance(args, dict) or set(args) - set(schema):
+                raise ValueError('Unknown argument or non-object parameters')
+            for key, declaration in schema.items():
+                if key not in args:
+                    if '=' not in declaration:
+                        raise ValueError('Missing argument: ' + key)
+                elif (declaration.startswith('int') and type(args[key]) is not int) or (declaration.startswith('str') and not isinstance(args[key], str)):
+                    raise ValueError('Argument type differs from tool schema: ' + key)
+        if self.capabilities and name in self.capabilities.registry():
+            self.capabilities.validate(name, args)
+        else:
+            toolkit.validate_tool(self.tool_context(), name, args)
 
     def tool_context(self):
         return ToolContext(
@@ -621,11 +763,17 @@ class Pico:
             depth=self.depth,
             max_depth=self.max_depth,
             spawn_delegate=self.spawn_delegate,
+            cancellation=self.cancellation if self.harness_profile == 'workbench' else None,
+            read_filter=self.capabilities.allowed_path if self.capabilities else None,
+            source_sink=(lambda values: setattr(self.capabilities, 'last_sources', values)) if self.capabilities else None,
             isolated_shell_runner=self._isolated_shell if self.shell_backend == "appcontainer" else None,
         )
 
     def _isolated_shell(self, command, timeout):
         from .windows_sandbox import run_verification
+        if self.capabilities:
+            return run_verification(self.root, command, timeout, cancellation=self.cancellation,
+                                    path_filter=self.capabilities.allowed_path)
         return run_verification(self.root, command, timeout)
 
     def spawn_delegate(self, args):
@@ -643,7 +791,11 @@ class Pico:
             read_only=True,
             secret_env_names=self.secret_env_names,
             shell_env_allowlist=self.shell_env_allowlist,
+            harness_profile=self.harness_profile,
+            embedding_mode=self.embedding_mode,
+            network_route=self.network_route,
         )
+        child.cancellation = self.cancellation
         # 委派的目标是“调查”，不是“放权执行”。
         # 子 agent 以只读方式运行、步数更少，最后只把结论文本返回给父 agent。
         child.session["memory"]["task"] = task
@@ -814,12 +966,17 @@ class Pico:
         return text[start:end]
 
     def reset(self):
+        if self.evidence:
+            self.evidence.event(self.session['id'], '', 'session_reset', {})
+            self.session['plan'] = []
         self.session["history"] = []
         self.session["memory"].clear()
         self.session["memory"].update(memorylib.default_memory_state())
         self.memory = memorylib.LayeredMemory(self.session["memory"], workspace_root=self.root)
         self.memory.session_id = self.session['id']
         self.session_store.save(self.session)
+        if self.capabilities:
+            self.memory.retriever = self.capabilities.index
 
     def path(self, raw_path):
         path = Path(raw_path)
@@ -831,4 +988,8 @@ class Pico:
             raise ValueError(f"path escapes workspace: {raw_path}")
         if securitylib.sensitive_workspace_path(resolved.relative_to(self.root)):
             raise ValueError(f"sensitive path denied: {raw_path}")
+        if self.harness_profile == 'workbench' and any(p.casefold() in {'.pico', '.git'} for p in resolved.relative_to(self.root).parts):
+            raise ValueError(f"internal state path denied: {raw_path}")
+        if self.harness_profile == 'workbench' and resolved.is_file() and resolved.stat().st_nlink > 1:
+            raise ValueError('Hardlinked file path denied: provenance is outside workspace guarantees')
         return resolved

@@ -189,7 +189,7 @@ class ContextManager:
         else:
             relevant_lines.append("- none")
         relevant_raw = "\n".join(relevant_lines)
-        history = list(getattr(self.agent, "session", {}).get("history", []))
+        history = list(self.agent.prompt_history() if hasattr(self.agent, 'prompt_history') else getattr(self.agent, 'session', {}).get('history', []))
         history_raw = self._raw_history_text(history)
         return {
             "prefix": SectionRender(raw=section_texts["prefix"], budget=len(section_texts["prefix"]), rendered=section_texts["prefix"], details={}),
@@ -295,7 +295,7 @@ class ContextManager:
         return max(1, usable // note_count)
 
     def _render_history_section(self, budget):
-        history = list(getattr(self.agent, "session", {}).get("history", []))
+        history = list(self.agent.prompt_history() if hasattr(self.agent, 'prompt_history') else getattr(self.agent, 'session', {}).get('history', []))
         raw = self._raw_history_text(history)
         if not history:
             rendered = "Transcript:\n- empty"
@@ -405,6 +405,8 @@ class ContextManager:
         return entries, details
 
     def _reusable_file_summary(self, path):
+        if getattr(self.agent, 'capabilities', None) and not self.agent.capabilities.allowed_path(path):
+            return None
         memory = getattr(self.agent, "memory", None)
         if memory is None or not hasattr(memory, "to_dict"):
             return ""

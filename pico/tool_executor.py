@@ -47,7 +47,9 @@ class ToolExecutor:
 
     def execute(self, name, args):
         agent = self.agent
-        if (name in {'write_file','patch_file'} and getattr(agent,'verification_command',None)
+        if getattr(agent, 'harness_profile', 'classic') == 'workbench':
+            agent.cancellation.check()
+        if (name in {'write_file','patch_file', 'apply_changes', 'rewind_changes'} and getattr(agent,'verification_command',None)
                 and getattr(agent.model_client,'supports_native_tools',False)
                 and getattr(agent,'remaining_tool_steps',None)==1):
             return ToolExecutionResult(content='error: last tool step is reserved for the exact verification command; no edit applied',
@@ -149,6 +151,16 @@ class ToolExecutor:
             )
 
         if tool['risky']:
+            if getattr(agent, 'capabilities', None):
+                if agent.cancellation.event.is_set():
+                    agent.operations.reject(operation_id)
+                    agent.cancellation.check()
+                try:
+                    agent.capabilities.hooks.before(name, args)
+                except (ValueError, OSError, TypeError, KeyError) as exc:
+                    agent.operations.reject(operation_id)
+                    return ToolExecutionResult(str(exc), _metadata('rejected', tool_error_code='policy_hook_denied',
+                        security_event_type='policy_denied', risk_level='high', read_only=False))
             try:
                 agent.operations.start(operation_id, agent.capture_workspace_snapshot())
             except RecoveryRequired as exc:
@@ -156,7 +168,10 @@ class ToolExecutor:
                     tool_error_code='approval_snapshot_changed', risk_level='high', read_only=False))
         after_snapshot = before_snapshot
         try:
-            content = agent.redact_text(clip(tool["run"](args), 12000 if name == 'run_shell' else 4000))
+            raw_content = tool['run'](args)
+            if getattr(agent, 'evidence', None):
+                agent._raw_tool_evidence = agent.redact_text(clip(raw_content, 131072))
+            content = agent.redact_text(clip(raw_content, 12000 if name == 'run_shell' else 4000))
             after_snapshot = agent.capture_workspace_snapshot() if tool["risky"] else before_snapshot
             affected_paths, diff_summary = agent.diff_workspace_snapshots(before_snapshot, after_snapshot)
             workspace_changed = bool(affected_paths)
@@ -209,6 +224,8 @@ class ToolExecutor:
             if isinstance(exc, subprocess.TimeoutExpired):
                 metadata["tool_error_code"] = "tool_timeout"
                 metadata["timed_out"] = True
+            if exc.__class__.__name__ == 'Cancelled':
+                metadata['tool_error_code'] = 'cancelled'
             if name == 'run_shell':
                 metadata['execution_backend'] = getattr(agent, 'shell_backend', 'host')
                 if exc.__class__.__name__ == 'SandboxUnavailable':
@@ -216,6 +233,6 @@ class ToolExecutor:
             if operation_id:
                 metadata['operation_id'] = operation_id
                 agent.operations.complete(operation_id, after_snapshot, agent.redact_text(f'error: tool {name} failed: {exc}'), metadata,
-                                          uncertain=name == 'run_shell')
+                                          uncertain=name == 'run_shell' or name.startswith('mcp_'))
             agent.record_process_note_for_tool(name, metadata)
             return ToolExecutionResult(content=f"error: tool {name} failed: {exc}", metadata=metadata)

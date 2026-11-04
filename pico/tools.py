@@ -6,6 +6,10 @@
 
 import shutil
 import subprocess
+import os
+import re
+import stat
+from pathlib import Path
 
 from .process import decode_output
 import textwrap
@@ -54,7 +58,8 @@ DELEGATE_TOOL_SPEC = {
 
 
 def legal_tool_names():
-    return set(BASE_TOOL_SPECS) | {"delegate"}
+    from .workbench import SPECS
+    return set(BASE_TOOL_SPECS) | {'delegate'} | set(SPECS)
 
 TOOL_EXAMPLES = {
     "list_files": '<tool>{"name":"list_files","args":{"path":"."}}</tool>',
@@ -161,6 +166,7 @@ def tool_list_files(context, args):
     entries = [
         item for item in sorted(path.iterdir(), key=lambda item: (item.is_file(), item.name.lower()))
         if item.name not in IGNORED_PATH_NAMES
+        and (not context.read_filter or context.read_filter(item))
     ]
     lines = []
     for entry in entries[:200]:
@@ -177,10 +183,16 @@ def tool_read_file(context, args):
     end = int(args.get("end", 200))
     if start < 1 or end < start:
         raise ValueError("invalid line range")
-    lines = path.read_text(encoding="utf-8", errors="replace").splitlines()
+    data = path.read_bytes()
+    if context.cancellation and len(data) > 262144:
+        raise ValueError('Workbench reads support text files <=256 KiB; use scoped search')
+    lines = data.decode('utf-8', errors='replace').splitlines()
     # Stop at a line boundary and report the actual unread range. Silent head
     # clipping made the same broad read look like it had returned the entire file.
     output = [f"# {path.relative_to(context.root)} ({len(lines)} total lines)"]
+    if context.cancellation:
+        import hashlib
+        output[0] += ' sha256=' + hashlib.sha256(data).hexdigest()
     used = len(output[0]); last = start - 1
     for number, line in enumerate(lines[start - 1:end], start=start):
         rendered = f"{number:>4}: {line}"
@@ -200,6 +212,39 @@ def tool_search(context, args):
     if not pattern:
         raise ValueError("pattern must not be empty")
     path = context.path(args.get("path", "."))
+    if context.read_filter:
+        from .retrieval import SKIP
+        expression = re.compile(pattern, 0 if any(c.isupper() for c in pattern) else re.I)
+        files = []
+        if path.is_file():
+            files = [path]
+        else:
+            for base, dirs, names in os.walk(path, followlinks=False):
+                dirs[:] = sorted(d for d in dirs if d not in SKIP and context.read_filter(Path(base)/d)
+                                 and not (getattr((Path(base)/d).lstat(), 'st_file_attributes', 0) & getattr(stat, 'FILE_ATTRIBUTE_REPARSE_POINT', 0)))
+                files.extend(Path(base)/name for name in sorted(names))
+                if len(files) > 500:
+                    break
+        matches, sources = [], set()
+        for target in files[:500]:
+            if not context.read_filter(target) or not target.is_file() or target.stat().st_size > 131072:
+                continue
+            try:
+                text = target.read_text('utf-8')
+            except (UnicodeError, OSError):
+                continue
+            for number, line in enumerate(text.splitlines(), 1):
+                if expression.search(line):
+                    key = target.relative_to(context.root).as_posix()
+                    matches.append(f'{key}:{number}:{line[:500]}')
+                    sources.add(key)
+                    if len(matches) >= 200:
+                        break
+            if len(matches) >= 200:
+                break
+        if context.source_sink:
+            context.source_sink(sorted(sources))
+        return '\n'.join(matches) or '(no matches)'
 
     if shutil.which("rg"):
         # 优先用 rg，因为搜索会非常频繁，搜索延迟会直接影响 agent 控制循环。
@@ -239,7 +284,11 @@ def tool_run_shell(context, args):
     if getattr(context, 'isolated_shell_runner', None) is not None:
         isolated = context.isolated_shell_runner(command, timeout)
         return f"exit_code: {isolated['returncode']}\nstdout:\n{isolated['output'].strip() or '(empty)'}\nstderr:\n(empty)"
-    result = subprocess.run(
+    if getattr(context, 'cancellation', None) is not None:
+        from .control import run_cancellable
+        result = run_cancellable(command, context.root, context.shell_env(), timeout, context.cancellation)
+    else:
+        result = subprocess.run(
         command,
         cwd=context.root,
         shell=True,

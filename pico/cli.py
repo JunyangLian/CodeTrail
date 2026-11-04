@@ -263,6 +263,9 @@ def build_agent(args):
             shell_backend=getattr(args, 'shell_backend', 'host'),
             native_input_budget=getattr(args, 'native_input_budget', 32768),
             native_context_window=getattr(args, 'native_context_window', 65536),
+            harness_profile=getattr(args, 'harness_profile', 'classic'),
+            embedding_mode=getattr(args, 'embedding', 'off'),
+            network_route=getattr(args, 'network_route', 'environment'),
         )
     return Pico(
         model_client=model,
@@ -276,6 +279,9 @@ def build_agent(args):
         shell_backend=getattr(args, 'shell_backend', 'host'),
         native_input_budget=getattr(args, 'native_input_budget', 32768),
         native_context_window=getattr(args, 'native_context_window', 65536),
+        harness_profile=getattr(args, 'harness_profile', 'classic'),
+        embedding_mode=getattr(args, 'embedding', 'off'),
+        network_route=getattr(args, 'network_route', 'environment'),
     )
 
 
@@ -286,6 +292,9 @@ def build_arg_parser():
     )
     parser.add_argument("prompt", nargs="*", help="Optional one-shot prompt.")
     parser.add_argument("--cwd", default=".", help="Workspace directory.")
+    parser.add_argument('--harness-profile', choices=('classic', 'workbench'), default='classic')
+    parser.add_argument('--embedding', choices=('off', 'siliconflow'), default='off', help='Explicit dense retrieval; off is labeled lexical mode')
+    parser.add_argument('--network-route', choices=('environment', 'direct'), default='environment', help='Explicit route; TLS verification remains enabled')
     parser.add_argument(
         "--provider",
         choices=PROVIDER_CHOICES,

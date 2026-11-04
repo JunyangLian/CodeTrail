@@ -3,7 +3,7 @@
 const $ = (id) => document.getElementById(id);
 const welcome = $("welcome").cloneNode(true);
 const state = { config: null, sessionId: "", taskId: "", busy: false, messages: [], base: [], job: null, eventKey: "", diffKey: "" };
-const statusNames = { queued: "准备中", running: "执行中", waiting_approval: "等待确认", finishing: "整理结果", completed: "已结束", failed: "执行异常", stopped: "已停止" };
+const statusNames = { queued: "准备中", running: "执行中", waiting_approval: "等待确认", finishing: "整理结果", cancelling: "正在取消", completed: "已结束", failed: "执行异常", stopped: "已停止" };
 let toastTimer;
 
 function node(tag, className, text) {
@@ -32,6 +32,8 @@ function setBusy(value) {
   state.busy = value;
   for (const id of ["send", "policy", "steps", "new-session"]) $(id).disabled = value;
   $("send").textContent = value ? "任务执行中…" : "开始任务 ↗";
+  if ($('cancel-task')) $('cancel-task').disabled = !value;
+  if ($('resume-task')) $('resume-task').disabled = value || !state.job?.id || state.job.status === 'completed';
   $("composer-state").textContent = value ? "可以在右侧查看实时过程" : policyHint();
 }
 function policyHint() {
@@ -77,7 +79,7 @@ function resetInspector() {
   $("tests").replaceChildren(emptyView("✓", "用执行结果说话", "运行命令的输出会显示在这里。"));
 }
 function selectTab(name) {
-  if (!["timeline", "diffs", "tests"].includes(name)) return;
+  if (!["timeline", "diffs", "tests", 'governance'].includes(name)) return;
   for (const button of document.querySelectorAll("[data-tab]")) {
     const selected = button.dataset.tab === name;
     button.classList.toggle("active", selected);
@@ -85,6 +87,7 @@ function selectTab(name) {
     button.tabIndex = selected ? 0 : -1;
     $(button.dataset.tab).classList.toggle("hidden", !selected);
   }
+  if (name === 'governance') refreshGovernance().catch(error => toast(error.message));
 }
 async function refreshSessions() {
   const sessions = await api("/api/sessions");
@@ -195,7 +198,12 @@ function renderJob(job) {
   const messages = [...state.base];
   if (job.answer) messages.push({ role: "assistant", content: job.answer });
   if (job.error) messages.push({ role: "assistant", content: job.error, error: true });
-  if (!done) messages.push({ role: "assistant", content: job.status === "waiting_approval" ? "等待你确认下一步操作。" : "CodeTrail 正在执行，右侧可以查看过程…", pending: true });
+  if (!done) {
+    const events = job.events || [];
+    const boundary = events.map(e => e.event).lastIndexOf('model_requested');
+    const partial = events.slice(boundary + 1).filter(e => e.event === 'model_delta').map(e => e.text || '').join('');
+    messages.push({ role: 'assistant', content: job.status === 'waiting_approval' ? '等待你确认下一步操作。' : job.status === 'cancelling' ? '取消已请求，正在等待在途操作退出；已完成的修改会保留。' : partial || 'CodeTrail 正在执行，右侧可以查看过程…', pending: true });
+  }
   state.messages = messages.filter((message) => !message.pending);
   showMessages(messages);
   $("task-status").className = `status-pill ${job.status}`;
@@ -212,19 +220,15 @@ function renderJob(job) {
   }
   $("tool-count").textContent = job.tool_steps || 0;
   $("elapsed").textContent = job.elapsed_ms ? formatDuration(job.elapsed_ms) : "—";
-  const usage = job.usage && Object.keys(job.usage).length ? job.usage : (job.events || []).reduce((total, event) => {
-    if (event.event === "model_parsed") {
-      total.input_tokens += Number(event.completion_metadata?.input_tokens || 0);
-      total.output_tokens += Number(event.completion_metadata?.output_tokens || 0);
-    }
-    return total;
-  }, { input_tokens: 0, output_tokens: 0 });
-  const tokens = usage.input_tokens + usage.output_tokens;
-  $("token-count").textContent = tokens ? (tokens > 9999 ? `${(tokens / 1000).toFixed(1)}k` : tokens.toLocaleString()) : "—";
-  $("token-count").title = `输入 ${usage.input_tokens || 0} / 输出 ${usage.output_tokens || 0}`;
+  const usage = job.usage || {};
+  const complete = usage.complete === true;
+  const tokens = complete ? usage.input_tokens + usage.output_tokens : (usage.known_input_tokens || 0) + (usage.known_output_tokens || 0);
+  $('token-count').textContent = complete ? tokens.toLocaleString() : tokens ? `≥${tokens.toLocaleString()}` : '未知';
+  $('token-count').title = `输入 ${usage.input_tokens ?? '未知'} / 输出 ${usage.output_tokens ?? '未知'}${complete ? '' : ' · 用量记录不完整，未知值未计为零'}；实际费用未评估`;
   renderEvents(job.events || []);
   renderDiffs(job.diffs || [], done);
   renderApproval(job.approval);
+  if ($('resume-task')) $('resume-task').disabled = !done || !job.id || job.status === 'completed';
 }
 function formatDuration(ms) {
   const seconds = Math.floor(ms / 1000);
@@ -338,7 +342,7 @@ async function history() {
       button.append(description, node("b", "", run.outcome?.title || statusNames[run.status] || run.status));
       button.addEventListener("click", async () => {
         try {
-          const job = await api(`/api/runs/${run.id}`);
+          const job = await api(run.task_id ? `/api/tasks/${run.task_id}` : `/api/runs/${run.id}`);
           state.taskId = "";
           state.sessionId = job.session_id || "";
           state.base = job.prompt ? [{ role: "user", content: job.prompt }] : [];
@@ -375,7 +379,7 @@ document.addEventListener("keydown", (event) => {
   if (tab && ["ArrowRight", "ArrowLeft"].includes(event.key)) {
     event.preventDefault();
     const tabs = [...document.querySelectorAll("[data-tab]")];
-    const next = tabs[(tabs.indexOf(tab) + (event.key === "ArrowRight" ? 1 : 2)) % tabs.length];
+    const next = tabs[(tabs.indexOf(tab) + (event.key === "ArrowRight" ? 1 : tabs.length - 1)) % tabs.length];
     selectTab(next.dataset.tab);
     next.focus();
   }
@@ -385,6 +389,8 @@ document.addEventListener("keydown", (event) => {
 async function init() {
   try {
     state.config = await api("/api/config");
+    installControls();
+    $('steps').value = String(state.config.recommended_steps || 8);
     const command = state.config.verification_command;
     if (state.config.demo) $("steps").value = "12";
     if (command) {
@@ -410,11 +416,77 @@ async function init() {
       setBusy(true);
       renderJob(job);
       poll(job.id);
+    } else if (state.config.recoverable_tasks?.length) {
+      const job = await api(`/api/tasks/${state.config.recoverable_tasks[0]}`);
+      state.taskId = job.id; state.base = [{role: 'user', content: job.prompt}];
+      renderJob(job); setBusy(false);
+      toast('已找回中断任务。旧审批已失效，请先核对未决操作，再继续。');
     }
   } catch (error) {
     $("connection").textContent = "无法连接本地服务";
     $("send").disabled = true;
     toast(error.message);
   }
+}
+
+function installControls() {
+  const cancel = node('button', 'secondary-button', '取消任务'); cancel.id = 'cancel-task'; cancel.disabled = true;
+  cancel.addEventListener('click', async () => {
+    try { await api(`/api/tasks/${state.taskId}/cancel`, {}); cancel.disabled = true; toast('已请求取消，将保留已完成效果和未决操作。'); }
+    catch (error) { toast(error.message); }
+  });
+  const resume = node('button', 'secondary-button', '继续未完成任务'); resume.id = 'resume-task'; resume.disabled = true;
+  resume.addEventListener('click', async () => {
+    try {
+      const job = await api(`/api/tasks/${state.job.id}/resume`, {});
+      state.taskId = job.id; state.base = [{role: 'user', content: job.prompt}];
+      setBusy(true); renderJob(job); poll(job.id);
+    } catch (error) { toast(error.message); }
+  });
+  const actions = node('div', 'workbench-actions');
+  actions.append($('show-history'), cancel, resume);
+  document.querySelector('.page-heading').append(actions);
+  if (state.config.harness_profile !== 'workbench') return;
+  const tab = node('button', '', '计划与记忆'); tab.dataset.tab = 'governance'; tab.setAttribute('role', 'tab'); tab.setAttribute('aria-selected', 'false');
+  document.querySelector('.inspector-tabs').append(tab);
+  const section = node('section', 'detail-view hidden'); section.id = 'governance';
+  document.querySelector('.inspector').insertBefore(section, document.querySelector('.inspector-footer'));
+  section.append(node('p', 'muted', '选择后查看计划、记忆来源、失效状态和恢复核对。'));
+}
+
+async function refreshGovernance() {
+  const section = $('governance'); if (!section) return;
+  const data = await api('/api/governance' + (state.sessionId ? `?session_id=${encodeURIComponent(state.sessionId)}` : ''));
+  state.governance = data; section.replaceChildren();
+  const refresh = node('button', 'secondary-button', '刷新现场'); refresh.addEventListener('click', () => refreshGovernance().catch(e => toast(e.message))); section.append(refresh);
+  section.append(node('h3', '', '任务计划'));
+  for (const step of data.plan) section.append(node('p', '', `${step.status} · ${step.title}\n验收：${step.acceptance}\n证据：${step.evidence.join(', ') || '尚无'}`));
+  if (!data.plan.length) section.append(node('p', 'muted', '当前会话尚未创建计划。'));
+  section.append(node('h3', '', '跨会话知识'));
+  for (const memory of data.memories.slice(0, 15)) {
+    const card = node('div', 'knowledge-card');
+    card.append(node('strong', '', `${memory.fact_key} · ${memory.status} · v${memory.version}`), node('pre', '', memory.text), node('small', '', `来源：${memory.evidence}`));
+    for (const [action, label] of memory.status === 'candidate' ? [['confirm_memory', '确认这条记忆'], ['retract_memory', '撤销']] : memory.status === 'active' ? [['retract_memory', '撤销']] : []) {
+      const button = node('button', 'secondary-button', label); button.disabled = state.busy;
+      button.addEventListener('click', () => govern({action, id: memory.id, version: memory.version})); card.append(button);
+    }
+    section.append(card);
+  }
+  if (!data.memories.length) section.append(node('p', 'muted', '暂无仓库知识；候选需要确认，源码变化会使相关记录失效。'));
+  section.append(node('h3', '', '未决操作'));
+  for (const operation of data.operations) {
+    const card = node('div', 'knowledge-card'); card.append(node('pre', '', JSON.stringify(operation, null, 2)));
+    const reason = node('input'); reason.placeholder = '核对文件和外部副作用后填写结论'; reason.setAttribute('aria-label', '操作核对结论');
+    const button = node('button', 'secondary-button', '已核对，结束旧意图（不重放）'); button.disabled = state.busy;
+    button.addEventListener('click', () => { if (!reason.value.trim()) return toast('请先核对现场并填写结论。'); govern({action: 'reconcile_operation', id: operation.id, snapshot_sha256: data.snapshot_sha256, reason: reason.value}); });
+    card.append(reason, button); section.append(card);
+  }
+  if (!data.operations.length) section.append(node('p', 'muted', '没有需要人工核对的未决操作。'));
+  section.append(node('h3', '', '规则与按需流程'), node('pre', '', JSON.stringify({rules: data.rules, skills: data.skills}, null, 2)));
+}
+
+async function govern(action) {
+  try { await api('/api/governance', {...action, session_id: state.governance.session_id}); await refreshGovernance(); }
+  catch (error) { toast(error.message); }
 }
 init();

@@ -6,6 +6,7 @@ reasoning text is summarized or persisted. Mandatory frames are never clipped.
 import copy
 import hashlib
 import json
+import re
 
 
 class ContextBudgetExceeded(ValueError):
@@ -63,9 +64,11 @@ def group_fact(group):
         if not isinstance(args, dict):
             args = {}
         content = result.get('content') or ''
+        reference = re.search(r'^Evidence ID: (ev_[0-9a-f]{32})$', content, re.M)
         facts.append({'tool': function.get('name'), 'path': args.get('path'),
                       'command': args.get('command'), 'sha256': hashlib.sha256(content.encode()).hexdigest(),
-                      'result_preview': content[:400], 'call_id': call.get('id')})
+                      'result_preview': content[:400], 'call_id': call.get('id'),
+                      'evidence_id': reference.group(1) if reference else None})
     # Runtime correction notices remain represented; arbitrary assistant prose
     # is not promoted to evidence. The original user request remains pinned.
     if not calls and first.get('role') == 'user':

@@ -264,6 +264,22 @@ class OpenAICompatibleModelClient:
         self.native_wire_options = {'enable_thinking': True, 'thinking_budget': 4096} if self.siliconflow_deepseek else None
         self.top_p = None
         self.native_conversation = None
+        self.stream = False
+        self.cancellation = None
+        self.on_delta = None
+        self.active_response = None
+        self.network_route = 'environment'
+
+    def cancel_request(self):
+        if self.cancellation:
+            self.cancellation.cancel()
+        # Best effort shutdown of an established socket. DNS/connect/header
+        # waits remain bounded by the configured timeout, never claimed instant.
+        import socket
+        try:
+            self.active_response.fp.raw._sock.shutdown(socket.SHUT_RDWR)
+        except (AttributeError, OSError):
+            pass
 
     def begin_native_run(self, tools, context, request, verification_command):
         self.native_conversation = NativeToolConversation(tools, context, request, verification_command,
@@ -334,6 +350,9 @@ class OpenAICompatibleModelClient:
             payload['top_p'] = self.top_p
         if self.native_conversation is not None:
             payload.update(self.native_conversation.payload())
+        if self.stream and self.api_format == 'chat_completions':
+            payload['stream'] = True
+            payload['stream_options'] = {'include_usage': True}
         # runtime 传入的是“稳定前缀”的签名，而不是整段 prompt 的签名。
         # 这样缓存复用针对的是稳定段，不会因为动态 history 每轮变化而失效。
         if self.supports_prompt_cache and prompt_cache_key:
@@ -364,17 +383,32 @@ class OpenAICompatibleModelClient:
         attempts = self.max_transport_attempts
         deadline = time.monotonic() + self.timeout * 2
         for attempt in range(attempts):
+            if self.cancellation:
+                self.cancellation.check()
             started = time.monotonic()
             remaining = deadline - started
             if remaining <= 0:
                 raise TimeoutError('OpenAI-compatible transport retry budget exhausted; failed-request usage is unknown')
             try:
                 phase = 'connect_or_response_headers'
-                with urllib.request.urlopen(request, timeout=min(self.timeout, remaining)) as response:
+                if self.network_route not in {'environment', 'direct'}:
+                    raise ValueError('Unknown explicit network route')
+                opener = urllib.request.urlopen if self.network_route == 'environment' else urllib.request.build_opener(urllib.request.ProxyHandler({})).open
+                with opener(request, timeout=min(self.timeout, remaining)) as response:
+                    self.active_response = response
                     phase = 'response_body'
-                    body_text = response.read().decode("utf-8")
                     headers = getattr(response, "headers", {}) or {}
                     content_type = headers.get("Content-Type", "")
+                    if self.stream and self.api_format == 'chat_completions' and content_type.startswith('text/event-stream'):
+                        from .streaming import read_chat_stream
+                        body_text = json.dumps(read_chat_stream(response, self.cancellation, self.on_delta))
+                        content_type = 'application/json'
+                        self.last_completion_metadata['streamed'] = True
+                    else:
+                        body_text = response.read().decode('utf-8')
+                    self.active_response = None
+                    if self.cancellation:
+                        self.cancellation.check()
                 if self.on_wire_event:
                     self.on_wire_event({'event':'response','body':body_text,
                                         'sha256':hashlib.sha256(body_text.encode('utf-8')).hexdigest()})
@@ -383,6 +417,8 @@ class OpenAICompatibleModelClient:
                     'elapsed_ms':round((time.monotonic()-started)*1000)})
                 break
             except urllib.error.HTTPError as exc:
+                if self.cancellation:
+                    self.cancellation.check()
                 body = exc.read().decode("utf-8", errors="replace")
                 if self.on_wire_event:
                     self.on_wire_event({'event':'http_error','status_code':exc.code,'body':body,
@@ -397,17 +433,19 @@ class OpenAICompatibleModelClient:
                     'error_type':type(exc).__name__,'phase':phase,'will_retry':retry,'retry_delay_seconds':delay if retry else 0,
                     'elapsed_ms':round((time.monotonic()-started)*1000)})
                 if retry:
-                    time.sleep(delay)
+                    self.cancellation.wait(delay) if self.cancellation else time.sleep(delay)
                     continue
                 raise RuntimeError(f"OpenAI-compatible request failed with HTTP {exc.code}: {body}") from exc
             except (urllib.error.URLError, RemoteDisconnected, TimeoutError, ConnectionResetError, IncompleteRead) as exc:
+                if self.cancellation:
+                    self.cancellation.check()
                 delay = 0.5 * (attempt + 1)
                 retry = attempt<attempts-1 and deadline-time.monotonic()>delay
                 self._transport_event({'attempt':attempt+1,'ok':False,'error_type':type(exc).__name__,'phase':phase,
                     'will_retry':retry,'retry_delay_seconds':delay if retry else 0,
                     'elapsed_ms':round((time.monotonic()-started)*1000)})
                 if retry:
-                    time.sleep(delay)
+                    self.cancellation.wait(delay) if self.cancellation else time.sleep(delay)
                     continue
                 if isinstance(exc, TimeoutError) or isinstance(getattr(exc, 'reason', None), TimeoutError):
                     raise TimeoutError(f'OpenAI-compatible request timed out after {attempt+1} transport attempts; failed-request usage is unknown') from exc

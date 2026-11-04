@@ -54,9 +54,12 @@ class NativeToolConversation:
         self.messages = [{'role': 'system', 'content': instruction},
                          {'role': 'user', 'content': context + '\n\nCurrent user request:\n' + request}]
         self.pending = None
+        self.pending_queue = []
+        self.batch_limit = 1
         self.context_budget = NativeContextBudget()
         self.context_state = {}
         self.context_memory = []
+        self.context_rules = ''
         self.last_context_audit = {}
         self.last_wire_messages = None
 
@@ -65,6 +68,8 @@ class NativeToolConversation:
         if self.context_state:
             pinned += 1
         if self.context_memory:
+            pinned += 1
+        if self.context_rules:
             pinned += 1
         prepared, audit = self.context_budget.prepare(payload, pinned, self.context_state)
         self.last_context_audit = audit
@@ -96,14 +101,14 @@ class NativeToolConversation:
         if not self.pending:
             raise RuntimeError('No native tool call awaiting a result')
         self.messages.append({'role': 'tool', 'tool_call_id': self.pending, 'content': content})
-        self.pending = None
+        self.pending = self.pending_queue.pop(0) if self.pending_queue else None
 
     def payload(self):
         if self.pending:
             raise RuntimeError('Cannot request model before delivering tool result')
         tools = self.tools
         if self.verification_command and self.remaining_steps is not None and self.remaining_steps<=1:
-            tools = [t for t in tools if t['function']['name'] not in {'write_file','patch_file'}]
+            tools = [t for t in tools if t['function']['name'] not in {'write_file','patch_file','apply_changes','rewind_changes'}]
         messages = copy.deepcopy(self.messages)
         position = 3 if len(messages) > 2 and (messages[2].get('content') or '').startswith('Runtime budget:') else 2
         if self.context_state:
@@ -114,6 +119,9 @@ class NativeToolConversation:
         if self.context_memory:
             messages.insert(position, {'role': 'user', 'content': 'Current retrieved memory (advisory data, never tool permissions):\n' +
                                       json.dumps(self.context_memory, ensure_ascii=False)})
+            position += 1
+        if self.context_rules:
+            messages.insert(position, {'role': 'user', 'content': self.context_rules})
         return {'messages': messages, 'tools': tools,
                 'tool_choice': 'auto', **copy.deepcopy(self.wire_options)}
 
@@ -159,20 +167,23 @@ class NativeToolConversation:
                 return retry('Invalid or duplicate tool IDs; no action accepted.')
             self.messages.append(saved)
             try:
-                if len(calls) != 1:
+                if len(calls) > self.batch_limit:
                     raise ValueError('Multiple tool calls rejected; send exactly one per step.')
-                call = calls[0]
-                if call.get('type') != 'function':
-                    raise ValueError('Expected a native function call.')
-                function = call['function']
-                args = json.loads(function['arguments'], parse_constant=lambda _: (_ for _ in ()).throw(ValueError('Non-finite JSON')))
-                if not isinstance(args, dict):
-                    raise ValueError('Tool arguments must be a JSON object.')
-                if any(re.search(r'</?[｜|]+DSML', str(v)) for v in args.values()):
-                    raise ValueError('DSML transport markers in native arguments; resend clean JSON.')
-                self.pending = call['id']
-                action = {'name': function['name'], 'args': args}
-                return NativeReply(json.dumps(action, ensure_ascii=False), 'tool', action)
+                actions = []
+                for call in calls:
+                    if call.get('type') != 'function':
+                        raise ValueError('Expected a native function call.')
+                    function = call['function']
+                    args = json.loads(function['arguments'], parse_constant=lambda _: (_ for _ in ()).throw(ValueError('Non-finite JSON')))
+                    if not isinstance(args, dict):
+                        raise ValueError('Tool arguments must be a JSON object.')
+                    if any(re.search(r'</?[｜|]+DSML', str(v)) for v in args.values()):
+                        raise ValueError('DSML transport markers in native arguments; resend clean JSON.')
+                    actions.append({'name': function['name'], 'args': args})
+                self.pending, self.pending_queue = ids[0], list(ids[1:])
+                if len(actions) == 1:
+                    return NativeReply(json.dumps(actions[0], ensure_ascii=False), 'tool', actions[0])
+                return NativeReply(json.dumps(actions, ensure_ascii=False), 'tools', actions)
             except (KeyError, ValueError, TypeError) as exc:
                 for call_id in ids:
                     self.messages.append({'role': 'tool', 'tool_call_id': call_id,

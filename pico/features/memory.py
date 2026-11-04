@@ -658,6 +658,16 @@ class LayeredMemory:
     def retrieval_candidates(self, query, limit=3):
         notes = retrieval_candidates(self.state, query, limit=limit, workspace_root=self.workspace_root)
         verified = self.knowledge.search(query, self.session_id, limit) if self.knowledge else []
+        retriever = getattr(self, 'retriever', None)
+        if retriever is not None and self.knowledge:
+            notes = [n for n in notes if n.get('kind') != 'durable']
+            active = self.knowledge.active(self.session_id)
+            if retriever.path_filter:
+                active = [r for r in active if all(retriever.path_filter(e['path']) for e in r['evidence'])]
+                notes = [n for n in notes if not n.get('source') or retriever.path_filter(n['source'])]
+            records = [{**r, 'memory_record': r} for r in active]
+            ranked = retriever.rank(records, query, limit) if records else []
+            verified = [r['memory_record'] for r in ranked]
         facts = [{'text': record['text'], 'source': record['fact_key'], 'kind': 'verified',
                   'memory_id': record['id'], 'version': record['version'], 'evidence': record['evidence'], 'scope': record['scope']}
                  for record in verified]
@@ -669,6 +679,14 @@ class LayeredMemory:
         return 'Relevant memory:\n' + ('\n'.join('- ' + n['text'] for n in notes) if notes else '- none')
 
     def render_memory_text(self):
+        retriever = getattr(self, 'retriever', None)
+        if retriever and retriever.path_filter:
+            import copy
+            state = copy.deepcopy(self.state)
+            state['file_summaries'] = {p: v for p, v in state.get('file_summaries', {}).items() if retriever.path_filter(p)}
+            state['working']['recent_files'] = [p for p in state['working']['recent_files'] if retriever.path_filter(p)]
+            state['files'] = list(state['working']['recent_files'])
+            return render_memory_text(state, self.workspace_root)
         return render_memory_text(self.state, self.workspace_root)
 
     def promote_durable(self, promotions):

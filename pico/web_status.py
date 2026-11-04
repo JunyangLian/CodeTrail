@@ -3,6 +3,24 @@
 import re
 
 
+def usage_summary(events):
+    requested = sum(e.get('event') == 'model_requested' for e in events)
+    observations = [e.get('completion_metadata', {}) for e in events if e.get('event') in {'model_parsed', 'model_failed'}]
+    missing = max(0, requested - len(observations))
+    result = {'requests': max(requested, len(observations)),
+              'unknown_transport_attempts': sum(int(o.get('unknown_usage_attempts') or 0) for o in observations)}
+    for key in ('input_tokens', 'output_tokens'):
+        values = [o.get(key) for o in observations]
+        unknown = sum(type(v) is not int or v < 0 for v in values) + missing
+        known = sum(v for v in values if type(v) is int and v >= 0)
+        result['known_' + key] = known
+        result['unknown_' + key + '_requests'] = unknown
+        result[key] = None if unknown or not observations else known
+    result['complete'] = bool(observations) and all(result[k] is not None for k in ('input_tokens', 'output_tokens')) and not result['unknown_transport_attempts']
+    result['actual_cost'] = None
+    return result
+
+
 def shell_exit_code(event):
     value = event.get("exit_code")
     if type(value) is int:
@@ -27,6 +45,8 @@ def verification_summary(events, command):
             result.update(exit_code=code, runs=result["runs"] + 1)
             if event.get("tool_error_code") in {"approval_denied", "tool_not_allowed"}:
                 result["status"] = "blocked"
+            elif code == 0 and event.get('workspace_changed'):
+                result['status'] = 'stale'
             elif code == 0 and event.get("tool_status") == "ok":
                 result["status"] = "passed"
             else:
@@ -63,7 +83,7 @@ def run_summary(status, events, stop_reason="", error="", verification_command=N
     failed_model = next((e for e in reversed(events) if e.get("event") == "model_failed"), None)
     detail = ""
     action = ""
-    if status in {"queued", "running", "waiting_approval", "finishing"}:
+    if status in {"queued", "running", "waiting_approval", "finishing", 'cancelling'}:
         code, title = "running", "任务尚未结束"
         detail = "结果会随真实工具记录更新。"
     elif reason == "model_error" or failed_model:

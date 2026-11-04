@@ -1,0 +1,45 @@
+{
+  "scope": "Small complete workbench; offline mechanism and browser integration, not model benchmark",
+  "automated_tests": {
+    "tests": 380,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "test_seconds": 739.156,
+  "continuous_scenario": {
+    "passed": 21,
+    "total": 21,
+    "api_requests": 0
+  },
+  "independent_codex_qa": {
+    "scope": "Independent offline mechanism QA; not LLM benchmark",
+    "external_api_requests": 0,
+    "product_source_modified_by_child": false,
+    "previous_findings_verified_fixed": 7,
+    "positive_control_groups": 10,
+    "probe_groups_total": 17,
+    "all_expected_conditions_met": true,
+    "source_hashes_still_match": true,
+    "previous_failure_directories_preserved": [
+      "independent-qa",
+      "independent-qa-after"
+    ]
+  },
+  "browser": {
+    "repair_case_count": 1,
+    "workspaces": 2,
+    "controller_runs": 5,
+    "completed_repairs": 2,
+    "cancelled_runs": 2,
+    "server_interrupted_runs": 1,
+    "external_acceptance_each": "8/8",
+    "tests_unchanged": true,
+    "real_browser": "Tabbit",
+    "decisions": "explicitly scripted, not a live LLM"
+  },
+  "live_llm_evaluation": "deferred by user",
+  "embedding_probe_before_deferral": "HTTP402; no semantic performance score",
+  "source_matches_frozen_test_manifest": true,
+  "historical_evidence_unchanged": true
+}
