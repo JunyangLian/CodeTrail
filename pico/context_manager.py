@@ -487,6 +487,8 @@ class ContextManager:
                 "selected_durable_count": sum(
                     1 for note in selected_notes if (str(note.get("kind", "episodic")).strip() or "episodic") == "durable"
                 ),
+                "selected_verified_count": sum(note.get('kind') == 'verified' for note in selected_notes),
+                "selected_memory_ids": [note['memory_id'] for note in selected_notes if note.get('memory_id')],
                 "raw_chars": rendered["relevant_memory"].raw_chars,
                 "rendered_chars": rendered["relevant_memory"].rendered_chars,
                 "rendered_notes": list(rendered["relevant_memory"].details.get("rendered_notes", [])),

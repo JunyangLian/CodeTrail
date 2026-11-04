@@ -75,6 +75,8 @@ class Pico:
         allowed_tools=None,
         verification_command=None,
         shell_backend="host",
+        native_input_budget=32768,
+        native_context_window=65536,
     ):
         self.model_client = model_client
         self.workspace = workspace
@@ -83,6 +85,8 @@ class Pico:
         self.approval_policy = approval_policy
         self.max_steps = max_steps
         self.max_new_tokens = max_new_tokens
+        from .native_context import NativeContextBudget
+        self.native_context_policy = NativeContextBudget(native_input_budget, native_context_window)
         self.depth = depth
         self.max_depth = max_depth
         self.read_only = read_only
@@ -116,6 +120,9 @@ class Pico:
             self.session.setdefault("memory", memorylib.default_memory_state()),
             workspace_root=self.root,
         )
+        self.memory.session_id = self.session['id']
+        from .operations import OperationJournal
+        self.operations = OperationJournal(self.root)
         self.session["memory"] = self.memory.to_dict()
         self.tools = self._apply_tool_allowlist(self.build_tools())
         if self.shell_backend == "appcontainer" and "run_shell" in self.tools:
@@ -353,6 +360,7 @@ class Pico:
                 "stale_summary_invalidations": int(self.resume_state.get("stale_summary_invalidations", 0)),
                 "stale_paths": list(self.resume_state.get("stale_paths", [])),
                 "runtime_identity_mismatch_fields": list(self.resume_state.get("runtime_identity_mismatch_fields", [])),
+                "unresolved_operations": self.operations.unresolved(),
             }
         )
         metadata.update(self.detected_secret_env_summary())
@@ -435,6 +443,14 @@ class Pico:
             self.memory.remember_file(canonical_path)
         if name == "read_file":
             summary = memorylib.summarize_read_result(result)
+            if self.memory.knowledge is not None:
+                try:
+                    indexed = self.memory.knowledge.index_file(canonical_path)
+                    if indexed:
+                        summary = indexed['text']
+                except (ValueError, OSError, SyntaxError, UnicodeError):
+                    # Partial/invalid/non-Python source is not a verified fact.
+                    pass
             self.memory.set_file_summary(canonical_path, summary)
             self.memory.append_note(summary, tags=(canonical_path,), source=canonical_path)
         elif name in {"write_file", "patch_file"}:
@@ -802,6 +818,7 @@ class Pico:
         self.session["memory"].clear()
         self.session["memory"].update(memorylib.default_memory_state())
         self.memory = memorylib.LayeredMemory(self.session["memory"], workspace_root=self.root)
+        self.memory.session_id = self.session['id']
         self.session_store.save(self.session)
 
     def path(self, raw_path):

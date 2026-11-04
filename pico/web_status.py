@@ -39,6 +39,8 @@ def verification_summary(events, command):
 
 def model_failure(error, error_type=""):
     text = str(error).lower()
+    if error_type == 'ContextBudgetExceeded':
+        return ('context_budget', '上下文预算不足', '必要指令、请求与最新工具记录无法完整保留；请缩小输入或调整上下文预算。')
     if re.search(r"\b(401|403)\b", text):
         return ("model_auth", "模型鉴权失败", "检查本地 Key、模型访问权限和服务地址，保存后重启工作台。")
     if re.search(r"\b429\b", text):

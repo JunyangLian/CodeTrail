@@ -1,0 +1,41 @@
+{
+  "kind": "long-task mechanisms; not a model repair benchmark",
+  "baseline_commit": "004fc02222cc6acd291bd556aedef3a6f87ce400",
+  "automated_tests": {
+    "tests": 340,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "test_duration_seconds": 803.37,
+  "offline_checks": {
+    "passed": 12,
+    "total": 12,
+    "api_calls": 0
+  },
+  "native_context_example": {
+    "counting": "utf8_json_bytes_conservative_estimate",
+    "input_budget": 18000,
+    "output_reserve_tokens_requested": 1024,
+    "before_estimate": 110589,
+    "compacted_groups": 15,
+    "after_estimate": 15451,
+    "provider_usage": "reported_separately",
+    "retrieved_memory_omitted": false,
+    "wire_sha256": "5f9e1092f861567b58bbdd9e9ecd1a41abac75250b25b18ba8b2ec599584e9b4"
+  },
+  "provider_smoke": {
+    "http_requests": 1,
+    "completed_sessions": 0,
+    "planned_sessions": 2,
+    "failure": "api_billing_insufficient_balance",
+    "token_usage": null,
+    "actual_cost": null
+  },
+  "runtime_source_matches_demo_freeze": true,
+  "historical_evidence_unchanged": {
+    "benchmarks/results/final-agent-90-2026-10-25/evidence.zip": "2fc5e42cf764504137d4243b509171bcba46d3df6a254896e827ed42487d1c76",
+    "benchmarks/results/reliability-v2-2026-10-25/evidence.zip": "3c17fcb7eeb80d00e90ffc672058716c7e6cb7ffc95464054c0cb2b526c2ce3a",
+    "benchmarks/results/tabbit-e2e-2026-10-25/evidence.zip": "24493c57dc899f7ff13b868d734ef0e549f1b8e5177ab5a9240c9f9338a476bb"
+  }
+}

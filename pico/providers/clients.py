@@ -341,6 +341,9 @@ class OpenAICompatibleModelClient:
         if self.supports_prompt_cache and prompt_cache_retention:
             payload["prompt_cache_retention"] = prompt_cache_retention
 
+        if self.native_conversation is not None:
+            payload = self.native_conversation.prepare_payload(payload)
+
         headers = {
             "Content-Type": "application/json",
             "Accept": "application/json",

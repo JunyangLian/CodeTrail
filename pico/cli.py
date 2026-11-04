@@ -261,6 +261,8 @@ def build_agent(args):
             secret_env_names=configured_secret_names,
             verification_command=getattr(args, 'verify_command', None),
             shell_backend=getattr(args, 'shell_backend', 'host'),
+            native_input_budget=getattr(args, 'native_input_budget', 32768),
+            native_context_window=getattr(args, 'native_context_window', 65536),
         )
     return Pico(
         model_client=model,
@@ -272,6 +274,8 @@ def build_agent(args):
         secret_env_names=configured_secret_names,
         verification_command=getattr(args, 'verify_command', None),
         shell_backend=getattr(args, 'shell_backend', 'host'),
+        native_input_budget=getattr(args, 'native_input_budget', 32768),
+        native_context_window=getattr(args, 'native_context_window', 65536),
     )
 
 
@@ -312,6 +316,8 @@ def build_arg_parser():
     parser.add_argument('--verify-command', default=None, help='Require this exact command to pass after the latest edit before finishing; normal approval still applies.')
     parser.add_argument('--shell-backend', choices=('host','appcontainer'), default='host', help='AppContainer isolates the exact unittest verifier on Windows and fails closed; host has no OS isolation.')
     parser.add_argument("--max-new-tokens", type=int, default=512, help="Maximum model output tokens per step.")
+    parser.add_argument('--native-input-budget', type=int, default=32768, help='Conservative native input budget; includes messages and tools, not actual provider token usage.')
+    parser.add_argument('--native-context-window', type=int, default=65536, help='Configured conservative window used to reserve requested output; not a provider capability claim.')
     parser.add_argument("--temperature", type=float, default=0.2, help="Sampling temperature sent to Ollama.")
     parser.add_argument("--top-p", type=float, default=0.9, help="Top-p sampling value sent to Ollama.")
     return parser

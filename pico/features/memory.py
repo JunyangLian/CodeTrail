@@ -335,6 +335,7 @@ def _normalize_note(note, index):
         "created_at": created_at,
         "note_index": note_index,
         "kind": kind,
+        "source_freshness": note.get('source_freshness'),
     }
 
 
@@ -466,6 +467,7 @@ def append_note(state, text, tags=(), source="", created_at=None, workspace_root
         "created_at": str(created_at).strip() if created_at else now(),
         "note_index": int(state.get("next_note_index", 0)),
         "kind": str(kind).strip() or "episodic",
+        "source_freshness": file_freshness(source, workspace_root) if workspace_root is not None and source else None,
     }
     state["next_note_index"] = note["note_index"] + 1
 
@@ -528,6 +530,8 @@ def retrieval_candidates(state, query, limit=3, workspace_root=None):
     query_tokens = _tokenize(query)
     ranked = []
     for note in state["episodic_notes"]:
+        if note.get('source_freshness') and file_freshness(note.get('source'), workspace_root) != note['source_freshness']:
+            continue
         # 召回逻辑故意保持简单透明：先看 tag 精确命中，
         # 再看关键词重叠，最后看新旧程度。这里不引入 embedding。
         note_tags = {tag.lower() for tag in note.get("tags", [])}
@@ -608,6 +612,9 @@ class LayeredMemory:
         self.workspace_root = workspace_root
         self.state = normalize_memory_state(state, workspace_root)
         self.durable_store = DurableMemoryStore(Path(workspace_root) / ".pico" / "memory") if workspace_root is not None else None
+        from ..knowledge import KnowledgeStore
+        self.knowledge = KnowledgeStore(workspace_root) if workspace_root is not None else None
+        self.session_id = ''
 
     def to_dict(self):
         self.state = normalize_memory_state(self.state, self.workspace_root)
@@ -649,10 +656,17 @@ class LayeredMemory:
         return invalidated
 
     def retrieval_candidates(self, query, limit=3):
-        return retrieval_candidates(self.state, query, limit=limit, workspace_root=self.workspace_root)
+        notes = retrieval_candidates(self.state, query, limit=limit, workspace_root=self.workspace_root)
+        verified = self.knowledge.search(query, self.session_id, limit) if self.knowledge else []
+        facts = [{'text': record['text'], 'source': record['fact_key'], 'kind': 'verified',
+                  'memory_id': record['id'], 'version': record['version'], 'evidence': record['evidence'], 'scope': record['scope']}
+                 for record in verified]
+        # Legacy notes remain supported but do not displace verified evidence.
+        return (facts + notes)[:limit]
 
     def retrieval_view(self, query, limit=3):
-        return retrieval_view(self.state, query, limit=limit, workspace_root=self.workspace_root)
+        notes = self.retrieval_candidates(query, limit)
+        return 'Relevant memory:\n' + ('\n'.join('- ' + n['text'] for n in notes) if notes else '- none')
 
     def render_memory_text(self):
         return render_memory_text(self.state, self.workspace_root)

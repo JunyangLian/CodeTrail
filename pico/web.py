@@ -126,7 +126,10 @@ class Task:
 
 
 class Workbench:
-    def __init__(self, workspace, factory=None, verification_command=None, model_timeout=180, max_new_tokens=None, shell_backend='host'):
+    def __init__(self, workspace, factory=None, verification_command=None, model_timeout=180, max_new_tokens=None, shell_backend='host',
+                 native_input_budget=32768, native_context_window=65536):
+        from .native_context import NativeContextBudget
+        self.native_context_policy = NativeContextBudget(native_input_budget, native_context_window)
         if type(model_timeout) is not int or not 1 <= model_timeout <= 300:
             raise ValueError("模型超时应在 1–300 秒之间。")
         self.root = Path(workspace).resolve()
@@ -167,6 +170,8 @@ class Workbench:
             "csrf": self.csrf, "active_id": self.active_id,
             "verification_command": self.verification_command,
             "shell_backend": self.shell_backend,
+            "native_input_budget": self.native_context_policy.input_budget,
+            "native_context_window": self.native_context_policy.context_window,
             "demo": self.root == (Path(__file__).resolve().parent.parent / "examples/interview-demo"),
         }
 
@@ -182,6 +187,8 @@ class Workbench:
             max_new_tokens=self.max_new_tokens, secret_env_names=_configured_secret_names(self.args),
             verification_command=self.verification_command,
             shell_backend=self.shell_backend,
+            native_input_budget=self.native_context_policy.input_budget,
+            native_context_window=self.native_context_policy.context_window,
         )
         if session_id:
             return Pico.from_session(session_id=session_id, **options)
@@ -460,10 +467,13 @@ def main(argv=None):
     parser.add_argument('--shell-backend', choices=('host','appcontainer'), default='host', help='AppContainer verification is Windows-only and fails closed; host is not isolated.')
     parser.add_argument("--model-timeout", type=int, default=180, help="Model request timeout per transport attempt in seconds (1-300); retries are bounded")
     parser.add_argument('--max-new-tokens',type=int,default=None,help='Model completion budget; defaults to PICO_MAX_NEW_TOKENS or 1024')
+    parser.add_argument('--native-input-budget', type=int, default=32768)
+    parser.add_argument('--native-context-window', type=int, default=65536)
     args = parser.parse_args(argv)
     if not 1 <= args.model_timeout <= 300:
         parser.error("--model-timeout must be between 1 and 300 seconds")
-    app = Workbench(args.cwd, verification_command=args.verify_command, model_timeout=args.model_timeout, max_new_tokens=args.max_new_tokens, shell_backend=args.shell_backend)
+    app = Workbench(args.cwd, verification_command=args.verify_command, model_timeout=args.model_timeout, max_new_tokens=args.max_new_tokens,
+                    shell_backend=args.shell_backend, native_input_budget=args.native_input_budget, native_context_window=args.native_context_window)
     server = make_server(app, args.port)
     url = f"http://127.0.0.1:{server.server_port}"
     print(f"CodeTrail workbench: {url}\nWorkspace: {app.root}\nPress Ctrl+C to stop.", flush=True)

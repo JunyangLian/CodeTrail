@@ -17,6 +17,10 @@ class AgentLoop:
         error_text = agent.redact_text(str(exc))
         final = f"Model request failed: {error_text}"
         task_state.stop_model_error(final)
+        from .native_context import ContextBudgetExceeded
+        if isinstance(exc, ContextBudgetExceeded):
+            task_state.stop_reason = 'context_budget_exceeded'
+            prompt_metadata['native_context'] = exc.audit
         agent.run_store.write_task_state(task_state)
         checkpoint = agent.create_checkpoint(task_state, user_message, trigger="model_error")
         agent.run_store.write_task_state(task_state)
@@ -26,6 +30,7 @@ class AgentLoop:
             {
                 "error": error_text,
                 "error_type": type(exc).__name__,
+                "failure_stage": 'context_preparation' if isinstance(exc, ContextBudgetExceeded) else 'model_request',
                 "completion_metadata": dict(agent.last_completion_metadata),
             },
         )
@@ -45,6 +50,16 @@ class AgentLoop:
 
     def _request_model(self, task_state, user_message, prompt, prompt_metadata, run_started_at, purpose):
         agent = self.agent
+        conversation = getattr(agent.model_client, 'native_conversation', None)
+        if conversation is not None:
+            agent.session['working_state']['stale_paths'] = list(agent.resume_state.get('stale_paths', []))
+            conversation.context_state = agent.redact_artifact(agent.session.get('working_state', {}))
+            notes = agent.memory.retrieval_candidates(user_message)
+            conversation.context_memory = agent.redact_artifact([
+                {'text': n['text'], 'source': n.get('source'), 'kind': n.get('kind'),
+                 'evidence': n.get('evidence', []), 'version': n.get('version'),
+                 'trust': 'verified_source_or_operator' if n.get('kind') == 'verified' else 'unverified_legacy_note'}
+                for n in notes])
         agent.emit_trace(
             task_state,
             "model_requested",
@@ -141,6 +156,9 @@ class AgentLoop:
         completion = CompletionGate(agent)
         run_started_at = time.monotonic()
         agent.memory.set_task_summary(user_message)
+        previous_working_state = agent.session.get('working_state', {})
+        agent.session['working_state'] = {'goal': user_message[:300], 'changed_files': [],
+                                          'failed_attempts': [], 'verification': {'status': 'not_run'}}
         agent.record({"role": "user", "content": user_message, "created_at": now()})
 
         task_state = TaskState.create(run_id=agent.new_run_id(), task_id=agent.new_task_id(), user_request=user_message)
@@ -149,10 +167,21 @@ class AgentLoop:
         agent.current_run_dir = agent.run_store.start_run(task_state)
         native = bool(getattr(agent.model_client, 'supports_native_tools', False))
         if native:
+            import json
+            # Do not seed a new run with unbounded, potentially stale raw tool
+            # transcripts. Keep user instructions intact and carry structured
+            # historical state; fresh source facts arrive through retrieval.
+            instructions = '\n\n'.join('Previous user instruction:\n' + item['content']
+                for item in agent.session['history'][:-1] if item.get('role') == 'user')
+            carryover = {k: previous_working_state[k] for k in ('goal', 'changed_files', 'failed_attempts') if k in previous_working_state}
             agent.model_client.begin_native_run(
                 agent.tools,
-                agent.redact_text(agent.workspace.text() + '\n\n' + agent.memory_text() + '\n\n' + agent.history_text()),
+                agent.redact_text(agent.workspace.text() + '\n\n' + agent.memory_text() + '\n\n' + instructions +
+                    '\n\nHistorical task state (not a current verification):\n' + json.dumps(carryover, ensure_ascii=False)),
                 user_message, agent.verification_command)
+            conversation = getattr(agent.model_client, 'native_conversation', None)
+            if conversation is not None:
+                conversation.context_budget = agent.native_context_policy
         agent.emit_trace(
             task_state,
             "run_started",
@@ -248,6 +277,13 @@ class AgentLoop:
                 tool_result = agent.execute_tool(name, args)
                 completion.observe(name, args, tool_result.metadata)
                 result = tool_result.content
+                working = agent.session['working_state']
+                working['verification'] = dict(completion.state)
+                working['changed_files'] = sorted(set(working['changed_files']) | set(tool_result.metadata.get('affected_paths', [])))
+                if tool_result.metadata.get('tool_status') != 'ok':
+                    working['failed_attempts'].append({'tool': name, 'path': args.get('path'),
+                        'error': tool_result.metadata.get('tool_error_code'), 'evidence': result[:400]})
+                    working['failed_attempts'] = working['failed_attempts'][-6:]
                 if native:
                     agent.model_client.observe_native_tool(result)
                 agent.record(

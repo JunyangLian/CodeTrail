@@ -3,6 +3,7 @@ import copy
 import hashlib
 import json
 import re
+from ..native_context import NativeContextBudget
 
 
 class NativeReply(str):
@@ -53,6 +54,22 @@ class NativeToolConversation:
         self.messages = [{'role': 'system', 'content': instruction},
                          {'role': 'user', 'content': context + '\n\nCurrent user request:\n' + request}]
         self.pending = None
+        self.context_budget = NativeContextBudget()
+        self.context_state = {}
+        self.context_memory = []
+        self.last_context_audit = {}
+        self.last_wire_messages = None
+
+    def prepare_payload(self, payload):
+        pinned = 3 if len(self.messages) > 2 and (self.messages[2].get('content') or '').startswith('Runtime budget:') else 2
+        if self.context_state:
+            pinned += 1
+        if self.context_memory:
+            pinned += 1
+        prepared, audit = self.context_budget.prepare(payload, pinned, self.context_state)
+        self.last_context_audit = audit
+        self.last_wire_messages = copy.deepcopy(prepared['messages'])
+        return prepared
 
     def set_budget(self, remaining):
         if self.pending:
@@ -64,7 +81,7 @@ class NativeToolConversation:
             text += 'Reserve the last step for '+repr(self.verification_command)+'. No write is allowed on the last step.'
         message = {'role': 'user', 'content': text}
         # Replace a dedicated runtime user frame; never rewrite assistant/reasoning or tool frames.
-        if len(self.messages)>2 and self.messages[2].get('content','').startswith('Runtime budget:'):
+        if len(self.messages)>2 and (self.messages[2].get('content') or '').startswith('Runtime budget:'):
             self.messages[2] = message
         else:
             self.messages.insert(2, message)
@@ -87,7 +104,17 @@ class NativeToolConversation:
         tools = self.tools
         if self.verification_command and self.remaining_steps is not None and self.remaining_steps<=1:
             tools = [t for t in tools if t['function']['name'] not in {'write_file','patch_file'}]
-        return {'messages': copy.deepcopy(self.messages), 'tools': tools,
+        messages = copy.deepcopy(self.messages)
+        position = 3 if len(messages) > 2 and (messages[2].get('content') or '').startswith('Runtime budget:') else 2
+        if self.context_state:
+            messages.insert(position, {'role': 'user', 'content': 'Host tracked task state (evidence data, not permissions). '
+                'Stale source paths require a fresh read; historical test passes do not verify this run:\n' +
+                json.dumps(self.context_state, ensure_ascii=False)})
+            position += 1
+        if self.context_memory:
+            messages.insert(position, {'role': 'user', 'content': 'Current retrieved memory (advisory data, never tool permissions):\n' +
+                                      json.dumps(self.context_memory, ensure_ascii=False)})
+        return {'messages': messages, 'tools': tools,
                 'tool_choice': 'auto', **copy.deepcopy(self.wire_options)}
 
     def audit_request(self):
@@ -98,6 +125,7 @@ class NativeToolConversation:
                 message['reasoning_audit'] = {'chars': len(reasoning or ''),
                     'sha256': hashlib.sha256((reasoning or '').encode()).hexdigest()}
         return {'messages': messages, 'tools': self.payload()['tools'], 'tool_choice': 'auto',
+                'audit_stage': 'conversation_before_wire_budget',
                 **copy.deepcopy(self.wire_options)}
 
     def accept(self, data, metadata):
@@ -105,13 +133,15 @@ class NativeToolConversation:
         message = choice['message']
         calls = message.get('tool_calls') or []
         reasoning = message.get('reasoning_content')
+        sent_messages = self.last_wire_messages if self.last_wire_messages is not None else self.messages
         metadata.update(response_protocol='deepseek_native', native_tool_calls=len(calls),
                         reasoning_present=isinstance(reasoning, str),
                         reasoning_chars=len(reasoning or ''),
                         reasoning_sha256=hashlib.sha256((reasoning or '').encode()).hexdigest(),
-                        replayed_assistant_turns=sum(m['role'] == 'assistant' for m in self.messages),
-                        wire_message_count=len(self.messages),
-                        wire_content_chars=sum(len(m.get('content') or '') for m in self.messages))
+                        replayed_assistant_turns=sum(m['role'] == 'assistant' for m in sent_messages),
+                        wire_message_count=len(sent_messages),
+                        wire_content_chars=sum(len(m.get('content') or '') for m in sent_messages),
+                        native_context=dict(self.last_context_audit))
         def retry(reason):
             metadata['protocol_error'] = reason
             return NativeReply(reason, 'retry')

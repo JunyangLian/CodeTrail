@@ -4,6 +4,14 @@
 
 ![CodeTrail 工作台](assets/screenshots/codetrail-qa-desktop-20261024.png)
 
+## 长任务治理更新（2026-11-04）
+
+新增[实际请求预算、记忆生命周期与中断恢复核对](docs/long-task-upgrade.md)：在原生请求发送前统一计量并按完整工具调用配对压缩；仓库知识支持候选确认、源码证据、版本替换、TTL、撤销和失效；风险工具通过 SQLite 先记录意图，进程中断后不自动重放未知操作。沿用原审批与权限边界。
+
+可直接运行离线机制 Demo：`python -X utf8 scripts/demo_long_task.py --output artifacts/my-long-task-demo`。它不调用 API，不是新的代码修复评测，不改写下方历史成绩。计量使用明确标识的保守估算，真实模型 Token、修复率与记忆收益仍需单独验证。
+
+本轮全量自动化 **340/340 通过**，离线连续场景 **12/12 通过**。真实只读接口检查因首次请求 HTTP402 余额不足停止，未宣称模型效果提升；[验证报告与完整证据](validation/long-task-2026-11-04/report.md)分别保留这些结果。
+
 ## 真实 Tabbit 网页集成测试（2026-10-25）
 
 通过已打开的 Tabbit 真实点击、输入、逐项审批和结果回放，在硅基流动 `deepseek-ai/DeepSeek-V4.1-Flash` 与 AppContainer 后端完成三类冻结修复任务：单文件、跨文件、未知位置定位。三个全新工作区均通过独立验收，每题 8/8 条测试；测试文件未修改。额外验证连接恢复和审批拒绝，**不计入历史 Benchmark 成功率**。

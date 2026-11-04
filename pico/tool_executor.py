@@ -6,6 +6,7 @@ import subprocess
 import json
 
 from .workspace import clip
+from .operations import RecoveryRequired
 
 
 @dataclass(frozen=True)
@@ -119,7 +120,21 @@ class ToolExecutor:
                 ),
             )
 
+        operation_id = None
+        before_snapshot = agent.capture_workspace_snapshot() if tool['risky'] else {}
+        if tool['risky']:
+            try:
+                conversation = getattr(agent.model_client, 'native_conversation', None)
+                state = getattr(agent, 'current_task_state', None)
+                operation_id, cached = agent.operations.begin(name, args, before_snapshot,
+                    agent.session['id'], state.run_id if state else '', getattr(conversation, 'pending', None))
+                if cached is not None:
+                    return ToolExecutionResult(cached['content'], {**cached['metadata'], 'operation_result_reused': True})
+            except RecoveryRequired as exc:
+                return ToolExecutionResult('error: ' + str(exc), _metadata('rejected',
+                    tool_error_code='operation_recovery_required', risk_level='high', read_only=False))
         if tool["risky"] and not agent.approve(name, args):
+            agent.operations.reject(operation_id)
             detail = (f"; use the exact configured verification command {agent.verification_command!r}; "
                       "do not try pipes or alternative commands" if name=='run_shell' and agent.verification_command else '')
             return ToolExecutionResult(
@@ -133,7 +148,12 @@ class ToolExecutor:
                 ),
             )
 
-        before_snapshot = agent.capture_workspace_snapshot() if tool["risky"] else {}
+        if tool['risky']:
+            try:
+                agent.operations.start(operation_id, agent.capture_workspace_snapshot())
+            except RecoveryRequired as exc:
+                return ToolExecutionResult('error: ' + str(exc), _metadata('rejected',
+                    tool_error_code='approval_snapshot_changed', risk_level='high', read_only=False))
         after_snapshot = before_snapshot
         try:
             content = agent.redact_text(clip(tool["run"](args), 12000 if name == 'run_shell' else 4000))
@@ -165,6 +185,9 @@ class ToolExecutor:
             if name == "run_shell":
                 metadata["exit_code"] = int(match.group(1)) if match else None
                 metadata["execution_backend"] = getattr(agent, 'shell_backend', 'host')
+            if operation_id:
+                metadata['operation_id'] = operation_id
+                agent.operations.complete(operation_id, after_snapshot, content, metadata)
             agent.record_process_note_for_tool(name, metadata)
             return ToolExecutionResult(content=content, metadata=metadata)
         except Exception as exc:
@@ -190,5 +213,9 @@ class ToolExecutor:
                 metadata['execution_backend'] = getattr(agent, 'shell_backend', 'host')
                 if exc.__class__.__name__ == 'SandboxUnavailable':
                     metadata['tool_error_code'] = 'sandbox_unavailable'
+            if operation_id:
+                metadata['operation_id'] = operation_id
+                agent.operations.complete(operation_id, after_snapshot, agent.redact_text(f'error: tool {name} failed: {exc}'), metadata,
+                                          uncertain=name == 'run_shell')
             agent.record_process_note_for_tool(name, metadata)
             return ToolExecutionResult(content=f"error: tool {name} failed: {exc}", metadata=metadata)
