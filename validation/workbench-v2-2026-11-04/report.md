@@ -29,7 +29,7 @@
 7. 最小扩展能力：按需Skill、真实stdio MCP初始化/发现/调用、有界只读委派、结构化策略钩子；扩展沿用授权过滤和原审批。
 8. 安全与交互：AppContainer固定测试后端、逐来源读取过滤、只读验收文件、硬链接限制、未知usage不按0展示，以及计划、记忆、差异、测试和恢复界面。
 
-配置、限制和操作命令见[工作台指南](../../docs/workbench-v2.md)，面试动机与追问见[讲解文档](../../docs/interview-workbench-v2.md)。
+配置、限制和操作命令见[工作台指南](../../docs/workbench-v2.md)。
 
 ## 独立审查发现与修复
 
@@ -94,3 +94,5 @@ python -m pytest -q --junitxml=artifacts/your-new-full-tests.xml
 [证据包](evidence.zip)、[SHA256](evidence.sha256)和[结构化总表](summary.json)包含最终JUnit、源码/测试快照、源码清单、协议、SQLite一致性快照、场景、独立QA、浏览器回执与独立验收；逐文件SHA在包内manifest中。发布前扫描真实环境凭据，未将Key写入仓库。
 
 可以据此说明主要功能已实现，已知7项反例已修复，选定场景可审计且能够恢复。尚不能说明真实Embedding提高Recall、记忆降低真实模型成本、新版提高代码修复成功率，或达到任意仓库/插件/外部副作用的生产级可靠性；这些需要下一轮受控模型实验。
+
+公开证据包仅保留技术材料；个人准备文档及其入口已移出，原始包在本地保留。运行记录、产品源码与测试快照未改动，分发调整见包内 `publication-redaction.json`。

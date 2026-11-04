@@ -12,7 +12,7 @@ python -X utf8 scripts/run_workbench_demo.py --offline --open
 
 默认本地 `http://127.0.0.1:8770/`，创建全新演示工作区并使用 Windows AppContainer。离线模式明确使用脚本化决策，真实执行工具、审批与测试；不计入模型修复成绩。在线向量与模型效果仍需接口可用后验证，本轮硅基流动实际 Embedding 请求返回 HTTP402。
 
-[完整功能范围与运行指南](docs/workbench-v2.md) · [面试讲解](docs/interview-workbench-v2.md) · [本轮验证与证据](validation/workbench-v2-2026-11-04/report.md)。下方各历史批次的数字对应其冻结版本，不能当作新增工作台的效果结论。
+[完整功能范围与运行指南](docs/workbench-v2.md) · [本轮验证与证据](validation/workbench-v2-2026-11-04/report.md)。下方各历史批次的数字对应其冻结版本，不能当作新增工作台的效果结论。
 
 最终全量 **380/380通过**；连续离线场景 **21/21项检查通过**；独立Codex子代理确认并复验修复 **7项缺陷，17组机制探针满足预期**。Tabbit真实完成逐项审批、记忆确认、取消及服务重启后的找回/核对/新审批流程；2个修复工作区独立验收均8/8。所有决策脚本、真实工具结果和中断/失败均保留，这些数据不计为外部模型成功率。
 
@@ -61,7 +61,7 @@ Windows可选择 **AppContainer测试执行**：过滤工作区副本、独立�
 - **[最终工程报告](benchmarks/results/final-agent-90-2026-10-25/final-report.md)**、[凭据恢复报告](benchmarks/results/final-agent-90-2026-10-25/credential-recovery-report.md)、[全部执行CSV](benchmarks/results/final-agent-90-2026-10-25/all-executions.csv)、[逐题首批→追加分布](benchmarks/results/final-agent-90-2026-10-25/per-task-with-recovery.csv)。
 - [完整证据包](benchmarks/results/final-agent-90-2026-10-25/evidence.zip)、[SHA256](benchmarks/results/final-agent-90-2026-10-25/evidence.sha256)与[公开复现命令](docs/final-agent-reproduction.md)。参考补丁不发布，公开重跑不依赖私有金标。
 - [首批完整报告](benchmarks/results/final-agent-90-2026-10-25/report.md)与[七维指标定义](benchmarks/results/final-agent-90-2026-10-25/methodology.md)：结果、检索上下文、证据忠实性、工具过程、稳定恢复、成本效率、安全权限。
-- [架构图](docs/final-agent-architecture.md)与[面试讲解](docs/final-agent-interview.md)：独立外部验收、冻结金标、过程监控、Windows有限重试、失败保留和安全边界。
+- [架构图](docs/final-agent-architecture.md)：独立外部验收、冻结金标、过程监控、Windows有限重试、失败保留和安全边界。
 - 全量自动化测试 **292/292通过**；测试用例数与Agent任务数分开统计。任务数量有限，旧20道已用于历史评测，其中6道参与额外调优；新10道只保证此前未用于本项目Agent调优，无法保证模型训练未见。
 - 安全独立统计。应用层拒绝越界、敏感路径、未经批准的Shell和测试修改；**批准的Python仍以当前用户运行，没有OS沙箱**。真实费用、广义语义忠实性及真实任务长期记忆收益没有可靠观测时标为未评估。
 

@@ -103,7 +103,7 @@ def main():
       '', '## 交付与复现','',
       '- [全部执行数据](all-executions.csv)、[首批审计](audit.json)、[追加审计](credential-recovery-audit.json)、[七维定义](methodology.md)、[逐题分布](per-task-with-recovery.json)。',
       '- [完整证据包](evidence.zip)与[evidence.sha256](evidence.sha256)：完整请求响应、工具轨迹、代码差异、外部验收、哈希、JUnit和源码快照。Authorization与真实Key不落盘；公开假canary允许出现在安全证据中，私有参考补丁不发布。',
-      '- [公开复现命令](../../../docs/final-agent-reproduction.md)、[架构图](../../../docs/final-agent-architecture.md)、[面试讲解与简历](../../../docs/final-agent-interview.md)。设置本地环境SILICONFLOW_API_KEY后，可运行scripts/run_final_demo.py；现成真实修复离线回放无需API。',
+      '- [公开复现命令](../../../docs/final-agent-reproduction.md)、[架构图](../../../docs/final-agent-architecture.md)。设置本地环境SILICONFLOW_API_KEY后，可运行scripts/run_final_demo.py；现成真实修复离线回放无需API。',
       '- 留出题已完成评测；后续若据其改进，应降级为开发回归集。动态服务状态不因源码冻结而固定。本轮无单因素消融、无复杂仓库泛化或统计显著性结论。','']
     (PUBLIC/'final-report.md').write_text('\n'.join(lines),encoding='utf-8',newline='\n')
     print(json.dumps({'final_report':str(PUBLIC/'final-report.md'),'all_repair_executions':144,'functional':all['functional'],'workflow':all['workflow']}))

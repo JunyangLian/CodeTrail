@@ -59,7 +59,7 @@ python -m pico.web --cwd path/to/project --verify-command "python -m pytest -q"
 - 网页不把 API Key 发送到浏览器；接口限制本机 Host，写请求校验随机令牌和 Origin。
 
 这是本地单用户工具。没有多用户权限、任务并发队列、强制取消或操作系统级 shell 沙箱。
-直接运行在可信示例上即可，不需要为面试再扩展这些功能。
+直接运行在可信示例上即可。
 
 ## 验证
 
